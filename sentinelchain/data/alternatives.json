@@ -1,9 +1,0 @@
-{
-    "MCU-2201X": [
-        {
-            "partNumber": "MCU-2201X-ALT1",
-            "vendor": "Distributor A",
-            "note": "Pin-compatible, same voltage & package"
-        }
-    ]
-}
