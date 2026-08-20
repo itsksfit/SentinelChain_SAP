@@ -2,6 +2,8 @@
 
 **Autonomous Supply Chain Resilience & Procurement Platform**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Live_on_Vercel-success?style=for-the-badge&logo=vercel)](https://sentinelchain-gilt.vercel.app)
+
 SentinelChain is an AI-powered enterprise pipeline that transforms supply-chain risk management from a reactive, manual process into an autonomous, self-healing workflow. By sitting between live global intelligence feeds and enterprise ERP software, SentinelChain detects disruptions, measures financial impact, negotiates alternatives, and executes recovery procurement—all without human intervention.
 
 ## 🚀 The Hackathon Problem
@@ -65,4 +67,4 @@ npm run dev
 
 ## 🌐 Live Demo
 The application is deployed on Vercel:
-👉 **[SentinelChain Live](https://sentinelchain-gilt.vercel.app)**
+👉 **[https://sentinelchain-gilt.vercel.app](https://sentinelchain-gilt.vercel.app)**
