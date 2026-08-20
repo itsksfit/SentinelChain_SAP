@@ -1,0 +1,20 @@
+[
+  {
+    "partNumber": "MCU-2201X",
+    "name": "32-bit Automotive Microcontroller",
+    "usedInProducts": ["EV Charging Controller", "Smart Thermostat V3"],
+    "revenueAtRiskPerDay": 42000
+  },
+  {
+    "partNumber": "PWR-9942A",
+    "name": "High-Voltage Power IC",
+    "usedInProducts": ["Industrial Motor Drive", "Solar Inverter"],
+    "revenueAtRiskPerDay": 85000
+  },
+  {
+    "partNumber": "MEM-64GB-NAND",
+    "name": "64GB NAND Flash",
+    "usedInProducts": ["Flagship Smartphone X", "Tablet Pro 12"],
+    "revenueAtRiskPerDay": 120000
+  }
+]

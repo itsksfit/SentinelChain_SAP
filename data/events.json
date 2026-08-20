@@ -1,0 +1,5 @@
+[
+  { "id": "evt1", "text": "Part MCU-2201X export banned under new trade restrictions.", "affectedPart": "MCU-2201X" },
+  { "id": "evt2", "text": "Factory fire at primary facility halts production of PWR-9942A.", "affectedPart": "PWR-9942A" },
+  { "id": "evt3", "text": "Critical shortage of rare-earth metals delays MEM-64GB-NAND shipments globally.", "affectedPart": "MEM-64GB-NAND" }
+]

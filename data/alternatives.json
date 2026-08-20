@@ -1,0 +1,15 @@
+{
+  "MCU-2201X": [
+    { "partNumber": "MCU-2201X-ALT1", "vendor": "Distributor A", "note": "Pin-compatible, same voltage & package" },
+    { "partNumber": "MCU-3301Y", "vendor": "Distributor B", "note": "Requires slight PCB layout change, but available in volume" },
+    { "partNumber": "MCU-1100Z", "vendor": "Distributor C", "note": "Lower performance but pin-compatible drop-in" }
+  ],
+  "PWR-9942A": [
+    { "partNumber": "PWR-9942B-REV2", "vendor": "PowerGlobal Inc.", "note": "Direct replacement, slightly higher thermal output" },
+    { "partNumber": "VOLT-8800", "vendor": "ElectroSource", "note": "Pin-compatible, certified for industrial use" }
+  ],
+  "MEM-64GB-NAND": [
+    { "partNumber": "MEM-128GB-NAND", "vendor": "StorageTech", "note": "Higher capacity, same form factor, higher cost" },
+    { "partNumber": "NAND-64-IND", "vendor": "GlobalChips", "note": "Industrial grade, identical specs" }
+  ]
+}
