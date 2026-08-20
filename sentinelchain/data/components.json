@@ -1,0 +1,9 @@
+// data/components.json
+[
+  {
+    "partNumber": "MCU-2201X",
+    "name": "32-bit Automotive Microcontroller",
+    "usedInProducts": ["EV Charging Controller", "Smart Thermostat V3"],
+    "revenueAtRiskPerDay": 42000
+  }
+]
