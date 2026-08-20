@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0f1115] text-gray-200 antialiased selection:bg-indigo-500/30;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-[#1a1d24]/80 backdrop-blur-md border border-white/10 shadow-xl rounded-xl;
+  }
+  .glass-panel-accent {
+    @apply bg-indigo-950/20 backdrop-blur-md border border-indigo-500/30 shadow-xl rounded-xl;
+  }
+  .glass-panel-danger {
+    @apply bg-red-950/20 backdrop-blur-md border border-red-500/30 shadow-xl rounded-xl;
+  }
+  .glass-panel-success {
+    @apply bg-emerald-950/20 backdrop-blur-md border border-emerald-500/30 shadow-xl rounded-xl;
+  }
+}
+
+/* Custom scrollbar for chat */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
