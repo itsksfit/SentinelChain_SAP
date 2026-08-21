@@ -4,22 +4,25 @@
 
 @layer base {
   body {
-    @apply bg-[#0f1115] text-gray-200 antialiased selection:bg-indigo-500/30;
+    @apply bg-gray-50 text-gray-900 antialiased selection:bg-indigo-500/30 transition-colors duration-300;
+  }
+  .dark body {
+    @apply bg-[#0f1115] text-gray-200;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-[#1a1d24]/80 backdrop-blur-md border border-white/10 shadow-xl rounded-xl;
+    @apply bg-white/80 dark:bg-[#1a1d24]/80 backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-xl rounded-xl transition-colors duration-300;
   }
   .glass-panel-accent {
-    @apply bg-indigo-950/20 backdrop-blur-md border border-indigo-500/30 shadow-xl rounded-xl;
+    @apply bg-indigo-50 dark:bg-indigo-950/20 backdrop-blur-md border border-indigo-200 dark:border-indigo-500/30 shadow-xl rounded-xl transition-colors duration-300;
   }
   .glass-panel-danger {
-    @apply bg-red-950/20 backdrop-blur-md border border-red-500/30 shadow-xl rounded-xl;
+    @apply bg-red-50 dark:bg-red-950/20 backdrop-blur-md border border-red-200 dark:border-red-500/30 shadow-xl rounded-xl transition-colors duration-300;
   }
   .glass-panel-success {
-    @apply bg-emerald-950/20 backdrop-blur-md border border-emerald-500/30 shadow-xl rounded-xl;
+    @apply bg-emerald-50 dark:bg-emerald-950/20 backdrop-blur-md border border-emerald-200 dark:border-emerald-500/30 shadow-xl rounded-xl transition-colors duration-300;
   }
 }
 

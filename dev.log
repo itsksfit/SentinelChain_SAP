@@ -1,0 +1,450 @@
+
+> sentinelchain@1.0.0 dev
+> next dev
+
+▲ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.109:3000
+- Environments: .env.local
+✓ Ready in 189ms
+✓ Running next.config took 3ms
+
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 304 in 431ms (next.js: 415ms, application-code: 16ms)
+ GET /plans 200 in 61ms (next.js: 42ms, application-code: 19ms)
+ GET /api/sap/status 304 in 21ms (next.js: 18ms, application-code: 3ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 311ms (next.js: 23ms, application-code: 288ms)
+ GET / 304 in 37ms (next.js: 3ms, application-code: 34ms)
+ GET /api/sap/status 304 in 1.1ms (next.js: 0.6ms, application-code: 0.5ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 308ms (next.js: 1.1ms, application-code: 307ms)
+ POST /api/detect 200 in 1570ms (next.js: 7ms, application-code: 1562ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 677ms (next.js: 6ms, application-code: 671ms)
+ POST /api/match 200 in 2.5s (next.js: 7ms, application-code: 2.5s)
+ POST /api/negotiate 200 in 3.3s (next.js: 8ms, application-code: 3.3s)
+ GET /api/sap/status 304 in 2ms (next.js: 1.1ms, application-code: 1.4ms)
+ GET /api/news/latest 200 in 483ms (next.js: 2ms, application-code: 481ms)
+ GET /api/sap/status 304 in 1.6ms (next.js: 0.9ms, application-code: 0.7ms)
+ GET /api/news/latest 200 in 341ms (next.js: 1.9ms, application-code: 339ms)
+ GET /api/news/latest 200 in 1292ms (next.js: 1.1ms, application-code: 1290ms)
+ GET /api/news/latest 200 in 375ms (next.js: 1.2ms, application-code: 374ms)
+ GET /api/news/latest 200 in 302ms (next.js: 1.2ms, application-code: 301ms)
+ GET /api/news/latest 200 in 282ms (next.js: 0.7ms, application-code: 282ms)
+ GET / 304 in 40ms (next.js: 5ms, application-code: 35ms)
+ GET /api/sap/status 304 in 2ms (next.js: 1.9ms, application-code: 0.4ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 282ms (next.js: 1.1ms, application-code: 281ms)
+ POST /api/detect 200 in 1447ms (next.js: 1.2ms, application-code: 1446ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 712ms (next.js: 1.4ms, application-code: 710ms)
+ POST /api/match 200 in 2.5s (next.js: 0.7ms, application-code: 2.5s)
+ POST /api/negotiate 200 in 3.7s (next.js: 1.2ms, application-code: 3.7s)
+ GET /api/news/latest 200 in 308ms (next.js: 0.9ms, application-code: 307ms)
+ GET /api/news/latest 200 in 311ms (next.js: 0.5ms, application-code: 311ms)
+ GET /api/sap/status 304 in 3ms (next.js: 2ms, application-code: 0.9ms)
+ GET /api/news/latest 200 in 295ms (next.js: 0.9ms, application-code: 294ms)
+ GET / 304 in 36ms (next.js: 3ms, application-code: 33ms)
+ GET /api/sap/status 304 in 1.8ms (next.js: 0.9ms, application-code: 0.9ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 305ms (next.js: 0.9ms, application-code: 304ms)
+ POST /api/detect 200 in 937ms (next.js: 0.8ms, application-code: 936ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 673ms (next.js: 1.7ms, application-code: 671ms)
+ POST /api/match 200 in 2.6s (next.js: 0.6ms, application-code: 2.6s)
+ POST /api/negotiate 200 in 3.4s (next.js: 1.0ms, application-code: 3.4s)
+ GET /api/news/latest 200 in 310ms (next.js: 0.6ms, application-code: 309ms)
+ GET /api/news/latest 200 in 310ms (next.js: 0.9ms, application-code: 310ms)
+ GET /api/news/latest 200 in 341ms (next.js: 0.2ms, application-code: 341ms)
+ GET /api/sap/status 304 in 1.6ms (next.js: 1.2ms, application-code: 0.3ms)
+✓ Compiled in 27ms
+ GET /api/news/latest 200 in 280ms (next.js: 0.4ms, application-code: 280ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1713ms (next.js: 6ms, application-code: 1707ms)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 304 in 63ms (next.js: 35ms, application-code: 27ms)
+ GET /api/sap/status 304 in 1.4ms (next.js: 0.6ms, application-code: 0.8ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 1051ms (next.js: 1.6ms, application-code: 1050ms)
+ POST /api/detect 200 in 1401ms (next.js: 0.7ms, application-code: 1400ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1490ms (next.js: 0.9ms, application-code: 1489ms)
+ POST /api/match 200 in 2.3s (next.js: 0.7ms, application-code: 2.3s)
+ POST /api/negotiate 200 in 2.9s (next.js: 1.3ms, application-code: 2.9s)
+ GET /api/news/latest 200 in 311ms (next.js: 0.9ms, application-code: 310ms)
+ GET /api/news/latest 200 in 342ms (next.js: 1.2ms, application-code: 340ms)
+ GET /api/news/latest 200 in 312ms (next.js: 1.4ms, application-code: 310ms)
+ GET /api/news/latest 200 in 354ms (next.js: 0.8ms, application-code: 353ms)
+✓ Compiled in 15ms
+ GET /api/news/latest 200 in 312ms (next.js: 0.8ms, application-code: 311ms)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 304 in 63ms (next.js: 36ms, application-code: 27ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/sap/status 304 in 1.5ms (next.js: 1.0ms, application-code: 0.5ms)
+ GET /api/news/latest 200 in 289ms (next.js: 0.6ms, application-code: 288ms)
+ GET /api/news/latest 200 in 292ms (next.js: 1.4ms, application-code: 290ms)
+ GET /api/news/latest 200 in 291ms (next.js: 1.6ms, application-code: 290ms)
+ GET / 304 in 32ms (next.js: 3ms, application-code: 28ms)
+ GET /api/sap/status 304 in 1.5ms (next.js: 1.0ms, application-code: 0.5ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 281ms (next.js: 0.2ms, application-code: 280ms)
+ GET /api/news/latest 200 in 295ms (next.js: 0.9ms, application-code: 294ms)
+ POST /api/detect 200 in 1343ms (next.js: 1.0ms, application-code: 1342ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1847ms (next.js: 7ms, application-code: 1841ms)
+ POST /api/match 200 in 3.0s (next.js: 1.1ms, application-code: 3.0s)
+ POST /api/negotiate 200 in 3.1s (next.js: 0.7ms, application-code: 3.1s)
+ GET /api/news/latest 200 in 337ms (next.js: 0.8ms, application-code: 336ms)
+ GET /api/news/latest 200 in 285ms (next.js: 1.2ms, application-code: 284ms)
+ GET /api/news/latest 200 in 337ms (next.js: 1.1ms, application-code: 336ms)
+ GET /api/news/latest 200 in 297ms (next.js: 1.6ms, application-code: 295ms)
+ GET /api/news/latest 200 in 351ms (next.js: 0.5ms, application-code: 350ms)
+SAP API Error (ariba): Error: SAP ariba POST failed: 403
+    at sapPost (lib/sap/client.js:52:29)
+    at async submitRecoveryPlan (lib/sap/ariba.js:30:18)
+    at async handler (pages/api/sap/recovery-plan.js:8:18)
+  50 |       body: JSON.stringify(payload)
+  51 |     });
+> 52 |     if (!response.ok) throw new Error(`SAP ${system} POST failed: ${response.status}`);
+     |                             ^
+  53 |     return await response.json();
+  54 |   } catch (error) {
+  55 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/sap/recovery-plan 200 in 1143ms (next.js: 5ms, application-code: 1138ms)
+ GET /api/news/latest 200 in 281ms (next.js: 2ms, application-code: 279ms)
+ GET /api/sap/status 304 in 1.8ms (next.js: 0.8ms, application-code: 1.0ms)
+ GET /api/news/latest 200 in 290ms (next.js: 1.6ms, application-code: 288ms)
+ GET /api/news/latest 200 in 293ms (next.js: 0.7ms, application-code: 292ms)
+ GET /api/news/latest 200 in 286ms (next.js: 1.1ms, application-code: 285ms)
+ GET /api/news/latest 200 in 290ms (next.js: 1.6ms, application-code: 288ms)
+ GET /api/news/latest 200 in 292ms (next.js: 0.8ms, application-code: 292ms)
+ GET /api/news/latest 200 in 1076ms (next.js: 0.8ms, application-code: 1075ms)
+ GET /api/news/latest 200 in 337ms (next.js: 1.5ms, application-code: 336ms)
+ GET /api/news/latest 200 in 337ms (next.js: 1.8ms, application-code: 335ms)
+ GET /api/news/latest 200 in 294ms (next.js: 0.9ms, application-code: 293ms)
+ GET /api/news/latest 200 in 1087ms (next.js: 0.4ms, application-code: 1086ms)
+ GET /api/news/latest 200 in 309ms (next.js: 0.4ms, application-code: 309ms)
+ GET /api/news/latest 200 in 1038ms (next.js: 0.3ms, application-code: 1038ms)
+ GET /api/news/latest 200 in 264ms (next.js: 1.2ms, application-code: 263ms)
+ GET /api/news/latest 200 in 312ms (next.js: 13ms, application-code: 299ms)
+ GET /api/news/latest 200 in 296ms (next.js: 0.8ms, application-code: 295ms)
+ GET /api/news/latest 200 in 538ms (next.js: 1.0ms, application-code: 537ms)
+ GET / 304 in 40ms (next.js: 6ms, application-code: 34ms)
+ GET /api/sap/status 304 in 0.7ms (next.js: 0.3ms, application-code: 0.4ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 786ms (next.js: 0.3ms, application-code: 786ms)
+ POST /api/detect 200 in 1009ms (next.js: 2ms, application-code: 1006ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 2.1s (next.js: 1.1ms, application-code: 2.1s)
+ POST /api/match 200 in 3.4s (next.js: 1.2ms, application-code: 3.4s)
+ POST /api/negotiate 200 in 3.5s (next.js: 1.3ms, application-code: 3.5s)
+ GET /api/news/latest 200 in 299ms (next.js: 0.8ms, application-code: 299ms)
+ GET /api/news/latest 200 in 313ms (next.js: 1.3ms, application-code: 311ms)
+ GET /api/news/latest 200 in 354ms (next.js: 0.7ms, application-code: 353ms)
+ GET /api/news/latest 200 in 305ms (next.js: 1.1ms, application-code: 303ms)
+ GET / 304 in 38ms (next.js: 5ms, application-code: 34ms)
+ GET /api/sap/status 304 in 2ms (next.js: 1.3ms, application-code: 0.9ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 294ms (next.js: 1.9ms, application-code: 292ms)
+ POST /api/detect 200 in 1556ms (next.js: 10ms, application-code: 1546ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 2.1s (next.js: 1.0ms, application-code: 2.1s)
+ POST /api/match 200 in 2.7s (next.js: 1.0ms, application-code: 2.7s)
+ POST /api/negotiate 200 in 4.7s (next.js: 1.2ms, application-code: 4.7s)
+ GET /api/news/latest 200 in 301ms (next.js: 0.6ms, application-code: 300ms)
+ GET /api/news/latest 200 in 327ms (next.js: 1.4ms, application-code: 325ms)
+ GET /api/news/latest 200 in 2.0s (next.js: 2ms, application-code: 2.0s)
+ GET /api/news/latest 200 in 340ms (next.js: 0.7ms, application-code: 340ms)
+ GET /api/news/latest 200 in 316ms (next.js: 0.7ms, application-code: 315ms)
+ GET /api/news/latest 200 in 1036ms (next.js: 1.1ms, application-code: 1035ms)
+ GET /api/news/latest 200 in 2.2s (next.js: 1.1ms, application-code: 2.2s)
+ GET /api/sap/status 304 in 1.3ms (next.js: 0.7ms, application-code: 0.6ms)
+✓ Compiled in 40ms
+ GET /api/news/latest 200 in 326ms (next.js: 1.1ms, application-code: 325ms)
+ GET /api/news/latest 200 in 910ms (next.js: 0.9ms, application-code: 909ms)
+ GET /api/news/latest 200 in 583ms (next.js: 2ms, application-code: 581ms)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 304 in 65ms (next.js: 35ms, application-code: 30ms)
+ GET /api/sap/status 304 in 2ms (next.js: 1.9ms, application-code: 0.4ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 313ms (next.js: 1.0ms, application-code: 312ms)
+ POST /api/detect 200 in 1337ms (next.js: 11ms, application-code: 1326ms)
+ POST /api/detect 200 in 1851ms (next.js: 1.0ms, application-code: 1850ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1566ms (next.js: 1.4ms, application-code: 1564ms)
+ POST /api/match 200 in 2.5s (next.js: 1.0ms, application-code: 2.5s)
+ GET /api/news/latest 200 in 580ms (next.js: 1.1ms, application-code: 579ms)
+ POST /api/negotiate 200 in 3.2s (next.js: 0.9ms, application-code: 3.2s)
+ GET / 304 in 36ms (next.js: 2ms, application-code: 34ms)
+ GET /api/sap/status 304 in 1.1ms (next.js: 0.6ms, application-code: 0.5ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 343ms (next.js: 0.2ms, application-code: 343ms)
+ POST /api/detect 200 in 996ms (next.js: 3ms, application-code: 993ms)
+ POST /api/detect 200 in 1375ms (next.js: 1.2ms, application-code: 1374ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1418ms (next.js: 0.8ms, application-code: 1417ms)
+ POST /api/match 200 in 1814ms (next.js: 1.4ms, application-code: 1813ms)
+ GET /api/news/latest 200 in 813ms (next.js: 1.0ms, application-code: 812ms)
+ POST /api/negotiate 200 in 4.4s (next.js: 0.9ms, application-code: 4.4s)
+ POST /api/detect 200 in 1023ms (next.js: 0.6ms, application-code: 1022ms)
+ GET /api/news/latest 200 in 439ms (next.js: 1.1ms, application-code: 438ms)
+ GET / 304 in 41ms (next.js: 4ms, application-code: 37ms)
+ GET /api/sap/status 304 in 1.8ms (next.js: 1.5ms, application-code: 0.4ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 311ms (next.js: 0.7ms, application-code: 311ms)
+ GET /api/sap/status 304 in 1.0ms (next.js: 0.7ms, application-code: 0.3ms)
+✓ Compiled in 30ms
+ GET /api/news/latest 200 in 333ms (next.js: 0.4ms, application-code: 332ms)
+ POST /api/detect 200 in 1065ms (next.js: 0.7ms, application-code: 1065ms)
+ GET /api/news/latest 200 in 320ms (next.js: 1.0ms, application-code: 319ms)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 200 in 73ms (next.js: 43ms, application-code: 30ms)
+ GET /api/sap/status 304 in 1.6ms (next.js: 1.0ms, application-code: 0.6ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 359ms (next.js: 1.1ms, application-code: 357ms)
+ POST /api/detect 200 in 1234ms (next.js: 1.0ms, application-code: 1233ms)
+ GET / 304 in 36ms (next.js: 2ms, application-code: 34ms)
+ GET /api/sap/status 304 in 1.9ms (next.js: 1.6ms, application-code: 0.3ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 348ms (next.js: 0.9ms, application-code: 347ms)
+ POST /api/detect 200 in 1337ms (next.js: 0.6ms, application-code: 1337ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1574ms (next.js: 2ms, application-code: 1571ms)
+ POST /api/match 200 in 2.5s (next.js: 1.2ms, application-code: 2.5s)
+ POST /api/negotiate 200 in 2.7s (next.js: 0.7ms, application-code: 2.7s)
+ GET /api/news/latest 200 in 307ms (next.js: 0.9ms, application-code: 306ms)
+ GET /api/news/latest 200 in 300ms (next.js: 0.5ms, application-code: 299ms)
+ GET /api/news/latest 200 in 311ms (next.js: 1.0ms, application-code: 310ms)
+ GET / 304 in 40ms (next.js: 6ms, application-code: 34ms)
+ GET /api/news/latest 200 in 673ms (next.js: 1.5ms, application-code: 672ms)
+ GET /api/sap/status 304 in 1.5ms (next.js: 1.1ms, application-code: 0.4ms)
+[browser] `legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components 
+ GET /api/news/latest 200 in 315ms (next.js: 0.6ms, application-code: 315ms)
+ POST /api/detect 200 in 1963ms (next.js: 1.2ms, application-code: 1962ms)
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at sapGet (lib/sap/client.js:21:29)
+    at async getMaterial (lib/sap/s4hana.js:13:18)
+    at async handler (pages/api/impact.js:7:21)
+  19 |   try {
+  20 |     const response = await fetch(url, { method: 'GET', headers });
+> 21 |     if (!response.ok) throw new Error(`SAP ${system} GET failed: ${response.status}`);
+     |                             ^
+  22 |     return await response.json();
+  23 |   } catch (error) {
+  24 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/impact 200 in 1669ms (next.js: 3ms, application-code: 1666ms)
+ POST /api/match 200 in 2.0s (next.js: 0.7ms, application-code: 2.0s)
+ POST /api/negotiate 200 in 4.3s (next.js: 0.7ms, application-code: 4.3s)
+ GET /api/news/latest 200 in 317ms (next.js: 0.7ms, application-code: 316ms)
+ GET /api/news/latest 200 in 314ms (next.js: 1.2ms, application-code: 313ms)
+SAP API Error (ariba): Error: SAP ariba POST failed: 403
+    at sapPost (lib/sap/client.js:52:29)
+    at async submitRecoveryPlan (lib/sap/ariba.js:30:18)
+    at async handler (pages/api/sap/recovery-plan.js:8:18)
+  50 |       body: JSON.stringify(payload)
+  51 |     });
+> 52 |     if (!response.ok) throw new Error(`SAP ${system} POST failed: ${response.status}`);
+     |                             ^
+  53 |     return await response.json();
+  54 |   } catch (error) {
+  55 |     console.error(`SAP API Error (${system}):`, error);
+ POST /api/sap/recovery-plan 200 in 932ms (next.js: 0.5ms, application-code: 932ms)
+ GET /api/news/latest 200 in 311ms (next.js: 1.0ms, application-code: 310ms)
+ GET /api/news/latest 200 in 309ms (next.js: 0.9ms, application-code: 308ms)
+ GET /api/news/latest 200 in 1937ms (next.js: 0.8ms, application-code: 1936ms)
+ GET /api/news/latest 200 in 303ms (next.js: 0.8ms, application-code: 302ms)
+ GET /api/news/latest 200 in 308ms (next.js: 0.8ms, application-code: 307ms)
+ GET /api/news/latest 200 in 307ms (next.js: 0.9ms, application-code: 306ms)
+ GET /api/news/latest 200 in 345ms (next.js: 1.0ms, application-code: 344ms)
+ GET /api/news/latest 200 in 304ms (next.js: 0.9ms, application-code: 303ms)

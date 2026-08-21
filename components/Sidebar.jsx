@@ -10,23 +10,23 @@ export default function Sidebar() {
   const linkClass = (path) => 
     `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
       isActive(path) 
-        ? 'bg-white/5 text-white' 
-        : 'text-gray-400 hover:text-white hover:bg-white/5'
+        ? 'bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white' 
+        : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-white/5'
     }`;
     
   const iconClass = (path, defaultColor) => 
-    `w-4 h-4 ${isActive(path) ? defaultColor : 'text-gray-400'}`;
+    `w-4 h-4 ${isActive(path) ? defaultColor : 'text-gray-500 dark:text-gray-400'}`;
 
   return (
-    <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-white/10 bg-[#0f1115] h-screen fixed left-0 top-0 overflow-y-auto z-50">
+    <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-white/10 bg-[#0f1115] h-screen fixed left-0 top-0 overflow-y-auto z-50">
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded bg-indigo-600 flex items-center justify-center">
-            <ShieldCheck className="text-white w-5 h-5" />
+            <ShieldCheck className="text-gray-900 dark:text-white w-5 h-5" />
           </div>
-          <span className="text-xl font-bold tracking-wide text-white">SentinelChain</span>
+          <span className="text-xl font-bold tracking-wide text-gray-900 dark:text-white">SentinelChain</span>
         </div>
-        <button className="lg:hidden p-2 text-gray-400 hover:text-white" onClick={() => document.getElementById('mobile-sidebar').classList.add('hidden')}>
+        <button className="lg:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:text-white" onClick={() => document.getElementById('mobile-sidebar').classList.add('hidden')}>
           ✕
         </button>
       </div>
@@ -68,8 +68,8 @@ export default function Sidebar() {
         </nav>
       </div>
       
-      <div className="mt-auto p-4 border-t border-white/10">
-        <div className="relative overflow-hidden rounded-xl bg-gray-900/50 border border-gray-800 p-4">
+      <div className="mt-auto p-4 border-t border-gray-200 dark:border-white/10">
+        <div className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 p-4">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50 animate-[progress_2s_ease-in-out_infinite]"></div>
           <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-2">AI Sentinel Node</p>
           <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export default function Sidebar() {
               <div className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,0.8)]"></div>
             </div>
             <div>
-              <p className="text-xs font-bold text-white">Actively Scanning</p>
+              <p className="text-xs font-bold text-gray-900 dark:text-white">Actively Scanning</p>
               <p className="text-[10px] text-indigo-400 font-mono mt-0.5">32,491 Global Nodes</p>
             </div>
           </div>

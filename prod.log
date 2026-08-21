@@ -1,0 +1,14 @@
+
+> sentinelchain@1.0.0 start
+> next start
+
+▲ Next.js 16.3.1
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.109:3000
+✓ Ready in 50ms
+✓ Running next.config took 7ms
+SAP API Error (s4hana): Error: SAP s4hana GET failed: 404
+    at s (.next/server/chunks/[root-of-the-server]__1_7fc08._.js:1:2085)
+    at async s (.next/server/chunks/[root-of-the-server]__1_7fc08._.js:1:2982)
+    at async l (.next/server/chunks/[root-of-the-server]__1_7fc08._.js:1:3330)
+    at async Module.P [as handler] (.next/server/chunks/[root-of-the-server]__1_7fc08._.js:14:2789)

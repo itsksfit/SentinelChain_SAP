@@ -37,9 +37,9 @@ export default function WorldMap() {
   }, []);
 
   return (
-    <div className="w-full h-[350px] overflow-hidden flex items-center justify-center bg-[#0a0a0a] rounded-xl border border-white/10 relative">
-      <div className="absolute top-4 left-4 z-10 glass-panel px-3 py-1.5 rounded-lg border border-white/5 bg-black/50 backdrop-blur-md">
-        <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">3D Global Supply Network</span>
+    <div className="w-full h-[350px] overflow-hidden flex items-center justify-center bg-[#0a0a0a] rounded-xl border border-gray-200 dark:border-white/10 relative">
+      <div className="absolute top-4 left-4 z-10 glass-panel px-3 py-1.5 rounded-lg border border-gray-100 dark:border-white/5 bg-black/50 backdrop-blur-md">
+        <span className="text-[10px] uppercase font-bold text-gray-500 dark:text-gray-400 tracking-wider">3D Global Supply Network</span>
       </div>
       <Globe
         ref={globeEl}

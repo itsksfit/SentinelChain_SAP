@@ -181,7 +181,7 @@ export default function Dashboard() {
         <div className="p-6 max-w-7xl mx-auto w-full space-y-6 pb-24">
           
           {/* SAP CONNECTION STATUS */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-start mb-6 pb-6 border-b border-white/10">
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-start mb-6 pb-6 border-b border-gray-200 dark:border-white/10">
             <div className="flex gap-4">
               <div className="glass-panel px-4 py-2 flex flex-col gap-1">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">LIVE INTELLIGENCE</span>
@@ -189,11 +189,11 @@ export default function Dashboard() {
               </div>
               <div className="glass-panel px-4 py-2 flex flex-col gap-1">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP S/4HANA</span>
-                <span className={`text-xs font-semibold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-400' : 'text-gray-400'}`}>● {sapStatus.s4hana}</span>
+                <span className={`text-xs font-semibold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.s4hana}</span>
               </div>
               <div className="glass-panel px-4 py-2 flex flex-col gap-1">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP Ariba</span>
-                <span className={`text-xs font-semibold ${sapStatus.ariba === 'Connected' ? 'text-emerald-400' : 'text-gray-400'}`}>● {sapStatus.ariba}</span>
+                <span className={`text-xs font-semibold ${sapStatus.ariba === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.ariba}</span>
               </div>
             </div>
             <div className={`px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${sapStatus.mode === 'LIVE SAP MODE' ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : 'border-orange-500/50 bg-orange-500/10 text-orange-400'}`}>
@@ -203,13 +203,13 @@ export default function Dashboard() {
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-white tracking-tight">Autonomous Supply Chain Recovery</h1>
-              <p className="text-gray-400 mt-1">Real World → Enterprise Context → AI Decision → Procurement Action</p>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Autonomous Supply Chain Recovery</h1>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">Real World → Enterprise Context → AI Decision → Procurement Action</p>
             </div>
             {(loading || stage > 0) && (
               <button 
                 onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}
-                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/10"
+                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
               >
                 Reset System
               </button>
@@ -221,7 +221,7 @@ export default function Dashboard() {
             {/* LEFT COLUMN: LIVE FEED */}
             <div className="lg:col-span-1 space-y-4">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
                   <Activity className="w-4 h-4 text-emerald-500" /> Live Disruption Feed
                 </h2>
                 <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-500 tracking-wider">
@@ -247,11 +247,11 @@ export default function Dashboard() {
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{news.source}</span>
                       <span className="text-[10px] text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3" /> {new Date(news.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <h3 className="text-sm font-bold text-white leading-tight mb-3">{news.title}</h3>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white leading-tight mb-3">{news.title}</h3>
                     {activeNews?.id === news.id && stage === 0 && (
                        <button 
                          onClick={(e) => { e.stopPropagation(); simulatePipeline(news); }}
-                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_10px_rgba(79,70,229,0.3)]"
+                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-gray-900 dark:text-white px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_10px_rgba(79,70,229,0.3)]"
                        >
                          <Search className="w-3 h-3" /> Analyze Impact
                        </button>
@@ -280,9 +280,9 @@ export default function Dashboard() {
                     <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
                        <AlertTriangle className="w-4 h-4" />
                     </div>
-                    <h2 className="text-lg font-bold text-white tracking-wide">CRITICAL DISRUPTION DETECTED</h2>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-wide">CRITICAL DISRUPTION DETECTED</h2>
                   </div>
-                  <span className="text-[10px] uppercase tracking-widest bg-red-500 text-white font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+                  <span className="text-[10px] uppercase tracking-widest bg-red-500 text-gray-900 dark:text-white font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]">
                     Severity: {detectResult.severity?.toUpperCase() || 'HIGH'}
                   </span>
                 </div>
@@ -290,15 +290,15 @@ export default function Dashboard() {
                 <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="md:col-span-2">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                    <p className="text-gray-300 text-sm leading-relaxed bg-black/20 p-4 rounded-lg border border-white/5 shadow-inner">
+                    <p className="text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
                       {detectResult.reason}
                     </p>
                   </div>
                   
-                  <div className="space-y-4 md:border-l md:border-white/5 md:pl-6">
+                  <div className="space-y-4 md:border-l md:border-gray-100 dark:border-white/5 md:pl-6">
                      <div>
                        <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Impacted Node</h3>
-                       <p className="font-mono text-base text-white font-bold bg-white/5 inline-block px-3 py-1 rounded border border-white/10">{detectResult.partNumber}</p>
+                       <p className="font-mono text-base text-gray-900 dark:text-white font-bold bg-gray-100 dark:bg-white/5 inline-block px-3 py-1 rounded border border-gray-200 dark:border-white/10">{detectResult.partNumber}</p>
                      </div>
                      <div>
                        <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Disruption Classification</h3>
@@ -307,10 +307,10 @@ export default function Dashboard() {
                      <div>
                        <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">AI Confidence Score</h3>
                        <div className="flex items-center gap-2 mt-1">
-                         <div className="flex-1 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                         <div className="flex-1 bg-gray-200 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
                             <div className="bg-red-500 h-full rounded-full" style={{ width: `${(detectResult.confidence || 0.9) * 100}%` }}></div>
                          </div>
-                         <span className="text-xs text-white font-bold">{Math.round((detectResult.confidence || 0.9) * 100)}%</span>
+                         <span className="text-xs text-gray-900 dark:text-white font-bold">{Math.round((detectResult.confidence || 0.9) * 100)}%</span>
                        </div>
                      </div>
                   </div>
@@ -322,11 +322,11 @@ export default function Dashboard() {
                   <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                      <ShieldCheck className="w-4 h-4" />
                   </div>
-                  <h2 className="text-lg font-bold text-white tracking-wide">THREAT DISMISSED</h2>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-wide">THREAT DISMISSED</h2>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                  <p className="text-gray-300 text-sm leading-relaxed bg-black/20 p-4 rounded-lg border border-white/5 shadow-inner">
+                  <p className="text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
                     {detectResult.reason}
                   </p>
                 </div>
@@ -344,11 +344,11 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Search className={`w-4 h-4 ${stage >= 1 ? 'text-indigo-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 1 ? 'text-white' : 'text-gray-500'}`}>Detection Agent</h3>
+                <h3 className={`font-semibold text-sm ${stage >= 1 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>Detection Agent</h3>
               </div>
               {getStageStatus(stage, 1) === 'COMPLETED' && detectResult && (
-                <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">Identified</p>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Identified</p>
                   <p className="text-xs font-mono text-indigo-300 mt-1 truncate">{detectResult.partNumber}</p>
                 </div>
               )}
@@ -362,11 +362,11 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Database className={`w-4 h-4 ${stage >= 2 ? 'text-emerald-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 2 ? 'text-white' : 'text-gray-500'}`}>SAP S/4HANA</h3>
+                <h3 className={`font-semibold text-sm ${stage >= 2 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>SAP S/4HANA</h3>
               </div>
               {getStageStatus(stage, 2) === 'COMPLETED' && (
-                <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">BOM Retrieved</p>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">BOM Retrieved</p>
                   <p className="text-xs font-mono text-emerald-300 mt-1 truncate">Source of Truth</p>
                 </div>
               )}
@@ -379,11 +379,11 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Activity className={`w-4 h-4 ${stage >= 2 ? 'text-orange-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 2 ? 'text-white' : 'text-gray-500'}`}>Impact Agent</h3>
+                <h3 className={`font-semibold text-sm ${stage >= 2 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>Impact Agent</h3>
               </div>
               {getStageStatus(stage, 2) === 'COMPLETED' && impactResult && (
-                <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">At Risk</p>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">At Risk</p>
                   <p className="text-xs font-mono text-orange-400 mt-1 truncate">${impactResult.revenueAtRiskPerDay.toLocaleString()}/day</p>
                 </div>
               )}
@@ -397,11 +397,11 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Box className={`w-4 h-4 ${stage >= 3 ? 'text-blue-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 3 ? 'text-white' : 'text-gray-500'}`}>Cross-Reference</h3>
+                <h3 className={`font-semibold text-sm ${stage >= 3 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>Cross-Reference</h3>
               </div>
               {getStageStatus(stage, 3) === 'COMPLETED' && matchResult && (
-                <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">Alternatives</p>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Alternatives</p>
                   <p className="text-xs font-mono text-blue-300 mt-1 truncate">{matchResult.length} verified</p>
                 </div>
               )}
@@ -415,11 +415,11 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <MessageSquare className={`w-4 h-4 ${stage >= 4 ? 'text-purple-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 4 ? 'text-white' : 'text-gray-500'}`}>Chase Agent</h3>
+                <h3 className={`font-semibold text-sm ${stage >= 4 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>Chase Agent</h3>
               </div>
               {getStageStatus(stage, 4) === 'COMPLETED' && negotiateResult && (
-                <div className="mt-3 pt-3 border-t border-white/5">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">Evaluated</p>
+                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Evaluated</p>
                   <p className="text-xs font-mono text-purple-300 mt-1 truncate">{negotiateResult.rankedPlan.length} suppliers</p>
                 </div>
               )}
@@ -432,19 +432,19 @@ export default function Dashboard() {
             <div className="lg:col-span-1 space-y-6">
               {stage >= 2 && impactResult && (
                 <div className="glass-panel p-6 animate-[fadeInUp_0.4s_ease-out]">
-                  <h3 className="text-lg font-semibold text-white mb-4 border-b border-white/10 pb-2">Business Impact</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Business Impact</h3>
                   
                   <div className="space-y-4">
-                    <div className="bg-white/5 rounded-lg p-4 border border-white/5">
-                      <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Revenue at Risk</p>
+                    <div className="bg-gray-100 dark:bg-white/5 rounded-lg p-4 border border-gray-100 dark:border-white/5">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Revenue at Risk</p>
                       <p className="text-3xl font-bold text-orange-400">${impactResult.revenueAtRiskPerDay.toLocaleString()} <span className="text-sm text-gray-500 font-normal">/ day</span></p>
                     </div>
                     
                     <div>
-                      <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Affected Products ({impactResult.affectedProducts.length})</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Affected Products ({impactResult.affectedProducts.length})</p>
                       <div className="flex flex-wrap gap-2">
                         {impactResult.affectedProducts.map(p => (
-                          <span key={p} className="px-2 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300">
+                          <span key={p} className="px-2 py-1 bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-xs text-gray-300">
                             {p}
                           </span>
                         ))}
@@ -456,15 +456,15 @@ export default function Dashboard() {
 
               {stage >= 3 && matchResult && (
                 <div className="glass-panel p-6 animate-[fadeInUp_0.4s_ease-out]">
-                  <h3 className="text-lg font-semibold text-white mb-4 border-b border-white/10 pb-2">Compatible Alternatives</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Compatible Alternatives</h3>
                   <div className="space-y-3">
                     {matchResult.map((alt, i) => (
-                      <div key={i} className={`p-3 rounded-lg border ${i === 0 ? 'bg-indigo-900/20 border-indigo-500/30' : 'bg-white/5 border-white/5'}`}>
+                      <div key={i} className={`p-3 rounded-lg border ${i === 0 ? 'bg-indigo-900/20 border-indigo-500/30' : 'bg-gray-100 dark:bg-white/5 border-gray-100 dark:border-white/5'}`}>
                         <div className="flex justify-between items-start mb-1">
-                          <p className="font-mono text-sm text-white font-bold">{alt.partNumber}</p>
+                          <p className="font-mono text-sm text-gray-900 dark:text-white font-bold">{alt.partNumber}</p>
                           {i === 0 && <span className="text-[9px] uppercase tracking-wider bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">Top Match</span>}
                         </div>
-                        <p className="text-xs text-gray-400">{alt.vendor}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{alt.vendor}</p>
                         <p className="text-xs text-gray-500 mt-2">{alt.note}</p>
                       </div>
                     ))}
@@ -477,10 +477,10 @@ export default function Dashboard() {
             <div className="lg:col-span-2 space-y-6">
               {stage >= 4 && negotiateResult && (
                 <div className="glass-panel flex flex-col h-[400px] animate-[fadeInUp_0.4s_ease-out]">
-                  <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5 rounded-t-xl">
+                  <div className="p-4 border-b border-gray-200 dark:border-white/10 flex justify-between items-center bg-gray-100 dark:bg-white/5 rounded-t-xl">
                     <div>
-                      <h3 className="text-lg font-semibold text-white">Chase Agent</h3>
-                      <p className="text-xs text-gray-400">Autonomous supplier negotiation</p>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Chase Agent</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Autonomous supplier negotiation</p>
                     </div>
                     {stage === 4 ? (
                       <div className="flex items-center gap-2 px-3 py-1 bg-indigo-500/20 rounded-full border border-indigo-500/30">
@@ -488,8 +488,8 @@ export default function Dashboard() {
                         <span className="text-xs text-indigo-300 font-medium tracking-wide uppercase">Negotiating</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 px-3 py-1 bg-gray-800 rounded-full border border-gray-700">
-                        <span className="text-xs text-gray-400 font-medium tracking-wide uppercase">Session Closed</span>
+                      <div className="flex items-center gap-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">Session Closed</span>
                       </div>
                     )}
                   </div>
@@ -499,8 +499,8 @@ export default function Dashboard() {
                       <div key={i} className={`flex w-full ${(msg.from === 'System' || msg.from === 'Chase Agent') ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
                           (msg.from === 'System' || msg.from === 'Chase Agent') 
-                            ? 'bg-indigo-600 text-white rounded-br-none' 
-                            : 'bg-gray-800 text-gray-200 border border-gray-700 rounded-bl-none'
+                            ? 'bg-indigo-600 text-gray-900 dark:text-white rounded-br-none' 
+                            : 'bg-gray-200 dark:bg-gray-800 text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-none'
                         }`}>
                           <p className="text-[10px] uppercase tracking-wider mb-1 opacity-70 font-semibold">{msg.from}</p>
                           <p>{msg.text}</p>
@@ -509,7 +509,7 @@ export default function Dashboard() {
                     ))}
                     {stage === 4 && chatRevealIndex < negotiateResult.chatLog.length && (
                       <div className="flex justify-start">
-                        <div className="bg-gray-800 border border-gray-700 rounded-lg rounded-bl-none p-4 flex gap-1 items-center">
+                        <div className="bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg rounded-bl-none p-4 flex gap-1 items-center">
                           <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
                           <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
                           <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
@@ -529,39 +529,39 @@ export default function Dashboard() {
                       <CheckCircle className="w-6 h-6 text-emerald-400" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-white">Recovery Plan Ready</h2>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Recovery Plan Ready</h2>
                       <p className="text-emerald-300/80">AI-ranked response to MCU-2201X disruption</p>
                     </div>
                   </div>
 
-                  <div className="bg-black/20 rounded-lg border border-emerald-500/20 p-5 mb-6">
+                  <div className="bg-gray-100 dark:bg-black/20 rounded-lg border border-emerald-500/20 p-5 mb-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Supplier</p>
-                        <p className="font-semibold text-white">{negotiateResult.rankedPlan[0].vendor}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Supplier</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].vendor}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Replacement Part</p>
-                        <p className="font-mono font-semibold text-white">{negotiateResult.rankedPlan[0].part}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Replacement Part</p>
+                        <p className="font-mono font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].part}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Quantity</p>
-                        <p className="font-semibold text-white">{negotiateResult.rankedPlan[0].quantity.toLocaleString()} units</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Quantity</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].quantity.toLocaleString()} units</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Lead Time</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Lead Time</p>
                         <p className="font-semibold text-emerald-400">{negotiateResult.rankedPlan[0].days} days</p>
                       </div>
                     </div>
-                    <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
-                      <p className="text-sm text-gray-400">Score: <span className="text-emerald-400 font-semibold">{negotiateResult.rankedPlan[0].score}</span></p>
-                      <p className="text-sm text-gray-400">Risk Reduction: <span className="text-emerald-400 font-semibold">94%</span></p>
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className="text-emerald-400 font-semibold">{negotiateResult.rankedPlan[0].score}</span></p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className="text-emerald-400 font-semibold">94%</span></p>
                     </div>
                   </div>
 
                   <div className="flex justify-end gap-4">
                     <button 
-                      className="px-6 py-3 text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/10 cursor-not-allowed opacity-50"
+                      className="px-6 py-3 text-sm font-medium text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10 cursor-not-allowed opacity-50"
                     >
                       View Details
                     </button>
@@ -571,13 +571,13 @@ export default function Dashboard() {
                           <CheckCircle className="w-5 h-5" /> SAP Ariba Integration Queued
                         </div>
                         {aribaResponse && (
-                          <span className="text-xs text-gray-400 font-mono">Doc ID: {aribaResponse.documentId} ({aribaResponse.sapSource})</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">Doc ID: {aribaResponse.documentId} ({aribaResponse.sapSource})</span>
                         )}
                       </div>
                     ) : (
                       <button 
                         onClick={approvePlan}
-                        className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-8 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center gap-2"
+                        className="bg-emerald-600 hover:bg-emerald-500 text-gray-900 dark:text-white font-bold py-3 px-8 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center gap-2"
                       >
                         <CheckCircle className="w-5 h-5" /> Approve & Send to SAP Ariba
                       </button>
@@ -588,8 +588,8 @@ export default function Dashboard() {
 
               {/* AUDIT TRAIL */}
               {stage > 0 && (
-                <div className="glass-panel overflow-hidden animate-[fadeIn_0.5s_ease-out] border-gray-700 bg-gray-950/80">
-                  <div className="bg-gray-900 px-4 py-2 flex items-center gap-2 border-b border-gray-800">
+                <div className="glass-panel overflow-hidden animate-[fadeIn_0.5s_ease-out] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950/80">
+                  <div className="bg-white dark:bg-gray-900 px-4 py-2 flex items-center gap-2 border-b border-gray-100 dark:border-gray-800">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
@@ -602,7 +602,7 @@ export default function Dashboard() {
                           <span className="text-emerald-500">[{log.time}]</span>
                           <span className="text-indigo-400 font-bold">{log.source}:</span>
                         </div>
-                        <div className="text-gray-300 pl-4 border-l-2 border-gray-800 ml-2">
+                        <div className="text-gray-300 pl-4 border-l-2 border-gray-100 dark:border-gray-800 ml-2">
                           {log.message}
                         </div>
                       </div>
