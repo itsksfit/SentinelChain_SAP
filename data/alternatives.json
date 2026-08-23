@@ -1,15 +1,23 @@
 {
-  "MCU-2201X": [
-    { "partNumber": "MCU-2201X-ALT1", "vendor": "Distributor A", "note": "Pin-compatible, same voltage & package" },
-    { "partNumber": "MCU-3301Y", "vendor": "Distributor B", "note": "Requires slight PCB layout change, but available in volume" },
-    { "partNumber": "MCU-1100Z", "vendor": "Distributor C", "note": "Lower performance but pin-compatible drop-in" }
+  "STM32F405RGT6": [
+    { "partNumber": "GD32F405RGT6", "vendor": "Digi-Key Electronics", "note": "Pin-to-pin compatible, direct replacement", "price": 4.50, "stock": 12500 },
+    { "partNumber": "AT32F403ARCT7", "vendor": "Mouser Electronics", "note": "Requires minor firmware updates", "price": 3.80, "stock": 8400 },
+    { "partNumber": "NXP-MK66FX1M0VLQ18", "vendor": "Arrow Electronics", "note": "Requires PCB redesign", "price": 5.20, "stock": 2000 }
   ],
-  "PWR-9942A": [
-    { "partNumber": "PWR-9942B-REV2", "vendor": "PowerGlobal Inc.", "note": "Direct replacement, slightly higher thermal output" },
-    { "partNumber": "VOLT-8800", "vendor": "ElectroSource", "note": "Pin-compatible, certified for industrial use" }
+  "TPS65987DDH": [
+    { "partNumber": "CYPD3177-24LQXQ", "vendor": "Mouser Electronics", "note": "Infineon alternative, functionally equivalent", "price": 2.10, "stock": 45000 },
+    { "partNumber": "FUSB302BMPX", "vendor": "Digi-Key Electronics", "note": "Onsemi, different footprint", "price": 1.85, "stock": 18000 }
   ],
-  "MEM-64GB-NAND": [
-    { "partNumber": "MEM-128GB-NAND", "vendor": "StorageTech", "note": "Higher capacity, same form factor, higher cost" },
-    { "partNumber": "NAND-64-IND", "vendor": "GlobalChips", "note": "Industrial grade, identical specs" }
+  "MT29F64G08AECABH1-10Z:A": [
+    { "partNumber": "K9F4G08U0F-SCB0", "vendor": "Avnet", "note": "Samsung alternative, identical timing", "price": 8.50, "stock": 50000 },
+    { "partNumber": "TH58NVG2S3HTA00", "vendor": "Future Electronics", "note": "Kioxia alternative", "price": 9.20, "stock": 22000 }
+  ],
+  "XC7Z020-1CLG400C": [
+    { "partNumber": "5ASTFD3K3F40I3N", "vendor": "Digi-Key Electronics", "note": "Intel/Altera Cyclone V equivalent SoC", "price": 125.00, "stock": 850 },
+    { "partNumber": "LFE5UM-45F-8BG381C", "vendor": "Mouser Electronics", "note": "Lattice alternative, lower logic elements", "price": 85.00, "stock": 1200 }
+  ],
+  "NVIDIA-A100-80GB": [
+    { "partNumber": "AMD-Instinct-MI250", "vendor": "Arrow Electronics", "note": "Comparable compute, ROCm required", "price": 12500.00, "stock": 45 },
+    { "partNumber": "Intel-Gaudi2", "vendor": "Avnet", "note": "Good for PyTorch, smaller ecosystem", "price": 9500.00, "stock": 120 }
   ]
 }

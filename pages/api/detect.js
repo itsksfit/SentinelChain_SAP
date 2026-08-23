@@ -7,15 +7,15 @@ export default async function handler(req, res) {
   const textToAnalyze = article ? `${article.title}. ${article.description}` : req.body.eventText;
 
   const prompt = `You are a strict, highly accurate supply-chain disruption classifier.
-Known enterprise part numbers in our system: ${JSON.stringify(partNumbers)}
+Known enterprise Bill of Materials (BOM) in our system:
+${JSON.stringify(components.map(c => ({ part: c.partNumber, name: c.name, manufacturer: c.manufacturer })))}
+
 News Article: "${textToAnalyze}"
 
 Your job is to identify if this news FACTUALLY affects any of our known enterprise parts.
-- If the news is about microcontrollers, chips, automotive silicon, or TSMC, map it to "MCU-2201X".
-- If the news is about memory, storage, NAND, or rare-earth materials, map it to "MEM-64GB-NAND".
-- If the news is about power ICs, batteries, industrial machinery, or factory fires, map it to "PWR-9942A".
+Analyze the article carefully. If the news mentions a specific manufacturer (e.g. STMicroelectronics, Texas Instruments, Micron, AMD, NVIDIA, TSMC, ASML) or a technology domain (e.g. GPUs, MCUs, Power ICs, FPGAs, Memory, fabs) that is directly linked to one of our BOM components, map it to the corresponding partNumber.
 
-CRITICAL INSTRUCTION: If the news is generic macroeconomics (e.g. stock market updates, general politics, generic tariffs) or completely unrelated, you MUST set "isDisruption" to false and "partNumber" to null. DO NOT hallucinate a connection.
+CRITICAL INSTRUCTION: If the news is generic macroeconomics, general politics, or completely unrelated to our specific components or manufacturers, you MUST set "isDisruption" to false and "partNumber" to null. DO NOT hallucinate a connection.
 
 If it IS a disruption, write a highly specific, factual 1-sentence reason linking the news to the chosen part number. If it is NOT a disruption, write "News event does not directly impact the tracked enterprise BOM."
 

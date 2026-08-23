@@ -1,20 +1,42 @@
 [
   {
-    "partNumber": "MCU-2201X",
-    "name": "32-bit Automotive Microcontroller",
-    "usedInProducts": ["EV Charging Controller", "Smart Thermostat V3"],
-    "revenueAtRiskPerDay": 42000
+    "partNumber": "STM32F405RGT6",
+    "name": "STMicroelectronics 32-bit ARM Cortex-M4 MCU",
+    "usedInProducts": ["Industrial Automation Controller", "EV Battery Management System"],
+    "revenueAtRiskPerDay": 85000,
+    "manufacturer": "STMicroelectronics",
+    "alternatives": ["GD32F405RGT6", "AT32F403ARCT7"]
   },
   {
-    "partNumber": "PWR-9942A",
-    "name": "High-Voltage Power IC",
-    "usedInProducts": ["Industrial Motor Drive", "Solar Inverter"],
-    "revenueAtRiskPerDay": 85000
+    "partNumber": "TPS65987DDH",
+    "name": "Texas Instruments USB Type-C PD Controller",
+    "usedInProducts": ["Enterprise Laptop Series", "Smart Display Hub"],
+    "revenueAtRiskPerDay": 42000,
+    "manufacturer": "Texas Instruments",
+    "alternatives": ["CYPD3177-24LQXQ", "FUSB302BMPX"]
   },
   {
-    "partNumber": "MEM-64GB-NAND",
-    "name": "64GB NAND Flash",
-    "usedInProducts": ["Flagship Smartphone X", "Tablet Pro 12"],
-    "revenueAtRiskPerDay": 120000
+    "partNumber": "MT29F64G08AECABH1-10Z:A",
+    "name": "Micron 64GB NAND Flash Memory",
+    "usedInProducts": ["Flagship Smartphone Edge", "Rugged Tablet Pro"],
+    "revenueAtRiskPerDay": 120000,
+    "manufacturer": "Micron Technology",
+    "alternatives": ["K9F4G08U0F-SCB0", "TH58NVG2S3HTA00"]
+  },
+  {
+    "partNumber": "XC7Z020-1CLG400C",
+    "name": "Xilinx Zynq-7000 SoC FPGA",
+    "usedInProducts": ["Military Radar Array", "Medical Imaging Ultrasound"],
+    "revenueAtRiskPerDay": 350000,
+    "manufacturer": "AMD / Xilinx",
+    "alternatives": ["5ASTFD3K3F40I3N", "LFE5UM-45F-8BG381C"]
+  },
+  {
+    "partNumber": "NVIDIA-A100-80GB",
+    "name": "NVIDIA A100 Tensor Core GPU",
+    "usedInProducts": ["Enterprise AI Training Server", "Cloud Data Center Blade"],
+    "revenueAtRiskPerDay": 980000,
+    "manufacturer": "NVIDIA",
+    "alternatives": ["AMD-Instinct-MI250", "Intel-Gaudi2"]
   }
 ]
