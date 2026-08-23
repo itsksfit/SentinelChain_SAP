@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["file:///Users/krishnasharma/.gemini/antigravity/scratch/sentinelchain/pages/api/sap/status.js"],"sourcesContent":["export default function handler(req, res) {\n  // Hardcoded for presentation perfection\n  res.status(200).json({\n    s4hana: \"Connected\",\n    ariba: \"Connected\",\n    mode: \"LIVE SAP MODE\"\n  });\n}\n"],"names":["handler","req","res","status","json","s4hana","ariba","mode"],"mappings":";;;;AAAe,SAASA,QAAQC,GAAG,EAAEC,GAAG;IACtC,wCAAwC;IACxCA,IAAIC,MAAM,CAAC,KAAKC,IAAI,CAAC;QACnBC,QAAQ;QACRC,OAAO;QACPC,MAAM;IACR;AACF"}}]
-}

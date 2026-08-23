@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///Users/krishnasharma/.gemini/antigravity/scratch/sentinelchain/pages/_app.js"],"sourcesContent":["import '../styles/globals.css'\n\nfunction MyApp({ Component, pageProps }) {\n  return <Component {...pageProps} />\n}\n\nexport default MyApp\n"],"names":["MyApp","Component","pageProps"],"mappings":";;;;;;;AAEA,SAASA,MAAM,EAAEC,SAAS,EAAEC,SAAS,EAAE;IACrC,qBAAO,qKAACD;QAAW,GAAGC,SAAS;;;;;;AACjC;uCAEeF"}}]
-}

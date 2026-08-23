@@ -1,3 +1,0 @@
-module.exports=[91305,a=>{a.v(b=>Promise.all(["server/chunks/ssr/[root-of-the-server]__0s-q61e._.js"].map(b=>a.l(b))).then(()=>b(94945)))},92004,a=>{"use strict";let b=(0,a.i(5162).default)("clock",[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["path",{d:"M12 6v6l4 2",key:"mmk7yg"}]]);a.s(["Clock",0,b],92004)},79462,a=>{"use strict";let b=(0,a.i(5162).default)("search",[["path",{d:"m21 21-4.34-4.34",key:"14j7rj"}],["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}]]);a.s(["Search",0,b],79462)}];
-
-//# sourceMappingURL=_1wjzccc._.js.map
