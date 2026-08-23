@@ -13,7 +13,7 @@ export default function Network() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f1115] flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
       <Head><title>Supply Network | SentinelChain</title></Head>
       <Sidebar />
       <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">

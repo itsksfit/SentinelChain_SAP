@@ -39,7 +39,7 @@ export default function Plans() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f1115] flex">
+    <div className="min-h-screen bg-white dark:bg-[#0a0f18] flex">
       <Head><title>Recovery Plans | SentinelChain</title></Head>
       <Sidebar />
       <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
@@ -91,7 +91,7 @@ export default function Plans() {
         {/* CUSTOM PLAN MODAL */}
         {showModal && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-[#0f1115] border border-gray-100 dark:border-gray-800 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-[fadeInUp_0.2s_ease-out]">
+            <div className="bg-white dark:bg-[#0a0f18] border border-gray-100 dark:border-gray-800 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-[fadeInUp_0.2s_ease-out]">
               <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-white dark:bg-gray-900/50">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2"><Zap className="w-5 h-5 text-indigo-400" /> AI Plan Generator</h2>
                 <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-gray-900 dark:text-white">
