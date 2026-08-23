@@ -233,7 +233,15 @@ export default function Dashboard() {
                   <div 
                     key={news.id} 
                     onClick={() => {
-                      if (!loading && stage === 0) {
+                      if (!loading) {
+                        setStage(0); 
+                        setDetectResult(null); 
+                        setImpactResult(null); 
+                        setMatchResult(null); 
+                        setNegotiateResult(null); 
+                        setApproved(false); 
+                        setAribaResponse(null); 
+                        setAuditTrail([]);
                         setActiveNews(news);
                       }
                     }}
