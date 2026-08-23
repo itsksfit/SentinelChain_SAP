@@ -58,11 +58,17 @@ export default function Dashboard() {
   };
 
   const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  // Auto-scroll chat
+  // Auto-scroll chat only if user hasn't manually scrolled up
   useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (chatEndRef.current && chatContainerRef.current) {
+      const container = chatContainerRef.current;
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
+      
+      if (isNearBottom || chatRevealIndex <= 1) {
+        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [chatRevealIndex, negotiateResult]);
 
@@ -144,7 +150,7 @@ export default function Dashboard() {
         addAudit('Chase Agent', `Supplier quotes evaluated`);
         setTimeout(() => setStage(5), 1500);
       }
-    }, 1200); 
+    }, 3500); 
   };
 
   const approvePlan = async () => {
@@ -502,7 +508,7 @@ export default function Dashboard() {
                     )}
                   </div>
                   
-                  <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
                     {negotiateResult.chatLog.slice(0, chatRevealIndex).map((msg, i) => (
                       <div key={i} className={`flex w-full ${(msg.from === 'System' || msg.from === 'Chase Agent') ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
