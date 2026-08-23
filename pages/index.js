@@ -340,7 +340,7 @@ export default function Dashboard() {
             <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 1 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''}`}>
               {stage === 1 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-900/30 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Search className={`w-4 h-4 ${stage >= 1 ? 'text-indigo-400' : 'text-gray-600'}`} />
@@ -375,7 +375,7 @@ export default function Dashboard() {
             {/* Stage 2: Impact */}
             <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 2 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 2 ? 'opacity-50' : ''}`}>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-900/30 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Activity className={`w-4 h-4 ${stage >= 2 ? 'text-orange-400' : 'text-gray-600'}`} />
@@ -393,7 +393,7 @@ export default function Dashboard() {
             <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 3 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 3 ? 'opacity-50' : ''}`}>
               {stage === 3 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-900/30 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <Box className={`w-4 h-4 ${stage >= 3 ? 'text-blue-400' : 'text-gray-600'}`} />
@@ -411,7 +411,7 @@ export default function Dashboard() {
             <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 4 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 4 ? 'opacity-50' : ''}`}>
               {stage === 4 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-900/30 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
               </div>
               <div className="flex items-center gap-2 mb-1">
                 <MessageSquare className={`w-4 h-4 ${stage >= 4 ? 'text-purple-400' : 'text-gray-600'}`} />

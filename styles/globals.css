@@ -16,7 +16,7 @@
     @apply bg-white dark:bg-[#1a1d24]/80 backdrop-blur-md border border-gray-100 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-xl rounded-xl transition-colors duration-300;
   }
   .glass-panel-accent {
-    @apply bg-indigo-50/50 dark:bg-indigo-950/20 backdrop-blur-md border border-indigo-100 dark:border-indigo-500/30 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-xl rounded-xl transition-colors duration-300;
+    @apply bg-indigo-50/50 dark:bg-indigo-900/30 backdrop-blur-md border border-indigo-100 dark:border-indigo-500/30 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-xl rounded-xl transition-colors duration-300;
   }
   .glass-panel-danger {
     @apply bg-red-50/50 dark:bg-red-950/20 backdrop-blur-md border border-red-100 dark:border-red-500/30 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-xl rounded-xl transition-colors duration-300;

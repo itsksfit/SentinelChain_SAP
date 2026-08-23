@@ -74,7 +74,7 @@ export default function Navbar() {
               <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-gray-950">
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white">Notifications</h3>
                 {notifications.length > 0 && (
-                  <span className="text-[10px] uppercase font-bold text-indigo-400 tracking-wider bg-indigo-900/30 px-2 py-0.5 rounded">{notifications.length} New</span>
+                  <span className="text-[10px] uppercase font-bold text-indigo-400 tracking-wider bg-indigo-600/20 px-2 py-0.5 rounded">{notifications.length} New</span>
                 )}
               </div>
               <div className="max-h-[300px] overflow-y-auto">
