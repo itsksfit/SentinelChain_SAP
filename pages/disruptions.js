@@ -43,9 +43,9 @@ export default function Disruptions() {
               <tbody className="divide-y divide-white/5">
                 {disruptions.map((d, i) => (
                   <tr key={i} className="hover:bg-gray-100 dark:bg-white/5 transition-colors">
-                    <td className="p-4 text-sm font-mono text-gray-300">{d.id}</td>
+                    <td className="p-4 text-sm font-mono text-gray-700 dark:text-gray-300">{d.id}</td>
                     <td className="p-4 text-sm font-bold text-gray-900 dark:text-white">{d.part}</td>
-                    <td className="p-4 text-sm text-gray-300">{d.type}</td>
+                    <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{d.type}</td>
                     <td className="p-4">
                       <span className={`flex items-center gap-1 w-max px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${
                         d.severity === 'CRITICAL' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 

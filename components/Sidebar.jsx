@@ -18,7 +18,7 @@ export default function Sidebar() {
     `w-4 h-4 ${isActive(path) ? defaultColor : 'text-gray-500 dark:text-gray-400'}`;
 
   return (
-    <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-white/10 bg-[#0f1115] h-screen fixed left-0 top-0 overflow-y-auto z-50">
+    <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-white/10 bg-white dark:bg-[#0a0f18] h-screen fixed left-0 top-0 overflow-y-auto z-50">
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded bg-indigo-600 flex items-center justify-center">

@@ -168,7 +168,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f1115] flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
       <Head>
         <title>SentinelChain | Supply Chain Command Center</title>
       </Head>
@@ -209,7 +209,7 @@ export default function Dashboard() {
             {(loading || stage > 0) && (
               <button 
                 onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}
-                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
               >
                 Reset System
               </button>
@@ -290,7 +290,7 @@ export default function Dashboard() {
                 <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="md:col-span-2">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                    <p className="text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
                       {detectResult.reason}
                     </p>
                   </div>
@@ -326,7 +326,7 @@ export default function Dashboard() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                  <p className="text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
                     {detectResult.reason}
                   </p>
                 </div>
@@ -444,7 +444,7 @@ export default function Dashboard() {
                       <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Affected Products ({impactResult.affectedProducts.length})</p>
                       <div className="flex flex-wrap gap-2">
                         {impactResult.affectedProducts.map(p => (
-                          <span key={p} className="px-2 py-1 bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-xs text-gray-300">
+                          <span key={p} className="px-2 py-1 bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-xs text-gray-700 dark:text-gray-300">
                             {p}
                           </span>
                         ))}
@@ -500,7 +500,7 @@ export default function Dashboard() {
                         <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
                           (msg.from === 'System' || msg.from === 'Chase Agent') 
                             ? 'bg-indigo-600 text-gray-900 dark:text-white rounded-br-none' 
-                            : 'bg-gray-200 dark:bg-gray-800 text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-none'
+                            : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-none'
                         }`}>
                           <p className="text-[10px] uppercase tracking-wider mb-1 opacity-70 font-semibold">{msg.from}</p>
                           <p>{msg.text}</p>
@@ -561,7 +561,7 @@ export default function Dashboard() {
 
                   <div className="flex justify-end gap-4">
                     <button 
-                      className="px-6 py-3 text-sm font-medium text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10 cursor-not-allowed opacity-50"
+                      className="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10 cursor-not-allowed opacity-50"
                     >
                       View Details
                     </button>
@@ -602,7 +602,7 @@ export default function Dashboard() {
                           <span className="text-emerald-500">[{log.time}]</span>
                           <span className="text-indigo-400 font-bold">{log.source}:</span>
                         </div>
-                        <div className="text-gray-300 pl-4 border-l-2 border-gray-100 dark:border-gray-800 ml-2">
+                        <div className="text-gray-700 dark:text-gray-300 pl-4 border-l-2 border-gray-100 dark:border-gray-800 ml-2">
                           {log.message}
                         </div>
                       </div>

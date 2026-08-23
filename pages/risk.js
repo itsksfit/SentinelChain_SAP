@@ -49,21 +49,21 @@ export default function Risk() {
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-300">East Asia (Export Controls)</span>
+                    <span className="text-gray-700 dark:text-gray-300">East Asia (Export Controls)</span>
                     <span className="text-red-400 font-bold">High</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 rounded-full"><div className="bg-red-500 h-2 rounded-full" style={{width: '85%'}}></div></div>
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-300">European Ports (Labor Strikes)</span>
+                    <span className="text-gray-700 dark:text-gray-300">European Ports (Labor Strikes)</span>
                     <span className="text-orange-400 font-bold">Medium</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 rounded-full"><div className="bg-orange-500 h-2 rounded-full" style={{width: '60%'}}></div></div>
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-300">North America (Logistics)</span>
+                    <span className="text-gray-700 dark:text-gray-300">North America (Logistics)</span>
                     <span className="text-emerald-400 font-bold">Low</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 rounded-full"><div className="bg-emerald-500 h-2 rounded-full" style={{width: '20%'}}></div></div>

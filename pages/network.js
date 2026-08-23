@@ -58,15 +58,15 @@ export default function Network() {
                   {suppliers.map((s, i) => (
                     <tr key={i} className="hover:bg-gray-100 dark:bg-white/5">
                       <td className="py-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-indigo-400" /> {s.name}</td>
-                      <td className="py-4 text-gray-300">{s.region}</td>
-                      <td className="py-4 text-gray-300">Tier {s.tier}</td>
-                      <td className="py-4 font-mono text-gray-300">{s.volume}</td>
+                      <td className="py-4 text-gray-700 dark:text-gray-300">{s.region}</td>
+                      <td className="py-4 text-gray-700 dark:text-gray-300">Tier {s.tier}</td>
+                      <td className="py-4 font-mono text-gray-700 dark:text-gray-300">{s.volume}</td>
                       <td className="py-4">
                         <div className="flex items-center gap-2">
                           <div className="w-24 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                             <div className={`h-full ${s.health > 90 ? 'bg-emerald-500' : s.health > 80 ? 'bg-yellow-500' : 'bg-red-500'}`} style={{width: `${s.health}%`}}></div>
                           </div>
-                          <span className="text-sm text-gray-300">{s.health}/100</span>
+                          <span className="text-sm text-gray-700 dark:text-gray-300">{s.health}/100</span>
                         </div>
                       </td>
                     </tr>
