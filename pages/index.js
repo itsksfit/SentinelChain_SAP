@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { 
   Activity, AlertTriangle, ShieldCheck, Cpu, Box, 
   Search, MessageSquare, CheckCircle, Clock, Zap,
-  Menu, Bell, User, LayoutDashboard, Database, Settings, ShieldAlert
+  Menu, Bell, User, LayoutDashboard, Database, Settings, ShieldAlert, RefreshCw
 } from 'lucide-react';
 import events from '../data/events.json';
 
@@ -35,21 +35,18 @@ export default function Dashboard() {
   const [liveNews, setLiveNews] = useState([]);
   const [activeNews, setActiveNews] = useState(null);
 
+  const fetchNews = () => {
+    fetch('/api/news/latest').then(r => r.json()).then(news => {
+      setLiveNews(news);
+      setActiveNews(prev => prev || (news.length > 0 ? news[0] : null));
+    });
+  };
+
   useEffect(() => {
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
-    
-    const fetchNews = () => {
-      fetch('/api/news/latest').then(r => r.json()).then(news => {
-        setLiveNews(news);
-        // Only set activeNews on the very first load if it's empty
-        setActiveNews(prev => prev || (news.length > 0 ? news[0] : null));
-      });
-    };
-
     fetchNews();
     // Auto-refresh the live disruption feed every 30 seconds
     const interval = setInterval(fetchNews, 30000);
-    
     return () => clearInterval(interval);
   }, []);
 
@@ -230,9 +227,14 @@ export default function Dashboard() {
                 <h2 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
                   <Activity className="w-4 h-4 text-emerald-500" /> Live Disruption Feed
                 </h2>
-                <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-500 tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync
-                </span>
+                <div className="flex items-center gap-3">
+                  <button onClick={fetchNews} className="text-gray-400 hover:text-emerald-500 transition-colors" title="Force Refresh News">
+                    <RefreshCw className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-500 tracking-wider">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync
+                  </span>
+                </div>
               </div>
               <div className="space-y-3">
                 {liveNews.map((news) => (
