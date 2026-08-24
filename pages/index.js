@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { 
   Activity, AlertTriangle, ShieldCheck, Cpu, Box, 
   Search, MessageSquare, CheckCircle, Clock, Zap,
@@ -16,6 +17,7 @@ const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false })
 // --- MAIN PAGE ---
 
 export default function Dashboard() {
+  const router = useRouter();
   const [selectedEvent, setSelectedEvent] = useState(events[0].text);
   const [stage, setStage] = useState(0); 
   const [detectResult, setDetectResult] = useState(null);
@@ -24,6 +26,7 @@ export default function Dashboard() {
   const [negotiateResult, setNegotiateResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [chatRevealIndex, setChatRevealIndex] = useState(-1);
+  const [autoScroll, setAutoScroll] = useState(true);
   const [approved, setApproved] = useState(false);
   
   // SAP Integration State
@@ -42,11 +45,18 @@ export default function Dashboard() {
     });
   };
 
+  const stageRef = useRef(stage);
+  useEffect(() => { stageRef.current = stage; }, [stage]);
+
   useEffect(() => {
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
     fetchNews();
-    // Auto-refresh the live disruption feed every 30 seconds
-    const interval = setInterval(fetchNews, 30000);
+    // Auto-refresh the live disruption feed every 30 seconds only if idle
+    const interval = setInterval(() => {
+      if (stageRef.current === 0) {
+        fetchNews();
+      }
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -59,15 +69,10 @@ export default function Dashboard() {
 
   // Auto-scroll chat only if user hasn't manually scrolled up
   useEffect(() => {
-    if (chatEndRef.current && chatContainerRef.current) {
-      const container = chatContainerRef.current;
-      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
-      
-      if (isNearBottom || chatRevealIndex <= 1) {
-        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (chatEndRef.current && (autoScroll || chatRevealIndex <= 1)) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatRevealIndex, negotiateResult]);
+  }, [chatRevealIndex, negotiateResult, autoScroll]);
 
   const simulatePipeline = async (newsArticle) => {
     setLoading(true);
@@ -510,7 +515,10 @@ export default function Dashboard() {
                     )}
                   </div>
                   
-                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
+                  <div ref={chatContainerRef} onScroll={(e) => {
+                    const isBottom = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 50;
+                    setAutoScroll(isBottom);
+                  }} className="flex-1 overflow-y-auto p-6 space-y-4">
                     {negotiateResult.chatLog.slice(0, chatRevealIndex).map((msg, i) => (
                       <div key={i} className={`flex w-full ${(msg.from === 'System' || msg.from === 'Chase Agent') ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
@@ -577,7 +585,8 @@ export default function Dashboard() {
 
                   <div className="flex justify-end gap-4">
                     <button 
-                      className="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10 cursor-not-allowed opacity-50"
+                      onClick={() => router.push('/plans')}
+                      className="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
                     >
                       View Details
                     </button>
