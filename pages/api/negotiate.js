@@ -1,5 +1,3 @@
-import distributors from "../../data/distributors.json";
-
 export default async function handler(req, res) {
   const { partNumber, options } = req.body;
   

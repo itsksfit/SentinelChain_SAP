@@ -1,5 +1,0 @@
-[
-  { "name": "Distributor A", "leadTimeDays": 6, "unitsAvailable": 12000, "price": 4.50 },
-  { "name": "Distributor B", "leadTimeDays": 14, "unitsAvailable": 50000, "price": 3.80 },
-  { "name": "Distributor C", "leadTimeDays": 2, "unitsAvailable": 2500, "price": 8.00 }
-]
