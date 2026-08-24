@@ -159,14 +159,29 @@ export default function Dashboard() {
     setApproved(true);
     addAudit('User', 'Recovery plan approved');
     
+    const planDetails = negotiateResult.rankedPlan[0];
     const res = await fetch('/api/sap/recovery-plan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ planDetails: negotiateResult.rankedPlan[0] })
+      body: JSON.stringify({ planDetails })
     });
     const data = await res.json();
     setAribaResponse(data);
     addAudit('SAP Ariba', 'Procurement workflow submitted');
+    
+    try {
+      const activePlan = {
+        id: `RP-${Math.floor(1000 + Math.random() * 9000)}`,
+        trigger: activeNews?.title || "Live Disruption Detected",
+        action: `Procure ${planDetails.part}`,
+        vendor: planDetails.vendor,
+        status: "Executing",
+        riskReduction: planDetails.score.includes("Risk") ? "98%" : "94%",
+        date: "Just Now",
+        historyContext: `A severe disruption was detected affecting the primary supply chain. SentinelChain's Impact Agent dynamically calculated massive enterprise revenue at risk based on live SAP data. To mitigate this, the AI autonomously engaged ${planDetails.vendor} and negotiated the procurement of ${planDetails.quantity.toLocaleString()} alternative units (${planDetails.part}), successfully preserving the production pipeline.`
+      };
+      localStorage.setItem('sentinel_latest_plan', JSON.stringify(activePlan));
+    } catch(e) {}
   };
 
   const getStageStatus = (currentStage, targetStage) => {
