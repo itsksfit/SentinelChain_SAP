@@ -4,37 +4,43 @@
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Live_on_Vercel-success?style=for-the-badge&logo=vercel)](https://sentinelchain-gilt.vercel.app)
 
-SentinelChain is an AI-powered enterprise pipeline that transforms supply-chain risk management from a reactive, manual process into an autonomous, self-healing workflow. By sitting between live global intelligence feeds and enterprise ERP software, SentinelChain detects disruptions, measures financial impact, negotiates alternatives, and executes recovery procurement—all without human intervention.
+SentinelChain is an AI-powered enterprise pipeline that transforms supply-chain risk management from a reactive, manual process into an autonomous, self-healing workflow. Designed specifically for the **Global Semiconductor Industry**, SentinelChain sits seamlessly between live global intelligence feeds and enterprise ERP software (SAP). It detects real-time disruptions, calculates massive financial impacts, engineers pin-compatible chip alternatives on the fly, and negotiates procurement—all in seconds.
 
-## 🚀 The Hackathon Problem
-When a global disruption occurs (e.g., a factory fire, a port strike, or geopolitical export restrictions), traditional procurement teams take days or weeks to manually cross-reference their Bill of Materials (BOM), email suppliers, and draft Purchase Requisitions. 
+## 🚀 The Problem
+When a global disruption occurs (e.g., a factory fire, a port strike, or geopolitical export restrictions), traditional procurement teams take weeks to manually cross-reference their Bill of Materials (BOM), email suppliers, and draft Purchase Requisitions. By the time humans react, competitors have already bought out the remaining global inventory.
 
-**SentinelChain turns a two-week human process into a two-minute autonomous workflow.**
+**SentinelChain turns a two-week human process into a two-minute autonomous AI workflow.**
 
-## 🧠 The AI Pipeline (How it works)
+## 🧠 The Multi-Agent AI Architecture
 
-Our architecture utilizes a multi-agent system powered by Llama 3 (120B) via Groq, working in four distinct stages:
+Our architecture is powered by a **Multi-Agent Generative AI framework** (via Groq / `gpt-oss-120b`), working in four autonomous stages:
 
 1. **📡 Detection Agent (Live Intelligence)**
-   - Continuously ingests live global news via the NewsAPI.
-   - Strictly maps macro-economic events and disruptions to specific nodes in the enterprise BOM using rigid factual LLM guardrails.
+   - Continuously ingests live global news via a heavily optimized NewsAPI pipeline.
+   - Strictly filters irrelevant news and maps real-world macroeconomic events (e.g., TSMC yield drops, NVIDIA export bans) directly to the enterprise Bill of Materials using rigid factual LLM guardrails.
 
-2. **💥 Impact Agent (SAP S/4HANA Sandbox)**
-   - Connects to the SAP S/4HANA Business Accelerator Hub.
-   - Extracts real-time product weight, dimensions, and downstream BOM dependencies to dynamically calculate the exact daily revenue at risk (in USD).
+2. **💥 Impact Agent (The AI CFO)**
+   - Connects to the **SAP S/4HANA Business Accelerator Hub** (The "Brain").
+   - Extracts real-time enterprise baseline data and dynamically calculates exact daily revenue at risk in USD (e.g., scaling up to $1.5M+/day for critical AI accelerators like the A100 GPU).
 
-3. **🕵️‍♂️ Cross-Reference & Chase Agent (Negotiation)**
-   - Queries known alternative distributors for the affected component.
-   - The AI acts as an autonomous procurement officer, aggressively negotiating price and lead times via conversational LLM inference to find the mathematically optimal recovery path.
+3. **⚙️ Match & Chase Agents (Engineering & Negotiation)**
+   - **Match Agent:** Acts as an AI electronics engineer. Instead of hardcoded databases, it uses internal LLM knowledge to dynamically generate commercially viable, pin-compatible alternative chips from global distributors (Digi-Key, Mouser, Arrow).
+   - **Chase Agent:** Acts as an autonomous procurement officer. It aggressively haggles with global distributors on price and lead times via conversational inference to find the mathematically optimal recovery path.
 
-4. **⚙️ Execution Agent (SAP Ariba Sandbox)**
-   - Once a recovery plan is selected, the system autonomously interfaces with the SAP Ariba Procurement API.
-   - It seamlessly pushes a drafted Purchase Requisition (PR) directly into the ERP workflow, completing the self-healing cycle.
+4. **💼 Execution Agent (SAP Ariba Sandbox)**
+   - Once the human-in-the-loop approves the AI's strategy, the system interfaces with **SAP Ariba** (The "Wallet").
+   - It seamlessly pushes a drafted Purchase Requisition (PR) directly into the ERP workflow, bypassing the bottleneck.
+
+## ✨ Key Features Developed
+* **100% Live AI Generation:** No hardcoded solutions. Alternatives, chat logs, and financial impacts are generated in real-time based on the specific disrupted semiconductor.
+* **Interactive 3D Supply Network:** A WebGL-powered interactive globe mapping major semiconductor hubs (Hsinchu, Eindhoven, Santa Clara) with live pulsing data strings representing technology trade routes.
+* **Dynamic Recovery Plans:** A fully interactive history vault where the AI dynamically generates and documents executed mitigation strategies with detailed historical context.
+* **Light / Dark Mode:** Fully responsive, polished enterprise UI with beautiful glass-morphism panels and dynamic theme switching.
 
 ## 🛠️ Tech Stack
-* **Frontend:** React, Next.js, Tailwind CSS, Framer Motion
+* **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons, next-themes
 * **3D Visualization:** React-Globe.gl, Three.js
-* **AI / LLM Inference:** Groq Cloud (Llama 3 120B)
+* **AI / LLM Inference:** Groq Cloud API
 * **Enterprise Integration:** SAP S/4HANA (Sandbox API), SAP Ariba (Procurement API)
 * **Live Data:** NewsAPI
 
