@@ -13,9 +13,10 @@ ${JSON.stringify(components.map(c => ({ part: c.partNumber, name: c.name, manufa
 News Article: "${textToAnalyze}"
 
 Your job is to identify if this news FACTUALLY affects any of our known enterprise parts.
-Analyze the article carefully. If the news mentions a specific manufacturer (e.g. STMicroelectronics, Texas Instruments, Micron, AMD, NVIDIA, TSMC, ASML) or a technology domain (e.g. GPUs, MCUs, Power ICs, FPGAs, Memory, fabs) that is directly linked to one of our BOM components, map it to the corresponding partNumber.
+Analyze the article carefully. If the news mentions a specific manufacturer (e.g., TSMC, NVIDIA, Texas Instruments, STMicroelectronics, Micron, AMD, ASML) or a technology domain (e.g., GPUs, MCUs, Power ICs, FPGAs, Memory, fabs) that is directly linked to one of our BOM components, map it to the corresponding partNumber. 
+Even if the news is a general company update (e.g. "TSMC reports yield drop" or "NVIDIA stock falls on supply fears"), you MUST map it to their specific component in our BOM (e.g. map TSMC/AMD to the FPGA/MCU, NVIDIA to the GPU).
 
-CRITICAL INSTRUCTION: If the news is generic macroeconomics, general politics, or completely unrelated to our specific components or manufacturers, you MUST set "isDisruption" to false and "partNumber" to null. DO NOT hallucinate a connection.
+CRITICAL INSTRUCTION: If the news is about generic logistics, shipping, freight, ports, or general politics WITH NO MENTION of semiconductors, chips, or tech companies, you MUST set "isDisruption" to false and "partNumber" to null. DO NOT hallucinate a connection for shipping/logistics news.
 
 If it IS a disruption, write a highly specific, factual 1-sentence reason linking the news to the chosen part number. If it is NOT a disruption, write "News event does not directly impact the tracked enterprise BOM."
 
