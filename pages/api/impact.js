@@ -11,18 +11,22 @@ export default async function handler(req, res) {
   }
 
   // 2. Use Groq AI to act as the "Impact Agent" to mathematically calculate the risk
-  const prompt = `You are an AI financial supply chain analyst.
-The company is facing a disruption for the following SAP component:
+  const prompt = `You are a Chief Financial Officer AI and supply chain analyst.
+The company is facing a disruption for the following critical SAP component:
 Component ID: ${component.partNumber}
-SAP Raw Data / Weights: ${JSON.stringify(component.sapRawData || {})}
+Manufacturer: ${component.manufacturer}
+SAP Baseline Daily Risk: $${component.revenueAtRiskPerDay}
 Downstream Products: ${JSON.stringify(component.usedInProducts)}
 Disruption Severity: ${severity || 'high'}
 AI Confidence in disruption: ${confidence || 0.9}
 
-Based on this enterprise data, dynamically calculate the estimated daily revenue at risk in USD. 
-Keep the numbers grounded. If the component is critical, the impact should be around $25,000 to $45,000/day. 
-If it's a minor component, it should be around $5,000 to $12,000/day.
-Factor in the severity and confidence score to adjust the final number.
+Based on this enterprise data and the real-world market value of this component, dynamically calculate the estimated daily revenue at risk in USD.
+CRITICAL INSTRUCTIONS:
+- DO NOT use small fake numbers. Base the final calculation heavily on the "SAP Baseline Daily Risk" provided above.
+- If it is a high-severity disruption, apply a multiplier (e.g., 1.2x to 1.8x the baseline).
+- If it is a low-severity disruption, apply a fractional multiplier (e.g., 0.4x to 0.7x the baseline).
+- Factor in the AI Confidence score (e.g., higher confidence narrows the variance).
+- The final number should be highly realistic for enterprise manufacturing (e.g., $150,000 to $2,500,000+ depending on the component).
 
 Return ONLY a strictly valid JSON object with exactly ONE key: "revenueAtRiskPerDay" (a number). No markdown.`;
 
