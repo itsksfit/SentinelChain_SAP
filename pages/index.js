@@ -574,20 +574,20 @@ export default function Dashboard() {
                   </div>
 
                   <div className="bg-gray-100 dark:bg-black/20 rounded-lg border border-emerald-500/20 p-5 mb-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div>
+                    <div className="grid grid-cols-2 md:grid-cols-12 gap-4">
+                      <div className="col-span-1 md:col-span-3">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Supplier</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].vendor}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white truncate">{negotiateResult.rankedPlan[0].vendor}</p>
                       </div>
-                      <div>
+                      <div className="col-span-1 md:col-span-5">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Replacement Part</p>
-                        <p className="font-mono font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].part}</p>
+                        <p className="font-mono font-semibold text-gray-900 dark:text-white truncate" title={negotiateResult.rankedPlan[0].part}>{negotiateResult.rankedPlan[0].part}</p>
                       </div>
-                      <div>
+                      <div className="col-span-1 md:col-span-2">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Quantity</p>
                         <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].quantity.toLocaleString()} units</p>
                       </div>
-                      <div>
+                      <div className="col-span-1 md:col-span-2">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Lead Time</p>
                         <p className="font-semibold text-emerald-400">{negotiateResult.rankedPlan[0].days} days</p>
                       </div>
