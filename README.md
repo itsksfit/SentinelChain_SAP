@@ -6,7 +6,7 @@
 
 SentinelChain is an AI-powered enterprise pipeline that transforms supply-chain risk management from a reactive, manual process into an autonomous, self-healing workflow. Designed specifically for the **Global Semiconductor Industry**, SentinelChain sits seamlessly between live global intelligence feeds and enterprise ERP software (SAP). It detects real-time disruptions, calculates massive financial impacts, engineers pin-compatible chip alternatives on the fly, and negotiates procurement—all in seconds.
 
-## 🚀 The Problem
+## 🚀 The Problem 
 When a global disruption occurs (e.g., a factory fire, a port strike, or geopolitical export restrictions), traditional procurement teams take weeks to manually cross-reference their Bill of Materials (BOM), email suppliers, and draft Purchase Requisitions. By the time humans react, competitors have already bought out the remaining global inventory.
 
 **SentinelChain turns a two-week human process into a two-minute autonomous AI workflow.**
