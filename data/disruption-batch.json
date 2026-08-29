@@ -1,0 +1,1190 @@
+[
+  {
+    "disruption_id": "DS-10000",
+    "part_affected": "PART-1012",
+    "event_type": "Port Strike",
+    "detected_at": "2026-07-30T09:54:14.098Z",
+    "revenue_at_risk_usd": 1496352,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1023",
+      "vendor": "Farnell",
+      "recovered_amount_usd": 1442580,
+      "time_to_recovery_hours": 24,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-07-30T09:54:14.098Z",
+        "action": "Detected Port Strike affecting PART-1012.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-07-30T09:54:19.098Z",
+        "action": "Confirmed financial risk of $1,496,352/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1012, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-07-30T09:54:29.098Z",
+        "action": "Identified 3 alternatives. Selected ALT-1023 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-07-30T09:55:14.098Z",
+        "action": "Negotiated procurement of ALT-1023 with Farnell at $86.01 (lead time: 21d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-07-30T09:56:14.098Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10001",
+    "part_affected": "PART-1019",
+    "event_type": "Export Ban",
+    "detected_at": "2026-07-31T08:39:00.564Z",
+    "revenue_at_risk_usd": 1507660,
+    "status": "Escalated",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": "TTI, Inc.",
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "escalated"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-07-31T08:39:00.564Z",
+        "action": "Detected Export Ban affecting PART-1019.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-07-31T08:39:05.564Z",
+        "action": "Confirmed financial risk of $1,507,660/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1019, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-07-31T08:39:15.564Z",
+        "action": "Identified 2 alternatives. Selected ALT-1038 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-07-31T08:39:45.564Z",
+        "action": "Auto-escalation triggered. Rule hit: max_negotiation_rounds exceeded or price ceiling breached (>$53.21).",
+        "data_used": "negotiation parameters"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10002",
+    "part_affected": "PART-1014",
+    "event_type": "Supplier Bankruptcy",
+    "detected_at": "2026-08-01T09:26:49.788Z",
+    "revenue_at_risk_usd": 3376035,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1027",
+      "vendor": "Digi-Key Electronics",
+      "recovered_amount_usd": 3044534,
+      "time_to_recovery_hours": 6,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-01T09:26:49.788Z",
+        "action": "Detected Supplier Bankruptcy affecting PART-1014.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-01T09:26:54.788Z",
+        "action": "Confirmed financial risk of $3,376,035/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1014, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-01T09:27:04.788Z",
+        "action": "Identified 3 alternatives. Selected ALT-1027 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-01T09:27:49.788Z",
+        "action": "Negotiated procurement of ALT-1027 with Digi-Key Electronics at $23.93 (lead time: 9d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-01T09:28:49.788Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10003",
+    "part_affected": "PART-1024",
+    "event_type": "Factory Fire",
+    "detected_at": "2026-08-02T10:56:58.315Z",
+    "revenue_at_risk_usd": 4016378,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1049",
+      "vendor": "Digi-Key Electronics",
+      "recovered_amount_usd": 3866573,
+      "time_to_recovery_hours": 8,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-02T10:56:58.315Z",
+        "action": "Detected Factory Fire affecting PART-1024.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-02T10:57:03.315Z",
+        "action": "Confirmed financial risk of $4,016,378/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1024, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-02T10:57:13.315Z",
+        "action": "Identified 3 alternatives. Selected ALT-1049 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-02T10:57:58.315Z",
+        "action": "Negotiated procurement of ALT-1049 with Digi-Key Electronics at $9.24 (lead time: 7d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-02T10:58:58.315Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10004",
+    "part_affected": "NVIDIA-A100-80GB",
+    "event_type": "Factory Fire",
+    "detected_at": "2026-08-03T09:34:44.370Z",
+    "revenue_at_risk_usd": 737216,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-NVIDIA-A100-80GB-01",
+      "vendor": "Smith",
+      "recovered_amount_usd": 695306,
+      "time_to_recovery_hours": 19,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-03T09:34:44.370Z",
+        "action": "Detected Factory Fire affecting NVIDIA-A100-80GB.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-03T09:34:49.370Z",
+        "action": "Confirmed financial risk of $737,216/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: NVIDIA-A100-80GB, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-03T09:34:59.370Z",
+        "action": "Identified 1 alternatives. Selected ALT-NVIDIA-A100-80GB-01 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-03T09:35:44.370Z",
+        "action": "Negotiated procurement of ALT-NVIDIA-A100-80GB-01 with Smith at $9485.81 (lead time: 19d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-03T09:36:44.370Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10005",
+    "part_affected": "PART-1047",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-04T10:21:32.266Z",
+    "revenue_at_risk_usd": 2871861,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1100",
+      "vendor": "WT Microelectronics",
+      "recovered_amount_usd": 2847690,
+      "time_to_recovery_hours": 4,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-04T10:21:32.266Z",
+        "action": "Detected Port Strike affecting PART-1047.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-04T10:21:37.266Z",
+        "action": "Confirmed financial risk of $2,871,861/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1047, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-04T10:21:47.266Z",
+        "action": "Identified 3 alternatives. Selected ALT-1100 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-04T10:22:32.266Z",
+        "action": "Negotiated procurement of ALT-1100 with WT Microelectronics at $26.25 (lead time: 11d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-04T10:23:32.266Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10006",
+    "part_affected": "PART-1046",
+    "event_type": "Raw Material Shortage",
+    "detected_at": "2026-08-05T10:48:32.013Z",
+    "revenue_at_risk_usd": 1448235,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1099",
+      "vendor": "Future Electronics",
+      "recovered_amount_usd": 1330100,
+      "time_to_recovery_hours": 7,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-05T10:48:32.013Z",
+        "action": "Detected Raw Material Shortage affecting PART-1046.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-05T10:48:37.013Z",
+        "action": "Confirmed financial risk of $1,448,235/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1046, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-05T10:48:47.013Z",
+        "action": "Identified 1 alternatives. Selected ALT-1099 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-05T10:49:32.013Z",
+        "action": "Negotiated procurement of ALT-1099 with Future Electronics at $35.93 (lead time: 3d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-05T10:50:32.013Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10007",
+    "part_affected": "PART-1032",
+    "event_type": "Power Outage",
+    "detected_at": "2026-08-06T10:16:44.310Z",
+    "revenue_at_risk_usd": 3620305,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1068",
+      "vendor": "Farnell",
+      "recovered_amount_usd": 2194869,
+      "time_to_recovery_hours": 6,
+      "outcome": "partial"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-06T10:16:44.310Z",
+        "action": "Detected Power Outage affecting PART-1032.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-06T10:16:49.310Z",
+        "action": "Confirmed financial risk of $3,620,305/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1032, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-06T10:16:59.310Z",
+        "action": "Identified 2 alternatives. Selected ALT-1068 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-06T10:17:44.310Z",
+        "action": "Negotiated procurement of ALT-1068 with Farnell at $38.45 (lead time: 3d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-06T10:18:44.310Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10008",
+    "part_affected": "PART-1051",
+    "event_type": "Yield Drop",
+    "detected_at": "2026-08-07T09:09:46.565Z",
+    "revenue_at_risk_usd": 1208362,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "failed"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-07T09:09:46.565Z",
+        "action": "Detected Yield Drop affecting PART-1051.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-07T09:09:51.565Z",
+        "action": "Confirmed financial risk of $1,208,362/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1051, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-07T09:10:01.565Z",
+        "action": "Attempted to source parts, but inventory globally exhausted.",
+        "data_used": "parts-catalog.json stock_qty"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10009",
+    "part_affected": "PART-1013",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-08T09:33:26.521Z",
+    "revenue_at_risk_usd": 3981646,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1026",
+      "vendor": "Rutronik",
+      "recovered_amount_usd": 3607245,
+      "time_to_recovery_hours": 26,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-08T09:33:26.521Z",
+        "action": "Detected Port Strike affecting PART-1013.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-08T09:33:31.521Z",
+        "action": "Confirmed financial risk of $3,981,646/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1013, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-08T09:33:41.521Z",
+        "action": "Identified 1 alternatives. Selected ALT-1026 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-08T09:34:26.521Z",
+        "action": "Negotiated procurement of ALT-1026 with Rutronik at $9.45 (lead time: 20d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-08T09:35:26.521Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10010",
+    "part_affected": "PART-1033",
+    "event_type": "Raw Material Shortage",
+    "detected_at": "2026-08-09T10:32:27.311Z",
+    "revenue_at_risk_usd": 2453010,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1070",
+      "vendor": "Future Electronics",
+      "recovered_amount_usd": 2328243,
+      "time_to_recovery_hours": 21,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-09T10:32:27.311Z",
+        "action": "Detected Raw Material Shortage affecting PART-1033.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-09T10:32:32.311Z",
+        "action": "Confirmed financial risk of $2,453,010/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1033, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-09T10:32:42.311Z",
+        "action": "Identified 1 alternatives. Selected ALT-1070 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-09T10:33:27.311Z",
+        "action": "Negotiated procurement of ALT-1070 with Future Electronics at $88.24 (lead time: 15d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-09T10:34:27.311Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10011",
+    "part_affected": "PART-1033",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-10T08:30:47.109Z",
+    "revenue_at_risk_usd": 4242873,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1070",
+      "vendor": "Future Electronics",
+      "recovered_amount_usd": 3903355,
+      "time_to_recovery_hours": 34,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-10T08:30:47.109Z",
+        "action": "Detected Port Strike affecting PART-1033.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-10T08:30:52.109Z",
+        "action": "Confirmed financial risk of $4,242,873/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1033, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-10T08:31:02.109Z",
+        "action": "Identified 1 alternatives. Selected ALT-1070 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-10T08:31:47.109Z",
+        "action": "Negotiated procurement of ALT-1070 with Future Electronics at $88.24 (lead time: 15d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-10T08:32:47.109Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10012",
+    "part_affected": "PART-1052",
+    "event_type": "Flood",
+    "detected_at": "2026-08-11T08:38:52.130Z",
+    "revenue_at_risk_usd": 89031,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1113",
+      "vendor": "TTI, Inc.",
+      "recovered_amount_usd": 86615,
+      "time_to_recovery_hours": 19,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-11T08:38:52.130Z",
+        "action": "Detected Flood affecting PART-1052.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-11T08:38:57.130Z",
+        "action": "Confirmed financial risk of $89,031/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1052, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-11T08:39:07.130Z",
+        "action": "Identified 1 alternatives. Selected ALT-1113 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-11T08:39:52.130Z",
+        "action": "Negotiated procurement of ALT-1113 with TTI, Inc. at $40.02 (lead time: 21d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-11T08:40:52.130Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10013",
+    "part_affected": "PART-1009",
+    "event_type": "Raw Material Shortage",
+    "detected_at": "2026-08-12T10:59:58.833Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-12T10:59:58.833Z",
+        "action": "Detected Raw Material Shortage affecting PART-1009.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-12T11:00:03.833Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10014",
+    "part_affected": "PART-1052",
+    "event_type": "Export Ban",
+    "detected_at": "2026-08-13T09:33:49.121Z",
+    "revenue_at_risk_usd": 4388173,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1113",
+      "vendor": "TTI, Inc.",
+      "recovered_amount_usd": 4176166,
+      "time_to_recovery_hours": 15,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-13T09:33:49.121Z",
+        "action": "Detected Export Ban affecting PART-1052.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-13T09:33:54.121Z",
+        "action": "Confirmed financial risk of $4,388,173/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1052, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-13T09:34:04.121Z",
+        "action": "Identified 1 alternatives. Selected ALT-1113 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-13T09:34:49.121Z",
+        "action": "Negotiated procurement of ALT-1113 with TTI, Inc. at $40.02 (lead time: 21d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-13T09:35:49.121Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10015",
+    "part_affected": "PART-1032",
+    "event_type": "Yield Drop",
+    "detected_at": "2026-08-14T08:35:00.916Z",
+    "revenue_at_risk_usd": 2121952,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1068",
+      "vendor": "Farnell",
+      "recovered_amount_usd": 2095389,
+      "time_to_recovery_hours": 8,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-14T08:35:00.916Z",
+        "action": "Detected Yield Drop affecting PART-1032.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-14T08:35:05.916Z",
+        "action": "Confirmed financial risk of $2,121,952/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1032, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-14T08:35:15.916Z",
+        "action": "Identified 2 alternatives. Selected ALT-1068 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-14T08:36:00.916Z",
+        "action": "Negotiated procurement of ALT-1068 with Farnell at $38.45 (lead time: 3d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-14T08:37:00.916Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10016",
+    "part_affected": "PART-1037",
+    "event_type": "Export Ban",
+    "detected_at": "2026-08-15T09:04:04.020Z",
+    "revenue_at_risk_usd": 3187807,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1078",
+      "vendor": "Digi-Key Electronics",
+      "recovered_amount_usd": 1500363,
+      "time_to_recovery_hours": 30,
+      "outcome": "partial"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-15T09:04:04.020Z",
+        "action": "Detected Export Ban affecting PART-1037.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-15T09:04:09.020Z",
+        "action": "Confirmed financial risk of $3,187,807/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1037, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-15T09:04:19.020Z",
+        "action": "Identified 3 alternatives. Selected ALT-1078 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-15T09:05:04.020Z",
+        "action": "Negotiated procurement of ALT-1078 with Digi-Key Electronics at $92.58 (lead time: 4d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-15T09:06:04.020Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10017",
+    "part_affected": "PART-1015",
+    "event_type": "Factory Fire",
+    "detected_at": "2026-08-16T09:03:18.151Z",
+    "revenue_at_risk_usd": 4702889,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1030",
+      "vendor": "Digi-Key Electronics",
+      "recovered_amount_usd": 4471394,
+      "time_to_recovery_hours": 19,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-16T09:03:18.151Z",
+        "action": "Detected Factory Fire affecting PART-1015.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-16T09:03:23.151Z",
+        "action": "Confirmed financial risk of $4,702,889/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1015, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-16T09:03:33.151Z",
+        "action": "Identified 1 alternatives. Selected ALT-1030 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-16T09:04:18.151Z",
+        "action": "Negotiated procurement of ALT-1030 with Digi-Key Electronics at $75.15 (lead time: 3d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-16T09:05:18.151Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10018",
+    "part_affected": "PART-1041",
+    "event_type": "Yield Drop",
+    "detected_at": "2026-08-17T10:47:22.424Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-17T10:47:22.424Z",
+        "action": "Detected Yield Drop affecting PART-1041.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-17T10:47:27.424Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10019",
+    "part_affected": "PART-1020",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-18T10:11:05.399Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-18T10:11:05.399Z",
+        "action": "Detected Port Strike affecting PART-1020.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-18T10:11:10.399Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10020",
+    "part_affected": "PART-1027",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-19T10:37:52.594Z",
+    "revenue_at_risk_usd": 4973533,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1056",
+      "vendor": "Avnet",
+      "recovered_amount_usd": 2296827,
+      "time_to_recovery_hours": 1,
+      "outcome": "partial"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-19T10:37:52.594Z",
+        "action": "Detected Port Strike affecting PART-1027.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-19T10:37:57.594Z",
+        "action": "Confirmed financial risk of $4,973,533/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1027, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-19T10:38:07.594Z",
+        "action": "Identified 1 alternatives. Selected ALT-1056 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-19T10:38:52.594Z",
+        "action": "Negotiated procurement of ALT-1056 with Avnet at $87.35 (lead time: 14d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-19T10:39:52.594Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10021",
+    "part_affected": "PART-1057",
+    "event_type": "Flood",
+    "detected_at": "2026-08-20T10:16:41.719Z",
+    "revenue_at_risk_usd": 776319,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "failed"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-20T10:16:41.719Z",
+        "action": "Detected Flood affecting PART-1057.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-20T10:16:46.719Z",
+        "action": "Confirmed financial risk of $776,319/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1057, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-20T10:16:56.719Z",
+        "action": "Attempted to source parts, but inventory globally exhausted.",
+        "data_used": "parts-catalog.json stock_qty"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10022",
+    "part_affected": "PART-1051",
+    "event_type": "Raw Material Shortage",
+    "detected_at": "2026-08-21T10:54:43.975Z",
+    "revenue_at_risk_usd": 1405259,
+    "status": "Escalated",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": "WT Microelectronics",
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "escalated"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-21T10:54:43.975Z",
+        "action": "Detected Raw Material Shortage affecting PART-1051.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-21T10:54:48.975Z",
+        "action": "Confirmed financial risk of $1,405,259/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1051, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-21T10:54:58.975Z",
+        "action": "Identified 3 alternatives. Selected ALT-1110 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-21T10:55:28.975Z",
+        "action": "Auto-escalation triggered. Rule hit: max_negotiation_rounds exceeded or price ceiling breached (>$4.81).",
+        "data_used": "negotiation parameters"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10023",
+    "part_affected": "PART-1035",
+    "event_type": "Yield Drop",
+    "detected_at": "2026-08-22T09:00:30.023Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-22T09:00:30.023Z",
+        "action": "Detected Yield Drop affecting PART-1035.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-22T09:00:35.023Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10024",
+    "part_affected": "PART-1018",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-23T10:05:34.362Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-23T10:05:34.362Z",
+        "action": "Detected Port Strike affecting PART-1018.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-23T10:05:39.362Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10025",
+    "part_affected": "PART-1047",
+    "event_type": "Port Strike",
+    "detected_at": "2026-08-24T11:00:51.372Z",
+    "revenue_at_risk_usd": 4789132,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": "ALT-1100",
+      "vendor": "WT Microelectronics",
+      "recovered_amount_usd": 4697643,
+      "time_to_recovery_hours": 14,
+      "outcome": "recovered"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-24T11:00:51.372Z",
+        "action": "Detected Port Strike affecting PART-1047.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-24T11:00:56.372Z",
+        "action": "Confirmed financial risk of $4,789,132/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1047, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-24T11:01:06.372Z",
+        "action": "Identified 3 alternatives. Selected ALT-1100 as primary candidate.",
+        "data_used": "parts-catalog.json row match"
+      },
+      {
+        "agent": "Chase Agent",
+        "timestamp": "2026-08-24T11:01:51.372Z",
+        "action": "Negotiated procurement of ALT-1100 with WT Microelectronics at $26.25 (lead time: 11d).",
+        "data_used": "vendors.json reliability rating"
+      },
+      {
+        "agent": "Human Approver",
+        "timestamp": "2026-08-24T11:02:51.372Z",
+        "action": "Approved recovery plan and dispatched to SAP Ariba.",
+        "data_used": "User UI click"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10026",
+    "part_affected": "PART-1053",
+    "event_type": "Factory Fire",
+    "detected_at": "2026-08-25T10:24:22.019Z",
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "false_positive"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-25T10:24:22.019Z",
+        "action": "Detected Factory Fire affecting PART-1053.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-25T10:24:27.019Z",
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock available.",
+        "data_used": "SAP Inventory Check"
+      }
+    ]
+  },
+  {
+    "disruption_id": "DS-10027",
+    "part_affected": "PART-1037",
+    "event_type": "Power Outage",
+    "detected_at": "2026-08-26T11:00:55.917Z",
+    "revenue_at_risk_usd": 87998,
+    "status": "Completed",
+    "confirmed_impact": true,
+    "resolution": {
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "failed"
+    },
+    "decision_trail": [
+      {
+        "agent": "Detection Agent",
+        "timestamp": "2026-08-26T11:00:55.917Z",
+        "action": "Detected Power Outage affecting PART-1037.",
+        "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
+      },
+      {
+        "agent": "Impact Agent",
+        "timestamp": "2026-08-26T11:01:00.917Z",
+        "action": "Confirmed financial risk of $87,998/day via SAP S/4HANA baseline.",
+        "data_used": "Product ID: PART-1037, Revenue Dependency."
+      },
+      {
+        "agent": "Match Agent",
+        "timestamp": "2026-08-26T11:01:10.917Z",
+        "action": "Attempted to source parts, but inventory globally exhausted.",
+        "data_used": "parts-catalog.json stock_qty"
+      }
+    ]
+  }
+]

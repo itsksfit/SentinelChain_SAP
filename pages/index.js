@@ -30,7 +30,7 @@ export default function Dashboard() {
   const [approved, setApproved] = useState(false);
   
   // SAP Integration State
-  const [sapStatus, setSapStatus] = useState({ s4hana: 'Offline', ariba: 'Offline', mode: 'DEMO MODE' });
+  const [sapStatus, setSapStatus] = useState({ s4hana: 'Sandbox Mode', ariba: 'Sandbox Mode', mode: 'DEMO MODE' });
   const [auditTrail, setAuditTrail] = useState([]);
   const [aribaResponse, setAribaResponse] = useState(null);
   
@@ -210,13 +210,26 @@ export default function Dashboard() {
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">LIVE INTELLIGENCE</span>
                 <span className={`text-xs font-semibold ${liveNews.length > 0 && liveNews[0].isLive ? 'text-emerald-400' : 'text-orange-400'}`}>● {liveNews.length > 0 && liveNews[0].isLive ? 'CONNECTED' : 'DEMO MODE'}</span>
               </div>
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1">
+              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="Seeded data standing in for a live enterprise S/4HANA connection.">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP S/4HANA</span>
                 <span className={`text-xs font-semibold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.s4hana}</span>
               </div>
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1">
+              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="Seeded data standing in for a live enterprise Ariba connection.">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP Ariba</span>
                 <span className={`text-xs font-semibold ${sapStatus.ariba === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.ariba}</span>
+              </div>
+              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="True positive rate on seeded batch">
+                <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Detection Accuracy</span>
+                <span className="text-xs font-semibold text-emerald-400">
+                  {(() => {
+                    if (typeof window === 'undefined') return 'Loading...';
+                    try {
+                      const b = require('../data/disruption-batch.json');
+                      const conf = b.filter(x => x.confirmed_impact).length;
+                      return `${conf}/${b.length} (${((conf/b.length)*100).toFixed(0)}%)`;
+                    } catch(e) { return 'N/A' }
+                  })()}
+                </span>
               </div>
             </div>
             <div className={`px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${sapStatus.mode === 'LIVE SAP MODE' ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : 'border-orange-500/50 bg-orange-500/10 text-orange-400'}`}>
@@ -593,8 +606,8 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className="text-emerald-400 font-semibold">{negotiateResult.rankedPlan[0].score}</span></p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className="text-emerald-400 font-semibold">94%</span></p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className={`font-semibold ${negotiateResult.rankedPlan[0].score === 'Escalated' ? 'text-orange-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan[0].score}</span></p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className={`font-semibold ${negotiateResult.rankedPlan[0].score === 'Escalated' ? 'text-gray-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan[0].score === 'Escalated' ? '0%' : '94%'}</span></p>
                     </div>
                   </div>
 

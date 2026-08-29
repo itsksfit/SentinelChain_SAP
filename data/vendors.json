@@ -1,0 +1,93 @@
+[
+  {
+    "vendor_id": "V-001",
+    "name": "Digi-Key Electronics",
+    "region": "North America",
+    "reliability_score": 98,
+    "price_variance_pct": 5
+  },
+  {
+    "vendor_id": "V-002",
+    "name": "Mouser Electronics",
+    "region": "North America",
+    "reliability_score": 97,
+    "price_variance_pct": 8
+  },
+  {
+    "vendor_id": "V-003",
+    "name": "Arrow Electronics",
+    "region": "Global",
+    "reliability_score": 95,
+    "price_variance_pct": 12
+  },
+  {
+    "vendor_id": "V-004",
+    "name": "Avnet",
+    "region": "Global",
+    "reliability_score": 94,
+    "price_variance_pct": 10
+  },
+  {
+    "vendor_id": "V-005",
+    "name": "Future Electronics",
+    "region": "Europe",
+    "reliability_score": 92,
+    "price_variance_pct": 15
+  },
+  {
+    "vendor_id": "V-006",
+    "name": "Rochester Electronics",
+    "region": "North America",
+    "reliability_score": 99,
+    "price_variance_pct": 20
+  },
+  {
+    "vendor_id": "V-007",
+    "name": "Rutronik",
+    "region": "Europe",
+    "reliability_score": 90,
+    "price_variance_pct": 12
+  },
+  {
+    "vendor_id": "V-008",
+    "name": "WT Microelectronics",
+    "region": "Asia Pacific",
+    "reliability_score": 88,
+    "price_variance_pct": 18
+  },
+  {
+    "vendor_id": "V-009",
+    "name": "WPG Holdings",
+    "region": "Asia Pacific",
+    "reliability_score": 91,
+    "price_variance_pct": 14
+  },
+  {
+    "vendor_id": "V-010",
+    "name": "Farnell",
+    "region": "Europe",
+    "reliability_score": 95,
+    "price_variance_pct": 9
+  },
+  {
+    "vendor_id": "V-011",
+    "name": "TTI, Inc.",
+    "region": "Global",
+    "reliability_score": 96,
+    "price_variance_pct": 7
+  },
+  {
+    "vendor_id": "V-012",
+    "name": "Smith",
+    "region": "Global",
+    "reliability_score": 85,
+    "price_variance_pct": 25
+  },
+  {
+    "vendor_id": "V-013",
+    "name": "Fusion Worldwide",
+    "region": "Global",
+    "reliability_score": 82,
+    "price_variance_pct": 30
+  }
+]

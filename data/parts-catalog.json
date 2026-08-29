@@ -1,0 +1,1452 @@
+[
+  {
+    "part_id": "STM32F405RGT6",
+    "category": "MCU",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 4.5,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-STM32F405RGT6-01",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 5.82,
+        "lead_time_days": 16,
+        "stock_qty": 38355
+      },
+      {
+        "alt_part_id": "ALT-1001",
+        "vendor": "Farnell",
+        "unit_price": 4.5,
+        "lead_time_days": 8,
+        "stock_qty": 29259
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.287Z"
+  },
+  {
+    "part_id": "TPS65987DDH",
+    "category": "PWR",
+    "manufacturer": "Texas Instruments",
+    "base_price": 2.1,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-TPS65987DDH-01",
+        "vendor": "WPG Holdings",
+        "unit_price": 1.97,
+        "lead_time_days": 5,
+        "stock_qty": 11815
+      },
+      {
+        "alt_part_id": "ALT-1002",
+        "vendor": "Avnet",
+        "unit_price": 2.01,
+        "lead_time_days": 17,
+        "stock_qty": 1176
+      },
+      {
+        "alt_part_id": "ALT-1003",
+        "vendor": "TTI, Inc.",
+        "unit_price": 2.05,
+        "lead_time_days": 14,
+        "stock_qty": 5310
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "MT29F64G08AECABH1-10Z:A",
+    "category": "MEM",
+    "manufacturer": "Micron Technology",
+    "base_price": 8.5,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-MT29F64G08AECABH1-10Z:A-01",
+        "vendor": "Future Electronics",
+        "unit_price": 7.81,
+        "lead_time_days": 21,
+        "stock_qty": 41990
+      },
+      {
+        "alt_part_id": "ALT-1004",
+        "vendor": "Farnell",
+        "unit_price": 9.06,
+        "lead_time_days": 2,
+        "stock_qty": 23816
+      },
+      {
+        "alt_part_id": "ALT-1005",
+        "vendor": "Rochester Electronics",
+        "unit_price": 6.97,
+        "lead_time_days": 16,
+        "stock_qty": 28818
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "XC7Z020-1CLG400C",
+    "category": "FPGA",
+    "manufacturer": "AMD",
+    "base_price": 125,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-XC7Z020-1CLG400C-01",
+        "vendor": "Smith",
+        "unit_price": 135.26,
+        "lead_time_days": 13,
+        "stock_qty": 28822
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "NVIDIA-A100-80GB",
+    "category": "GPU",
+    "manufacturer": "NVIDIA",
+    "base_price": 12500,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-NVIDIA-A100-80GB-01",
+        "vendor": "Smith",
+        "unit_price": 9485.81,
+        "lead_time_days": 19,
+        "stock_qty": 44921
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1005",
+    "category": "PWR",
+    "manufacturer": "NVIDIA",
+    "base_price": 20.63,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1006",
+        "vendor": "Arrow Electronics",
+        "unit_price": 23.07,
+        "lead_time_days": 7,
+        "stock_qty": 46629
+      },
+      {
+        "alt_part_id": "ALT-1007",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 19.92,
+        "lead_time_days": 10,
+        "stock_qty": 36676
+      },
+      {
+        "alt_part_id": "ALT-1008",
+        "vendor": "Mouser Electronics",
+        "unit_price": 19,
+        "lead_time_days": 14,
+        "stock_qty": 37699
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1006",
+    "category": "SENSOR",
+    "manufacturer": "Micron",
+    "base_price": 36.56,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1009",
+        "vendor": "Mouser Electronics",
+        "unit_price": 36.67,
+        "lead_time_days": 9,
+        "stock_qty": 11236
+      },
+      {
+        "alt_part_id": "ALT-1010",
+        "vendor": "WT Microelectronics",
+        "unit_price": 38.65,
+        "lead_time_days": 21,
+        "stock_qty": 18072
+      },
+      {
+        "alt_part_id": "ALT-1011",
+        "vendor": "Mouser Electronics",
+        "unit_price": 37.32,
+        "lead_time_days": 2,
+        "stock_qty": 16208
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1007",
+    "category": "PWR",
+    "manufacturer": "Texas Instruments",
+    "base_price": 33.45,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1012",
+        "vendor": "WPG Holdings",
+        "unit_price": 31.48,
+        "lead_time_days": 7,
+        "stock_qty": 1563
+      },
+      {
+        "alt_part_id": "ALT-1013",
+        "vendor": "TTI, Inc.",
+        "unit_price": 33.21,
+        "lead_time_days": 19,
+        "stock_qty": 44632
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1008",
+    "category": "FPGA",
+    "manufacturer": "AMD",
+    "base_price": 35.7,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1014",
+        "vendor": "Mouser Electronics",
+        "unit_price": 34.16,
+        "lead_time_days": 15,
+        "stock_qty": 21107
+      },
+      {
+        "alt_part_id": "ALT-1015",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 40.58,
+        "lead_time_days": 14,
+        "stock_qty": 1325
+      },
+      {
+        "alt_part_id": "ALT-1016",
+        "vendor": "TTI, Inc.",
+        "unit_price": 35.99,
+        "lead_time_days": 6,
+        "stock_qty": 13178
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1009",
+    "category": "PWR",
+    "manufacturer": "Infineon",
+    "base_price": 48.93,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1017",
+        "vendor": "Farnell",
+        "unit_price": 45.25,
+        "lead_time_days": 7,
+        "stock_qty": 1511
+      },
+      {
+        "alt_part_id": "ALT-1018",
+        "vendor": "Farnell",
+        "unit_price": 50.28,
+        "lead_time_days": 6,
+        "stock_qty": 44444
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1010",
+    "category": "GPU",
+    "manufacturer": "Micron",
+    "base_price": 48.64,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1019",
+        "vendor": "Farnell",
+        "unit_price": 51.94,
+        "lead_time_days": 19,
+        "stock_qty": 33274
+      },
+      {
+        "alt_part_id": "ALT-1020",
+        "vendor": "Future Electronics",
+        "unit_price": 43.27,
+        "lead_time_days": 6,
+        "stock_qty": 10571
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1011",
+    "category": "PWR",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 81.81,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1021",
+        "vendor": "Arrow Electronics",
+        "unit_price": 81.44,
+        "lead_time_days": 4,
+        "stock_qty": 11587
+      },
+      {
+        "alt_part_id": "ALT-1022",
+        "vendor": "Smith",
+        "unit_price": 62.59,
+        "lead_time_days": 16,
+        "stock_qty": 11410
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1012",
+    "category": "MCU",
+    "manufacturer": "Texas Instruments",
+    "base_price": 82.82,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1023",
+        "vendor": "Farnell",
+        "unit_price": 86.01,
+        "lead_time_days": 21,
+        "stock_qty": 8273
+      },
+      {
+        "alt_part_id": "ALT-1024",
+        "vendor": "Smith",
+        "unit_price": 82.45,
+        "lead_time_days": 2,
+        "stock_qty": 33314
+      },
+      {
+        "alt_part_id": "ALT-1025",
+        "vendor": "WT Microelectronics",
+        "unit_price": 80.28,
+        "lead_time_days": 5,
+        "stock_qty": 8367
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1013",
+    "category": "GPU",
+    "manufacturer": "Microchip",
+    "base_price": 9.75,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1026",
+        "vendor": "Rutronik",
+        "unit_price": 9.45,
+        "lead_time_days": 20,
+        "stock_qty": 35607
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1014",
+    "category": "PWR",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 24.55,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1027",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 23.93,
+        "lead_time_days": 9,
+        "stock_qty": 38801
+      },
+      {
+        "alt_part_id": "ALT-1028",
+        "vendor": "Rutronik",
+        "unit_price": 23.07,
+        "lead_time_days": 15,
+        "stock_qty": 47709
+      },
+      {
+        "alt_part_id": "ALT-1029",
+        "vendor": "WPG Holdings",
+        "unit_price": 27.09,
+        "lead_time_days": 6,
+        "stock_qty": 14258
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1015",
+    "category": "PWR",
+    "manufacturer": "Micron",
+    "base_price": 71.91,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1030",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 75.15,
+        "lead_time_days": 3,
+        "stock_qty": 42447
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1016",
+    "category": "SENSOR",
+    "manufacturer": "NVIDIA",
+    "base_price": 91.94,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1031",
+        "vendor": "Arrow Electronics",
+        "unit_price": 99.73,
+        "lead_time_days": 2,
+        "stock_qty": 50023
+      },
+      {
+        "alt_part_id": "ALT-1032",
+        "vendor": "Farnell",
+        "unit_price": 98.44,
+        "lead_time_days": 18,
+        "stock_qty": 28125
+      },
+      {
+        "alt_part_id": "ALT-1033",
+        "vendor": "Mouser Electronics",
+        "unit_price": 85.35,
+        "lead_time_days": 4,
+        "stock_qty": 12882
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1017",
+    "category": "PWR",
+    "manufacturer": "Infineon",
+    "base_price": 16.66,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1034",
+        "vendor": "Future Electronics",
+        "unit_price": 16.53,
+        "lead_time_days": 10,
+        "stock_qty": 1293
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1018",
+    "category": "GPU",
+    "manufacturer": "Micron",
+    "base_price": 53.34,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1035",
+        "vendor": "Mouser Electronics",
+        "unit_price": 55.61,
+        "lead_time_days": 10,
+        "stock_qty": 48601
+      },
+      {
+        "alt_part_id": "ALT-1036",
+        "vendor": "Farnell",
+        "unit_price": 55.76,
+        "lead_time_days": 9,
+        "stock_qty": 26541
+      },
+      {
+        "alt_part_id": "ALT-1037",
+        "vendor": "Avnet",
+        "unit_price": 51.44,
+        "lead_time_days": 18,
+        "stock_qty": 30345
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1019",
+    "category": "MCU",
+    "manufacturer": "NVIDIA",
+    "base_price": 46.27,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1038",
+        "vendor": "TTI, Inc.",
+        "unit_price": 44.55,
+        "lead_time_days": 19,
+        "stock_qty": 4259
+      },
+      {
+        "alt_part_id": "ALT-1039",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 57.09,
+        "lead_time_days": 6,
+        "stock_qty": 9571
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1020",
+    "category": "MEM",
+    "manufacturer": "NXP",
+    "base_price": 11.62,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1040",
+        "vendor": "Farnell",
+        "unit_price": 12.02,
+        "lead_time_days": 21,
+        "stock_qty": 47545
+      },
+      {
+        "alt_part_id": "ALT-1041",
+        "vendor": "Rutronik",
+        "unit_price": 11.89,
+        "lead_time_days": 21,
+        "stock_qty": 12294
+      },
+      {
+        "alt_part_id": "ALT-1042",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 11.63,
+        "lead_time_days": 20,
+        "stock_qty": 2165
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1021",
+    "category": "MEM",
+    "manufacturer": "Infineon",
+    "base_price": 3.48,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1043",
+        "vendor": "WT Microelectronics",
+        "unit_price": 3.01,
+        "lead_time_days": 5,
+        "stock_qty": 22415
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1022",
+    "category": "FPGA",
+    "manufacturer": "AMD",
+    "base_price": 97.23,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1044",
+        "vendor": "Rutronik",
+        "unit_price": 102.05,
+        "lead_time_days": 21,
+        "stock_qty": 24344
+      },
+      {
+        "alt_part_id": "ALT-1045",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 97.45,
+        "lead_time_days": 13,
+        "stock_qty": 45769
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1023",
+    "category": "MCU",
+    "manufacturer": "NXP",
+    "base_price": 84.49,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1046",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 95.04,
+        "lead_time_days": 3,
+        "stock_qty": 1928
+      },
+      {
+        "alt_part_id": "ALT-1047",
+        "vendor": "Farnell",
+        "unit_price": 89.21,
+        "lead_time_days": 11,
+        "stock_qty": 38652
+      },
+      {
+        "alt_part_id": "ALT-1048",
+        "vendor": "Farnell",
+        "unit_price": 91.35,
+        "lead_time_days": 2,
+        "stock_qty": 34693
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1024",
+    "category": "GPU",
+    "manufacturer": "Texas Instruments",
+    "base_price": 9.51,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1049",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 9.24,
+        "lead_time_days": 7,
+        "stock_qty": 10115
+      },
+      {
+        "alt_part_id": "ALT-1050",
+        "vendor": "WPG Holdings",
+        "unit_price": 10.12,
+        "lead_time_days": 11,
+        "stock_qty": 2520
+      },
+      {
+        "alt_part_id": "ALT-1051",
+        "vendor": "Rochester Electronics",
+        "unit_price": 9.1,
+        "lead_time_days": 13,
+        "stock_qty": 33104
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1025",
+    "category": "PWR",
+    "manufacturer": "Analog Devices",
+    "base_price": 26.03,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1052",
+        "vendor": "Farnell",
+        "unit_price": 26.61,
+        "lead_time_days": 17,
+        "stock_qty": 9236
+      },
+      {
+        "alt_part_id": "ALT-1053",
+        "vendor": "WT Microelectronics",
+        "unit_price": 22.78,
+        "lead_time_days": 13,
+        "stock_qty": 24806
+      },
+      {
+        "alt_part_id": "ALT-1054",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 26.82,
+        "lead_time_days": 15,
+        "stock_qty": 38891
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1026",
+    "category": "FPGA",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 97.3,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1055",
+        "vendor": "Smith",
+        "unit_price": 119.61,
+        "lead_time_days": 7,
+        "stock_qty": 4764
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1027",
+    "category": "SENSOR",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 92.53,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1056",
+        "vendor": "Avnet",
+        "unit_price": 87.35,
+        "lead_time_days": 14,
+        "stock_qty": 1424
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1028",
+    "category": "MCU",
+    "manufacturer": "AMD",
+    "base_price": 28.85,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1057",
+        "vendor": "WT Microelectronics",
+        "unit_price": 24.07,
+        "lead_time_days": 10,
+        "stock_qty": 27175
+      },
+      {
+        "alt_part_id": "ALT-1058",
+        "vendor": "Smith",
+        "unit_price": 32.04,
+        "lead_time_days": 17,
+        "stock_qty": 24200
+      },
+      {
+        "alt_part_id": "ALT-1059",
+        "vendor": "TTI, Inc.",
+        "unit_price": 28.81,
+        "lead_time_days": 4,
+        "stock_qty": 48212
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1029",
+    "category": "PWR",
+    "manufacturer": "AMD",
+    "base_price": 81.68,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1060",
+        "vendor": "Rochester Electronics",
+        "unit_price": 85.18,
+        "lead_time_days": 3,
+        "stock_qty": 9542
+      },
+      {
+        "alt_part_id": "ALT-1061",
+        "vendor": "Smith",
+        "unit_price": 89.07,
+        "lead_time_days": 13,
+        "stock_qty": 47544
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1030",
+    "category": "GPU",
+    "manufacturer": "NXP",
+    "base_price": 52.47,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1062",
+        "vendor": "Farnell",
+        "unit_price": 55.7,
+        "lead_time_days": 3,
+        "stock_qty": 6938
+      },
+      {
+        "alt_part_id": "ALT-1063",
+        "vendor": "Smith",
+        "unit_price": 43.41,
+        "lead_time_days": 20,
+        "stock_qty": 11806
+      },
+      {
+        "alt_part_id": "ALT-1064",
+        "vendor": "Farnell",
+        "unit_price": 53.06,
+        "lead_time_days": 14,
+        "stock_qty": 5546
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1031",
+    "category": "MCU",
+    "manufacturer": "Microchip",
+    "base_price": 88.81,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1065",
+        "vendor": "WT Microelectronics",
+        "unit_price": 94.65,
+        "lead_time_days": 2,
+        "stock_qty": 37744
+      },
+      {
+        "alt_part_id": "ALT-1066",
+        "vendor": "Arrow Electronics",
+        "unit_price": 93.76,
+        "lead_time_days": 17,
+        "stock_qty": 14452
+      },
+      {
+        "alt_part_id": "ALT-1067",
+        "vendor": "Arrow Electronics",
+        "unit_price": 89.42,
+        "lead_time_days": 12,
+        "stock_qty": 13946
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1032",
+    "category": "PWR",
+    "manufacturer": "AMD",
+    "base_price": 38.66,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1068",
+        "vendor": "Farnell",
+        "unit_price": 38.45,
+        "lead_time_days": 3,
+        "stock_qty": 38915
+      },
+      {
+        "alt_part_id": "ALT-1069",
+        "vendor": "Smith",
+        "unit_price": 41.82,
+        "lead_time_days": 19,
+        "stock_qty": 34925
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1033",
+    "category": "FPGA",
+    "manufacturer": "Microchip",
+    "base_price": 82.87,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1070",
+        "vendor": "Future Electronics",
+        "unit_price": 88.24,
+        "lead_time_days": 15,
+        "stock_qty": 24796
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1034",
+    "category": "FPGA",
+    "manufacturer": "Texas Instruments",
+    "base_price": 51.81,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1071",
+        "vendor": "Mouser Electronics",
+        "unit_price": 51.27,
+        "lead_time_days": 20,
+        "stock_qty": 16990
+      },
+      {
+        "alt_part_id": "ALT-1072",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 52.45,
+        "lead_time_days": 17,
+        "stock_qty": 4402
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1035",
+    "category": "MEM",
+    "manufacturer": "Infineon",
+    "base_price": 92.43,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1073",
+        "vendor": "Future Electronics",
+        "unit_price": 97.82,
+        "lead_time_days": 18,
+        "stock_qty": 30595
+      },
+      {
+        "alt_part_id": "ALT-1074",
+        "vendor": "WT Microelectronics",
+        "unit_price": 99.02,
+        "lead_time_days": 16,
+        "stock_qty": 10511
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1036",
+    "category": "FPGA",
+    "manufacturer": "Microchip",
+    "base_price": 42.13,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1075",
+        "vendor": "Arrow Electronics",
+        "unit_price": 41.8,
+        "lead_time_days": 6,
+        "stock_qty": 28458
+      },
+      {
+        "alt_part_id": "ALT-1076",
+        "vendor": "TTI, Inc.",
+        "unit_price": 44.24,
+        "lead_time_days": 6,
+        "stock_qty": 37978
+      },
+      {
+        "alt_part_id": "ALT-1077",
+        "vendor": "Arrow Electronics",
+        "unit_price": 43.36,
+        "lead_time_days": 9,
+        "stock_qty": 9128
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1037",
+    "category": "MCU",
+    "manufacturer": "NXP",
+    "base_price": 89.05,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1078",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 92.58,
+        "lead_time_days": 4,
+        "stock_qty": 2301
+      },
+      {
+        "alt_part_id": "ALT-1079",
+        "vendor": "Mouser Electronics",
+        "unit_price": 87.5,
+        "lead_time_days": 8,
+        "stock_qty": 32570
+      },
+      {
+        "alt_part_id": "ALT-1080",
+        "vendor": "Avnet",
+        "unit_price": 97.82,
+        "lead_time_days": 17,
+        "stock_qty": 19603
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1038",
+    "category": "MCU",
+    "manufacturer": "Texas Instruments",
+    "base_price": 49.43,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1081",
+        "vendor": "Future Electronics",
+        "unit_price": 51.34,
+        "lead_time_days": 18,
+        "stock_qty": 12200
+      },
+      {
+        "alt_part_id": "ALT-1082",
+        "vendor": "Future Electronics",
+        "unit_price": 51.75,
+        "lead_time_days": 15,
+        "stock_qty": 32818
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1039",
+    "category": "FPGA",
+    "manufacturer": "NXP",
+    "base_price": 57.41,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1083",
+        "vendor": "WPG Holdings",
+        "unit_price": 53.73,
+        "lead_time_days": 20,
+        "stock_qty": 17636
+      },
+      {
+        "alt_part_id": "ALT-1084",
+        "vendor": "Smith",
+        "unit_price": 49.03,
+        "lead_time_days": 16,
+        "stock_qty": 5484
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1040",
+    "category": "MCU",
+    "manufacturer": "Infineon",
+    "base_price": 90.45,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1085",
+        "vendor": "WPG Holdings",
+        "unit_price": 88.88,
+        "lead_time_days": 15,
+        "stock_qty": 9396
+      },
+      {
+        "alt_part_id": "ALT-1086",
+        "vendor": "Mouser Electronics",
+        "unit_price": 96.91,
+        "lead_time_days": 2,
+        "stock_qty": 3638
+      },
+      {
+        "alt_part_id": "ALT-1087",
+        "vendor": "Rochester Electronics",
+        "unit_price": 103.54,
+        "lead_time_days": 21,
+        "stock_qty": 22115
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1041",
+    "category": "PWR",
+    "manufacturer": "NXP",
+    "base_price": 57.62,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1088",
+        "vendor": "Future Electronics",
+        "unit_price": 51.1,
+        "lead_time_days": 16,
+        "stock_qty": 36623
+      },
+      {
+        "alt_part_id": "ALT-1089",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 57.98,
+        "lead_time_days": 7,
+        "stock_qty": 39474
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1042",
+    "category": "GPU",
+    "manufacturer": "NVIDIA",
+    "base_price": 30.1,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1090",
+        "vendor": "Mouser Electronics",
+        "unit_price": 31.23,
+        "lead_time_days": 14,
+        "stock_qty": 46664
+      },
+      {
+        "alt_part_id": "ALT-1091",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 30.2,
+        "lead_time_days": 8,
+        "stock_qty": 9200
+      },
+      {
+        "alt_part_id": "ALT-1092",
+        "vendor": "Farnell",
+        "unit_price": 32.43,
+        "lead_time_days": 18,
+        "stock_qty": 26954
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1043",
+    "category": "FPGA",
+    "manufacturer": "Microchip",
+    "base_price": 96.78,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1093",
+        "vendor": "Rutronik",
+        "unit_price": 93.14,
+        "lead_time_days": 3,
+        "stock_qty": 6935
+      },
+      {
+        "alt_part_id": "ALT-1094",
+        "vendor": "Rochester Electronics",
+        "unit_price": 108.05,
+        "lead_time_days": 5,
+        "stock_qty": 10743
+      },
+      {
+        "alt_part_id": "ALT-1095",
+        "vendor": "Rutronik",
+        "unit_price": 86.6,
+        "lead_time_days": 2,
+        "stock_qty": 39177
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1044",
+    "category": "FPGA",
+    "manufacturer": "Texas Instruments",
+    "base_price": 69.68,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1096",
+        "vendor": "TTI, Inc.",
+        "unit_price": 69.54,
+        "lead_time_days": 6,
+        "stock_qty": 46476
+      },
+      {
+        "alt_part_id": "ALT-1097",
+        "vendor": "TTI, Inc.",
+        "unit_price": 69.1,
+        "lead_time_days": 15,
+        "stock_qty": 28842
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1045",
+    "category": "SENSOR",
+    "manufacturer": "Analog Devices",
+    "base_price": 85.29,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1098",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 71.45,
+        "lead_time_days": 4,
+        "stock_qty": 41977
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1046",
+    "category": "MEM",
+    "manufacturer": "Micron",
+    "base_price": 35.42,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1099",
+        "vendor": "Future Electronics",
+        "unit_price": 35.93,
+        "lead_time_days": 3,
+        "stock_qty": 18158
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1047",
+    "category": "MEM",
+    "manufacturer": "AMD",
+    "base_price": 24.07,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1100",
+        "vendor": "WT Microelectronics",
+        "unit_price": 26.25,
+        "lead_time_days": 11,
+        "stock_qty": 26039
+      },
+      {
+        "alt_part_id": "ALT-1101",
+        "vendor": "Smith",
+        "unit_price": 25.49,
+        "lead_time_days": 5,
+        "stock_qty": 20346
+      },
+      {
+        "alt_part_id": "ALT-1102",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 24.35,
+        "lead_time_days": 16,
+        "stock_qty": 18158
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1048",
+    "category": "MEM",
+    "manufacturer": "AMD",
+    "base_price": 66.79,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1103",
+        "vendor": "Fusion Worldwide",
+        "unit_price": 65.39,
+        "lead_time_days": 13,
+        "stock_qty": 48091
+      },
+      {
+        "alt_part_id": "ALT-1104",
+        "vendor": "Rutronik",
+        "unit_price": 67.53,
+        "lead_time_days": 2,
+        "stock_qty": 18470
+      },
+      {
+        "alt_part_id": "ALT-1105",
+        "vendor": "Avnet",
+        "unit_price": 72.13,
+        "lead_time_days": 4,
+        "stock_qty": 47837
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1049",
+    "category": "FPGA",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 57.14,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1106",
+        "vendor": "Rochester Electronics",
+        "unit_price": 68.33,
+        "lead_time_days": 21,
+        "stock_qty": 32710
+      },
+      {
+        "alt_part_id": "ALT-1107",
+        "vendor": "TTI, Inc.",
+        "unit_price": 55.05,
+        "lead_time_days": 5,
+        "stock_qty": 22222
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1050",
+    "category": "PWR",
+    "manufacturer": "Infineon",
+    "base_price": 79.02,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1108",
+        "vendor": "Farnell",
+        "unit_price": 75.96,
+        "lead_time_days": 10,
+        "stock_qty": 41486
+      },
+      {
+        "alt_part_id": "ALT-1109",
+        "vendor": "WPG Holdings",
+        "unit_price": 88.32,
+        "lead_time_days": 16,
+        "stock_qty": 24245
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1051",
+    "category": "FPGA",
+    "manufacturer": "Infineon",
+    "base_price": 4.18,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1110",
+        "vendor": "WT Microelectronics",
+        "unit_price": 4.87,
+        "lead_time_days": 5,
+        "stock_qty": 47681
+      },
+      {
+        "alt_part_id": "ALT-1111",
+        "vendor": "WT Microelectronics",
+        "unit_price": 3.92,
+        "lead_time_days": 6,
+        "stock_qty": 43862
+      },
+      {
+        "alt_part_id": "ALT-1112",
+        "vendor": "Rutronik",
+        "unit_price": 4.54,
+        "lead_time_days": 17,
+        "stock_qty": 27204
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1052",
+    "category": "MEM",
+    "manufacturer": "Texas Instruments",
+    "base_price": 42.88,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1113",
+        "vendor": "TTI, Inc.",
+        "unit_price": 40.02,
+        "lead_time_days": 21,
+        "stock_qty": 12611
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1053",
+    "category": "PWR",
+    "manufacturer": "Microchip",
+    "base_price": 98.43,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1114",
+        "vendor": "Mouser Electronics",
+        "unit_price": 102.93,
+        "lead_time_days": 2,
+        "stock_qty": 43059
+      },
+      {
+        "alt_part_id": "ALT-1115",
+        "vendor": "Rochester Electronics",
+        "unit_price": 89.66,
+        "lead_time_days": 5,
+        "stock_qty": 24023
+      },
+      {
+        "alt_part_id": "ALT-1116",
+        "vendor": "Avnet",
+        "unit_price": 102.46,
+        "lead_time_days": 14,
+        "stock_qty": 8655
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1054",
+    "category": "GPU",
+    "manufacturer": "NXP",
+    "base_price": 57.09,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1117",
+        "vendor": "Avnet",
+        "unit_price": 60.05,
+        "lead_time_days": 6,
+        "stock_qty": 2724
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1055",
+    "category": "PWR",
+    "manufacturer": "NXP",
+    "base_price": 69.11,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1118",
+        "vendor": "WPG Holdings",
+        "unit_price": 73.66,
+        "lead_time_days": 20,
+        "stock_qty": 31566
+      },
+      {
+        "alt_part_id": "ALT-1119",
+        "vendor": "Rochester Electronics",
+        "unit_price": 81.32,
+        "lead_time_days": 14,
+        "stock_qty": 14664
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1056",
+    "category": "PWR",
+    "manufacturer": "NVIDIA",
+    "base_price": 52.76,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1120",
+        "vendor": "Rutronik",
+        "unit_price": 48.63,
+        "lead_time_days": 19,
+        "stock_qty": 10510
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1057",
+    "category": "FPGA",
+    "manufacturer": "STMicroelectronics",
+    "base_price": 7.59,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1121",
+        "vendor": "Arrow Electronics",
+        "unit_price": 8.12,
+        "lead_time_days": 7,
+        "stock_qty": 23991
+      },
+      {
+        "alt_part_id": "ALT-1122",
+        "vendor": "WPG Holdings",
+        "unit_price": 8.57,
+        "lead_time_days": 6,
+        "stock_qty": 48683
+      },
+      {
+        "alt_part_id": "ALT-1123",
+        "vendor": "Smith",
+        "unit_price": 6.46,
+        "lead_time_days": 2,
+        "stock_qty": 30284
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1058",
+    "category": "PWR",
+    "manufacturer": "AMD",
+    "base_price": 59.43,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1124",
+        "vendor": "Smith",
+        "unit_price": 61.71,
+        "lead_time_days": 20,
+        "stock_qty": 33195
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  },
+  {
+    "part_id": "PART-1059",
+    "category": "MCU",
+    "manufacturer": "AMD",
+    "base_price": 31.23,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "ALT-1125",
+        "vendor": "Avnet",
+        "unit_price": 33.47,
+        "lead_time_days": 20,
+        "stock_qty": 43903
+      }
+    ],
+    "last_updated": "2026-08-29T11:11:43.288Z"
+  }
+]

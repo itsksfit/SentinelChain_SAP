@@ -49,6 +49,11 @@ export default function Sidebar() {
               <CheckCircle className={iconClass('/plans', 'text-emerald-400')} /> Recovery Plans
             </a>
           </Link>
+          <Link href="/ledger" passHref legacyBehavior>
+            <a className={linkClass('/ledger')}>
+              <Database className={iconClass('/ledger', 'text-orange-400')} /> Recovery Ledger
+            </a>
+          </Link>
         </nav>
       </div>
 
