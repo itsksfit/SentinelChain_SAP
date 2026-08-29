@@ -225,7 +225,7 @@ export default function Plans({ initialPlans }) {
                     <div key={idx} className="relative pl-4">
                       <div className="absolute w-2 h-2 bg-indigo-500 rounded-full -left-[5px] top-1.5"></div>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">
-                        <span className="font-bold text-gray-700 dark:text-gray-300">{t.agent}</span> • {new Date(t.timestamp).toLocaleTimeString()}
+                        <span className="font-bold text-gray-700 dark:text-gray-300">{t.agent}</span> • {new Date(t.timestamp || Date.now()).toLocaleTimeString()}
                       </p>
                       <p className="text-sm text-gray-800 dark:text-gray-200">{t.action}</p>
                     </div>

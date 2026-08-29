@@ -192,7 +192,8 @@ export default function Dashboard() {
       plants_affected: 3,
       products_affected: d2.affectedProducts?.length || 1,
       orders_at_risk: 42,
-      matched_options: d3
+      matched_options: d3,
+      detected_at: new Date().toISOString()
     };
     
     const current = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');

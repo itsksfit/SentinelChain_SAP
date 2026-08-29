@@ -97,7 +97,7 @@ export default function Disruptions({ initialDisruptions }) {
                     <div className="flex items-center gap-4 text-sm">
                       <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                         <Clock className="w-4 h-4" />
-                        {new Date(d.detected_at).toLocaleDateString()}
+                        {new Date(d.detected_at || Date.now()).toLocaleDateString()}
                       </span>
                       <StatusBadge status={d.status} />
                     </div>

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight } from 'lucide-react';
+import { ShieldAlert, Activity, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
@@ -148,11 +148,32 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
     setIsProcessing(false);
     setPlanGenerated(true);
 
+    const planId = `RP-LIVE-${Math.floor(Math.random()*9000)+1000}`;
+    const dt = [
+      { timestamp: new Date(Date.now() - 30000).toISOString(), agent: "Detection Agent", action: "Identified critical shortage risk." },
+      { timestamp: new Date(Date.now() - 25000).toISOString(), agent: "Impact Agent", action: "Mapped revenue at risk." },
+      { timestamp: new Date(Date.now() - 15000).toISOString(), agent: "Cross-Reference", action: "Matched pin-compatible alternative." },
+      { timestamp: new Date().toISOString(), agent: "Chase Agent", action: "Negotiated and locked in PO with alternative supplier." }
+    ];
+    
     // Update status globally
     if (id?.includes('LIVE')) {
       const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
       const updated = custom.map(d => {
-        if (d.disruption_id === id) return { ...d, status: 'Resolved', recovery_plan_id: `RP-${Math.floor(Math.random()*9000)+1000}` };
+        if (d.disruption_id === id) {
+          return { 
+            ...d, 
+            status: 'Resolved', 
+            recovery_plan_id: planId,
+            decision_trail: dt,
+            resolution: {
+              outcome: "Executing",
+              vendor: options.find(o => o.id === approvedOption)?.vendor || "N/A",
+              proposed_action: "Automated RFQ negotiation and secondary supplier PO execution.",
+              recovered_amount_usd: (d.revenue_at_risk_usd || 10000) * 0.95
+            }
+          };
+        }
         return d;
       });
       localStorage.setItem('custom_disruptions', JSON.stringify(updated));
@@ -193,9 +214,12 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                 </div>
                 <p className="text-xl font-mono text-gray-700 dark:text-gray-300">{data.event_type}</p>
               </div>
-              <div className="text-right">
+              <div className="text-right flex flex-col items-end">
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">AI Confidence</p>
-                <div className="text-3xl font-bold text-emerald-500">{confidence}%</div>
+                <div className="text-3xl font-bold text-emerald-500 mb-2">{confidence}%</div>
+                <Link href="/risk" className="text-[10px] bg-gray-100 dark:bg-white/5 hover:bg-indigo-500/10 text-indigo-500 border border-gray-200 dark:border-white/10 px-2 py-1 rounded flex items-center gap-1 transition-colors">
+                  <Activity className="w-3 h-3" /> View Risk Model
+                </Link>
               </div>
             </div>
 
