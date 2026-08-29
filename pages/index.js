@@ -51,7 +51,17 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
-    fetch('/api/stats').then(r => r.json()).then(data => setAccuracyStat(data.accuracyText));
+    fetch('/api/stats').then(r => r.json()).then(data => {
+      try {
+        const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+        const customConf = custom.filter(x => x.confirmed_impact).length;
+        const total = data.total + custom.length;
+        const conf = data.confirmed + customConf;
+        setAccuracyStat(`${conf}/${total} (${((conf/total)*100).toFixed(0)}%)`);
+      } catch(e) {
+        setAccuracyStat(data.accuracyText);
+      }
+    });
     fetchNews();
     // Auto-refresh the live disruption feed every 30 seconds only if idle
     const interval = setInterval(() => {
@@ -171,18 +181,31 @@ export default function Dashboard() {
     setAribaResponse(data);
     addAudit('SAP Ariba', 'Procurement workflow submitted');
     
-    try {
-      const activePlan = {
-        id: `RP-${Math.floor(1000 + Math.random() * 9000)}`,
-        trigger: activeNews?.title || "Live Disruption Detected",
-        action: `Procure ${planDetails.part}`,
+    const newRecord = {
+      disruption_id: `DS-LIVE-${Math.floor(Math.random()*9000)+1000}`,
+      recovery_plan_id: `RP-LIVE-${Math.floor(Math.random()*9000)+1000}`,
+      part_affected: planDetails.part,
+      event_type: detectResult.reason || "Live Dashboard Demo",
+      detected_at: new Date().toISOString(),
+      revenue_at_risk_usd: impactResult.revenueAtRiskPerDay,
+      status: "Completed",
+      confirmed_impact: true,
+      resolution: {
+        plan_id: `RP-LIVE-${Math.floor(Math.random()*9000)+1000}`,
+        alt_part_used: planDetails.part,
         vendor: planDetails.vendor,
-        status: "Executing",
-        riskReduction: planDetails.score.includes("Risk") ? "98%" : "94%",
-        date: "Just Now",
-        historyContext: `A severe disruption was detected affecting the primary supply chain. SentinelChain's Impact Agent dynamically calculated massive enterprise revenue at risk based on live SAP data. To mitigate this, the AI autonomously engaged ${planDetails.vendor} and negotiated the procurement of ${planDetails.quantity?.toLocaleString()} alternative units (${planDetails.part}), successfully preserving the production pipeline.`
-      };
-      localStorage.setItem('sentinel_latest_plan', JSON.stringify(activePlan));
+        recovered_amount_usd: impactResult.revenueAtRiskPerDay * (planDetails.score.includes("Risk") ? 0.98 : 0.94),
+        time_to_recovery_hours: planDetails.days * 24,
+        outcome: "Completed",
+        proposed_action: `Procure ${planDetails.quantity} of ${planDetails.part} from ${planDetails.vendor}`
+      },
+      decision_trail: auditTrail.map(a => ({ agent: a.source, action: a.message, timestamp: a.time, data_used: "Live session context" }))
+    };
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+      existing.unshift(newRecord);
+      localStorage.setItem('custom_disruptions', JSON.stringify(existing));
     } catch(e) {}
   };
 

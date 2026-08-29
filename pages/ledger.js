@@ -5,17 +5,12 @@ import { CheckCircle, AlertTriangle, XCircle, ArrowRight, Activity, DollarSign, 
 import React, { useState, useEffect } from 'react';
 
 export async function getServerSideProps() {
-  // Read the JSON directly server-side
   const fs = require('fs');
   const path = require('path');
   const filePath = path.join(process.cwd(), 'data', 'disruption-batch.json');
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   
-  return {
-    props: {
-      initialDisruptions: data
-    }
-  };
+  return { props: { initialDisruptions: data } };
 }
 
 export default function Ledger({ initialDisruptions }) {
@@ -23,18 +18,24 @@ export default function Ledger({ initialDisruptions }) {
   const [expandedId, setExpandedId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'detected_at', direction: 'desc' });
 
-  // Handle client-side sorting
+  // Load custom live disruptions from localStorage
+  useEffect(() => {
+    try {
+      const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+      if (custom.length > 0) {
+        setDisruptions([...custom, ...initialDisruptions]);
+      }
+    } catch(e) {}
+  }, [initialDisruptions]);
+
   const handleSort = (key) => {
     let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
+    if (sortConfig.key === key && sortConfig.direction === 'asc') direction = 'desc';
     setSortConfig({ key, direction });
 
     const sortedData = [...disruptions].sort((a, b) => {
       let aVal = a[key];
       let bVal = b[key];
-
       if (key === 'recovered') {
         aVal = a.resolution?.recovered_amount_usd || 0;
         bVal = b.resolution?.recovered_amount_usd || 0;
@@ -43,7 +44,6 @@ export default function Ledger({ initialDisruptions }) {
         aVal = a.revenue_at_risk_usd > 0 ? ((a.resolution?.recovered_amount_usd || 0) / a.revenue_at_risk_usd) : 0;
         bVal = b.revenue_at_risk_usd > 0 ? ((b.resolution?.recovered_amount_usd || 0) / b.revenue_at_risk_usd) : 0;
       }
-
       if (aVal < bVal) return direction === 'asc' ? -1 : 1;
       if (aVal > bVal) return direction === 'asc' ? 1 : -1;
       return 0;
@@ -51,11 +51,11 @@ export default function Ledger({ initialDisruptions }) {
     setDisruptions(sortedData);
   };
 
-  const totalAtRisk = initialDisruptions.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
-  const totalRecovered = initialDisruptions.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
+  const totalAtRisk = disruptions.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
+  const totalRecovered = disruptions.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
   const recoveryRate = totalAtRisk > 0 ? ((totalRecovered / totalAtRisk) * 100).toFixed(1) : 0;
   
-  const recoveredDisruptions = initialDisruptions.filter(d => d.resolution?.time_to_recovery_hours > 0);
+  const recoveredDisruptions = disruptions.filter(d => d.resolution?.time_to_recovery_hours > 0);
   const avgTime = recoveredDisruptions.length > 0 
     ? (recoveredDisruptions.reduce((acc, d) => acc + d.resolution.time_to_recovery_hours, 0) / recoveredDisruptions.length).toFixed(1)
     : 0;
@@ -132,9 +132,12 @@ export default function Ledger({ initialDisruptions }) {
                           onClick={() => setExpandedId(isExpanded ? null : d.disruption_id)}
                           className={`border-b border-gray-100 dark:border-white/5 cursor-pointer hover:bg-gray-50 dark:hover:bg-white/[0.02] ${isExpanded ? 'bg-gray-50 dark:bg-white/[0.02]' : ''}`}
                         >
-                          <td className="px-4 py-4 font-mono font-medium text-gray-900 dark:text-white">{d.disruption_id}</td>
+                          <td className="px-4 py-4 font-mono font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                            {d.disruption_id.includes('LIVE') && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>}
+                            {d.disruption_id}
+                          </td>
                           <td className="px-4 py-4">{d.part_affected}</td>
-                          <td className="px-4 py-4">${d.revenue_at_risk_usd.toLocaleString()}</td>
+                          <td className="px-4 py-4">${d.revenue_at_risk_usd?.toLocaleString() || '0'}</td>
                           <td className="px-4 py-4 font-medium text-emerald-600 dark:text-emerald-400">${recovered.toLocaleString()}</td>
                           <td className="px-4 py-4">
                             <div className="flex items-center gap-2">
@@ -161,7 +164,7 @@ export default function Ledger({ initialDisruptions }) {
                                   <ShieldCheck className="w-4 h-4 text-indigo-500" /> Audit & Decision Trail
                                 </h4>
                                 <div className="space-y-3 pl-2 border-l-2 border-indigo-500/30">
-                                  {d.decision_trail.map((t, idx) => (
+                                  {d.decision_trail && d.decision_trail.map((t, idx) => (
                                     <div key={idx} className="relative pl-4">
                                       <div className="absolute w-2 h-2 bg-indigo-500 rounded-full -left-[5px] top-1.5"></div>
                                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">

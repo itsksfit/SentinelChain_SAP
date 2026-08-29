@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import { ShieldAlert, AlertTriangle, AlertCircle, Clock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -10,17 +11,24 @@ export async function getServerSideProps() {
   const filePath = path.join(process.cwd(), 'data', 'disruption-batch.json');
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   
-  // Show only recent active or recently resolved items to keep it clean, maybe top 10
-  const recent = data;
-  
   return {
     props: {
-      disruptions: recent
+      initialDisruptions: data
     }
   };
 }
 
-export default function Disruptions({ disruptions }) {
+export default function Disruptions({ initialDisruptions }) {
+  const [disruptions, setDisruptions] = useState(initialDisruptions);
+
+  useEffect(() => {
+    try {
+      const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+      if (custom.length > 0) {
+        setDisruptions([...custom, ...initialDisruptions]);
+      }
+    } catch(e) {}
+  }, [initialDisruptions]);
   
   const getSeverity = (risk) => {
     if (risk > 1000000) return { label: 'CRITICAL', color: 'text-red-400 bg-red-500/20 border-red-500/30' };
@@ -68,9 +76,10 @@ export default function Disruptions({ disruptions }) {
                       </div>
                       <div>
                         <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                          {d.disruption_id.includes('LIVE') && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>}
                           {d.disruption_id} • {d.part_affected}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{d.event_type} — Risk: ${d.revenue_at_risk_usd.toLocaleString()}/day</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{d.event_type} — Risk: ${d.revenue_at_risk_usd?.toLocaleString() || '0'}/day</p>
                       </div>
                     </div>
                     <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded border ${sev.color}`}>

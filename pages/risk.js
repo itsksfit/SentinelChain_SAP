@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import { ShieldAlert, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -11,15 +11,32 @@ export async function getServerSideProps() {
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   
   const totalRecovered = data.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
+  const totalAtRisk = data.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
   
   return {
     props: {
-      totalRecovered
+      initialRecovered: totalRecovered,
+      initialRisk: totalAtRisk
     }
   };
 }
 
-export default function RiskAnalysis({ totalRecovered }) {
+export default function RiskAnalysis({ initialRecovered, initialRisk }) {
+  const [liveRecovered, setLiveRecovered] = useState(initialRecovered);
+  const [liveAtRisk, setLiveAtRisk] = useState(initialRisk || 84500000);
+
+  useEffect(() => {
+    try {
+      const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+      if (custom.length > 0) {
+        const extraRecovered = custom.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
+        const extraRisk = custom.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
+        setLiveRecovered(initialRecovered + extraRecovered);
+        setLiveAtRisk((initialRisk || 84500000) + extraRisk);
+      }
+    } catch(e) {}
+  }, [initialRecovered, initialRisk]);
+
   const formatMillions = (val) => `$${(val / 1000000).toFixed(1)}M`;
 
   return (
@@ -37,7 +54,7 @@ export default function RiskAnalysis({ totalRecovered }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="glass-panel p-5 border-l-4 border-red-500">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Total Value at Risk (30d)</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">$84.5M</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatMillions(liveAtRisk)}</p>
             </div>
             <div className="glass-panel p-5 border-l-4 border-indigo-500">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Active Threats</p>
@@ -45,7 +62,7 @@ export default function RiskAnalysis({ totalRecovered }) {
             </div>
             <div className="glass-panel p-5 border-l-4 border-emerald-500" title="Dynamically synced with Recovery Ledger total">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Mitigated Value</p>
-              <p className="text-2xl font-bold text-emerald-400">{totalRecovered > 0 ? formatMillions(totalRecovered) : '$14.2M'}</p>
+              <p className="text-2xl font-bold text-emerald-400">{formatMillions(liveRecovered)}</p>
             </div>
           </div>
 

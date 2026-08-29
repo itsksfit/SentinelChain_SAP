@@ -40,6 +40,24 @@ export default function Plans({ initialPlans }) {
   const [generating, setGenerating] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
+  useEffect(() => {
+    try {
+      const customDisruptions = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+      const customPlans = customDisruptions.filter(d => d.recovery_plan_id).map(d => ({
+        id: d.recovery_plan_id,
+        source_disruption_id: d.disruption_id,
+        generated_at: d.detected_at,
+        status: d.resolution?.outcome || "Pending",
+        vendor: d.resolution?.vendor || "N/A",
+        part: d.part_affected,
+        proposed_action: d.resolution?.proposed_action || (d.resolution?.alt_part_used ? `Procure ${d.resolution.alt_part_used} from ${d.resolution.vendor}` : 'Internal reallocation'),
+        risk_reduction_pct: d.revenue_at_risk_usd > 0 ? Math.round(((d.resolution?.recovered_amount_usd || 0) / d.revenue_at_risk_usd) * 100) : 0,
+        decision_trail: d.decision_trail
+      }));
+      setPlans([...customPlans, ...initialPlans]);
+    } catch(e) {}
+  }, [initialPlans]);
+
   const handleGenerate = async () => {
     if (!customInput.trim()) return;
     setGenerating(true);
@@ -50,7 +68,16 @@ export default function Plans({ initialPlans }) {
         body: JSON.stringify({ customInput })
       });
       if (res.ok) {
-        // Just reload the page to get the new SSR data
+        const newRecord = await res.json();
+        
+        // Also save to localStorage so it persists instantly on client
+        try {
+          const existing = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+          existing.unshift(newRecord);
+          localStorage.setItem('custom_disruptions', JSON.stringify(existing));
+        } catch(e) {}
+
+        // Reload the page to get the new SSR data
         router.replace(router.asPath);
         setShowModal(false);
         setCustomInput('');
@@ -96,7 +123,10 @@ export default function Plans({ initialPlans }) {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-gray-900 dark:text-white text-lg">{plan.id}</h3>
+                      <h3 className="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+                        {plan.id.includes('LIVE') && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>}
+                        {plan.id}
+                      </h3>
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(plan.status)}`}>
                         {plan.status}
                       </span>
