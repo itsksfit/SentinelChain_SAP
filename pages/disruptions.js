@@ -11,7 +11,7 @@ export async function getServerSideProps() {
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   
   // Show only recent active or recently resolved items to keep it clean, maybe top 10
-  const recent = data.slice(0, 15);
+  const recent = data;
   
   return {
     props: {
