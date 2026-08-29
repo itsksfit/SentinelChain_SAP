@@ -1,19 +1,29 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { CheckCircle, AlertTriangle, XCircle, ArrowRight, Activity, DollarSign, Clock, ShieldCheck } from 'lucide-react';
+import { CheckCircle, AlertTriangle, XCircle, ArrowRight, Activity, DollarSign, Clock, ShieldCheck, ShieldAlert } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
-import batchData from '../data/disruption-batch.json';
 
-export default function Ledger() {
-  const [disruptions, setDisruptions] = useState([]);
+export async function getServerSideProps() {
+  // Read the JSON directly server-side
+  const fs = require('fs');
+  const path = require('path');
+  const filePath = path.join(process.cwd(), 'data', 'disruption-batch.json');
+  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  
+  return {
+    props: {
+      initialDisruptions: data
+    }
+  };
+}
+
+export default function Ledger({ initialDisruptions }) {
+  const [disruptions, setDisruptions] = useState(initialDisruptions);
   const [expandedId, setExpandedId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'detected_at', direction: 'desc' });
 
-  useEffect(() => {
-    setDisruptions(batchData);
-  }, []);
-
+  // Handle client-side sorting
   const handleSort = (key) => {
     let direction = 'asc';
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
@@ -41,23 +51,20 @@ export default function Ledger() {
     setDisruptions(sortedData);
   };
 
-  // Summaries
-  const totalAtRisk = disruptions.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
-  const totalRecovered = disruptions.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
+  const totalAtRisk = initialDisruptions.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
+  const totalRecovered = initialDisruptions.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
   const recoveryRate = totalAtRisk > 0 ? ((totalRecovered / totalAtRisk) * 100).toFixed(1) : 0;
   
-  const recoveredDisruptions = disruptions.filter(d => d.resolution?.time_to_recovery_hours > 0);
+  const recoveredDisruptions = initialDisruptions.filter(d => d.resolution?.time_to_recovery_hours > 0);
   const avgTime = recoveredDisruptions.length > 0 
     ? (recoveredDisruptions.reduce((acc, d) => acc + d.resolution.time_to_recovery_hours, 0) / recoveredDisruptions.length).toFixed(1)
     : 0;
 
   const getStatusIcon = (status) => {
-    switch (status) {
-      case 'Completed': return <CheckCircle className="w-4 h-4 text-emerald-500" />;
-      case 'Escalated': return <AlertTriangle className="w-4 h-4 text-orange-500" />;
-      case 'Resolved': return <ShieldCheck className="w-4 h-4 text-blue-500" />;
-      default: return <XCircle className="w-4 h-4 text-red-500" />;
-    }
+    if (status.includes('Completed') || status.includes('Resolved')) return <CheckCircle className="w-4 h-4 text-emerald-500" />;
+    if (status.includes('Escalated')) return <AlertTriangle className="w-4 h-4 text-orange-500" />;
+    if (status.includes('Failed')) return <XCircle className="w-4 h-4 text-red-500" />;
+    return <Activity className="w-4 h-4 text-blue-500" />;
   };
 
   return (
@@ -72,7 +79,6 @@ export default function Ledger() {
             <p className="text-gray-500 dark:text-gray-400 mt-1">Audit trail and measured revenue recovery across all disruption batches.</p>
           </div>
 
-          {/* Summary Header */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div className="glass-panel p-5 border border-gray-200 dark:border-white/10 rounded-xl">
               <div className="flex items-center gap-2 mb-2 text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider">
@@ -100,18 +106,17 @@ export default function Ledger() {
             </div>
           </div>
 
-          {/* Ledger Table */}
           <div className="glass-panel rounded-xl overflow-hidden border border-gray-200 dark:border-white/10">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                 <thead className="text-xs uppercase bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10">
                   <tr>
-                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" onClick={() => handleSort('disruption_id')}>Disruption ID</th>
-                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" onClick={() => handleSort('part_affected')}>Part</th>
-                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" onClick={() => handleSort('revenue_at_risk_usd')}>At Risk</th>
-                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" onClick={() => handleSort('recovered')}>Recovered</th>
-                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" onClick={() => handleSort('recovery_pct')}>Recovery %</th>
-                    <th className="px-4 py-3">Outcome / Status</th>
+                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => handleSort('disruption_id')}>Disruption ID</th>
+                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => handleSort('part_affected')}>Part</th>
+                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => handleSort('revenue_at_risk_usd')}>At Risk</th>
+                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => handleSort('recovered')}>Recovered</th>
+                    <th className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10" onClick={() => handleSort('recovery_pct')}>Recovery %</th>
+                    <th className="px-4 py-3">Outcome</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -119,12 +124,13 @@ export default function Ledger() {
                     const recovered = d.resolution?.recovered_amount_usd || 0;
                     const recPct = d.revenue_at_risk_usd > 0 ? Math.round((recovered / d.revenue_at_risk_usd) * 100) : 0;
                     const isExpanded = expandedId === d.disruption_id;
+                    const outcomeStr = d.resolution?.outcome || d.status;
 
                     return (
                       <React.Fragment key={d.disruption_id}>
                         <tr 
                           onClick={() => setExpandedId(isExpanded ? null : d.disruption_id)}
-                          className={`border-b border-gray-100 dark:border-white/5 cursor-pointer hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors ${isExpanded ? 'bg-gray-50 dark:bg-white/[0.02]' : ''}`}
+                          className={`border-b border-gray-100 dark:border-white/5 cursor-pointer hover:bg-gray-50 dark:hover:bg-white/[0.02] ${isExpanded ? 'bg-gray-50 dark:bg-white/[0.02]' : ''}`}
                         >
                           <td className="px-4 py-4 font-mono font-medium text-gray-900 dark:text-white">{d.disruption_id}</td>
                           <td className="px-4 py-4">{d.part_affected}</td>
@@ -140,8 +146,10 @@ export default function Ledger() {
                           </td>
                           <td className="px-4 py-4">
                             <div className="flex items-center gap-1.5 font-medium">
-                              {getStatusIcon(d.status)}
-                              <span className={d.status === 'Escalated' ? 'text-orange-500' : 'text-gray-900 dark:text-white'}>{d.status}</span>
+                              {getStatusIcon(outcomeStr)}
+                              <span className={outcomeStr.includes('Escalated') ? 'text-orange-500' : outcomeStr.includes('Failed') ? 'text-red-500' : 'text-gray-900 dark:text-white'}>
+                                {outcomeStr}
+                              </span>
                             </div>
                           </td>
                         </tr>
@@ -150,8 +158,7 @@ export default function Ledger() {
                             <td colSpan="6" className="p-0 border-b border-gray-200 dark:border-white/10">
                               <div className="p-6 bg-gray-50/50 dark:bg-black/20 text-sm">
                                 <h4 className="font-bold text-gray-900 dark:text-white mb-3 uppercase tracking-wider text-xs flex items-center gap-2">
-                                  <ShieldCheck className="w-4 h-4 text-indigo-500" />
-                                  Audit & Decision Trail
+                                  <ShieldCheck className="w-4 h-4 text-indigo-500" /> Audit & Decision Trail
                                 </h4>
                                 <div className="space-y-3 pl-2 border-l-2 border-indigo-500/30">
                                   {d.decision_trail.map((t, idx) => (
@@ -161,12 +168,16 @@ export default function Ledger() {
                                         <span className="font-bold text-gray-700 dark:text-gray-300">{t.agent}</span> • {new Date(t.timestamp).toLocaleString()}
                                       </p>
                                       <p className="text-gray-800 dark:text-gray-200">{t.action}</p>
-                                      <p className="text-[10px] font-mono text-gray-500 mt-1 flex items-center gap-1">
-                                        <ArrowRight className="w-3 h-3" /> Source: {t.data_used}
-                                      </p>
                                     </div>
                                   ))}
                                 </div>
+                                {d.recovery_plan_id && (
+                                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+                                    <a href="/plans" className="text-indigo-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                                      View Recovery Plan {d.recovery_plan_id} <ArrowRight className="w-3 h-3" />
+                                    </a>
+                                  </div>
+                                )}
                               </div>
                             </td>
                           </tr>

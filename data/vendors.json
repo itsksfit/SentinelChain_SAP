@@ -68,26 +68,5 @@
     "region": "Europe",
     "reliability_score": 95,
     "price_variance_pct": 9
-  },
-  {
-    "vendor_id": "V-011",
-    "name": "TTI, Inc.",
-    "region": "Global",
-    "reliability_score": 96,
-    "price_variance_pct": 7
-  },
-  {
-    "vendor_id": "V-012",
-    "name": "Smith",
-    "region": "Global",
-    "reliability_score": 85,
-    "price_variance_pct": 25
-  },
-  {
-    "vendor_id": "V-013",
-    "name": "Fusion Worldwide",
-    "region": "Global",
-    "reliability_score": 82,
-    "price_variance_pct": 30
   }
 ]

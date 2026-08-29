@@ -1,14 +1,42 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { ShieldAlert, AlertTriangle, AlertCircle, Clock } from 'lucide-react';
+import { ShieldAlert, AlertTriangle, AlertCircle, Clock, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Disruptions() {
-  const disruptions = [
-    { id: "DSP-092", part: "MCU-2201X", type: "Export Ban", severity: "CRITICAL", time: "2 hours ago", status: "Mitigating", products: 2 },
-    { id: "DSP-091", part: "PWR-9942A", type: "Factory Fire", severity: "HIGH", time: "14 hours ago", status: "Assessing", products: 1 },
-    { id: "DSP-088", part: "MEM-64GB-NAND", type: "Material Shortage", severity: "MEDIUM", time: "2 days ago", status: "Resolved", products: 3 },
-  ];
+export async function getServerSideProps() {
+  const fs = require('fs');
+  const path = require('path');
+  const filePath = path.join(process.cwd(), 'data', 'disruption-batch.json');
+  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  
+  // Show only recent active or recently resolved items to keep it clean, maybe top 10
+  const recent = data.slice(0, 15);
+  
+  return {
+    props: {
+      disruptions: recent
+    }
+  };
+}
+
+export default function Disruptions({ disruptions }) {
+  
+  const getSeverity = (risk) => {
+    if (risk > 1000000) return { label: 'CRITICAL', color: 'text-red-400 bg-red-500/20 border-red-500/30' };
+    if (risk > 200000) return { label: 'HIGH', color: 'text-orange-400 bg-orange-500/20 border-orange-500/30' };
+    return { label: 'MEDIUM', color: 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30' };
+  };
+
+  const getStatusColor = (status) => {
+    if (status.includes('Completed') || status.includes('Resolved')) return 'text-emerald-500';
+    if (status.includes('Escalated')) return 'text-orange-500';
+    if (status.includes('Failed')) return 'text-red-500';
+    return 'text-blue-500'; // Mitigating, Assessing
+  };
+
+  const countCrit = disruptions.filter(d => d.revenue_at_risk_usd > 1000000 && !d.status.includes('Resolved') && !d.status.includes('Completed')).length;
+  const countHigh = disruptions.filter(d => d.revenue_at_risk_usd > 200000 && d.revenue_at_risk_usd <= 1000000 && !d.status.includes('Resolved') && !d.status.includes('Completed')).length;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
@@ -20,52 +48,57 @@ export default function Disruptions() {
           <div className="flex justify-between items-end mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Active Disruptions</h1>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">Real-time monitoring of supply chain anomalies.</p>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">Real-time monitoring of supply chain anomalies mapped to BOM.</p>
             </div>
             <div className="flex gap-2">
-              <span className="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-sm font-medium">1 Critical</span>
-              <span className="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded text-sm font-medium">1 High</span>
+              <span className="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-sm font-medium">{countCrit} Critical</span>
+              <span className="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded text-sm font-medium">{countHigh} High</span>
             </div>
           </div>
 
-          <div className="glass-panel overflow-hidden">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5">
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">ID</th>
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Component</th>
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Event Type</th>
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Severity</th>
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Detected</th>
-                  <th className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {disruptions.map((d, i) => (
-                  <tr key={i} className="hover:bg-gray-100 dark:bg-white/5 transition-colors">
-                    <td className="p-4 text-sm font-mono text-gray-700 dark:text-gray-300">{d.id}</td>
-                    <td className="p-4 text-sm font-bold text-gray-900 dark:text-white">{d.part}</td>
-                    <td className="p-4 text-sm text-gray-700 dark:text-gray-300">{d.type}</td>
-                    <td className="p-4">
-                      <span className={`flex items-center gap-1 w-max px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${
-                        d.severity === 'CRITICAL' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 
-                        d.severity === 'HIGH' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 
-                        'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                      }`}>
-                        {d.severity === 'CRITICAL' ? <AlertTriangle className="w-3 h-3" /> : <AlertCircle className="w-3 h-3" />}
-                        {d.severity}
+          <div className="grid grid-cols-1 gap-4">
+            {disruptions.map((d, i) => {
+              const sev = getSeverity(d.revenue_at_risk_usd);
+              return (
+                <div key={i} className="glass-panel p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg ${sev.color.replace('border-', '').replace('text-', 'bg-').replace('/20', '/10')}`}>
+                        <ShieldAlert className={`w-5 h-5 ${sev.color.split(' ')[0]}`} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                          {d.disruption_id} • {d.part_affected}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{d.event_type} — Risk: ${d.revenue_at_risk_usd.toLocaleString()}/day</p>
+                      </div>
+                    </div>
+                    <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded border ${sev.color}`}>
+                      {sev.label}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-white/5">
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                        <Clock className="w-4 h-4" />
+                        {new Date(d.detected_at).toLocaleDateString()}
                       </span>
-                    </td>
-                    <td className="p-4 text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {d.time}</td>
-                    <td className="p-4 text-sm">
-                      <span className={`px-2 py-1 rounded text-xs ${d.status === 'Resolved' ? 'text-emerald-400 bg-emerald-500/10' : 'text-indigo-400 bg-indigo-500/10'}`}>
+                      <span className={`font-semibold flex items-center gap-1 ${getStatusColor(d.status)}`}>
+                        <div className={`w-2 h-2 rounded-full bg-current ${d.status === 'Mitigating' ? 'animate-pulse' : ''}`}></div>
                         {d.status}
                       </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                    
+                    {d.recovery_plan_id && (
+                      <Link href="/plans" className="text-indigo-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 bg-indigo-500/10 px-3 py-1.5 rounded transition-colors">
+                        View Recovery Plan {d.recovery_plan_id} <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
