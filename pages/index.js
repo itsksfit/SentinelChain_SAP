@@ -73,7 +73,7 @@ export default function Dashboard() {
   }, []);
 
   const addAudit = (source, message) => {
-    setAuditTrail(prev => [...prev, { time: new Date().toLocaleTimeString(), source, message }]);
+    setAuditTrail(prev => [...prev, { time: new Date().toISOString(), source, message }]);
   };
 
   const chatEndRef = useRef(null);
@@ -700,7 +700,7 @@ export default function Dashboard() {
                     {auditTrail.map((log, i) => (
                       <div key={i} className="flex flex-col gap-1">
                         <div className="flex gap-2">
-                          <span className="text-emerald-500">[{log.time}]</span>
+                          <span className="text-emerald-500">[{new Date(log.time).toLocaleTimeString()}]</span>
                           <span className="text-indigo-400 font-bold">{log.source}:</span>
                         </div>
                         <div className="text-gray-700 dark:text-gray-300 pl-4 border-l-2 border-gray-100 dark:border-gray-800 ml-2">
