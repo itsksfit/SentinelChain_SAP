@@ -270,62 +270,65 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
               <div className="p-6 md:p-8 lg:col-span-4 space-y-10 bg-gray-50 dark:bg-black/20">
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <FileText className="w-4 h-4" /> Evidence Sources
+                    <FileText className="w-4 h-4" /> Telemetry Sources
                   </h3>
-                  <ul className="space-y-3">
+                  <div className="space-y-3">
                     {sources.map((src, i) => (
-                      <li key={i} className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></div> {src}
-                      </li>
+                      <div key={i} className="flex items-center gap-3 p-2.5 bg-white dark:bg-[#151821] rounded border border-gray-200 dark:border-white/10 shadow-sm">
+                        <div className="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></div> 
+                        <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{src}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <GitCommit className="w-4 h-4" /> Impact Chain
+                    <GitCommit className="w-4 h-4" /> Vulnerability Scope
                   </h3>
                   <div className="space-y-0 relative before:absolute before:inset-0 before:ml-[11px] before:h-full before:w-[2px] before:bg-gradient-to-b before:from-transparent before:via-gray-300 dark:before:via-gray-700 before:to-transparent">
                     
                     <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white dark:border-[#11141c] bg-gray-200 dark:bg-gray-800 text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
                         <Factory className="w-3 h-3" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Supplier</p>
-                        <p className="text-sm font-bold text-gray-900 dark:text-white">{data.vendor || "XYZ Semiconductor"}</p>
+                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Manufacturer</p>
+                        <p className="text-sm font-bold text-gray-900 dark:text-white">
+                          {data.vendor || (data.part_affected?.includes('GPU') ? 'NVIDIA' : data.part_affected?.includes('MCU') ? 'STMicroelectronics' : data.part_affected?.includes('FPGA') ? 'Xilinx' : data.part_affected?.includes('MEM') ? 'Micron' : 'Tier-1 Supplier')}
+                        </p>
                       </div>
                     </div>
 
                     <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white dark:border-[#11141c] bg-gray-200 dark:bg-gray-800 text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
                         <Box className="w-3 h-3" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Part</p>
-                        <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 font-mono">
+                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Target Component</p>
+                        <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 font-mono bg-indigo-50 dark:bg-indigo-500/10 px-2 py-0.5 rounded-md inline-block border border-indigo-100 dark:border-indigo-500/20">
                           <Link href="/network" className="hover:underline">{data.part_affected}</Link>
                         </p>
                       </div>
                     </div>
 
                     <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white dark:border-[#11141c] bg-gray-200 dark:bg-gray-800 text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
                         <BarChart2 className="w-3 h-3" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Impact Scope</p>
-                        <p className="text-sm font-bold text-gray-900 dark:text-white">{plants} Plants / {products} Products</p>
+                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">BOM Dependencies</p>
+                        <p className="text-sm font-bold text-gray-900 dark:text-white">{plants} Assembly Lines / {products} Products</p>
                       </div>
                     </div>
 
                     <div className="relative flex items-start gap-4">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-white dark:border-[#11141c] bg-red-100 dark:bg-red-900/30 text-red-500 shadow-sm shrink-0 z-10 mt-0.5">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-red-50 dark:bg-red-900/30 text-red-500 shadow-sm shrink-0 z-10 mt-0.5">
                         <ShieldAlert className="w-3 h-3" />
                       </div>
                       <div>
-                        <p className="text-[10px] text-red-500 uppercase font-bold tracking-widest mb-0.5">Revenue Exposure</p>
-                        <p className="text-xl font-black text-gray-900 dark:text-white">${data.revenue_at_risk_usd?.toLocaleString() || '3,500,000'}/day</p>
+                        <p className="text-[9px] text-red-500 uppercase font-bold tracking-widest mb-0.5">Revenue at Risk</p>
+                        <p className="text-xl font-black text-gray-900 dark:text-white">${data.revenue_at_risk_usd?.toLocaleString() || '3,500,000'}<span className="text-sm text-gray-400 font-medium">/day</span></p>
                       </div>
                     </div>
                     
@@ -333,28 +336,39 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                 </div>
 
                 <div className="pt-6 border-t border-gray-200 dark:border-white/10">
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <Database className="w-4 h-4" /> Alternative Parts Found
-                  </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                      <Database className="w-4 h-4" /> Catalog Cross-Reference
+                    </h3>
+                    <span className="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-bold uppercase rounded border border-emerald-200 dark:border-emerald-500/20 tracking-wider">Active</span>
+                  </div>
                   <div className="space-y-3">
-                    {part?.pin_compatible_alternatives?.length > 0 ? (
-                      part.pin_compatible_alternatives.map((alt, i) => (
-                        <div key={i} className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-lg shadow-sm flex items-center justify-between">
-                          <div>
-                            <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono mb-0.5">{alt.alt_part_id}</p>
-                            <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{alt.vendor}</p>
+                    {(() => {
+                      const alts = data.matched_options?.map(o => o._raw) || part?.pin_compatible_alternatives || [];
+                      if (alts.length > 0) {
+                        return alts.map((alt, i) => (
+                          <div key={i} className="p-3.5 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm flex items-center justify-between group hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors">
+                            <div>
+                              <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono mb-1">{alt.alt_part_id}</p>
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">{alt.vendor}</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-xs font-black text-gray-900 dark:text-white mb-0.5">{alt.stock_qty?.toLocaleString()} <span className="font-medium text-gray-400 text-[10px]">UNITS</span></p>
+                              <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">ETA: {alt.lead_time_days} days</p>
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <p className="text-xs font-bold text-gray-900 dark:text-white">{alt.stock_qty.toLocaleString()} units</p>
-                            <p className="text-[10px] text-gray-500 font-medium">ETA: {alt.lead_time_days} days</p>
-                          </div>
+                        ));
+                      }
+                      return (
+                        <div className="p-4 bg-gray-100 dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl text-center shadow-inner">
+                          <AlertTriangle className="w-5 h-5 text-gray-400 mx-auto mb-2" />
+                          <p className="text-xs text-gray-500 font-medium">No drop-in replacements found in authorized vendor catalog.</p>
                         </div>
-                      ))
-                    ) : (
-                      <div className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-lg text-center shadow-sm">
-                        <p className="text-xs text-gray-500 font-medium">No drop-in replacements found.</p>
-                      </div>
-                    )}
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
