@@ -18,8 +18,8 @@ export default async function handler(req, res) {
     const partsData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const catPart = partsData.find(p => p.part_id === partNumber);
     if (catPart) {
-      // 10,000 units/day volume * base price exactly (e.g. 10000 * 10000 = 100M for GPU)
-      dailyRisk = (catPart.base_price * 10000);
+      // 1,420 units/day volume * base price
+      dailyRisk = (catPart.base_price * 1420);
     }
   } catch(e) {}
 
