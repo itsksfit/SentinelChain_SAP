@@ -36,6 +36,7 @@ export default function Dashboard() {
   
   // Real-Time Intelligence State
   const [liveNews, setLiveNews] = useState([]);
+  const [accuracyStat, setAccuracyStat] = useState("Loading...");
   const [activeNews, setActiveNews] = useState(null);
 
   const fetchNews = () => {
@@ -50,6 +51,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
+    fetch('/api/stats').then(r => r.json()).then(data => setAccuracyStat(data.accuracyText));
     fetchNews();
     // Auto-refresh the live disruption feed every 30 seconds only if idle
     const interval = setInterval(() => {
@@ -221,14 +223,7 @@ export default function Dashboard() {
               <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="True positive rate on seeded batch">
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Detection Accuracy</span>
                 <span className="text-xs font-semibold text-emerald-400">
-                  {(() => {
-                    if (typeof window === 'undefined') return 'Loading...';
-                    try {
-                      const b = require('../data/disruption-batch.json');
-                      const conf = b.filter(x => x.confirmed_impact).length;
-                      return `${conf}/${b.length} (${((conf/b.length)*100).toFixed(0)}%)`;
-                    } catch(e) { return 'N/A' }
-                  })()}
+                  {accuracyStat}
                 </span>
               </div>
             </div>

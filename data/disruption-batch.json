@@ -131,16 +131,16 @@
     "part_affected": "FPGA-Z7020",
     "event_type": "Export Ban",
     "detected_at": "2026-08-02T09:00:01.096Z",
-    "revenue_at_risk_usd": 517136,
-    "status": "Completed",
-    "confirmed_impact": true,
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
     "resolution": {
-      "plan_id": "RP-10003",
-      "alt_part_used": "FPGA-Z7020-ALT",
-      "vendor": "Rutronik",
-      "recovered_amount_usd": 381811,
-      "time_to_recovery_hours": 23,
-      "outcome": "Completed"
+      "plan_id": null,
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "Resolved (False Positive)"
     },
     "decision_trail": [
       {
@@ -152,20 +152,8 @@
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-02T09:00:06.096Z",
-        "action": "Confirmed financial risk of $517,136/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-Z7020, Revenue Dependency."
-      },
-      {
-        "agent": "Match Agent",
-        "timestamp": "2026-08-02T09:00:16.096Z",
-        "action": "Identified 3 alternatives. Selected FPGA-Z7020-ALT.",
-        "data_used": "parts-catalog.json row match"
-      },
-      {
-        "agent": "Chase Agent",
-        "timestamp": "2026-08-02T09:01:01.096Z",
-        "action": "Negotiated procurement of FPGA-Z7020-ALT with Rutronik at $129.69.",
-        "data_used": "vendors.json reliability rating"
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
+        "data_used": "SAP Inventory Check"
       }
     ]
   },
@@ -175,16 +163,16 @@
     "part_affected": "GPU-A100-80",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-03T10:24:29.104Z",
-    "revenue_at_risk_usd": 2860939,
-    "status": "Failed",
-    "confirmed_impact": true,
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
     "resolution": {
-      "plan_id": "RP-10004",
+      "plan_id": null,
       "alt_part_used": null,
       "vendor": null,
       "recovered_amount_usd": 0,
       "time_to_recovery_hours": 0,
-      "outcome": "Failed"
+      "outcome": "Resolved (False Positive)"
     },
     "decision_trail": [
       {
@@ -196,14 +184,8 @@
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-03T10:24:34.104Z",
-        "action": "Confirmed financial risk of $2,860,939/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: GPU-A100-80, Revenue Dependency."
-      },
-      {
-        "agent": "Match Agent",
-        "timestamp": "2026-08-03T10:24:44.104Z",
-        "action": "Attempted to source parts, but inventory globally exhausted.",
-        "data_used": "parts-catalog.json stock_qty"
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
+        "data_used": "SAP Inventory Check"
       }
     ]
   },
@@ -213,16 +195,16 @@
     "part_affected": "SENSOR-3370S",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-04T11:29:10.789Z",
-    "revenue_at_risk_usd": 4285834,
-    "status": "Completed",
-    "confirmed_impact": true,
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
     "resolution": {
-      "plan_id": "RP-10005",
-      "alt_part_used": "SENSOR-3190U",
-      "vendor": "WPG Holdings",
-      "recovered_amount_usd": 4128073,
-      "time_to_recovery_hours": 20,
-      "outcome": "Completed"
+      "plan_id": null,
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "Resolved (False Positive)"
     },
     "decision_trail": [
       {
@@ -234,20 +216,8 @@
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-04T11:29:15.789Z",
-        "action": "Confirmed financial risk of $4,285,834/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: SENSOR-3370S, Revenue Dependency."
-      },
-      {
-        "agent": "Match Agent",
-        "timestamp": "2026-08-04T11:29:25.789Z",
-        "action": "Identified 1 alternatives. Selected SENSOR-3190U.",
-        "data_used": "parts-catalog.json row match"
-      },
-      {
-        "agent": "Chase Agent",
-        "timestamp": "2026-08-04T11:30:10.789Z",
-        "action": "Negotiated procurement of SENSOR-3190U with WPG Holdings at $49.39.",
-        "data_used": "vendors.json reliability rating"
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
+        "data_used": "SAP Inventory Check"
       }
     ]
   },
@@ -257,16 +227,16 @@
     "part_affected": "MCU-6093I",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-05T10:08:19.882Z",
-    "revenue_at_risk_usd": 1896892,
-    "status": "Completed",
-    "confirmed_impact": true,
+    "revenue_at_risk_usd": 0,
+    "status": "Resolved",
+    "confirmed_impact": false,
     "resolution": {
-      "plan_id": "RP-10006",
-      "alt_part_used": "MCU-6018W",
-      "vendor": "WT Microelectronics",
-      "recovered_amount_usd": 1834686,
-      "time_to_recovery_hours": 39,
-      "outcome": "Completed"
+      "plan_id": null,
+      "alt_part_used": null,
+      "vendor": null,
+      "recovered_amount_usd": 0,
+      "time_to_recovery_hours": 0,
+      "outcome": "Resolved (False Positive)"
     },
     "decision_trail": [
       {
@@ -278,20 +248,8 @@
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-05T10:08:24.882Z",
-        "action": "Confirmed financial risk of $1,896,892/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MCU-6093I, Revenue Dependency."
-      },
-      {
-        "agent": "Match Agent",
-        "timestamp": "2026-08-05T10:08:34.882Z",
-        "action": "Identified 1 alternatives. Selected MCU-6018W.",
-        "data_used": "parts-catalog.json row match"
-      },
-      {
-        "agent": "Chase Agent",
-        "timestamp": "2026-08-05T10:09:19.882Z",
-        "action": "Negotiated procurement of MCU-6018W with WT Microelectronics at $80.36.",
-        "data_used": "vendors.json reliability rating"
+        "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
+        "data_used": "SAP Inventory Check"
       }
     ]
   },
