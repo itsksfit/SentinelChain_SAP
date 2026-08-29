@@ -102,7 +102,7 @@
     "part_id": "GPU-A100-80",
     "category": "GPU",
     "manufacturer": "NVIDIA",
-    "base_price": 12500,
+    "base_price": 10000,
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "GPU-A100-80-ALT",

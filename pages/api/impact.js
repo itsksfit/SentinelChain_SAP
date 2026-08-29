@@ -10,8 +10,7 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: "Part not found" });
   }
 
-  // Load deterministic baseline from parts-catalog (using base_price * simulated daily volume) 
-  // or fallback to the component.revenueAtRiskPerDay
+  // Load deterministic baseline from parts-catalog (using base_price * simulated daily volume)
   let dailyRisk = component.revenueAtRiskPerDay || 500000;
   
   try {
@@ -19,7 +18,8 @@ export default async function handler(req, res) {
     const partsData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const catPart = partsData.find(p => p.part_id === partNumber);
     if (catPart) {
-      dailyRisk = (catPart.base_price * 10000) * (severity === 'high' ? 1.5 : 0.8);
+      // 10,000 units/day volume * base price exactly (e.g. 10000 * 10000 = 100M for GPU)
+      dailyRisk = (catPart.base_price * 10000);
     }
   } catch(e) {}
 
