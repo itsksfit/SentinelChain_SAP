@@ -102,11 +102,9 @@ export default function Disruptions({ initialDisruptions }) {
                       <StatusBadge status={d.status} />
                     </div>
                     
-                    {d.recovery_plan_id && (
-                      <Link href="/plans" className="text-indigo-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 bg-indigo-500/10 px-3 py-1.5 rounded transition-colors">
-                        View Recovery Plan {d.recovery_plan_id} <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
+                    <Link href={`/disruptions/${d.disruption_id}`} className="text-indigo-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 bg-indigo-500/10 px-3 py-1.5 rounded transition-colors">
+                      Open Decision Center <ArrowRight className="w-3 h-3" />
+                    </Link>
                   </div>
                 </div>
               );

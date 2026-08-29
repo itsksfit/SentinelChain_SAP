@@ -174,30 +174,32 @@ export default function Dashboard() {
     addAudit('Cross-Reference', `${d3.length} compatible alternatives found`);
 
     await new Promise(r => setTimeout(r, 1500));
-    setStage(4);
-
-    // 4. Negotiate
-    const r4 = await fetch('/api/negotiate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ partNumber: d1.partNumber, options: d3 })
-    });
-    const d4 = await r4.json();
-    setNegotiateResult(d4);
-    
     setLoading(false);
     
-    let index = 0;
-    setChatRevealIndex(0);
-    const interval = setInterval(() => {
-      index++;
-      setChatRevealIndex(index);
-      if (index >= d4.chatLog.length) {
-        clearInterval(interval);
-        addAudit('Chase Agent', `Supplier quotes evaluated`);
-        setTimeout(() => setStage(5), 1500);
-      }
-    }, 2500); 
+    // We stop at Stage 3 (Impact & Match complete). The user must now open the Decision Center.
+    addAudit('System', 'Analysis complete. Awaiting human decision.');
+    
+    // Create the disruption payload to pass to the decision center
+    const newRecord = {
+      disruption_id: "DSP-LIVE-" + Math.floor(Math.random() * 10000),
+      event_type: d1.reason || "External Risk Detected",
+      part_affected: d1.partNumber,
+      severity: d1.severity,
+      revenue_at_risk_usd: d2.revenueAtRiskPerDay,
+      status: "Awaiting Decision",
+      confidence: Math.floor(Math.random() * 10) + 88,
+      plants_affected: 3,
+      products_affected: d2.affectedProducts?.length || 1,
+      orders_at_risk: 42,
+      matched_options: d3
+    };
+    
+    const current = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+    localStorage.setItem('custom_disruptions', JSON.stringify([newRecord, ...current]));
+    
+    // Pass the new record to state so Stage 3 UI can render the "Decision Required" card
+    setMatchResult(newRecord);
+
   };
 
   const approvePlan = async () => {
@@ -509,25 +511,7 @@ export default function Dashboard() {
               {getStageStatus(stage, 3) === 'COMPLETED' && matchResult && (
                 <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
                   <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Alternatives</p>
-                  <p className="text-xs font-mono text-blue-300 mt-1 truncate">{matchResult.length} verified</p>
-                </div>
-              )}
-            </div>
-
-            {/* Stage 4: Chase */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 4 ? 'border-indigo-500/50 ' : ''} ${stage < 4 ? 'opacity-50' : ''}`}>
-              {stage === 4 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
-              </div>
-              <div className="flex items-center gap-2 mb-1">
-                <MessageSquare className={`w-4 h-4 ${stage >= 4 ? 'text-purple-400' : 'text-gray-600'}`} />
-                <h3 className={`font-semibold text-sm ${stage >= 4 ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>Chase Agent</h3>
-              </div>
-              {getStageStatus(stage, 4) === 'COMPLETED' && negotiateResult && (
-                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
-                  <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Evaluated</p>
-                  <p className="text-xs font-mono text-purple-300 mt-1 truncate">{negotiateResult.rankedPlan?.length || 0} suppliers</p>
+                  <p className="text-xs font-mono text-blue-300 mt-1 truncate">{matchResult.matched_options?.length || 3} generated</p>
                 </div>
               )}
             </div>
@@ -566,178 +550,47 @@ export default function Dashboard() {
                 </div>
               )}
 
-              {stage >= 3 && matchResult && (
-                <div className="glass-panel p-6 animate-[fadeInUp_0.4s_ease-out]">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-gray-200 dark:border-white/10 pb-2">Compatible Alternatives</h3>
-                  <div className="space-y-3">
-                    {matchResult.map((alt, i) => (
-                      <div key={i} className={`p-3 rounded-lg border ${i === 0 ? 'bg-indigo-900/20 border-indigo-500/30' : 'bg-gray-100 dark:bg-white/5 border-gray-100 dark:border-white/5'}`}>
-                        <div className="flex justify-between items-start mb-1">
-                          <p className="font-mono text-sm text-gray-900 dark:text-white font-bold">{alt.partNumber}</p>
-                          {i === 0 && <span className="text-[9px] uppercase tracking-wider bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">Top Match</span>}
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{alt.vendor}</p>
-                        <p className="text-xs text-gray-500 mt-2">{alt.note}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* RIGHT COLUMN: NEGOTIATION & RESOLUTION */}
+            {/* RIGHT COLUMN: ACTION REQUIRED (DECISION CENTER) */}
             <div className="lg:col-span-2 space-y-6">
-              {stage >= 4 && negotiateResult && (
-                <div className="glass-panel flex flex-col h-[400px] animate-[fadeInUp_0.4s_ease-out]">
-                  <div className="p-4 border-b border-gray-200 dark:border-white/10 flex justify-between items-center bg-gray-100 dark:bg-white/5 rounded-t-xl">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Chase Agent</h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Autonomous supplier negotiation</p>
-                    </div>
-                    {stage === 4 ? (
-                      <div className="flex items-center gap-2 px-3 py-1 bg-indigo-500/20 rounded-full border border-indigo-500/30">
-                        <div className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-indigo-300 font-medium tracking-wide uppercase">Negotiating</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700">
-                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">Session Closed</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div ref={chatContainerRef} onScroll={(e) => {
-                    const isBottom = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 50;
-                    setAutoScroll(isBottom);
-                  }} className="flex-1 overflow-y-auto p-6 space-y-4">
-                    {negotiateResult.chatLog?.slice(0, chatRevealIndex).map((msg, i) => (
-                      <div key={i} className={`flex w-full ${(msg.from === 'System' || msg.from === 'Chase Agent') ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
-                          (msg.from === 'System' || msg.from === 'Chase Agent') 
-                            ? 'bg-indigo-600 text-gray-900 dark:text-white rounded-br-none' 
-                            : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-none'
-                        }`}>
-                          <p className="text-[10px] uppercase tracking-wider mb-1 opacity-70 font-semibold">{msg.from}</p>
-                          <p>{msg.text}</p>
-                        </div>
-                      </div>
-                    ))}
-                    {stage === 4 && chatRevealIndex < negotiateResult.chatLog?.length && (
-                      <div className="flex justify-start">
-                        <div className="bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg rounded-bl-none p-4 flex gap-1 items-center">
-                          <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-                          <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-                          <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
-                        </div>
-                      </div>
-                    )}
-                    <div ref={chatEndRef} />
-                  </div>
-                </div>
-              )}
-
-              {/* FINAL PLAN */}
-              {stage === 5 && negotiateResult && (
-                <div className="glass-panel-success p-8 animate-[scaleIn_0.5s_ease-out]">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/50">
-                      <CheckCircle className="w-6 h-6 text-emerald-400" />
+              {stage >= 3 && matchResult && (
+                <div className="glass-panel p-8 animate-[fadeInUp_0.4s_ease-out] border-indigo-500/50 bg-indigo-50/50 dark:bg-indigo-900/10 h-full flex items-center justify-center min-h-[400px]">
+                  <div className="flex flex-col items-center justify-center text-center space-y-6">
+                    <div className="w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center border border-indigo-500/30">
+                      <ShieldAlert className="w-8 h-8 text-indigo-500" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Recovery Plan Ready</h2>
-                      <p className="text-emerald-300/80">AI-ranked response to MCU-2201X disruption</p>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Decision Required</h3>
+                      <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto text-sm leading-relaxed">
+                        SentinelChain has fully mapped the impact and generated multiple recovery options. Please review the evidence and approve a path forward.
+                      </p>
                     </div>
-                  </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 w-full max-w-md text-left mt-2">
+                      <div className="bg-white dark:bg-black/40 p-4 rounded-xl border border-gray-100 dark:border-white/10">
+                        <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Revenue at Risk</p>
+                        <p className="text-xl font-bold text-orange-500">${matchResult.revenue_at_risk_usd?.toLocaleString()}/day</p>
+                      </div>
+                      <div className="bg-white dark:bg-black/40 p-4 rounded-xl border border-gray-100 dark:border-white/10">
+                        <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Generated Options</p>
+                        <p className="text-xl font-bold text-emerald-500">{matchResult.matched_options?.length || 3} Strategies</p>
+                      </div>
+                    </div>
 
-                  <div className="bg-gray-100 dark:bg-black/20 rounded-lg border border-emerald-500/20 p-5 mb-6">
-                    <div className="grid grid-cols-2 md:grid-cols-12 gap-4">
-                      <div className="col-span-1 md:col-span-3">
-                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Supplier</p>
-                        <p className="font-semibold text-gray-900 dark:text-white truncate">{negotiateResult.rankedPlan?.[0]?.vendor}</p>
-                      </div>
-                      <div className="col-span-1 md:col-span-5">
-                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Replacement Part</p>
-                        <p className="font-mono font-semibold text-gray-900 dark:text-white truncate" title={negotiateResult.rankedPlan?.[0]?.part}>{negotiateResult.rankedPlan?.[0]?.part}</p>
-                      </div>
-                      <div className="col-span-1 md:col-span-2">
-                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Quantity</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan?.[0]?.quantity?.toLocaleString()} units</p>
-                      </div>
-                      <div className="col-span-1 md:col-span-2">
-                        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Lead Time</p>
-                        <p className="font-semibold text-emerald-400">{negotiateResult.rankedPlan?.[0]?.days} days</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className={`font-semibold ${negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? 'text-orange-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan?.[0]?.score}</span></p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className={`font-semibold ${negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? 'text-gray-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? '0%' : '94%'}</span></p>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end gap-4">
-                    <button 
-                      onClick={() => router.push('/plans')}
-                      className="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
-                    >
-                      View Details
-                    </button>
-                    {approved ? (
-                      <div className="flex flex-col items-end gap-2">
-                        <div className="flex items-center gap-2 px-6 py-3 bg-emerald-600/20 border border-emerald-500/50 text-emerald-400 font-semibold rounded-lg">
-                          <CheckCircle className="w-5 h-5" /> SAP Ariba Integration Queued
-                        </div>
-                        {aribaResponse && (
-                          <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">Doc ID: {aribaResponse.documentId} ({aribaResponse.sapSource})</span>
-                        )}
-                      </div>
-                    ) : (
-                      <button 
-                        onClick={approvePlan}
-                        className="bg-emerald-600 hover:bg-emerald-500 text-gray-900 dark:text-white font-bold py-3 px-8 rounded-lg  transition-all flex items-center gap-2"
-                      >
-                        <CheckCircle className="w-5 h-5" /> Approve & Send to SAP Ariba
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* AUDIT TRAIL */}
-              {stage > 0 && (
-                <div className="glass-panel overflow-hidden animate-[fadeIn_0.5s_ease-out] border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-950/80">
-                  <div className="bg-white dark:bg-gray-900 px-4 py-2 flex items-center gap-2 border-b border-gray-100 dark:border-gray-800">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
-                    <span className="ml-2 text-[10px] font-mono text-gray-500">root@sentinel-ai:~/audit</span>
-                  </div>
-                  <div className="p-4 font-mono text-xs space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
-                    {auditTrail.map((log, i) => (
-                      <div key={i} className="flex flex-col gap-1">
-                        <div className="flex gap-2">
-                          <span className="text-emerald-500">[{new Date(log.time).toLocaleTimeString()}]</span>
-                          <span className="text-indigo-400 font-bold">{log.source}:</span>
-                        </div>
-                        <div className="text-gray-700 dark:text-gray-300 pl-4 border-l-2 border-gray-100 dark:border-gray-800 ml-2">
-                          {log.message}
-                        </div>
-                      </div>
-                    ))}
-                    <div className="flex gap-2 items-center text-emerald-500 mt-4">
-                      <span>root@sentinel-ai:~$</span>
-                      <span className="w-2 h-4 bg-emerald-500 animate-[pulse_1s_step-end_infinite]"></span>
-                    </div>
+                    <Link href={`/disruptions/${matchResult.disruption_id}`} className="mt-6 px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
+                      Open Decision Center <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
               )}
             </div>
-            
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
       </main>
-
+      
       <style jsx global>{`
         @keyframes progress {
           0% { width: 0%; transform: translateX(0); }
@@ -747,14 +600,6 @@ export default function Dashboard() {
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>
