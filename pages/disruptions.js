@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar';
 import { ShieldAlert, AlertTriangle, AlertCircle, Clock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import StatusBadge from '../components/StatusBadge';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -30,18 +32,22 @@ export default function Disruptions({ initialDisruptions }) {
     } catch(e) {}
   }, [initialDisruptions]);
   
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.id) {
+      setTimeout(() => {
+        const el = document.getElementById(router.query.id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }, [router.query.id]);
+  
   const getSeverity = (risk) => {
     if (risk > 1000000) return { label: 'CRITICAL', color: 'text-red-400 bg-red-500/20 border-red-500/30' };
     if (risk > 200000) return { label: 'HIGH', color: 'text-orange-400 bg-orange-500/20 border-orange-500/30' };
     return { label: 'MEDIUM', color: 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30' };
   };
 
-  const getStatusColor = (status) => {
-    if (status.includes('Completed') || status.includes('Resolved')) return 'text-emerald-500';
-    if (status.includes('Escalated')) return 'text-orange-500';
-    if (status.includes('Failed')) return 'text-red-500';
-    return 'text-blue-500'; // Mitigating, Assessing
-  };
 
   const countCrit = disruptions.filter(d => d.revenue_at_risk_usd > 1000000 && !d.status.includes('Resolved') && !d.status.includes('Completed')).length;
   const countHigh = disruptions.filter(d => d.revenue_at_risk_usd > 200000 && d.revenue_at_risk_usd <= 1000000 && !d.status.includes('Resolved') && !d.status.includes('Completed')).length;
@@ -68,7 +74,7 @@ export default function Disruptions({ initialDisruptions }) {
             {disruptions.map((d, i) => {
               const sev = getSeverity(d.revenue_at_risk_usd);
               return (
-                <div key={i} className="glass-panel p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                <div key={i} id={d.disruption_id} className="bg-white dark:bg-[#0f1115] p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-lg ${sev.color.replace('border-', '').replace('text-', 'bg-').replace('/20', '/10')}`}>
@@ -93,10 +99,7 @@ export default function Disruptions({ initialDisruptions }) {
                         <Clock className="w-4 h-4" />
                         {new Date(d.detected_at).toLocaleDateString()}
                       </span>
-                      <span className={`font-semibold flex items-center gap-1 ${getStatusColor(d.status)}`}>
-                        <div className={`w-2 h-2 rounded-full bg-current ${d.status === 'Mitigating' ? 'animate-pulse' : ''}`}></div>
-                        {d.status}
-                      </span>
+                      <StatusBadge status={d.status} />
                     </div>
                     
                     {d.recovery_plan_id && (

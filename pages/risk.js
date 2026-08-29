@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { ShieldAlert, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 export async function getServerSideProps() {
@@ -40,11 +39,9 @@ export default function RiskAnalysis({ initialDisruptions, initialRecovered, ini
       const newTotalRisk = (initialRisk || 84500000) + extraRisk;
       setLiveAtRisk(newTotalRisk);
 
-      // Calculate Active Threats
       const active = allDisruptions.filter(d => d.status !== 'Resolved' && d.status !== 'Completed').length;
       setActiveThreats(active);
 
-      // Group by Part prefix (Category)
       const groups = {};
       allDisruptions.forEach(d => {
         let cat = d.part_affected.split('-')[0];
@@ -96,22 +93,26 @@ export default function RiskAnalysis({ initialDisruptions, initialRecovered, ini
             <p className="text-gray-500 dark:text-gray-400 mt-1">Macro-level financial exposure and AI mitigation metrics.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="glass-panel p-5 border-l-4 border-red-500">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Total Value at Risk (30d)</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatMillions(liveAtRisk)}</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Total Value at Risk (30d)</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{formatMillions(liveAtRisk)}</div>
             </div>
-            <div className="glass-panel p-5 border-l-4 border-indigo-500">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Active Threats</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeThreats}</p>
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Active Threats</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{activeThreats}</div>
             </div>
-            <div className="glass-panel p-5 border-l-4 border-emerald-500" title="Dynamically synced with Recovery Ledger total">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Mitigated Value</p>
-              <p className="text-2xl font-bold text-emerald-400">{formatMillions(liveRecovered)}</p>
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Mitigated Value</p>
+              <div className="text-[24px] font-bold text-emerald-600 dark:text-emerald-400">{formatMillions(liveRecovered)}</div>
+            </div>
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Risk Reduction</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{liveAtRisk > 0 ? Math.round((liveRecovered/liveAtRisk)*100) : 0}%</div>
             </div>
           </div>
 
-          <div className="glass-panel p-6 border border-gray-200 dark:border-white/10 rounded-xl mt-6">
+          <div className="bg-white dark:bg-[#0f1115] p-6 border border-gray-200 dark:border-white/10 rounded-xl mt-6">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Financial Exposure by Category (Live Data)</h3>
             <div className="space-y-5">
               {categoryExposure.map((cat, i) => (

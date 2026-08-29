@@ -347,7 +347,7 @@ export default function Dashboard() {
                     }}
                     className={`p-4 rounded-xl border transition-all cursor-pointer ${
                       activeNews?.id === news.id 
-                        ? 'bg-indigo-900/40 border-indigo-500 shadow-[0_0_15px_rgba(79,70,229,0.2)]' 
+                        ? 'bg-indigo-900/40 border-indigo-500 ' 
                         : 'glass-panel hover:border-gray-500'
                     }`}
                   >
@@ -359,7 +359,7 @@ export default function Dashboard() {
                     {activeNews?.id === news.id && stage === 0 && (
                        <button 
                          onClick={(e) => { e.stopPropagation(); simulatePipeline(news); }}
-                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-gray-900 dark:text-white px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_10px_rgba(79,70,229,0.3)]"
+                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-gray-900 dark:text-white px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all "
                        >
                          <Search className="w-3 h-3" /> Analyze Impact
                        </button>
@@ -382,7 +382,7 @@ export default function Dashboard() {
           {/* DETECTION RESULT UI */}
           {stage > 0 && detectResult && (
             detectResult.isDisruption ? (
-              <div className="glass-panel border-l-4 border-red-500 bg-red-950/20 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
+              <div className="glass-panel  border-red-500 bg-red-950/20 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
                 <div className="bg-red-900/30 px-6 py-4 flex flex-wrap items-center justify-between border-b border-red-500/20">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
@@ -390,7 +390,7 @@ export default function Dashboard() {
                     </div>
                     <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-wide">CRITICAL DISRUPTION DETECTED</h2>
                   </div>
-                  <span className="text-[10px] uppercase tracking-widest bg-red-500 text-gray-900 dark:text-white font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+                  <span className="text-[10px] uppercase tracking-widest bg-red-500 text-gray-900 dark:text-white font-bold px-3 py-1 rounded-full ">
                     Severity: {detectResult.severity?.toUpperCase() || 'HIGH'}
                   </span>
                 </div>
@@ -398,7 +398,7 @@ export default function Dashboard() {
                 <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="md:col-span-2">
                     <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 ">
                       {detectResult.reason}
                     </p>
                   </div>
@@ -425,7 +425,7 @@ export default function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="glass-panel border-l-4 border-emerald-500 bg-emerald-950/10 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
+              <div className="glass-panel  border-emerald-500 bg-emerald-950/10 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
                 <div className="bg-emerald-900/20 px-6 py-4 flex items-center gap-3 border-b border-emerald-500/20">
                   <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                      <ShieldCheck className="w-4 h-4" />
@@ -434,7 +434,7 @@ export default function Dashboard() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Diagnostic Assessment</h3>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 shadow-inner">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5 ">
                     {detectResult.reason}
                   </p>
                 </div>
@@ -445,7 +445,7 @@ export default function Dashboard() {
           {/* 4-STAGE PIPELINE */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Stage 1: Detection */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 1 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''}`}>
+            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 1 ? 'border-indigo-500/50 ' : ''}`}>
               {stage === 1 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
@@ -463,7 +463,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stage 1.5: SAP S/4HANA */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 2 ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.15)] bg-emerald-950/10' : ''} ${stage < 2 ? 'opacity-50' : ''}`}>
+            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 2 ? 'border-emerald-500/50  bg-emerald-950/10' : ''} ${stage < 2 ? 'opacity-50' : ''}`}>
               {stage === 2 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/20"><div className="h-full bg-emerald-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-900/30 text-emerald-400 border border-emerald-500/30">ENTERPRISE</span>
@@ -481,7 +481,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stage 2: Impact */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 2 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 2 ? 'opacity-50' : ''}`}>
+            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 2 ? 'border-indigo-500/50 ' : ''} ${stage < 2 ? 'opacity-50' : ''}`}>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
               </div>
@@ -502,7 +502,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stage 3: Match */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 3 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 3 ? 'opacity-50' : ''}`}>
+            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 3 ? 'border-indigo-500/50 ' : ''} ${stage < 3 ? 'opacity-50' : ''}`}>
               {stage === 3 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
@@ -520,7 +520,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stage 4: Chase */}
-            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 4 ? 'border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.15)]' : ''} ${stage < 4 ? 'opacity-50' : ''}`}>
+            <div className={`glass-panel p-4 relative overflow-hidden transition-all duration-500 ${stage === 4 ? 'border-indigo-500/50 ' : ''} ${stage < 4 ? 'opacity-50' : ''}`}>
               {stage === 4 && loading && <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"><div className="h-full bg-indigo-500 animate-[progress_1.5s_ease-in-out_infinite]"></div></div>}
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">AI LAYER</span>
@@ -698,7 +698,7 @@ export default function Dashboard() {
                     ) : (
                       <button 
                         onClick={approvePlan}
-                        className="bg-emerald-600 hover:bg-emerald-500 text-gray-900 dark:text-white font-bold py-3 px-8 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center gap-2"
+                        className="bg-emerald-600 hover:bg-emerald-500 text-gray-900 dark:text-white font-bold py-3 px-8 rounded-lg  transition-all flex items-center gap-2"
                       >
                         <CheckCircle className="w-5 h-5" /> Approve & Send to SAP Ariba
                       </button>

@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { CheckCircle, Clock, ArrowRight, Zap, X, Search, ChevronRight, Link as LinkIcon } from 'lucide-react';
+import { Zap, X, ArrowRight, ShieldCheck, Link as LinkIcon, CheckCircle, Clock, Search, ChevronRight } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import StatusBadge from '../components/StatusBadge';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -89,13 +90,15 @@ export default function Plans({ initialPlans }) {
     }
   };
 
-  const getStatusColor = (status) => {
-    if (status.includes('Completed') || status.includes('Resolved')) return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
-    if (status.includes('Executing') || status.includes('Mitigating')) return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
-    if (status.includes('Escalated')) return 'text-orange-400 bg-orange-500/10 border-orange-500/20';
-    if (status.includes('Failed')) return 'text-red-400 bg-red-500/10 border-red-500/20';
-    return 'text-gray-400 bg-gray-500/10 border-gray-500/20';
-  };
+
+  useEffect(() => {
+    if (router.query.id) {
+      setTimeout(() => {
+        const el = document.getElementById(router.query.id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }, [router.query.id]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
@@ -111,7 +114,7 @@ export default function Plans({ initialPlans }) {
             </div>
             <button 
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-[0_0_15px_rgba(79,70,229,0.3)] hover:shadow-[0_0_20px_rgba(79,70,229,0.5)]"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all"
             >
               <Zap className="w-4 h-4" /> Generate Custom Plan
             </button>
@@ -119,7 +122,7 @@ export default function Plans({ initialPlans }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {plans.map((plan, i) => (
-              <div key={i} className="glass-panel p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:border-indigo-500/30 transition-all cursor-pointer group flex flex-col" onClick={() => setSelectedPlan(plan)}>
+              <div key={i} id={plan.id} className="bg-white dark:bg-[#0f1115] p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:border-indigo-500/30 transition-all cursor-pointer group flex flex-col" onClick={() => setSelectedPlan(plan)}>
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -127,9 +130,7 @@ export default function Plans({ initialPlans }) {
                         {plan.id.includes('LIVE') && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>}
                         {plan.id}
                       </h3>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(plan.status)}`}>
-                        {plan.status}
-                      </span>
+                      <StatusBadge status={plan.status} />
                     </div>
                     <p className="text-sm font-mono text-indigo-400">{plan.part}</p>
                   </div>

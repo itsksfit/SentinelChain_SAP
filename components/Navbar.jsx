@@ -48,7 +48,15 @@ export default function Navbar() {
         Mission Control / Dashboard
       </div>
       <div className="flex items-center gap-4 relative">
-        
+        <button 
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+          className="hidden md:flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-md hover:border-indigo-500/50 transition-colors"
+        >
+          <span className="w-4 h-4">🔍</span>
+          <span>Search...</span>
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-bold bg-white dark:bg-black/40 rounded border border-gray-200 dark:border-white/10 ml-2">⌘K</kbd>
+        </button>
+
         {/* Theme Toggle */}
         {mounted && (
           <button

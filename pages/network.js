@@ -2,7 +2,8 @@ import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import { Database, MapPin, TrendingUp, ShieldCheck } from 'lucide-react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -14,6 +15,20 @@ export async function getServerSideProps() {
 }
 
 export default function Network({ vendors }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.vendor) {
+      setTimeout(() => {
+        const el = document.getElementById(router.query.vendor);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('bg-indigo-50', 'dark:bg-indigo-900/20');
+          setTimeout(() => el.classList.remove('bg-indigo-50', 'dark:bg-indigo-900/20'), 3000);
+        }
+      }, 500);
+    }
+  }, [router.query.vendor]);
   
   // Calculate aggregate metrics from vendors.json
   const avgHealth = Math.round(vendors.reduce((acc, v) => acc + v.reliability_score, 0) / vendors.length);
@@ -36,18 +51,18 @@ export default function Network({ vendors }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="glass-panel p-6 border-t-4 border-indigo-500">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><Database className="w-4 h-4 text-indigo-500" /> Catalog Suppliers</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">{vendors.length}</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Catalog Suppliers</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{vendors.length}</div>
             </div>
-            <div className="glass-panel p-6 border-t-4 border-emerald-500">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><TrendingUp className="w-4 h-4 text-emerald-500" /> Avg Network Health</p>
-              <p className="text-3xl font-bold text-emerald-400">{avgHealth}%</p>
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Avg Network Health</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{avgHealth}%</div>
             </div>
-            <div className="glass-panel p-6 border-t-4 border-blue-500">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><MapPin className="w-4 h-4 text-blue-500" /> Regions Active</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">{uniqueRegions} Global Zones</p>
+            <div className="bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 p-5 rounded-lg">
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium mb-1">Regions Active</p>
+              <div className="text-[24px] font-bold text-gray-900 dark:text-white">{uniqueRegions}</div>
             </div>
           </div>
 
@@ -66,7 +81,7 @@ export default function Network({ vendors }) {
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-white/5">
                   {sortedVendors.map((s, i) => (
-                    <tr key={i} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    <tr key={i} id={s.name} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                       <td className="py-4 px-4 font-mono text-sm text-indigo-400">{s.vendor_id}</td>
                       <td className="py-4 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <ShieldCheck className={`w-4 h-4 ${s.reliability_score >= 95 ? 'text-emerald-500' : 'text-yellow-500'}`} /> 
