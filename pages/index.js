@@ -197,7 +197,7 @@ export default function Dashboard() {
         addAudit('Chase Agent', `Supplier quotes evaluated`);
         setTimeout(() => setStage(5), 1500);
       }
-    }, 1200); 
+    }, 2500); 
   };
 
   const approvePlan = async () => {

@@ -18,8 +18,9 @@ export default async function handler(req, res) {
     const partsData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const catPart = partsData.find(p => p.part_id === partNumber);
     if (catPart) {
-      // 1,420 units/day volume * base price
-      dailyRisk = (catPart.base_price * 1420);
+      // Scale daily volume for cheaper parts so revenue risk isn't trivial
+      let dailyVolume = catPart.base_price > 1000 ? 1420 : 350000;
+      dailyRisk = (catPart.base_price * dailyVolume);
     }
   } catch(e) {}
 
