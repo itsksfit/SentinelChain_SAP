@@ -284,12 +284,7 @@ export default function Dashboard() {
                 <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP Ariba</span>
                 <span className={`text-xs font-semibold ${sapStatus.ariba === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.ariba}</span>
               </div>
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="True positive rate on seeded batch">
-                <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Detection Accuracy</span>
-                <span className="text-xs font-semibold text-emerald-400">
-                  {accuracyStat}
-                </span>
-              </div>
+
             </div>
             <div className={`px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${sapStatus.mode === 'LIVE SAP MODE' ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : 'border-orange-500/50 bg-orange-500/10 text-orange-400'}`}>
               {sapStatus.mode}
