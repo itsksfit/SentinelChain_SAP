@@ -232,7 +232,15 @@ export default function Dashboard() {
         outcome: "Completed",
         proposed_action: `Procure ${planDetails.quantity} of ${planDetails.part} from ${planDetails.vendor}`
       },
-      decision_trail: auditTrail.map(a => ({ agent: a.source, action: a.message, timestamp: a.time, data_used: "Live session context" }))
+      decision_trail: [
+        ...auditTrail.map(a => ({ agent: a.source, action: a.message, timestamp: a.time, data_used: "Live session context" })),
+        ...(negotiateResult?.chatLog || []).map((msg, idx) => ({
+           agent: msg.from === 'System' || msg.from === 'Chase Agent' ? msg.from : `Vendor (${msg.from})`,
+           action: msg.text,
+           timestamp: new Date(Date.now() + (idx * 1000)).toISOString(),
+           data_used: "Automated RFQ"
+        }))
+      ]
     };
 
     try {
