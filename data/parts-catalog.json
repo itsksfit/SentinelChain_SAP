@@ -11,6 +11,13 @@
         "unit_price": 4.28,
         "lead_time_days": 19,
         "stock_qty": 12515
+      },
+      {
+        "alt_part_id": "MCU-2201X-B",
+        "vendor": "Arrow Electronics",
+        "unit_price": 4.35,
+        "lead_time_days": 15,
+        "stock_qty": 20000
       }
     ],
     "last_updated": "2026-08-29T11:38:03.908Z"
@@ -110,6 +117,13 @@
         "unit_price": 13729.65,
         "lead_time_days": 6,
         "stock_qty": 17229
+      },
+      {
+        "alt_part_id": "GPU-A100-80-B",
+        "vendor": "Avnet",
+        "unit_price": 14100,
+        "lead_time_days": 8,
+        "stock_qty": 5000
       }
     ],
     "last_updated": "2026-08-29T11:38:03.909Z"
