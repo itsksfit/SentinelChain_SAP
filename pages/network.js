@@ -2,15 +2,25 @@ import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import { Database, MapPin, TrendingUp, ShieldCheck } from 'lucide-react';
+import React from 'react';
 
-export default function Network() {
-  const suppliers = [
-    { name: "Distributor A", region: "Taiwan", health: 98, tier: 1, volume: "$4.2M" },
-    { name: "PowerGlobal Inc.", region: "Germany", health: 92, tier: 1, volume: "$8.5M" },
-    { name: "GlobalChips", region: "South Korea", health: 85, tier: 2, volume: "$1.1M" },
-    { name: "ElectroSource", region: "USA", health: 99, tier: 1, volume: "$12.4M" },
-    { name: "StorageTech", region: "Japan", health: 76, tier: 2, volume: "$850K" },
-  ];
+export async function getServerSideProps() {
+  const fs = require('fs');
+  const path = require('path');
+  const filePath = path.join(process.cwd(), 'data', 'vendors.json');
+  const vendors = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  
+  return { props: { vendors } };
+}
+
+export default function Network({ vendors }) {
+  
+  // Calculate aggregate metrics from vendors.json
+  const avgHealth = Math.round(vendors.reduce((acc, v) => acc + v.reliability_score, 0) / vendors.length);
+  const uniqueRegions = new Set(vendors.map(v => v.region)).size;
+  
+  // Sort vendors by reliability
+  const sortedVendors = [...vendors].sort((a,b) => b.reliability_score - a.reliability_score);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
@@ -22,51 +32,56 @@ export default function Network() {
           <div className="flex justify-between items-end mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Supply Network</h1>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">Global vendor mapping and supplier health tracking.</p>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">Global vendor mapping, pricing variance, and supplier health tracking based on active catalogs.</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="glass-panel p-6">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><Database className="w-4 h-4" /> Active Suppliers</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">1,402</p>
+            <div className="glass-panel p-6 border-t-4 border-indigo-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><Database className="w-4 h-4 text-indigo-500" /> Catalog Suppliers</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white">{vendors.length}</p>
             </div>
-            <div className="glass-panel p-6">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><TrendingUp className="w-4 h-4" /> Network Health</p>
-              <p className="text-3xl font-bold text-emerald-400">92%</p>
+            <div className="glass-panel p-6 border-t-4 border-emerald-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><TrendingUp className="w-4 h-4 text-emerald-500" /> Avg Network Health</p>
+              <p className="text-3xl font-bold text-emerald-400">{avgHealth}%</p>
             </div>
-            <div className="glass-panel p-6">
-              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><MapPin className="w-4 h-4" /> Geographies</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">34 Countries</p>
+            <div className="glass-panel p-6 border-t-4 border-blue-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-2"><MapPin className="w-4 h-4 text-blue-500" /> Regions Active</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white">{uniqueRegions} Global Zones</p>
             </div>
           </div>
 
-          <div className="glass-panel p-6">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Critical Tier-1 & Tier-2 Suppliers</h3>
+          <div className="glass-panel p-6 border border-gray-200 dark:border-white/10 rounded-xl">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Supplier Directory & Health Ratings</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    <th className="pb-3">Supplier Name</th>
-                    <th className="pb-3">Region</th>
-                    <th className="pb-3">Tier</th>
-                    <th className="pb-3">Annual Volume</th>
-                    <th className="pb-3">Health Score</th>
+                    <th className="pb-3 px-4">Vendor ID</th>
+                    <th className="pb-3 px-4">Supplier Name</th>
+                    <th className="pb-3 px-4">Region</th>
+                    <th className="pb-3 px-4">Price Variance</th>
+                    <th className="pb-3 px-4">Health Score</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
-                  {suppliers.map((s, i) => (
-                    <tr key={i} className="hover:bg-gray-100 dark:bg-white/5">
-                      <td className="py-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-indigo-400" /> {s.name}</td>
-                      <td className="py-4 text-gray-700 dark:text-gray-300">{s.region}</td>
-                      <td className="py-4 text-gray-700 dark:text-gray-300">Tier {s.tier}</td>
-                      <td className="py-4 font-mono text-gray-700 dark:text-gray-300">{s.volume}</td>
-                      <td className="py-4">
+                <tbody className="divide-y divide-gray-100 dark:divide-white/5">
+                  {sortedVendors.map((s, i) => (
+                    <tr key={i} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                      <td className="py-4 px-4 font-mono text-sm text-indigo-400">{s.vendor_id}</td>
+                      <td className="py-4 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <ShieldCheck className={`w-4 h-4 ${s.reliability_score >= 95 ? 'text-emerald-500' : 'text-yellow-500'}`} /> 
+                        {s.name}
+                      </td>
+                      <td className="py-4 px-4 text-gray-700 dark:text-gray-300">{s.region}</td>
+                      <td className="py-4 px-4 font-mono text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                        ±{s.price_variance_pct}%
+                      </td>
+                      <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
                           <div className="w-24 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
-                            <div className={`h-full ${s.health > 90 ? 'bg-emerald-500' : s.health > 80 ? 'bg-yellow-500' : 'bg-red-500'}`} style={{width: `${s.health}%`}}></div>
+                            <div className={`h-full ${s.reliability_score > 90 ? 'bg-emerald-500' : s.reliability_score > 80 ? 'bg-yellow-500' : 'bg-red-500'}`} style={{width: `${s.reliability_score}%`}}></div>
                           </div>
-                          <span className="text-sm text-gray-700 dark:text-gray-300">{s.health}/100</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{s.reliability_score}/100</span>
                         </div>
                       </td>
                     </tr>

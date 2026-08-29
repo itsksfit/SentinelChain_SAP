@@ -15,29 +15,74 @@ export async function getServerSideProps() {
   
   return {
     props: {
+      initialDisruptions: data,
       initialRecovered: totalRecovered,
       initialRisk: totalAtRisk
     }
   };
 }
 
-export default function RiskAnalysis({ initialRecovered, initialRisk }) {
+export default function RiskAnalysis({ initialDisruptions, initialRecovered, initialRisk }) {
   const [liveRecovered, setLiveRecovered] = useState(initialRecovered);
   const [liveAtRisk, setLiveAtRisk] = useState(initialRisk || 84500000);
+  const [categoryExposure, setCategoryExposure] = useState([]);
+  const [activeThreats, setActiveThreats] = useState(0);
 
   useEffect(() => {
     try {
       const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
-      if (custom.length > 0) {
-        const extraRecovered = custom.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
-        const extraRisk = custom.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
-        setLiveRecovered(initialRecovered + extraRecovered);
-        setLiveAtRisk((initialRisk || 84500000) + extraRisk);
-      }
+      const allDisruptions = [...custom, ...initialDisruptions];
+      
+      const extraRecovered = custom.reduce((acc, d) => acc + (d.resolution?.recovered_amount_usd || 0), 0);
+      const extraRisk = custom.reduce((acc, d) => acc + (d.revenue_at_risk_usd || 0), 0);
+      setLiveRecovered(initialRecovered + extraRecovered);
+      
+      const newTotalRisk = (initialRisk || 84500000) + extraRisk;
+      setLiveAtRisk(newTotalRisk);
+
+      // Calculate Active Threats
+      const active = allDisruptions.filter(d => d.status !== 'Resolved' && d.status !== 'Completed').length;
+      setActiveThreats(active);
+
+      // Group by Part prefix (Category)
+      const groups = {};
+      allDisruptions.forEach(d => {
+        let cat = d.part_affected.split('-')[0];
+        if (cat === 'N/A' || cat === 'Unrelated / Noise') return; 
+        if (!groups[cat]) groups[cat] = 0;
+        groups[cat] += (d.revenue_at_risk_usd || 0);
+      });
+
+      const sortedCategories = Object.keys(groups).map(k => ({
+        name: k,
+        value: groups[k],
+        pct: newTotalRisk > 0 ? (groups[k] / newTotalRisk) * 100 : 0
+      })).sort((a, b) => b.value - a.value);
+
+      setCategoryExposure(sortedCategories);
+
     } catch(e) {}
-  }, [initialRecovered, initialRisk]);
+  }, [initialDisruptions, initialRecovered, initialRisk]);
 
   const formatMillions = (val) => `$${(val / 1000000).toFixed(1)}M`;
+  const getCategoryName = (code) => {
+    const map = {
+      'GPU': 'Graphics Processors (GPU)',
+      'MCU': 'Microcontrollers (MCU)',
+      'PWR': 'Power Management (PWR)',
+      'MEM': 'Memory (NAND/DRAM)',
+      'NAND': 'NAND Storage',
+      'CPU': 'Central Processors',
+      'DSP': 'Digital Signal Processors',
+      'FPGA': 'Field Programmable Gates'
+    };
+    return map[code] || `${code} Components`;
+  };
+
+  const getCategoryColor = (i) => {
+    const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-blue-500', 'bg-purple-500', 'bg-emerald-500'];
+    return colors[i % colors.length];
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex">
@@ -58,7 +103,7 @@ export default function RiskAnalysis({ initialRecovered, initialRisk }) {
             </div>
             <div className="glass-panel p-5 border-l-4 border-indigo-500">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Active Threats</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">12</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeThreats}</p>
             </div>
             <div className="glass-panel p-5 border-l-4 border-emerald-500" title="Dynamically synced with Recovery Ledger total">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Mitigated Value</p>
@@ -67,35 +112,22 @@ export default function RiskAnalysis({ initialRecovered, initialRisk }) {
           </div>
 
           <div className="glass-panel p-6 border border-gray-200 dark:border-white/10 rounded-xl mt-6">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Financial Exposure by Category</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600 dark:text-gray-300">Microcontrollers (MCU)</span>
-                  <span className="font-bold text-gray-900 dark:text-white">$42.1M</span>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Financial Exposure by Category (Live Data)</h3>
+            <div className="space-y-5">
+              {categoryExposure.map((cat, i) => (
+                <div key={i}>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-600 dark:text-gray-300 font-medium">{getCategoryName(cat.name)}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{formatMillions(cat.value)}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
+                    <div className={`${getCategoryColor(i)} h-2 rounded-full transition-all duration-1000`} style={{width: `${cat.pct}%`}}></div>
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                  <div className="bg-red-500 h-2 rounded-full" style={{width: '60%'}}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600 dark:text-gray-300">Power Management (PWR)</span>
-                  <span className="font-bold text-gray-900 dark:text-white">$28.4M</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                  <div className="bg-orange-500 h-2 rounded-full" style={{width: '40%'}}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600 dark:text-gray-300">Memory (NAND/DRAM)</span>
-                  <span className="font-bold text-gray-900 dark:text-white">$14.0M</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                  <div className="bg-yellow-500 h-2 rounded-full" style={{width: '20%'}}></div>
-                </div>
-              </div>
+              ))}
+              {categoryExposure.length === 0 && (
+                <p className="text-gray-500 text-sm">No significant financial exposure registered yet.</p>
+              )}
             </div>
           </div>
 
