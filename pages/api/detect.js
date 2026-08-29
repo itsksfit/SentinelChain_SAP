@@ -1,14 +1,21 @@
-import components from "../../data/components.json";
+import fs from 'fs';
+import path from 'path';
 
 export default async function handler(req, res) {
   const { article } = req.body;
-  const partNumbers = components.map(c => c.partNumber);
+  
+  const filePath = path.join(process.cwd(), 'data', 'parts-catalog.json');
+  const parts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  const partNumbers = parts.map(c => c.part_id);
   
   const textToAnalyze = article ? `${article.title}. ${article.description}` : req.body.eventText;
 
+  // We take the first 10 parts so we don't blow up the prompt context
+  const knownBOM = parts.slice(0, 10).map(c => ({ part: c.part_id, manufacturer: c.manufacturer, category: c.category }));
+
   const prompt = `You are a strict, highly accurate supply-chain disruption classifier.
 Known enterprise Bill of Materials (BOM) in our system:
-${JSON.stringify(components.map(c => ({ part: c.partNumber, name: c.name, manufacturer: c.manufacturer })))}
+${JSON.stringify(knownBOM)}
 
 News Article: "${textToAnalyze}"
 
@@ -34,7 +41,7 @@ Return ONLY a valid JSON object with EXACTLY these keys:
         model: "openai/gpt-oss-120b", 
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
-        temperature: 0.1 // Low temperature for factual, strict matching
+        temperature: 0.1 
       }),
     });
 
@@ -50,7 +57,6 @@ Return ONLY a valid JSON object with EXACTLY these keys:
     res.status(200).json(result);
   } catch (err) {
     console.error("Groq API Error in detect:", err);
-    // Fallback if API fails, do not hallucinate a fake disruption
     res.status(200).json({
       isDisruption: false,
       partNumber: null,

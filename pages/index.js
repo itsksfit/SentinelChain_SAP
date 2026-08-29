@@ -159,7 +159,7 @@ export default function Dashboard() {
     setApproved(true);
     addAudit('User', 'Recovery plan approved');
     
-    const planDetails = negotiateResult.rankedPlan[0];
+    const planDetails = negotiateResult.rankedPlan?.[0];
     const res = await fetch('/api/sap/recovery-plan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -178,7 +178,7 @@ export default function Dashboard() {
         status: "Executing",
         riskReduction: planDetails.score.includes("Risk") ? "98%" : "94%",
         date: "Just Now",
-        historyContext: `A severe disruption was detected affecting the primary supply chain. SentinelChain's Impact Agent dynamically calculated massive enterprise revenue at risk based on live SAP data. To mitigate this, the AI autonomously engaged ${planDetails.vendor} and negotiated the procurement of ${planDetails.quantity.toLocaleString()} alternative units (${planDetails.part}), successfully preserving the production pipeline.`
+        historyContext: `A severe disruption was detected affecting the primary supply chain. SentinelChain's Impact Agent dynamically calculated massive enterprise revenue at risk based on live SAP data. To mitigate this, the AI autonomously engaged ${planDetails.vendor} and negotiated the procurement of ${planDetails.quantity?.toLocaleString()} alternative units (${planDetails.part}), successfully preserving the production pipeline.`
       };
       localStorage.setItem('sentinel_latest_plan', JSON.stringify(activePlan));
     } catch(e) {}
@@ -469,7 +469,7 @@ export default function Dashboard() {
               {getStageStatus(stage, 4) === 'COMPLETED' && negotiateResult && (
                 <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
                   <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Evaluated</p>
-                  <p className="text-xs font-mono text-purple-300 mt-1 truncate">{negotiateResult.rankedPlan.length} suppliers</p>
+                  <p className="text-xs font-mono text-purple-300 mt-1 truncate">{negotiateResult.rankedPlan?.length || 0} suppliers</p>
                 </div>
               )}
             </div>
@@ -547,7 +547,7 @@ export default function Dashboard() {
                     const isBottom = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 50;
                     setAutoScroll(isBottom);
                   }} className="flex-1 overflow-y-auto p-6 space-y-4">
-                    {negotiateResult.chatLog.slice(0, chatRevealIndex).map((msg, i) => (
+                    {negotiateResult.chatLog?.slice(0, chatRevealIndex).map((msg, i) => (
                       <div key={i} className={`flex w-full ${(msg.from === 'System' || msg.from === 'Chase Agent') ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] rounded-lg p-3 text-sm ${
                           (msg.from === 'System' || msg.from === 'Chase Agent') 
@@ -559,7 +559,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                     ))}
-                    {stage === 4 && chatRevealIndex < negotiateResult.chatLog.length && (
+                    {stage === 4 && chatRevealIndex < negotiateResult.chatLog?.length && (
                       <div className="flex justify-start">
                         <div className="bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg rounded-bl-none p-4 flex gap-1 items-center">
                           <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
@@ -590,24 +590,24 @@ export default function Dashboard() {
                     <div className="grid grid-cols-2 md:grid-cols-12 gap-4">
                       <div className="col-span-1 md:col-span-3">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Supplier</p>
-                        <p className="font-semibold text-gray-900 dark:text-white truncate">{negotiateResult.rankedPlan[0].vendor}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white truncate">{negotiateResult.rankedPlan?.[0]?.vendor}</p>
                       </div>
                       <div className="col-span-1 md:col-span-5">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Replacement Part</p>
-                        <p className="font-mono font-semibold text-gray-900 dark:text-white truncate" title={negotiateResult.rankedPlan[0].part}>{negotiateResult.rankedPlan[0].part}</p>
+                        <p className="font-mono font-semibold text-gray-900 dark:text-white truncate" title={negotiateResult.rankedPlan?.[0]?.part}>{negotiateResult.rankedPlan?.[0]?.part}</p>
                       </div>
                       <div className="col-span-1 md:col-span-2">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Quantity</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan[0].quantity.toLocaleString()} units</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{negotiateResult.rankedPlan?.[0]?.quantity?.toLocaleString()} units</p>
                       </div>
                       <div className="col-span-1 md:col-span-2">
                         <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Lead Time</p>
-                        <p className="font-semibold text-emerald-400">{negotiateResult.rankedPlan[0].days} days</p>
+                        <p className="font-semibold text-emerald-400">{negotiateResult.rankedPlan?.[0]?.days} days</p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex justify-between items-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className={`font-semibold ${negotiateResult.rankedPlan[0].score === 'Escalated' ? 'text-orange-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan[0].score}</span></p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className={`font-semibold ${negotiateResult.rankedPlan[0].score === 'Escalated' ? 'text-gray-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan[0].score === 'Escalated' ? '0%' : '94%'}</span></p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Score: <span className={`font-semibold ${negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? 'text-orange-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan?.[0]?.score}</span></p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Risk Reduction: <span className={`font-semibold ${negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? 'text-gray-400' : 'text-emerald-400'}`}>{negotiateResult.rankedPlan?.[0]?.score === 'Escalated' ? '0%' : '94%'}</span></p>
                     </div>
                   </div>
 
