@@ -284,51 +284,69 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
 
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <GitCommit className="w-4 h-4" /> Vulnerability Scope
+                    <GitCommit className="w-4 h-4" /> Impact Graph
                   </h3>
-                  <div className="space-y-0 relative before:absolute before:inset-0 before:ml-[11px] before:h-full before:w-[2px] before:bg-gradient-to-b before:from-transparent before:via-gray-300 dark:before:via-gray-700 before:to-transparent">
+                  
+                  {/* Visual Node Graph */}
+                  <div className="flex flex-col items-center relative py-4">
                     
-                    <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
+                    {/* Level 1: Supplier */}
+                    <div className="flex flex-col items-center z-10">
+                      <div className="px-3 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-full shadow-md flex items-center gap-2">
                         <Factory className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Manufacturer</p>
-                        <p className="text-sm font-bold text-gray-900 dark:text-white">
-                          {data.vendor || (data.part_affected?.includes('GPU') ? 'NVIDIA' : data.part_affected?.includes('MCU') ? 'STMicroelectronics' : data.part_affected?.includes('FPGA') ? 'Xilinx' : data.part_affected?.includes('MEM') ? 'Micron' : 'Tier-1 Supplier')}
-                        </p>
+                        {data.vendor || (data.part_affected?.includes('GPU') ? 'NVIDIA' : data.part_affected?.includes('MCU') ? 'STMicroelectronics' : data.part_affected?.includes('FPGA') ? 'Xilinx' : data.part_affected?.includes('MEM') ? 'Micron' : 'Tier-1 Supplier')}
                       </div>
                     </div>
 
-                    <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
+                    {/* Down arrow */}
+                    <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+
+                    {/* Level 2: Component */}
+                    <div className="flex flex-col items-center z-10">
+                      <div className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 text-indigo-700 dark:text-indigo-400 text-xs font-mono font-bold rounded-lg shadow-sm flex items-center gap-2">
                         <Box className="w-3 h-3" />
+                        <Link href="/network" className="hover:underline">{data.part_affected}</Link>
                       </div>
-                      <div>
-                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">Target Component</p>
-                        <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400 font-mono bg-indigo-50 dark:bg-indigo-500/10 px-2 py-0.5 rounded-md inline-block border border-indigo-100 dark:border-indigo-500/20">
-                          <Link href="/network" className="hover:underline">{data.part_affected}</Link>
+                    </div>
+
+                    {/* Split Branching Lines */}
+                    <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="w-48 h-px bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="flex justify-between w-48 relative top-[1px]">
+                      <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                      <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                    </div>
+
+                    {/* Level 3: BOM / Plants */}
+                    <div className="flex justify-between w-56 z-10">
+                      <div className="flex flex-col items-center bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 px-3 py-2 rounded-lg shadow-sm w-[100px]">
+                        <span className="text-lg font-black text-gray-900 dark:text-white">{plants}</span>
+                        <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest text-center">Assembly<br/>Lines</span>
+                      </div>
+                      <div className="flex flex-col items-center bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 px-3 py-2 rounded-lg shadow-sm w-[100px]">
+                        <span className="text-lg font-black text-gray-900 dark:text-white">{products}</span>
+                        <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest text-center">Affected<br/>Products</span>
+                      </div>
+                    </div>
+
+                    {/* Converging Lines */}
+                    <div className="flex justify-between w-48 relative bottom-[1px]">
+                      <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
+                      <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
+                    </div>
+                    <div className="w-48 h-px bg-red-300 dark:bg-red-900/50"></div>
+                    <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
+
+                    {/* Level 4: Revenue Impact */}
+                    <div className="flex flex-col items-center z-10 w-full">
+                      <div className="w-full max-w-[220px] px-4 py-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl shadow-sm flex flex-col items-center text-center">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <ShieldAlert className="w-3 h-3 text-red-500" />
+                          <span className="text-[9px] text-red-600 dark:text-red-400 uppercase font-bold tracking-widest">Revenue at Risk</span>
+                        </div>
+                        <p className="text-xl font-black text-red-600 dark:text-red-400">
+                          ${data.revenue_at_risk_usd?.toLocaleString() || '3,500,000'}<span className="text-xs text-red-500/70 font-medium">/day</span>
                         </p>
-                      </div>
-                    </div>
-
-                    <div className="relative flex items-start gap-4 pb-6">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-white dark:bg-[#151821] text-gray-500 shadow-sm shrink-0 z-10 mt-0.5">
-                        <BarChart2 className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-0.5">BOM Dependencies</p>
-                        <p className="text-sm font-bold text-gray-900 dark:text-white">{plants} Assembly Lines / {products} Products</p>
-                      </div>
-                    </div>
-
-                    <div className="relative flex items-start gap-4">
-                      <div className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-50 dark:border-[#11141c] bg-red-50 dark:bg-red-900/30 text-red-500 shadow-sm shrink-0 z-10 mt-0.5">
-                        <ShieldAlert className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <p className="text-[9px] text-red-500 uppercase font-bold tracking-widest mb-0.5">Revenue at Risk</p>
-                        <p className="text-xl font-black text-gray-900 dark:text-white">${data.revenue_at_risk_usd?.toLocaleString() || '3,500,000'}<span className="text-sm text-gray-400 font-medium">/day</span></p>
                       </div>
                     </div>
                     
