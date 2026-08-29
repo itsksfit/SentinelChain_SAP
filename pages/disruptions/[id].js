@@ -131,7 +131,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
           setChatRevealIndex(index);
           if (index >= d.chatLog.length) {
             clearInterval(interval);
-            setTimeout(() => completeExecution(), 1500);
+            setTimeout(() => completeExecution(opt), 1500);
           }
         }, 2000); 
 
@@ -140,11 +140,11 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
       }
     } else {
       // Dummy execution for other options
-      setTimeout(() => completeExecution(), 2000);
+      setTimeout(() => completeExecution(opt), 2000);
     }
   };
 
-  const completeExecution = () => {
+  const completeExecution = (opt) => {
     setIsProcessing(false);
     setPlanGenerated(true);
 
@@ -168,7 +168,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
             decision_trail: dt,
             resolution: {
               outcome: "Executing",
-              vendor: options.find(o => o.id === approvedOption)?.vendor || "N/A",
+              vendor: opt?.vendor || "N/A",
               proposed_action: "Automated RFQ negotiation and secondary supplier PO execution.",
               recovered_amount_usd: (d.revenue_at_risk_usd || 10000) * 0.95
             }
