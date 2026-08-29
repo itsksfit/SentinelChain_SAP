@@ -25,7 +25,7 @@ export default async function handler(req, res) {
        let qty = Math.min(10000, v1.stock_qty, v2.stock_qty);
        let chatLog = [];
 
-       chatLog.push({ from: "Chase Agent", text: `[Round 1/4] Initiating parallel RFQ with ${v1.vendor} and ${v2.vendor} for ${qty} units of ${v1.alt_part_id}.` });
+       chatLog.push({ from: "Chase Agent", text: `[Round 1/4] Initiating parallel RFQ to replace target component ${originalPart.part_id}. Requesting quotes from ${v1.vendor} for ${qty} units of ${v1.alt_part_id}, and ${v2.vendor} for ${v2.alt_part_id}.` });
        chatLog.push({ from: v1.vendor, text: `Available. Quoting $${fmt(v1.unit_price)} per unit at ${v1.lead_time_days} days lead time.` });
        chatLog.push({ from: v2.vendor, text: `In stock. Quoting $${fmt(v2.unit_price)} per unit at ${v2.lead_time_days} days lead time.` });
 
@@ -80,7 +80,7 @@ export default async function handler(req, res) {
     
     let chatLog = [];
 
-    chatLog.push({ from: "Chase Agent", text: `[Round 1/4] Initiating automated RFQ with ${vendor} for ${qty} units of ${altPart}. Requesting best unit price and availability.` });
+    chatLog.push({ from: "Chase Agent", text: `[Round 1/4] Initiating automated RFQ to replace target component ${originalPart.part_id}. Requesting quotes from ${vendor} for ${qty} units of ${altPart}.` });
     chatLog.push({ from: vendor, text: `Available in stock. Quoting $${fmt(P0)} per unit at ${currentLeadTime} days lead time.` });
 
     let agentOffer1 = P0 * 0.90;
