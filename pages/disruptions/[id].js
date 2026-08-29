@@ -331,6 +331,32 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                     
                   </div>
                 </div>
+
+                <div className="pt-6 border-t border-gray-200 dark:border-white/10">
+                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <Database className="w-4 h-4" /> Alternative Parts Found
+                  </h3>
+                  <div className="space-y-3">
+                    {part?.pin_compatible_alternatives?.length > 0 ? (
+                      part.pin_compatible_alternatives.map((alt, i) => (
+                        <div key={i} className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-lg shadow-sm flex items-center justify-between">
+                          <div>
+                            <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono mb-0.5">{alt.alt_part_id}</p>
+                            <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{alt.vendor}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs font-bold text-gray-900 dark:text-white">{alt.stock_qty.toLocaleString()} units</p>
+                            <p className="text-[10px] text-gray-500 font-medium">ETA: {alt.lead_time_days} days</p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-lg text-center shadow-sm">
+                        <p className="text-xs text-gray-500 font-medium">No drop-in replacements found.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* RIGHT COLUMN: DECISION MATRIX OR EXECUTION */}
