@@ -81,8 +81,11 @@ export default function Dashboard() {
 
   // Auto-scroll chat only if user hasn't manually scrolled up
   useEffect(() => {
-    if (chatEndRef.current && (autoScroll || chatRevealIndex <= 1)) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current && (autoScroll || chatRevealIndex <= 1)) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }, [chatRevealIndex, negotiateResult, autoScroll]);
 
@@ -481,7 +484,11 @@ export default function Dashboard() {
               {getStageStatus(stage, 2) === 'COMPLETED' && impactResult && (
                 <div className="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
                   <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">At Risk</p>
-                  <p className="text-xs font-mono text-orange-400 mt-1 truncate">${impactResult.revenueAtRiskPerDay.toLocaleString()}/day</p>
+                  <p className="text-xs font-mono text-orange-400 mt-1 truncate">
+                    {impactResult.revenueAtRiskPerDay >= 1000000 
+                      ? `$${(impactResult.revenueAtRiskPerDay / 1000000).toFixed(1).replace(/\.0$/, '')}M/day` 
+                      : `$${impactResult.revenueAtRiskPerDay.toLocaleString()}/day`}
+                  </p>
                 </div>
               )}
             </div>
@@ -534,7 +541,12 @@ export default function Dashboard() {
                   <div className="space-y-4">
                     <div className="bg-gray-100 dark:bg-white/5 rounded-lg p-4 border border-gray-100 dark:border-white/5">
                       <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Revenue at Risk</p>
-                      <p className="text-3xl font-bold text-orange-400">${impactResult.revenueAtRiskPerDay.toLocaleString()} <span className="text-sm text-gray-500 font-normal">/ day</span></p>
+                      <p className="text-3xl font-bold text-orange-400">
+                        {impactResult.revenueAtRiskPerDay >= 1000000 
+                          ? `$${(impactResult.revenueAtRiskPerDay / 1000000).toFixed(1).replace(/\.0$/, '')}M` 
+                          : `$${impactResult.revenueAtRiskPerDay.toLocaleString()}`} 
+                        <span className="text-sm text-gray-500 font-normal">/ day</span>
+                      </p>
                     </div>
                     
                     <div>

@@ -3,28 +3,22 @@ import path from 'path';
 
 export default async function handler(req, res) {
   const { partNumber, options } = req.body;
-  // `options` here are the output from `match.js`, which now has `_raw` inside it.
   
   try {
     const filePath = path.join(process.cwd(), 'data', 'parts-catalog.json');
     const partsData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     
-    // Find original part for baseline price
     const originalPart = partsData.find(p => p.part_id === partNumber);
     if (!originalPart) {
       throw new Error("Original part not found in catalog");
     }
 
     const baselinePrice = originalPart.base_price;
-    const priceCeiling = baselinePrice * 1.15; // 15% over baseline
+    const priceCeiling = baselinePrice * 1.15; 
     const MAX_ROUNDS = 3;
 
-    // Use the first option as the target vendor for negotiation (or sort them)
-    // The options passed in have `_raw` if they came from our deterministic match.js
     let targetOption = options && options.length > 0 ? options[0] : null;
-    
     if (!targetOption || !targetOption._raw) {
-       // fallback if _raw missing
        const vendorName = targetOption ? targetOption.vendor : 'Generic Vendor';
        return res.status(200).json({
           chatLog: [{ from: 'System', text: 'Error: Cannot retrieve raw vendor pricing from match payload.' }],
@@ -37,44 +31,52 @@ export default async function handler(req, res) {
     let currentLeadTime = rawData.lead_time_days;
     let vendor = rawData.vendor;
     let altPart = rawData.alt_part_id;
-    let qty = Math.min(10000, rawData.stock_qty); // target qty
+    let qty = Math.min(10000, rawData.stock_qty); 
     
     let chatLog = [];
     let isEscalated = false;
     let escalationReason = "";
     
-    chatLog.push({ from: "Chase Agent", text: `Initiating automated RFQ with ${vendor} for ${qty} units of ${altPart}. Target baseline: $${baselinePrice.toFixed(2)}` });
+    chatLog.push({ from: "Chase Agent", text: `Initiating automated RFQ with ${vendor} for ${qty} units of ${altPart}. Target baseline: $${baselinePrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` });
     
-    // Simulate up to 3 rounds
+    // Smarter negotiation
     let round = 1;
     let finalAgreedPrice = currentPrice;
     let finalAgreedDays = currentLeadTime;
 
+    let currentAgentOffer = baselinePrice;
+
     while (round <= MAX_ROUNDS) {
-      chatLog.push({ from: "Chase Agent", text: `[Round ${round}/${MAX_ROUNDS}] Proposing $${baselinePrice.toFixed(2)} to ${vendor}...` });
+      chatLog.push({ from: "Chase Agent", text: `[Round ${round}/${MAX_ROUNDS}] Proposing $${currentAgentOffer.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} per unit...` });
       
-      // deterministic vendor response
-      if (currentPrice <= baselinePrice * 1.05) {
-         chatLog.push({ from: vendor, text: `We accept $${currentPrice.toFixed(2)} at ${currentLeadTime} days lead time.` });
+      // If the vendor's required price is very close to our offer, accept
+      if (currentPrice <= currentAgentOffer * 1.02) {
+         chatLog.push({ from: vendor, text: `We accept $${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} at ${currentLeadTime} days lead time.` });
          finalAgreedPrice = currentPrice;
          break;
       } else {
-         // Vendor wants currentPrice, which is high
-         if (currentPrice > priceCeiling) {
-           chatLog.push({ from: vendor, text: `Due to shortages, firm price is $${currentPrice.toFixed(2)}.` });
-           chatLog.push({ from: "Chase Agent", text: `Rule Violation: Price $${currentPrice.toFixed(2)} exceeds 15% ceiling ($${priceCeiling.toFixed(2)}).` });
+         // Vendor pushes back
+         if (currentPrice > priceCeiling && round === MAX_ROUNDS) {
+           chatLog.push({ from: vendor, text: `Due to shortages, firm price is $${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}.` });
+           chatLog.push({ from: "Chase Agent", text: `Rule Violation: Price $${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} exceeds 15% ceiling ($${priceCeiling.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}).` });
            isEscalated = true;
            escalationReason = "Price ceiling breached";
            break;
          } else {
-           // Vendor negotiates down slightly
-           let concession = (currentPrice - baselinePrice) * 0.2;
-           currentPrice = currentPrice - concession;
-           chatLog.push({ from: vendor, text: `We can do $${currentPrice.toFixed(2)} if you order today.` });
+           // Vendor negotiates down slightly, agent goes up slightly
+           let concession = (currentPrice - currentAgentOffer) * 0.4;
+           currentPrice = currentPrice - (concession * 0.5); // vendor drops a bit
+           chatLog.push({ from: vendor, text: `We cannot do $${currentAgentOffer.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}. Best we can offer is $${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}.` });
+           
            if (round === MAX_ROUNDS) {
-             chatLog.push({ from: "Chase Agent", text: `Max negotiation rounds reached. Accepting $${currentPrice.toFixed(2)}.` });
-             finalAgreedPrice = currentPrice;
-             break;
+             if (currentPrice <= priceCeiling) {
+               chatLog.push({ from: "Chase Agent", text: `Max negotiation rounds reached. Accepting $${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}.` });
+               finalAgreedPrice = currentPrice;
+               break;
+             }
+           } else {
+             // agent counters higher for next round
+             currentAgentOffer = currentAgentOffer + (concession * 0.8);
            }
          }
       }
@@ -88,7 +90,7 @@ export default async function handler(req, res) {
          rankedPlan: [{ vendor, part: altPart, quantity: qty, days: currentLeadTime, score: 'Escalated' }]
       });
     } else {
-      chatLog.push({ from: "System", text: `✅ Negotiation successful. Final price: $${finalAgreedPrice.toFixed(2)} (Lead time: ${finalAgreedDays} days).` });
+      chatLog.push({ from: "System", text: `✅ Negotiation successful. Final price: $${finalAgreedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} (Lead time: ${finalAgreedDays} days).` });
       return res.status(200).json({
          chatLog,
          rankedPlan: [{ vendor, part: altPart, quantity: qty, days: finalAgreedDays, score: 'Optimal Value' }]
