@@ -3,7 +3,7 @@ import path from 'path';
 
 export default async function handler(req, res) {
   const { partNumber } = req.body;
-  const MOUSER_API_KEY = process.env.MOUSER_API_KEY || "bdec6af2-332b-416c-9ea9-53201f29edf1"; // Use provided key if env missing
+  const MOUSER_API_KEY = process.env.MOUSER_API_KEY; // Use provided key if env missing
   
   if (!partNumber) {
     return res.status(200).json([]);
