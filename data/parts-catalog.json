@@ -1,19 +1,19 @@
 [
   {
-    "part_id": "MCU-2201X",
+    "part_id": "STM32F401RE",
     "category": "MCU",
     "manufacturer": "STMicroelectronics",
     "base_price": 4.5,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "MCU-2201X-ALT",
+        "alt_part_id": "GD32F403RET6",
         "vendor": "Farnell",
         "unit_price": 4.28,
         "lead_time_days": 19,
         "stock_qty": 12515
       },
       {
-        "alt_part_id": "MCU-2201X-B",
+        "alt_part_id": "AT32F403ARCT7",
         "vendor": "Arrow Electronics",
         "unit_price": 4.35,
         "lead_time_days": 15,
@@ -53,13 +53,13 @@
     "last_updated": "2026-08-29T11:38:03.909Z"
   },
   {
-    "part_id": "MEM-64GB-NAND",
+    "part_id": "MT29F64G08AECABH1",
     "category": "MEM",
     "manufacturer": "Micron Technology",
     "base_price": 8.5,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "MEM-64GB-NAND-ALT",
+        "alt_part_id": "K9F1G08U0E",
         "vendor": "Digi-Key Electronics",
         "unit_price": 8.62,
         "lead_time_days": 17,
@@ -76,13 +76,13 @@
     "last_updated": "2026-08-29T11:38:03.909Z"
   },
   {
-    "part_id": "FPGA-Z7020",
+    "part_id": "XC7Z020-1CLG400C",
     "category": "FPGA",
     "manufacturer": "AMD",
     "base_price": 125,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "FPGA-Z7020-ALT",
+        "alt_part_id": "XC7Z020-2CLG400C",
         "vendor": "Rutronik",
         "unit_price": 129.69,
         "lead_time_days": 17,
@@ -112,14 +112,14 @@
     "base_price": 10000,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "GPU-A100-80-ALT",
+        "alt_part_id": "AMD-MI300X",
         "vendor": "WT Microelectronics",
         "unit_price": 13729.65,
         "lead_time_days": 6,
         "stock_qty": 17229
       },
       {
-        "alt_part_id": "GPU-A100-80-B",
+        "alt_part_id": "NVIDIA-H100",
         "vendor": "Avnet",
         "unit_price": 14100,
         "lead_time_days": 8,

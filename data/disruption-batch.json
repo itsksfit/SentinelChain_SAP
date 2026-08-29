@@ -2,7 +2,7 @@
   {
     "disruption_id": "DSP-092",
     "recovery_plan_id": "RP-8042",
-    "part_affected": "MCU-2201X",
+    "part_affected": "STM32F401RE",
     "event_type": "Export Ban",
     "detected_at": "2026-07-30T10:27:46.721Z",
     "revenue_at_risk_usd": 3507860,
@@ -10,7 +10,7 @@
     "confirmed_impact": true,
     "resolution": {
       "plan_id": "RP-8042",
-      "alt_part_used": "MCU-2201X-ALT",
+      "alt_part_used": "GD32F403RET6",
       "vendor": "Farnell",
       "recovered_amount_usd": 3349487,
       "time_to_recovery_hours": 48,
@@ -20,25 +20,25 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-07-30T10:27:46.721Z",
-        "action": "Detected Supplier Bankruptcy affecting MCU-2201X.",
+        "action": "Detected Supplier Bankruptcy affecting STM32F401RE.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-07-30T10:27:51.721Z",
         "action": "Confirmed financial risk of $3,507,860/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MCU-2201X, Revenue Dependency."
+        "data_used": "Product ID: STM32F401RE, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
         "timestamp": "2026-07-30T10:28:01.721Z",
-        "action": "Identified 1 alternatives. Selected MCU-2201X-ALT.",
+        "action": "Identified 1 alternatives. Selected GD32F403RET6.",
         "data_used": "parts-catalog.json row match"
       },
       {
         "agent": "Chase Agent",
         "timestamp": "2026-07-30T10:28:46.721Z",
-        "action": "Negotiated procurement of MCU-2201X-ALT with Farnell at $4.28.",
+        "action": "Negotiated procurement of GD32F403RET6 with Farnell at $4.28.",
         "data_used": "vendors.json reliability rating"
       }
     ]
@@ -84,7 +84,7 @@
   {
     "disruption_id": "DSP-088",
     "recovery_plan_id": "RP-8044",
-    "part_affected": "MEM-64GB-NAND",
+    "part_affected": "MT29F64G08AECABH1",
     "event_type": "Material Shortage",
     "detected_at": "2026-08-01T10:44:17.149Z",
     "revenue_at_risk_usd": 3518602,
@@ -92,7 +92,7 @@
     "confirmed_impact": true,
     "resolution": {
       "plan_id": "RP-8044",
-      "alt_part_used": "MEM-64GB-NAND-ALT",
+      "alt_part_used": "K9F1G08U0E",
       "vendor": "Digi-Key Electronics",
       "recovered_amount_usd": 0,
       "time_to_recovery_hours": 24,
@@ -102,25 +102,25 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-01T10:44:17.149Z",
-        "action": "Detected Supplier Bankruptcy affecting MEM-64GB-NAND.",
+        "action": "Detected Supplier Bankruptcy affecting MT29F64G08AECABH1.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-01T10:44:22.149Z",
         "action": "Confirmed financial risk of $3,518,602/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MEM-64GB-NAND, Revenue Dependency."
+        "data_used": "Product ID: MT29F64G08AECABH1, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
         "timestamp": "2026-08-01T10:44:32.149Z",
-        "action": "Identified 2 alternatives. Selected MEM-64GB-NAND-ALT.",
+        "action": "Identified 2 alternatives. Selected K9F1G08U0E.",
         "data_used": "parts-catalog.json row match"
       },
       {
         "agent": "Chase Agent",
         "timestamp": "2026-08-01T10:45:17.149Z",
-        "action": "Negotiated procurement of MEM-64GB-NAND-ALT with Digi-Key Electronics at $8.62.",
+        "action": "Negotiated procurement of K9F1G08U0E with Digi-Key Electronics at $8.62.",
         "data_used": "vendors.json reliability rating"
       }
     ]
@@ -128,7 +128,7 @@
   {
     "disruption_id": "DS-10003",
     "recovery_plan_id": "RP-10003",
-    "part_affected": "FPGA-Z7020",
+    "part_affected": "XC7Z020-1CLG400C",
     "event_type": "Export Ban",
     "detected_at": "2026-08-02T09:00:01.096Z",
     "revenue_at_risk_usd": 0,
@@ -146,7 +146,7 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-02T09:00:01.096Z",
-        "action": "Detected Export Ban affecting FPGA-Z7020.",
+        "action": "Detected Export Ban affecting XC7Z020-1CLG400C.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
