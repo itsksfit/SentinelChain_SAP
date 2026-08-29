@@ -105,6 +105,36 @@ export default function Dashboard() {
     
     if (!d1.isDisruption) {
       addAudit('System', 'Event deemed non-critical to known supply chain. Pipeline halted.');
+      
+      const newRecord = {
+        disruption_id: `DS-LIVE-${Math.floor(Math.random()*9000)+1000}`,
+        recovery_plan_id: null,
+        part_affected: "Unrelated / Noise",
+        event_type: d1.reason || "Non-critical Event",
+        detected_at: new Date().toISOString(),
+        revenue_at_risk_usd: 0,
+        status: "Resolved",
+        confirmed_impact: false,
+        resolution: {
+          plan_id: null,
+          alt_part_used: null,
+          vendor: null,
+          recovered_amount_usd: 0,
+          time_to_recovery_hours: 0,
+          outcome: "Resolved (False Positive)",
+          proposed_action: "None. Threat safely dismissed."
+        },
+        decision_trail: [
+          { agent: 'Detection Agent', action: d1.reason || "No relevant disruption classified", timestamp: new Date().toISOString(), data_used: "News Analysis" },
+          { agent: 'System', action: 'Event deemed non-critical to known supply chain. Pipeline halted.', timestamp: new Date().toISOString(), data_used: "Stopping Rules" }
+        ]
+      };
+      try {
+        const existing = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+        existing.unshift(newRecord);
+        localStorage.setItem('custom_disruptions', JSON.stringify(existing));
+      } catch(e) {}
+      
       setLoading(false);
       return;
     }
