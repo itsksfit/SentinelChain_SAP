@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { 
   Activity, AlertTriangle, ShieldCheck, Cpu, Box, 
   Search, MessageSquare, CheckCircle, Clock, Zap,
-  Menu, Bell, User, LayoutDashboard, Database, Settings, ShieldAlert, RefreshCw
+  Menu, Bell, User, LayoutDashboard, Database, Settings, ShieldAlert, RefreshCw, ArrowRight
 } from 'lucide-react';
 import events from '../data/events.json';
 
