@@ -4,25 +4,25 @@
 
 @layer base {
   body {
-    @apply bg-white text-gray-900 antialiased selection:bg-indigo-500/30 transition-colors duration-300;
+    @apply bg-[#FFFFFF] text-[#111111] antialiased selection:bg-gray-200 transition-colors duration-300;
   }
   .dark body {
-    @apply bg-[#0f1115] text-gray-200;
+    @apply bg-[#09090b] text-[#fafafa] selection:bg-gray-800;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-white dark:bg-[#1a1d24] border border-gray-100 dark:border-white/10 rounded-xl transition-colors duration-300;
+    @apply bg-white dark:bg-[#09090b] border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors duration-300;
   }
   .glass-panel-accent {
-    @apply bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-500/30 rounded-xl transition-colors duration-300;
+    @apply bg-[#FAFAFA] dark:bg-[#18181b] border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors duration-300;
   }
   .glass-panel-danger {
-    @apply bg-red-50 dark:bg-red-950/10 border border-red-100 dark:border-red-500/30 rounded-xl transition-colors duration-300;
+    @apply bg-[#FFF5F5] dark:bg-[rgba(224,49,49,0.05)] border border-red-200 dark:border-[rgba(224,49,49,0.2)] rounded-lg transition-colors duration-300;
   }
   .glass-panel-success {
-    @apply bg-emerald-50 dark:bg-emerald-950/10 border border-emerald-100 dark:border-emerald-500/30 rounded-xl transition-colors duration-300;
+    @apply bg-[#F4FCE3] dark:bg-[rgba(47,158,68,0.05)] border border-green-200 dark:border-[rgba(47,158,68,0.2)] rounded-lg transition-colors duration-300;
   }
 }
 
