@@ -37,11 +37,14 @@ export default function Navbar() {
           const sidebar = document.getElementById('mobile-sidebar');
           if (sidebar) sidebar.classList.toggle('hidden');
         }}>
-          <Menu className="w-6 h-6 text-gray-500 dark:text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-gray-900 dark:text-white" />
+          <Menu className="w-6 h-6 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white" />
         </button>
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="text-indigo-500 w-5 h-5" />
-          <span className="font-bold text-gray-900 dark:text-gray-900 dark:text-white">SentinelChain</span>
+        <div className="flex items-center">
+          <img 
+            src="/logo.png" 
+            alt="SentinelChain" 
+            className="h-8 w-auto object-contain bg-white rounded p-0.5" 
+          />
         </div>
       </div>
       <div className="hidden lg:flex items-center text-sm text-gray-500 dark:text-gray-500 dark:text-gray-400">
