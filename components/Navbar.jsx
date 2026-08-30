@@ -39,11 +39,11 @@ export default function Navbar() {
         }}>
           <Menu className="w-6 h-6 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white" />
         </button>
-        <div className="flex items-center">
+        <div className="flex items-center -ml-2">
           <img 
             src="/logo.png" 
             alt="SentinelChain" 
-            className="h-8 w-auto object-contain bg-white rounded p-0.5" 
+            className="h-16 w-auto object-contain scale-110 origin-left" 
           />
         </div>
       </div>

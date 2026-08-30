@@ -20,11 +20,11 @@ export default function Sidebar() {
   return (
     <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-white/10 bg-white dark:bg-[#0a0f18] h-screen fixed left-0 top-0 overflow-y-auto z-50">
       <div className="p-6 flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center -ml-2">
           <img 
             src="/logo.png" 
             alt="SentinelChain: Global Integrity Ecosystem" 
-            className="h-12 w-auto object-contain rounded-md" 
+            className="h-24 w-auto object-contain" 
           />
         </div>
         <button className="lg:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:text-white" onClick={() => document.getElementById('mobile-sidebar').classList.add('hidden')}>
