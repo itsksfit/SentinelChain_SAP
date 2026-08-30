@@ -6,6 +6,7 @@ export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [newsResults, setNewsResults] = useState([]);
   const [dataset, setDataset] = useState({ disruptions: [], vendors: [] });
   const inputRef = useRef(null);
   const router = useRouter();
@@ -88,6 +89,37 @@ export default function CommandPalette() {
     setResults([...dMatches, ...pMatches, ...vMatches]);
   }, [query, dataset]);
 
+  // Debounced News Search API Call
+  useEffect(() => {
+    if (!query.trim()) {
+      setNewsResults([]);
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      fetch(`/api/news/latest?q=${encodeURIComponent(query)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            const formatted = data.map(newsItem => ({
+              type: 'News Feed Search',
+              id: newsItem.id,
+              title: newsItem.title,
+              description: newsItem.description,
+              icon: <Search className="w-4 h-4 text-indigo-400" />,
+              newsObject: newsItem
+            }));
+            setNewsResults(formatted);
+          } else {
+            setNewsResults([]);
+          }
+        })
+        .catch(() => setNewsResults([]));
+    }, 400); // 400ms debounce
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
+
   if (!isOpen) return null;
 
   return (
@@ -108,32 +140,64 @@ export default function CommandPalette() {
           </button>
         </div>
         
-        {results.length > 0 && (
-          <div className="max-h-[60vh] overflow-y-auto p-2">
-            {results.map((r, i) => (
-              <button
-                key={i}
-                className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-colors group"
-                onClick={() => {
-                  setIsOpen(false);
-                  router.push(r.url);
-                }}
-              >
-                <div className="p-2 bg-gray-100 dark:bg-black/30 rounded-md group-hover:bg-white dark:group-hover:bg-white/10 transition-colors">
-                  {r.icon}
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-900 dark:text-white">{r.title}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{r.type}</p>
-                </div>
-              </button>
-            ))}
+        {(results.length > 0 || newsResults.length > 0) && (
+          <div className="max-h-[60vh] overflow-y-auto p-2 space-y-4">
+            {results.length > 0 && (
+              <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-4 mb-2">Database Records</p>
+                {results.map((r, i) => (
+                  <button
+                    key={i}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-colors group"
+                    onClick={() => {
+                      setIsOpen(false);
+                      router.push(r.url);
+                    }}
+                  >
+                    <div className="p-2 bg-gray-100 dark:bg-black/30 rounded-md group-hover:bg-white dark:group-hover:bg-white/10 transition-colors">
+                      {r.icon}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm">{r.title}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{r.type}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {newsResults.length > 0 && (
+              <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-4 mb-2">Live News Search API (Analyze on Click)</p>
+                {newsResults.map((r, i) => (
+                  <button
+                    key={i}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-colors group"
+                    onClick={() => {
+                      setIsOpen(false);
+                      try {
+                        localStorage.setItem('pending_analysis_news', JSON.stringify(r.newsObject));
+                      } catch(e) {}
+                      router.push('/');
+                    }}
+                  >
+                    <div className="p-2 bg-indigo-500/10 rounded-md group-hover:bg-indigo-500/20 transition-colors">
+                      {r.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{r.title}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{r.description}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
         
-        {query.trim() && results.length === 0 && (
+        {query.trim() && results.length === 0 && newsResults.length === 0 && (
           <div className="p-8 text-center text-gray-500">
-            No results found for "{query}"
+            No database records or live news found for "{query}"
           </div>
         )}
       </div>

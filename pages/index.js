@@ -39,9 +39,12 @@ export default function Dashboard() {
   const [liveNews, setLiveNews] = useState([]);
   const [accuracyStat, setAccuracyStat] = useState("Loading...");
   const [activeNews, setActiveNews] = useState(null);
+  const [newsSearchQuery, setNewsSearchQuery] = useState('');
+  const [isSearchingNews, setIsSearchingNews] = useState(false);
 
-  const fetchNews = () => {
-    fetch('/api/news/latest').then(r => r.json()).then(news => {
+  const fetchNews = (query = '') => {
+    const url = query ? `/api/news/latest?q=${encodeURIComponent(query)}` : '/api/news/latest';
+    fetch(url).then(r => r.json()).then(news => {
       setLiveNews(news);
       setActiveNews(prev => prev || (news.length > 0 ? news[0] : null));
     });
@@ -51,6 +54,31 @@ export default function Dashboard() {
   useEffect(() => { stageRef.current = stage; }, [stage]);
 
   useEffect(() => {
+    // Check if there is a pending news analysis from CommandPalette
+    try {
+      const pending = localStorage.getItem('pending_analysis_news');
+      if (pending) {
+        localStorage.removeItem('pending_analysis_news');
+        const newsObj = JSON.parse(pending);
+        setLiveNews([newsObj]);
+        setActiveNews(newsObj);
+        simulatePipeline(newsObj);
+        fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
+        fetch('/api/stats').then(r => r.json()).then(data => {
+          try {
+            const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
+            const customConf = custom.filter(x => x.confirmed_impact).length;
+            const total = data.total + custom.length;
+            const conf = data.confirmed + customConf;
+            setAccuracyStat(`${conf}/${total} (${((conf/total)*100).toFixed(0)}%)`);
+          } catch(e) {
+            setAccuracyStat(data.accuracyText);
+          }
+        });
+        return;
+      }
+    } catch(e) {}
+
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
     fetch('/api/stats').then(r => r.json()).then(data => {
       try {
@@ -64,14 +92,14 @@ export default function Dashboard() {
       }
     });
     fetchNews();
-    // Auto-refresh the live disruption feed every 30 seconds only if idle
+    // Auto-refresh the live disruption feed every 30 seconds only if idle and not searching
     const interval = setInterval(() => {
-      if (stageRef.current === 0) {
+      if (stageRef.current === 0 && !isSearchingNews) {
         fetchNews();
       }
     }, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isSearchingNews]);
 
   const addAudit = (source, message) => {
     setAuditTrail(prev => [...prev, { time: new Date().toISOString(), source, message }]);
@@ -319,7 +347,15 @@ export default function Dashboard() {
                   <Activity className="w-4 h-4 text-emerald-500" /> Live Disruption Feed
                 </h2>
                 <div className="flex items-center gap-3">
-                  <button onClick={fetchNews} className="text-gray-400 hover:text-emerald-500 transition-colors" title="Force Refresh News">
+                  <button 
+                    onClick={() => {
+                      setNewsSearchQuery('');
+                      setIsSearchingNews(false);
+                      fetchNews();
+                    }} 
+                    className="text-gray-400 hover:text-emerald-500 transition-colors" 
+                    title="Reset & Refresh News"
+                  >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
                   <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-500 tracking-wider">
@@ -327,6 +363,42 @@ export default function Dashboard() {
                   </span>
                 </div>
               </div>
+
+              {/* NEWS API SEARCH BAR */}
+              <div className="glass-panel p-2 flex items-center gap-2 border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-black/20">
+                <Search className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                <input 
+                  type="text"
+                  placeholder="Search news, chips, parts..."
+                  value={newsSearchQuery}
+                  onChange={(e) => setNewsSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      if (newsSearchQuery.trim()) {
+                        setIsSearchingNews(true);
+                        fetchNews(newsSearchQuery);
+                      } else {
+                        setIsSearchingNews(false);
+                        fetchNews();
+                      }
+                    }
+                  }}
+                  className="flex-1 bg-transparent border-none text-xs outline-none text-gray-900 dark:text-white placeholder-gray-500"
+                />
+                {newsSearchQuery && (
+                  <button 
+                    onClick={() => {
+                      setNewsSearchQuery('');
+                      setIsSearchingNews(false);
+                      fetchNews();
+                    }} 
+                    className="text-[10px] font-bold text-gray-400 hover:text-red-400 transition-colors uppercase px-1"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
               <div className="space-y-3">
                 {liveNews.map((news) => (
                   <div 
