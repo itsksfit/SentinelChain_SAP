@@ -40,13 +40,11 @@ export default function Navbar() {
           <Menu className="w-6 h-6 text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white" />
         </button>
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 overflow-hidden relative rounded-lg shrink-0 bg-white">
-            <img 
-              src="/logo.png" 
-              alt="Logo Icon" 
-              className="absolute left-[-12px] top-1/2 transform -translate-y-[45%] w-[140px] max-w-none"
-            />
-          </div>
+          <img 
+            src="/shield.png" 
+            alt="Logo Icon" 
+            className="w-8 h-8 object-contain rounded-lg shadow-sm border border-gray-100 dark:border-[#27272a] shrink-0"
+          />
           <div className="flex flex-col">
             <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white leading-none">SentinelChain</span>
             <span className="text-[7px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-0.5">Global Integrity</span>

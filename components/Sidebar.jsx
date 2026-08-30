@@ -21,13 +21,11 @@ export default function Sidebar() {
     <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-white/10 bg-white dark:bg-[#0a0f18] h-screen fixed left-0 top-0 overflow-y-auto z-50">
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 overflow-hidden relative rounded-xl shrink-0 border border-gray-200 dark:border-[#27272a] shadow-sm bg-white">
-            <img 
-              src="/logo.png" 
-              alt="Logo Icon" 
-              className="absolute left-[-15px] top-1/2 transform -translate-y-[45%] w-[180px] max-w-none"
-            />
-          </div>
+          <img 
+            src="/shield.png" 
+            alt="Logo Icon" 
+            className="w-10 h-10 object-contain rounded-xl shadow-sm border border-gray-100 dark:border-[#27272a] shrink-0"
+          />
           <div className="flex flex-col">
             <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white leading-none">SentinelChain</span>
             <span className="text-[8px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mt-1">Global Integrity Ecosystem</span>
