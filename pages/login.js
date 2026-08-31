@@ -111,7 +111,7 @@ export default function Login() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Password <span className="text-xs font-normal text-indigo-500 ml-1">(Demo: Admin123!)</span>
+                Password
               </label>
               <div className="mt-2 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
