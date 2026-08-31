@@ -40,7 +40,7 @@ export default function Login() {
     signIn(provider, { callbackUrl: '/' });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
@@ -70,15 +70,21 @@ export default function Login() {
     });
     setDbUsers(users);
     
-    // Switch back to login
-    setSuccess("Account created successfully! Please log in.");
-    setIsLoginView(true);
-    setLoginEmail(signupEmail);
-    setLoginPassword('');
+    // Auto-login instantly after signup
+    setSuccess("Account created successfully! Logging you in...");
     
-    // Clear signup form
-    setName(''); setAge(''); setCompany('');
-    setSignupEmail(''); setSignupPassword(''); setConfirmPassword('');
+    const res = await signIn('credentials', {
+      redirect: false,
+      email: signupEmail,
+      password: signupPassword,
+      callbackUrl: '/'
+    });
+
+    if (res?.error) {
+      setError(res.error);
+    } else if (res?.url) {
+      window.location.href = res.url;
+    }
   };
 
   const handleManualLogin = async (e) => {
