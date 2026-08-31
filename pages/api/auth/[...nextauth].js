@@ -14,34 +14,42 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         const { email, password } = credentials;
 
         if (!email || !password) throw new Error("Please enter both email and password.");
 
-        // 1. Basic format validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) throw new Error("Invalid email format.");
-
-        // 2. Reject fake/test domains
-        const fakeDomains = ['test.com', 'example.com', 'fake.com', 'mailinator.com', 'demo.com'];
-        const domain = email.split('@')[1]?.toLowerCase();
-        if (fakeDomains.includes(domain)) {
-          throw new Error("Please use a real enterprise email domain.");
+        // For this hackathon, we are simulating a database using a secure cookie
+        // This allows real persistent registration without needing Postgres/Prisma!
+        const usersCookie = req.cookies.sentinel_db_users;
+        let users = [];
+        
+        if (usersCookie) {
+          try {
+            users = JSON.parse(decodeURIComponent(usersCookie));
+          } catch (e) {
+            console.error("Failed to parse mock DB", e);
+          }
         }
 
-        // 3. Strict Password Validation
-        // This allows the user to test the "wrong password" UI during the pitch.
-        if (password !== 'Admin123!') {
+        // Search our "database" for the user
+        const user = users.find(u => u.email === email);
+        
+        if (!user) {
+          throw new Error("No account found with this email. Please sign up first.");
+        }
+
+        // Validate password
+        if (user.password !== password) {
           throw new Error("Invalid password. Please try again.");
         }
 
-        // If it passes, create the session
+        // Success! Create the session
         return {
-          id: "demo-user-1",
-          name: email.split('@')[0],
-          email: email,
-          image: "https://ui-avatars.com/api/?name=" + encodeURIComponent(email) + "&background=random"
+          id: email,
+          name: user.name || email.split('@')[0],
+          email: user.email,
+          image: "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name || email) + "&background=random"
         }
       }
     })
