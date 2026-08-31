@@ -127,7 +127,15 @@ export default function Navbar() {
           )}
         </div>
         
-        <button className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden hover:border-gray-500 transition-colors cursor-pointer">
+        <button 
+          onClick={() => {
+            localStorage.removeItem('sentinel_auth');
+            localStorage.removeItem('sentinel_user');
+            window.location.href = '/login';
+          }}
+          title="Sign Out"
+          className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden hover:border-gray-500 transition-colors cursor-pointer"
+        >
           <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
         </button>
       </div>
