@@ -42,12 +42,21 @@ export default function Dashboard() {
   const [newsSearchQuery, setNewsSearchQuery] = useState('');
   const [isSearchingNews, setIsSearchingNews] = useState(false);
 
-  const fetchNews = (query = '') => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const fetchNews = async (query = '') => {
+    setIsRefreshing(true);
     const url = query ? `/api/news/latest?q=${encodeURIComponent(query)}` : '/api/news/latest';
-    fetch(url).then(r => r.json()).then(news => {
+    try {
+      const r = await fetch(url);
+      const news = await r.json();
       setLiveNews(news);
       setActiveNews(prev => prev || (news.length > 0 ? news[0] : null));
-    });
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500); // Small delay so the user sees the spin
+    }
   };
 
   const stageRef = useRef(stage);
@@ -353,10 +362,11 @@ export default function Dashboard() {
                       setIsSearchingNews(false);
                       fetchNews();
                     }} 
-                    className="text-gray-400 hover:text-emerald-500 transition-colors" 
+                    disabled={isRefreshing}
+                    className={`text-gray-400 hover:text-emerald-500 transition-colors ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`} 
                     title="Reset & Refresh News"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
+                    <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-emerald-500' : ''}`} />
                   </button>
                   <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-500 tracking-wider">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync
