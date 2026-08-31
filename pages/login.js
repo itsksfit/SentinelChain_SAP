@@ -26,7 +26,7 @@ export default function Login() {
     });
 
     if (res?.error) {
-      setError('Invalid credentials.');
+      setError(res.error);
       setIsLoading(false);
     } else if (res?.url) {
       window.location.href = res.url;
@@ -111,7 +111,7 @@ export default function Login() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Password
+                Password <span className="text-xs font-normal text-indigo-500 ml-1">(Demo: Admin123!)</span>
               </label>
               <div className="mt-2 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

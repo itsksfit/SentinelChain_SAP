@@ -15,17 +15,34 @@ export const authOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // For hackathon demo purposes, we accept any email and password 
-        // so the judges can easily test it, and inject it into the real NextAuth session.
-        if (credentials?.email && credentials?.password) {
-          return {
-            id: "demo-user-1",
-            name: credentials.email.split('@')[0],
-            email: credentials.email,
-            image: "https://ui-avatars.com/api/?name=" + encodeURIComponent(credentials.email) + "&background=random"
-          }
+        const { email, password } = credentials;
+
+        if (!email || !password) throw new Error("Please enter both email and password.");
+
+        // 1. Basic format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) throw new Error("Invalid email format.");
+
+        // 2. Reject fake/test domains
+        const fakeDomains = ['test.com', 'example.com', 'fake.com', 'mailinator.com', 'demo.com'];
+        const domain = email.split('@')[1]?.toLowerCase();
+        if (fakeDomains.includes(domain)) {
+          throw new Error("Please use a real enterprise email domain.");
         }
-        return null;
+
+        // 3. Strict Password Validation
+        // This allows the user to test the "wrong password" UI during the pitch.
+        if (password !== 'Admin123!') {
+          throw new Error("Invalid password. Please try again.");
+        }
+
+        // If it passes, create the session
+        return {
+          id: "demo-user-1",
+          name: email.split('@')[0],
+          email: email,
+          image: "https://ui-avatars.com/api/?name=" + encodeURIComponent(email) + "&background=random"
+        }
       }
     })
   ],
