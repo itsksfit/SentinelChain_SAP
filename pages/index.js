@@ -358,13 +358,11 @@ export default function Dashboard() {
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => {
-                      setNewsSearchQuery('');
-                      setIsSearchingNews(false);
-                      fetchNews();
+                      fetchNews(newsSearchQuery);
                     }} 
                     disabled={isRefreshing}
                     className={`text-gray-400 hover:text-emerald-500 transition-colors ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`} 
-                    title="Reset & Refresh News"
+                    title="Refresh News Feed"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-emerald-500' : ''}`} />
                   </button>
