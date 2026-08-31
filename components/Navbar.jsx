@@ -1,8 +1,10 @@
 import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -13,7 +15,6 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -64,7 +65,6 @@ export default function Navbar() {
           <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-bold bg-white dark:bg-black/40 rounded border border-gray-200 dark:border-white/10 ml-2">⌘K</kbd>
         </button>
 
-        {/* Theme Toggle */}
         {mounted && (
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -128,14 +128,14 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-2 border-l border-gray-200 dark:border-gray-800 pl-4">
           <button className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden">
-            <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            {session?.user?.image ? (
+              <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            )}
           </button>
           <button 
-            onClick={() => {
-              localStorage.removeItem('sentinel_auth');
-              localStorage.removeItem('sentinel_user');
-              window.location.href = '/login';
-            }}
+            onClick={() => signOut({ callbackUrl: '/login' })}
             className="text-xs font-bold text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors uppercase tracking-wider"
           >
             Sign Out
