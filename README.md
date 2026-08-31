@@ -3,6 +3,11 @@
   <h1>SentinelChain</h1>
   <p><b>Global Integrity Ecosystem & Autonomous Procurement Engine</b></p>
   <p><i>Built for Hackathon Track 03: AI Revenue Recovery</i></p>
+  
+  <br />
+  <a href="https://sentinelchain-gilt.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Demo-Live_on_Vercel-success?style=for-the-badge&logo=vercel" alt="Live Demo" />
+  </a>
 </div>
 
 ---
