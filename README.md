@@ -46,13 +46,15 @@ SentinelChain was built with strict enterprise constraints, ensuring a clean sep
 * **AI Engine:** `GroqCloud API` (Llama 3 / Mixtral for high-speed inference)
 
 ## ✨ Key Features Developed
+* **Enterprise Authentication:** Fully integrated `NextAuth.js` enabling genuine Google Single Sign-On (SSO) alongside a persistent, secure cookie-based database for authentic Enterprise Registration/Login workflows.
+* **Blurred Landing UI:** Sleek, privacy-first unauthenticated state that safely blurs proprietary dashboard metrics in the background until the user explicitly creates an account or logs in.
 * **Multi-Source Signal Verification:** An anti-hallucination UI engine that guarantees 98%+ confidence before triggering a massive procurement event.
 * **Visual Node-Link Impact Graph:** A dynamic, CSS-rendered dependency tree showing exactly how a single chip shortage cascades into multi-million dollar revenue loss.
 * **Live Enterprise Data Fusion:** Blends real-time SAP Sandbox data with live Mouser market pricing to ground the AI in reality.
 * **Minimalist Vercel-Style UI:** Strict, flat, Radix-inspired monochrome design for a highly professional enterprise aesthetic.
 
 ## 🛠️ Tech Stack
-* **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons
+* **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons, NextAuth.js
 * **Integrations:** SAP S/4HANA, SAP Ariba, Mouser API, NewsAPI
 * **AI / LLM Inference:** Groq Cloud API
 * **Deployment:** Vercel
@@ -76,6 +78,10 @@ GROQ_API_KEY="your_groq_key"
 NEWS_API_KEY="your_newsapi_key"
 SAP_SANDBOX_API_KEY="your_sap_sandbox_key"
 SAP_S4_BASE_URL="https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PRODUCT_SRV"
+GOOGLE_ID="your_google_oauth_client_id"
+GOOGLE_SECRET="your_google_oauth_secret"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="any_secure_random_string"
 ```
 
 4. Start the Development Server
