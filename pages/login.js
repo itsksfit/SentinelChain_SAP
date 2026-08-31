@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ArrowRight, Mail, Lock, AlertCircle } from 'lucide-react';
+import { ArrowRight, Mail, Lock, AlertCircle, X } from 'lucide-react';
 import Head from 'next/head';
 
 export default function Login() {
@@ -11,8 +11,12 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isNewUser, setIsNewUser] = useState(true);
 
+  // SSO Modals State
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
+  const [showMsftModal, setShowMsftModal] = useState(false);
+  const [showSapModal, setShowSapModal] = useState(false);
+
   useEffect(() => {
-    // Check if an account was already created locally
     const savedEmail = localStorage.getItem('sentinel_saved_email');
     if (savedEmail) {
       setIsNewUser(false);
@@ -29,14 +33,12 @@ export default function Login() {
       const savedPassword = localStorage.getItem('sentinel_saved_password');
 
       if (!savedEmail) {
-        // Create the account for the first time
         localStorage.setItem('sentinel_saved_email', email);
         localStorage.setItem('sentinel_saved_password', password);
         localStorage.setItem('sentinel_auth', 'true');
         localStorage.setItem('sentinel_user', email);
         router.push('/');
       } else {
-        // Validate existing account
         if (email !== savedEmail || password !== savedPassword) {
           setError('Invalid email or password. Please try again.');
           setIsLoading(false);
@@ -49,13 +51,14 @@ export default function Login() {
     }, 1200);
   };
 
-  const handleGoogleAuth = () => {
+  const handleSSOSelect = (selectedEmail, providerModalSetter) => {
+    providerModalSetter(false);
     setIsLoading(true);
     setTimeout(() => {
       localStorage.setItem('sentinel_auth', 'true');
-      localStorage.setItem('sentinel_user', 'google_user@enterprise.com');
+      localStorage.setItem('sentinel_user', selectedEmail);
       router.push('/');
-    }, 1500);
+    }, 1000);
   };
 
   return (
@@ -63,6 +66,92 @@ export default function Login() {
       <Head>
         <title>Login | SentinelChain</title>
       </Head>
+
+      {/* GOOGLE SSO MODAL (MOCK) */}
+      {showGoogleModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white w-full max-w-[400px] rounded-[24px] shadow-2xl p-10 transform transition-all text-center">
+            <svg className="w-12 h-12 mx-auto mb-4" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <h2 className="text-2xl font-normal text-[#202124] mb-2">Sign in</h2>
+            <p className="text-[16px] text-[#202124] mb-8 font-medium">Choose an account<br/><span className="font-normal text-sm text-[#5f6368]">to continue to SentinelChain</span></p>
+            
+            <div className="w-full border border-gray-200 rounded-2xl overflow-hidden mb-8">
+              <button onClick={() => handleSSOSelect('krishnasharma@gmail.com', setShowGoogleModal)} className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 border-b border-gray-200 transition-colors text-left">
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-medium text-lg">K</div>
+                <div>
+                  <p className="text-sm font-medium text-[#3c4043]">Krishna Sharma</p>
+                  <p className="text-[13px] text-[#5f6368]">krishnasharma@gmail.com</p>
+                </div>
+              </button>
+              
+              <button onClick={() => handleSSOSelect('admin@enterprise.com', setShowGoogleModal)} className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors text-left">
+                <div className="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center font-medium text-lg">E</div>
+                <div>
+                  <p className="text-sm font-medium text-[#3c4043]">Enterprise Admin</p>
+                  <p className="text-[13px] text-[#5f6368]">admin@enterprise.com</p>
+                </div>
+              </button>
+            </div>
+
+            <button onClick={() => setShowGoogleModal(false)} className="px-6 py-2 rounded text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* SAP SSO MODAL (MOCK) */}
+      {showSapModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white w-full max-w-[400px] rounded shadow-2xl p-8 transform transition-all text-center border-t-4 border-blue-600">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" className="w-16 h-8 object-contain mx-auto mb-6" alt="SAP" />
+            <h2 className="text-xl font-bold text-gray-900 mb-2">SAP Universal ID</h2>
+            <p className="text-sm text-gray-600 mb-6">Select your identity provider to continue to SentinelChain S/4HANA integrations.</p>
+            
+            <div className="space-y-3 mb-6">
+              <button onClick={() => handleSSOSelect('global.admin@sap.com', setShowSapModal)} className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded text-sm font-bold transition-colors">
+                Login as Enterprise Admin
+              </button>
+              <button onClick={() => setShowSapModal(false)} className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 p-3 rounded text-sm font-bold transition-colors">
+                Cancel Authentication
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MICROSOFT SSO MODAL (MOCK) */}
+      {showMsftModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white w-full max-w-[400px] shadow-2xl p-10 transform transition-all">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" className="w-24 h-6 object-contain mb-6" alt="Microsoft" />
+            <h2 className="text-2xl font-semibold text-[#1b1b1b] mb-2">Pick an account</h2>
+            
+            <div className="w-full mt-6 mb-8">
+              <button onClick={() => handleSSOSelect('krishna@microsoft.com', setShowMsftModal)} className="w-full flex items-center gap-4 p-4 hover:bg-gray-100 transition-colors text-left">
+                <img src="/shield.png" className="w-10 h-10 rounded-full" />
+                <div>
+                  <p className="text-[15px] font-semibold text-[#1b1b1b]">Krishna Sharma</p>
+                  <p className="text-[13px] text-[#666666]">krishna@microsoft.com</p>
+                  <p className="text-[12px] text-[#666666] mt-0.5">Connected to Windows</p>
+                </div>
+              </button>
+            </div>
+            
+            <div className="flex justify-end">
+              <button onClick={() => setShowMsftModal(false)} className="px-8 py-2 bg-gray-200 hover:bg-gray-300 text-black text-[15px] transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
@@ -79,19 +168,39 @@ export default function Login() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white dark:bg-[#0f1115]/80 backdrop-blur-xl py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 border border-gray-100 dark:border-white/10">
           
-          <button 
-            type="button"
-            onClick={handleGoogleAuth}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors mb-6"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Continue with Google
-          </button>
+          <div className="space-y-3 mb-6">
+            <button 
+              type="button"
+              onClick={() => setShowGoogleModal(true)}
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Continue with Google
+            </button>
+
+            <button 
+              type="button"
+              onClick={() => setShowMsftModal(true)}
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            >
+              <img className="w-5 h-5" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" />
+              Continue with Microsoft
+            </button>
+
+            <button 
+              type="button"
+              onClick={() => setShowSapModal(true)}
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            >
+              <img className="w-10 h-5 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP" />
+              Continue with SAP ID
+            </button>
+          </div>
 
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
