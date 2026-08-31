@@ -1,48 +1,56 @@
-# 🛡️ SentinelChain
+<div align="center">
+  <img src="public/shield.png" alt="SentinelChain Logo" width="120" />
+  <h1>SentinelChain</h1>
+  <p><b>Global Integrity Ecosystem & Autonomous Procurement Engine</b></p>
+  <p><i>Built for Hackathon Track 03: AI Revenue Recovery</i></p>
+</div>
 
-**Autonomous Supply Chain Resilience & Procurement Platform**
+---
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Live_on_Vercel-success?style=for-the-badge&logo=vercel)](https://sentinelchain-gilt.vercel.app)
+## 🚀 The Vision
+When a global supply chain disruption occurs (e.g., a factory fire, port strike, or geopolitical event), traditional procurement teams take weeks to manually cross-reference their Bill of Materials (BOM) and negotiate with suppliers. By the time humans react, competitors have already bought out the remaining global inventory.
 
-SentinelChain is an AI-powered enterprise pipeline that transforms supply-chain risk management from a reactive, manual process into an autonomous, self-healing workflow. Designed specifically for the **Global Semiconductor Industry**, SentinelChain sits seamlessly between live global intelligence feeds and enterprise ERP software (SAP). It detects real-time disruptions, calculates massive financial impacts, engineers pin-compatible chip alternatives on the fly, and negotiates procurement—all in seconds.
+**SentinelChain** bridges a company's internal ERP system with external global market data. It autonomously calculates revenue at risk, sources alternative components from the open market, and negotiates recovery options before competitors even realize there is a shortage.
 
-## 🚀 The Problem 
-When a global disruption occurs (e.g., a factory fire, a port strike, or geopolitical export restrictions), traditional procurement teams take weeks to manually cross-reference their Bill of Materials (BOM), email suppliers, and draft Purchase Requisitions. By the time humans react, competitors have already bought out the remaining global inventory.
+## 🔄 The 6-Step Autonomous Workflow
 
-**SentinelChain turns a two-week human process into a two-minute autonomous AI workflow.**
+SentinelChain executes a closed-loop revenue recovery pipeline:
 
-## 🧠 The Multi-Agent AI Architecture
+1. **📡 Disruption Detection (Live Intelligence)**
+   Ingests live global news via **NewsAPI**. To prevent AI hallucination and "fake news" reactions, signals pass through a **Multi-Source Consensus Engine** (architected to cross-reference GDELT & Reuters) before triggering an alert.
+2. **💥 Evidence & Impact Graph (SAP S/4HANA)**
+   Once verified, the platform queries the live **SAP S/4HANA Cloud OData API** to explode the Bill of Materials (BOM). It visually maps the exact assembly lines affected and calculates the daily revenue at risk. It also extracts engineering-approved alternate parts.
+3. **🌐 Real-Time Market Sourcing (Mouser API)**
+   SAP knows what parts you *can* use, but not what is in stock globally. The system dynamically queries the **Mouser Electronics Search API** to pull real-time stock availability, lead times, and spot pricing for those alternate chips.
+4. **🧠 Recovery Options & Comparison**
+   The AI generates three bounded recovery paths:
+   - **Option A (External):** AI Chase Agent autonomously negotiates a bulk discount with Mouser to issue a new Purchase Order.
+   - **Option B (Internal):** Simulate an SAP Stock Transport Order (STO) to reallocate existing inventory from another internal warehouse.
+   - **Option C (Accept Risk):** Do nothing and absorb the revenue hit.
+5. **🧑‍💼 Human Approval**
+   The supply chain manager reviews the dynamic **Visual Impact Graph** and the generated recovery options in the Decision Center, requiring just one click to approve the optimal path.
+6. **⚡ Execution & Verification**
+   The AI agent instantly executes the selected strategy (simulating an RFQ chat log or SAP STO), locking in the inventory and successfully recovering the at-risk revenue.
 
-Our architecture is powered by a **Multi-Agent Generative AI framework** (via Groq / `gpt-oss-120b`), working in four autonomous stages:
+## 🏗️ Enterprise Architecture
+SentinelChain was built with strict enterprise constraints, ensuring a clean separation between internal systems of record and external market volatility.
 
-1. **📡 Detection Agent (Live Intelligence)**
-   - Continuously ingests live global news via a heavily optimized NewsAPI pipeline.
-   - Strictly filters irrelevant news and maps real-world macroeconomic events (e.g., TSMC yield drops, NVIDIA export bans) directly to the enterprise Bill of Materials using rigid factual LLM guardrails.
-
-2. **💥 Impact Agent (The AI CFO)**
-   - Connects to the **SAP S/4HANA Business Accelerator Hub** (The "Brain").
-   - Extracts real-time enterprise baseline data and dynamically calculates exact daily revenue at risk in USD (e.g., scaling up to $1.5M+/day for critical AI accelerators like the A100 GPU).
-
-3. **⚙️ Match & Chase Agents (Engineering & Negotiation)**
-   - **Match Agent:** Acts as an AI electronics engineer. Instead of hardcoded databases, it uses internal LLM knowledge to dynamically generate commercially viable, pin-compatible alternative chips from global distributors (Digi-Key, Mouser, Arrow).
-   - **Chase Agent:** Acts as an autonomous procurement officer. It aggressively haggles with global distributors on price and lead times via conversational inference to find the mathematically optimal recovery path.
-
-4. **💼 Execution Agent (SAP Ariba Sandbox)**
-   - Once the human-in-the-loop approves the AI's strategy, the system interfaces with **SAP Ariba** (The "Wallet").
-   - It seamlessly pushes a drafted Purchase Requisition (PR) directly into the ERP workflow, bypassing the bottleneck.
+* **Internal Brain:** `SAP Business Accelerator Hub` (OData V4 APIs)
+* **External Market:** `Mouser Electronics Search API`
+* **Threat Telemetry:** `NewsAPI`
+* **AI Engine:** `GroqCloud API` (Llama 3 / Mixtral for high-speed inference)
 
 ## ✨ Key Features Developed
-* **100% Live AI Generation:** No hardcoded solutions. Alternatives, chat logs, and financial impacts are generated in real-time based on the specific disrupted semiconductor.
-* **Interactive 3D Supply Network:** A WebGL-powered interactive globe mapping major semiconductor hubs (Hsinchu, Eindhoven, Santa Clara) with live pulsing data strings representing technology trade routes.
-* **Dynamic Recovery Plans:** A fully interactive history vault where the AI dynamically generates and documents executed mitigation strategies with detailed historical context.
-* **Light / Dark Mode:** Fully responsive, polished enterprise UI with beautiful glass-morphism panels and dynamic theme switching.
+* **Multi-Source Signal Verification:** An anti-hallucination UI engine that guarantees 98%+ confidence before triggering a massive procurement event.
+* **Visual Node-Link Impact Graph:** A dynamic, CSS-rendered dependency tree showing exactly how a single chip shortage cascades into multi-million dollar revenue loss.
+* **Live Enterprise Data Fusion:** Blends real-time SAP Sandbox data with live Mouser market pricing to ground the AI in reality.
+* **Minimalist Vercel-Style UI:** Strict, flat, Radix-inspired monochrome design for a highly professional enterprise aesthetic.
 
 ## 🛠️ Tech Stack
-* **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons, next-themes
-* **3D Visualization:** React-Globe.gl, Three.js
+* **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons
+* **Integrations:** SAP S/4HANA, SAP Ariba, Mouser API, NewsAPI
 * **AI / LLM Inference:** Groq Cloud API
-* **Enterprise Integration:** SAP S/4HANA (Sandbox API), SAP Ariba (Procurement API)
-* **Live Data:** NewsAPI
+* **Deployment:** Vercel
 
 ## 💻 Running Locally
 
@@ -63,7 +71,6 @@ GROQ_API_KEY="your_groq_key"
 NEWS_API_KEY="your_newsapi_key"
 SAP_SANDBOX_API_KEY="your_sap_sandbox_key"
 SAP_S4_BASE_URL="https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PRODUCT_SRV"
-SAP_ARIBA_BASE_URL="https://sandbox.api.sap.com/ariba/api/purchasing-operational-sourcing/v2/prod"
 ```
 
 4. Start the Development Server
@@ -71,6 +78,5 @@ SAP_ARIBA_BASE_URL="https://sandbox.api.sap.com/ariba/api/purchasing-operational
 npm run dev
 ```
 
-## 🌐 Live Demo
-The application is deployed on Vercel:
-👉 **[https://sentinelchain-gilt.vercel.app](https://sentinelchain-gilt.vercel.app)**
+---
+*Built for the Enterprise AI Hackathon.*
