@@ -5,8 +5,8 @@ import AzureADProvider from "next-auth/providers/azure-ad"
 export const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID || "placeholder",
-      clientSecret: process.env.GOOGLE_SECRET || "placeholder",
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET || "fallback_secret_for_dev",
