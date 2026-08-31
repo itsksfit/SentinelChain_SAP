@@ -1,10 +1,36 @@
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { ArrowRight, Mail, Lock } from 'lucide-react';
+import { ArrowRight, Mail, Lock, AlertCircle } from 'lucide-react';
 import Head from 'next/head';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const handleSSO = (provider) => {
     signIn(provider, { callbackUrl: '/' });
+  };
+
+  const handleManualLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    const res = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+      callbackUrl: '/'
+    });
+
+    if (res?.error) {
+      setError('Invalid credentials.');
+      setIsLoading(false);
+    } else if (res?.url) {
+      window.location.href = res.url;
+    }
   };
 
   return (
@@ -42,24 +68,6 @@ export default function Login() {
               </svg>
               Continue with Google
             </button>
-
-            <button 
-              type="button"
-              onClick={() => alert("Please configure Azure AD credentials in .env.local to enable Microsoft SSO.")}
-              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-            >
-              <img className="w-5 h-5" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" />
-              Continue with Microsoft
-            </button>
-
-            <button 
-              type="button"
-              onClick={() => alert("Please configure SAP BTP IAS credentials in .env.local to enable SAP SSO.")}
-              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-            >
-              <img className="w-10 h-5 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP" />
-              Continue with SAP ID
-            </button>
           </div>
 
           <div className="relative mb-6">
@@ -73,7 +81,14 @@ export default function Login() {
             </div>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Email/Password auth requires a database adapter. Please use Google SSO above."); }}>
+          <form className="space-y-6" onSubmit={handleManualLogin}>
+            {error && (
+              <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-lg p-3 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <p className="text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Enterprise Email
@@ -85,6 +100,9 @@ export default function Login() {
                 <input
                   id="email"
                   type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm"
                   placeholder="admin@enterprise.com"
                 />
@@ -92,12 +110,40 @@ export default function Login() {
             </div>
 
             <div>
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Password
+              </label>
+              <div className="mt-2 relative rounded-md shadow-sm">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-4 w-4 text-gray-400" />
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent sm:text-sm transition-all"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            <div>
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                disabled={isLoading}
+                className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
               >
-                Secure Sign In
-                <ArrowRight className="ml-2 w-4 h-4" />
+                {isLoading ? (
+                  <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+                ) : (
+                  <>
+                    Secure Sign In
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </>
+                )}
               </button>
             </div>
           </form>
