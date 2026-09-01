@@ -24,41 +24,66 @@ Traditional procurement teams struggle with supply chain disruptions due to:
 
 ---
 
+---
+
 ## 🏗️ System Architecture
 
-SentinelChain's architecture comprises three core pillars: **Real-Time Intelligence (Ingestion)**, **Multi-Agent Generative AI (Decision)**, and **ERP/Marketplace Integration (Execution)**.
+SentinelChain's architecture comprises three core pillars: **Multi-Source Signal Layer (Ingestion)**, **Public Entity Extraction & Private BOM Correlation (Decision)**, and **ERP/Marketplace Integration (Execution)**.
 
 ```mermaid
 graph TD
-    NewsAPI[📡 NewsAPI / Live Intelligence] -->|Ingest Feed| DetectAgent[🤖 Detection Agent - Groq/LLM]
-    DetectAgent -->|No Impact| Terminate[🛑 Dismiss Event]
-    DetectAgent -->|BOM Disruption| ImpactAgent[💼 Impact Agent - AI CFO]
-    
-    subgraph ERP & Core Database
-        SAP_S4[📊 SAP S/4HANA Cloud] <-->|Get BOM & Volume| ImpactAgent
-        PartsCatalog[(parts-catalog.json)] <-->|Baseline Component Costs| ImpactAgent
+    subgraph Multi-Source Signal Layer
+        SEC[🏛️ SEC EDGAR / Corporate 10-K/8-K]
+        BIS[📜 US Federal Register / BIS Rules]
+        USGS[🌍 USGS Live Seismic Sensor Geo-Feed]
+        IR[🏢 Official Investor Relations Feeds]
+        GSCPI[📊 NY Fed GSCPI Macro Context]
+        NewsAPI[📰 NewsAPI Media Wire Baseline]
     end
 
-    ImpactAgent -->|USD Revenue at Risk| MatchAgent[⚙️ Match Agent - AI Engineer]
-    MatchAgent <-->|Fetch Alternative Parts| MouserAPI[🛒 Mouser API / Live Spot Market]
+    SEC -->|Ingest Official Signals| SignalLayer[📡 Signal Layer Engine]
+    BIS --> SignalLayer
+    USGS --> SignalLayer
+    IR --> SignalLayer
+    GSCPI --> SignalLayer
+    NewsAPI -->|Early Detection Benchmark| SignalLayer
+
+    SignalLayer -->|Signal Dossier + Confidence| DetectAgent[🤖 Public Entity Extraction Agent]
+    DetectAgent -->|No Impact| Terminate[🛑 Dismiss Non-Critical Event]
+    DetectAgent -->|Extracted Entities| BomCorrelator[⚙️ Private BOM Correlation Engine]
     
-    MatchAgent -->|Generate Alternatives| DecisionCenter[🖥️ Decision Center UI]
+    subgraph ERP & Core Database
+        SAP_S4[📊 SAP S/4HANA Cloud] <-->|Explode BOM & Volume| ImpactAgent[💼 Impact Agent - AI CFO]
+        PartsCatalog[(parts-catalog.json)] <-->|Private Component Baselines| BomCorrelator
+    end
+
+    BomCorrelator --> ImpactAgent
+    ImpactAgent -->|USD Revenue at Risk| MatchAgent[⚙️ Match Agent - Sourcing Engineer]
+    MatchAgent <-->|Fetch Pin-Compatible Alternatives| MouserAPI[🛒 Mouser API / Live Spot Market]
+    
+    MatchAgent -->|Ranked Alternative Options| DecisionCenter[🖥️ Decision Center UI]
     DecisionCenter -->|Human Approval| ChaseAgent[🤖 Chase Agent - Negotiator]
     
-    ChaseAgent -->|Bargain Price / Quantity| Vendor[🏢 Distributor APIs]
+    ChaseAgent -->|Autonomous RFQ Negotiation| Vendor[🏢 Distributor APIs]
     ChaseAgent -->|Submit Order| ExecutionAgent[💳 Execution Agent]
     
     ExecutionAgent -->|Create PR / STO| SAP_Ariba[💰 SAP Ariba API]
 ```
 
-### 1. Ingestion Layer
-* **NewsAPI Pipeline:** Located in [`newsClient.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/lib/intelligence/newsClient.js), it retrieves global news articles. It filters out irrelevant articles using strict semiconductor-focused keywords (e.g., *wafer, fab, TSMC, NAND, GPU*).
+### 1. Multi-Source Signal Ingestion Layer
+* **Signal Layer Engine:** Located in [`lib/intelligence/signalLayer.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/lib/intelligence/signalLayer.js), it synthesizes live verifiable primary sources:
+  - **Corporate Disclosure Adapter:** Direct live queries to **SEC EDGAR** for U.S.-reporting semiconductor companies/ADRs and **Official IR Disclosures** for non-U.S. foundries (ASML, STMicro).
+  - **Geophysical Hazard Adapter:** Live **USGS Seismic Geo-Feed** cross-referenced against the Global Semiconductor Fab Registry using the *Heuristic Fab Vibration Exposure Model*.
+  - **Trade Policy Adapter:** Live **US Federal Register API** for BIS Entity List rules.
+  - **Macro Context:** **NY Fed GSCPI** background indicator.
+  - **Mainstream Media Baseline:** **NewsAPI** used strictly to benchmark the **Early Detection Advantage** ($\Delta T = T_{\text{news}} - T_{\text{primary}}$).
 
-### 2. Multi-Agent AI Framework
-* **Detection Agent:** Lives in [`detect.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/detect.js). It takes incoming news text, compares it against the top items of the enterprise Bill of Materials (BOM), and uses the **Groq API** (prompting `gpt-oss-120b`) to evaluate if the news is a disruption. It returns a JSON object indicating the disruption status, impacted part, and severity.
-* **Impact Agent:** Located in [`impact.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/impact.js). It extracts BOM dependencies and calculates the daily dollar volume at risk ($Daily\ Risk = Component\ Base\ Price \times Daily\ Volume$).
-* **Match Agent:** Found in [`match.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/match.js). It pulls pre-mapped alternatives from [`parts-catalog.json`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/data/parts-catalog.json) and queries the **Mouser Search API** for live spot market inventory, pricing, and ETAs.
-* **Chase Agent:** Implemented in [`negotiate.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/negotiate.js). It acts as an automated procurement officer that bargains with distributor endpoints (or simulates conversations in demo mode) to obtain discounts, checking results against a strict **15% price ceiling variance**.
+### 2. Multi-Agent AI & Deterministic Correlation Framework
+* **Entity Extraction Agent:** Located in [`pages/api/detect.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/detect.js). It takes incoming public signal text and extracts the affected public companies, technology categories, and incident severity.
+* **Private Deterministic BOM Correlator:** Maps public entity extractions directly to the private enterprise Bill of Materials (BOM) in `parts-catalog.json`. Computes a deterministic **Evidence Confidence** score based on verified source tiers.
+* **Impact Agent:** Located in [`pages/api/impact.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/impact.js). It extracts BOM dependencies and calculates the daily dollar volume at risk ($Daily\ Risk = Component\ Base\ Price \times Daily\ Volume$).
+* **Match Agent:** Found in [`pages/api/match.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/match.js). It pulls pre-mapped alternatives from [`parts-catalog.json`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/data/parts-catalog.json) and queries the **Mouser Search API** for live spot market inventory, pricing, and ETAs.
+* **Chase Agent:** Implemented in [`pages/api/negotiate.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/negotiate.js). It acts as an automated procurement officer that bargains with distributor endpoints (or simulates conversations in demo mode) to obtain discounts, checking results against a strict **15% price ceiling variance**.
 
 ### 3. ERP Integration
 * **SAP S/4HANA (The "Brain"):** Interfaces via [`s4hana.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/lib/sap/s4hana.js) to retrieve official enterprise inventory structures, BOM relations, and product mappings.

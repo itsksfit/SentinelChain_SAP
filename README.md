@@ -21,41 +21,46 @@ When a global supply chain disruption occurs (e.g., a factory fire, port strike,
 
 SentinelChain executes a closed-loop revenue recovery pipeline:
 
-1. **📡 Disruption Detection (Live Intelligence)**
-   Ingests live global news via **NewsAPI**. To prevent AI hallucination and "fake news" reactions, signals pass through a **Multi-Source Consensus Engine** (architected to cross-reference GDELT & Reuters) before triggering an alert.
-2. **💥 Evidence & Impact Graph (SAP S/4HANA)**
-   Once verified, the platform queries the live **SAP S/4HANA Cloud OData API** to explode the Bill of Materials (BOM). It visually maps the exact assembly lines affected and calculates the daily revenue at risk. It also extracts engineering-approved alternate parts.
+1. **📡 Multi-Source Signal Intelligence**
+   Ingests live primary data across four verifiable institutional adapters:
+   - **Corporate Disclosure Adapter**: SEC EDGAR Full-Text Search for U.S.-reporting semiconductor companies/ADRs + Official IR disclosures for non-U.S. foundries (ASML, STMicro).
+   - **Geophysical Hazard Adapter**: Live USGS Seismic Geo-Feed cross-referenced against the Global Semiconductor Fab Registry (Heuristic Fab Vibration Exposure Model).
+   - **Trade Policy Adapter**: US Federal Register API for Bureau of Industry and Security (BIS) / EAR entity rules.
+   - **Macroeconomic Context**: NY Fed Global Supply Chain Pressure Index (GSCPI).
+   - **Media Baseline**: NewsAPI used strictly to benchmark the **Early Detection Advantage** ($\Delta T = T_{\text{news}} - T_{\text{primary}}$).
+2. **💥 Public Entity Extraction & Private BOM Correlation (SAP S/4HANA)**
+   Extracts public entities/technologies and deterministically correlates them against the private enterprise Bill of Materials (BOM) in SAP S/4HANA, calculating daily revenue at risk.
 3. **🌐 Real-Time Market Sourcing (Mouser API)**
-   SAP knows what parts you *can* use, but not what is in stock globally. The system dynamically queries the **Mouser Electronics Search API** to pull real-time stock availability, lead times, and spot pricing for those alternate chips.
+   SAP knows what parts you *can* use, but not what is in stock globally. The system dynamically queries the **Mouser Electronics Search API** to pull real-time stock availability, lead times, and spot pricing for pin-compatible chips.
 4. **🧠 Recovery Options & Comparison**
    The AI generates three bounded recovery paths:
-   - **Option A (External):** AI Chase Agent autonomously negotiates a bulk discount with Mouser to issue a new Purchase Order.
+   - **Option A (External):** AI Chase Agent autonomously negotiates a bulk discount with Mouser/distributors to issue a new Purchase Order.
    - **Option B (Internal):** Simulate an SAP Stock Transport Order (STO) to reallocate existing inventory from another internal warehouse.
    - **Option C (Accept Risk):** Do nothing and absorb the revenue hit.
 5. **🧑‍💼 Human Approval**
-   The supply chain manager reviews the dynamic **Visual Impact Graph** and the generated recovery options in the Decision Center, requiring just one click to approve the optimal path.
+   The supply chain manager reviews the **Signal Provenance Dossier** (deterministic Evidence Confidence score + direct link to official SEC/USGS document), the dynamic **Visual Impact Graph**, and the generated recovery options in the Decision Center.
 6. **⚡ Execution & Verification**
-   The AI agent instantly executes the selected strategy (simulating an RFQ chat log or SAP STO), locking in the inventory and successfully recovering the at-risk revenue.
+   The AI agent instantly executes the selected strategy (simulating an RFQ chat log or SAP STO), submitting purchase requisitions directly to **SAP Ariba**.
 
 ## 🏗️ Enterprise Architecture
 SentinelChain was built with strict enterprise constraints, ensuring a clean separation between internal systems of record and external market volatility.
 
 * **Internal Brain:** `SAP Business Accelerator Hub` (OData V4 APIs)
 * **External Market:** `Mouser Electronics Search API`
-* **Threat Telemetry:** `NewsAPI`
-* **AI Engine:** `GroqCloud API` (Llama 3 / Mixtral for high-speed inference)
+* **Signal Layer:** `SEC EDGAR`, `USGS Geo-Feed`, `Federal Register BIS`, `Official IR`, `NewsAPI Baseline`, `NY Fed GSCPI`
+* **AI Engine:** `GroqCloud API` (Llama 3 / Mixtral for entity extraction and negotiation)
 
 ## ✨ Key Features Developed
 * **Enterprise Authentication:** Fully integrated `NextAuth.js` enabling genuine Google Single Sign-On (SSO) alongside a persistent, secure cookie-based database for authentic Enterprise Registration/Login workflows.
-* **Blurred Landing UI:** Sleek, privacy-first unauthenticated state that safely blurs proprietary dashboard metrics in the background until the user explicitly creates an account or logs in.
-* **Multi-Source Signal Verification:** An anti-hallucination UI engine that guarantees 98%+ confidence before triggering a massive procurement event.
-* **Visual Node-Link Impact Graph:** A dynamic, CSS-rendered dependency tree showing exactly how a single chip shortage cascades into multi-million dollar revenue loss.
+* **Deterministic Evidence Confidence:** Mathematically computed veracity score based on verified primary government and corporate source tiers.
+* **Early Detection Advantage:** Computes exact hours/days gained between primary regulatory/seismic event timestamps and mainstream media coverage.
+* **Visual Node-Link Impact Graph:** A dynamic, CSS-rendered dependency tree showing exactly how a single component shortage cascades into multi-million dollar revenue loss.
 * **Live Enterprise Data Fusion:** Blends real-time SAP Sandbox data with live Mouser market pricing to ground the AI in reality.
 * **Minimalist Vercel-Style UI:** Strict, flat, Radix-inspired monochrome design for a highly professional enterprise aesthetic.
 
 ## 🛠️ Tech Stack
 * **Frontend:** Next.js, React, Tailwind CSS, Lucide Icons, NextAuth.js
-* **Integrations:** SAP S/4HANA, SAP Ariba, Mouser API, NewsAPI
+* **Integrations:** SAP S/4HANA, SAP Ariba, Mouser API, SEC EDGAR, Federal Register, USGS Geo-Feed, NewsAPI
 * **AI / LLM Inference:** Groq Cloud API
 * **Deployment:** Vercel
 

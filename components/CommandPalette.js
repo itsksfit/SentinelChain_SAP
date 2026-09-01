@@ -102,7 +102,7 @@ export default function CommandPalette() {
         .then(data => {
           if (Array.isArray(data)) {
             const formatted = data.map(newsItem => ({
-              type: 'News Feed Search',
+              type: 'Multi-Source Signal',
               id: newsItem.id,
               title: newsItem.title,
               description: newsItem.description,

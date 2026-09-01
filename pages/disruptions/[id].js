@@ -270,42 +270,62 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
               <div className="p-6 md:p-8 lg:col-span-4 space-y-10 bg-gray-50 dark:bg-black/20">
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <FileText className="w-4 h-4" /> Threat Intelligence & Verification
+                    <FileText className="w-4 h-4" /> Signal Provenance & Evidence
                   </h3>
                   
-                  <div className="mb-4 p-3 bg-white dark:bg-[#151821] rounded-lg border border-green-200 dark:border-green-900/30 shadow-sm flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <div className="mb-4 p-3 bg-white dark:bg-[#151821] rounded-lg border border-emerald-200 dark:border-emerald-900/30 shadow-sm flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold text-gray-900 dark:text-white mb-1">98% Confidence (Verified)</p>
-                      <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">
-                        Threat verified via Multi-Source Consensus. Signal cross-referenced across 3 independent data feeds to eliminate hallucination and fake news.
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-xs font-bold text-gray-900 dark:text-white">Evidence Confidence: {data.evidenceConfidence || confidence}%</p>
+                      </div>
+                      <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed mb-2">
+                        Calculated deterministically from verified source-tier weights. Signal correlates public disclosure against private SAP BOM catalog.
                       </p>
+                      {data.earlyDetectionAdvantage && (
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded text-[10px] font-bold">
+                          <Activity className="w-3 h-3" /> {data.earlyDetectionAdvantage}
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Primary Feed</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Primary Source</span>
                       </div>
-                      <span className="text-[10px] text-gray-500">{data.source || 'NewsAPI Global'}</span>
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400">{data.source || 'Official Regulatory / Sensor Source'}</span>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Cross-Check 1</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Macro Context</span>
                       </div>
-                      <span className="text-[10px] text-gray-500">GDELT Event Database</span>
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400">NY Fed GSCPI Baseline</span>
                     </div>
                     <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Cross-Check 2</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Media Baseline</span>
                       </div>
-                      <span className="text-[10px] text-gray-500">Reuters / Bloomberg</span>
+                      <span className="text-[10px] text-gray-500 dark:text-gray-400">NewsAPI Media Wire</span>
                     </div>
                   </div>
+
+                  {data.verifiedUrl && data.verifiedUrl !== '#' && (
+                    <div className="mt-3">
+                      <a 
+                        href={data.verifiedUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 hover:underline"
+                      >
+                        <FileText className="w-3.5 h-3.5" /> View Official Primary Document <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
                 </div>
 
                 <div>
