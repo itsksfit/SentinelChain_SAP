@@ -4,39 +4,36 @@
 
 @layer base {
   body {
-    @apply bg-[#FFFFFF] text-[#111111] antialiased selection:bg-gray-200 transition-colors duration-300;
-  }
-  .dark body {
-    @apply bg-[#09090b] text-[#fafafa] selection:bg-gray-800;
+    @apply bg-slate-50 text-slate-900 dark:bg-[#09090b] dark:text-[#fafafa] antialiased selection:bg-indigo-100 dark:selection:bg-indigo-950/50 transition-colors duration-200;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-white dark:bg-[#09090b] border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors duration-300;
+    @apply bg-white dark:bg-[#09090b] border border-slate-200 dark:border-[#27272a] rounded-xl shadow-sm transition-all duration-200;
   }
   .glass-panel-accent {
-    @apply bg-[#FAFAFA] dark:bg-[#18181b] border border-gray-200 dark:border-[#27272a] rounded-lg transition-colors duration-300;
+    @apply bg-slate-100/80 dark:bg-[#18181b] border border-slate-200 dark:border-[#27272a] rounded-xl transition-all duration-200;
   }
   .glass-panel-danger {
-    @apply bg-[#FFF5F5] dark:bg-[rgba(224,49,49,0.05)] border border-red-200 dark:border-[rgba(224,49,49,0.2)] rounded-lg transition-colors duration-300;
+    @apply bg-red-50/80 dark:bg-[rgba(224,49,49,0.08)] border border-red-200 dark:border-[rgba(224,49,49,0.25)] rounded-xl transition-all duration-200;
   }
   .glass-panel-success {
-    @apply bg-[#F4FCE3] dark:bg-[rgba(47,158,68,0.05)] border border-green-200 dark:border-[rgba(47,158,68,0.2)] rounded-lg transition-colors duration-300;
+    @apply bg-emerald-50/80 dark:bg-[rgba(47,158,68,0.08)] border border-emerald-200 dark:border-[rgba(47,158,68,0.25)] rounded-xl transition-all duration-200;
   }
 }
 
-/* Custom scrollbar for chat */
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 4px;
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  @apply bg-slate-400 dark:bg-slate-600;
 }

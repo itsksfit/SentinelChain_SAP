@@ -31,11 +31,11 @@ export default function WorldMap() {
     };
 
     // Tech colors
-    const C_CYAN = '#06b6d4';
-    const C_INDIGO = '#6366f1';
-    const C_PURPLE = '#a855f7';
-    const C_EMERALD = '#10b981';
-    const C_RED = '#ef4444'; // Disrupted
+    const C_CYAN = '#22d3ee';
+    const C_INDIGO = '#818cf8';
+    const C_PURPLE = '#c084fc';
+    const C_EMERALD = '#34d399';
+    const C_RED = '#f87171'; // Disrupted
 
     const routes = [
       // EUV Machines (ASML)
@@ -69,7 +69,7 @@ export default function WorldMap() {
       lng: n.lng, 
       name: n.name, 
       size: n.name.includes('TSMC') || n.name.includes('Shenzhen') ? 2 : 1.2,
-      color: n.name.includes('Shenzhen') ? C_RED : (theme === 'light' ? '#333' : '#fff')
+      color: n.name.includes('Shenzhen') ? C_RED : '#ffffff'
     }));
     setPlaces(locations);
 
@@ -91,32 +91,31 @@ export default function WorldMap() {
     }
   }, []);
 
-  const isLight = mounted && theme === 'light';
-
   return (
-    <div className={`w-full h-[400px] overflow-hidden flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 relative transition-colors duration-300 ${isLight ? 'bg-blue-50' : 'bg-[#030712]'}`}>
-      <div className="absolute top-4 left-4 z-10 glass-panel px-3 py-2 rounded-lg border border-gray-200 dark:border-white/5 bg-white/90 dark:bg-black/60 backdrop-blur-md">
-        <span className="text-[10px] uppercase font-bold text-gray-800 dark:text-gray-300 tracking-wider flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+    <div className="w-full h-[400px] overflow-hidden flex items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10 relative transition-all duration-300 shadow-sm bg-gradient-to-br from-[#0c1222] via-[#080d1a] to-[#030712]">
+      {/* Top Header Badge */}
+      <div className="absolute top-4 left-4 z-10 px-3 py-2 rounded-xl border border-white/15 bg-black/70 backdrop-blur-md shadow-md">
+        <span className="text-[10px] uppercase font-extrabold text-slate-200 tracking-wider flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
           Global Semiconductor Node Grid
         </span>
       </div>
       
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-10 glass-panel px-3 py-2 rounded-lg border border-gray-200 dark:border-white/5 bg-white/90 dark:bg-black/60 backdrop-blur-md flex flex-col gap-1.5">
-        <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-gray-600 dark:text-gray-400"><div className="w-2 h-0.5 bg-[#a855f7]"></div> EUV Tech</div>
-        <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-gray-600 dark:text-gray-400"><div className="w-2 h-0.5 bg-[#6366f1]"></div> IP & Design</div>
-        <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-gray-600 dark:text-gray-400"><div className="w-2 h-0.5 bg-[#10b981]"></div> Assembly</div>
-        <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-red-500"><div className="w-2 h-0.5 bg-red-500"></div> Disrupted</div>
+      <div className="absolute bottom-4 left-4 z-10 px-3.5 py-2.5 rounded-xl border border-white/15 bg-black/70 backdrop-blur-md shadow-md flex flex-col gap-1.5">
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-slate-300"><div className="w-2.5 h-1 rounded-full bg-[#c084fc]"></div> EUV Tech</div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-slate-300"><div className="w-2.5 h-1 rounded-full bg-[#818cf8]"></div> IP & Design</div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-slate-300"><div className="w-2.5 h-1 rounded-full bg-[#34d399]"></div> Assembly</div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-red-400"><div className="w-2.5 h-1 rounded-full bg-red-400"></div> Disrupted</div>
       </div>
 
       {mounted && (
         <Globe
           ref={globeEl}
-          width={500}
+          width={520}
           height={400}
           backgroundColor="rgba(0,0,0,0)"
-          globeImageUrl={isLight ? "//unpkg.com/three-globe/example/img/earth-day.jpg" : "//unpkg.com/three-globe/example/img/earth-dark.jpg"}
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
           arcsData={arcsData}
           arcStartLat={d => d.startLat}
           arcStartLng={d => d.startLng}
@@ -126,7 +125,7 @@ export default function WorldMap() {
           arcDashLength={0.3}
           arcDashGap={0.1}
           arcDashAnimateTime={1200}
-          arcStroke={1.2}
+          arcStroke={1.3}
           
           ringsData={ringsData}
           ringColor={d => d.color}

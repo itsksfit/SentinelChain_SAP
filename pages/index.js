@@ -258,17 +258,17 @@ export default function Dashboard() {
   const getSourceBadge = (tier) => {
     switch(tier) {
       case 'SEC_EDGAR':
-        return { label: 'SEC EDGAR (10-K/8-K)', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' };
+        return { label: 'SEC EDGAR (10-K/8-K)', color: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30' };
       case 'OFFICIAL_IR':
-        return { label: 'Official IR (Non-U.S.)', color: 'bg-purple-500/10 text-purple-400 border-purple-500/30' };
+        return { label: 'Official IR (Non-U.S.)', color: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/10 dark:text-purple-400 dark:border-purple-500/30' };
       case 'FED_REGISTER_BIS':
-        return { label: 'Federal Register (BIS)', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' };
+        return { label: 'Federal Register (BIS)', color: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30' };
       case 'USGS_SEISMIC':
-        return { label: 'USGS Seismic Sensor', color: 'bg-rose-500/10 text-rose-400 border-rose-500/30' };
+        return { label: 'USGS Seismic Sensor', color: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30' };
       case 'NEWS_BASELINE':
-        return { label: 'Media Wire Baseline', color: 'bg-slate-500/10 text-slate-400 border-slate-500/30' };
+        return { label: 'Media Wire Baseline', color: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-500/10 dark:text-slate-400 dark:border-slate-500/30' };
       default:
-        return { label: 'Primary Disclosure', color: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' };
+        return { label: 'Primary Disclosure', color: 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/30' };
     }
   };
 
@@ -292,38 +292,39 @@ export default function Dashboard() {
         <div className="p-6 max-w-7xl mx-auto w-full space-y-6 pb-24">
           
           {/* SAP CONNECTION STATUS & SYSTEM HEALTH */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-start mb-6 pb-6 border-b border-gray-200 dark:border-white/10">
-            <div className="flex flex-wrap gap-4">
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1">
-                <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SIGNAL LAYER</span>
-                <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+          {/* SAP CONNECTION STATUS & SYSTEM HEALTH */}
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-start mb-6 pb-6 border-b border-slate-200 dark:border-white/10">
+            <div className="flex flex-wrap gap-3">
+              <div className="glass-panel px-4 py-2 flex flex-col gap-0.5">
+                <span className="text-[9.5px] text-slate-500 dark:text-gray-400 uppercase font-extrabold tracking-wider">SIGNAL LAYER</span>
+                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   LIVE MULTI-SOURCE ({liveNews.length} Signals)
                 </span>
               </div>
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="SAP S/4HANA Cloud OData Service">
-                <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP S/4HANA</span>
-                <span className={`text-xs font-semibold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.s4hana}</span>
+              <div className="glass-panel px-4 py-2 flex flex-col gap-0.5" title="SAP S/4HANA Cloud OData Service">
+                <span className="text-[9.5px] text-slate-500 dark:text-gray-400 uppercase font-extrabold tracking-wider">SAP S/4HANA</span>
+                <span className={`text-xs font-bold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-500 dark:text-gray-400'}`}>● {sapStatus.s4hana}</span>
               </div>
-              <div className="glass-panel px-4 py-2 flex flex-col gap-1" title="SAP Ariba Procurement Engine">
-                <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">SAP Ariba</span>
-                <span className={`text-xs font-semibold ${sapStatus.ariba === 'Connected' ? 'text-emerald-400' : 'text-gray-500 dark:text-gray-400'}`}>● {sapStatus.ariba}</span>
+              <div className="glass-panel px-4 py-2 flex flex-col gap-0.5" title="SAP Ariba Procurement Engine">
+                <span className="text-[9.5px] text-slate-500 dark:text-gray-400 uppercase font-extrabold tracking-wider">SAP Ariba</span>
+                <span className={`text-xs font-bold ${sapStatus.ariba === 'Connected' ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-500 dark:text-gray-400'}`}>● {sapStatus.ariba}</span>
               </div>
             </div>
-            <div className={`px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wider ${sapStatus.mode === 'LIVE SAP MODE' ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : 'border-indigo-500/50 bg-indigo-500/10 text-indigo-400'}`}>
+            <div className={`px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wider shadow-2xs ${sapStatus.mode === 'LIVE SAP MODE' ? 'border-emerald-300 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400' : 'border-indigo-300 dark:border-indigo-500/50 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-800 dark:text-indigo-400'}`}>
               Multi-Source Intelligence Active
             </div>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Autonomous Supply Chain Recovery</h1>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">Multi-Source Signal Layer → Deterministic BOM Correlation → Spot Market Sourcing → SAP Execution</p>
+              <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Autonomous Supply Chain Recovery</h1>
+              <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 font-medium">Multi-Source Signal Layer → Deterministic BOM Correlation → Spot Market Sourcing → SAP Execution</p>
             </div>
             {(loading || stage > 0) && (
               <button 
                 onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-gray-200 dark:border-white/10"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-all border border-slate-200 dark:border-white/10 shadow-xs"
               >
                 Reset Pipeline
               </button>
@@ -389,10 +390,10 @@ export default function Dashboard() {
               </div>
 
               {/* QUICK SKU SCANNER */}
-              <div className="space-y-1 py-0.5">
-                <span className="text-[9px] font-bold uppercase tracking-wider text-gray-400">Quick SKU Exposure Scan:</span>
-                <div className="flex flex-wrap gap-1">
-                  {['STM32F401RE', 'PWR-9942A', 'GPU-A100-80', 'MT29F64G08'].map(sku => (
+              <div className="space-y-1.5 py-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 dark:text-gray-400">Quick SKU Exposure Scan:</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {['STM32F401RE', 'PWR-9942A', 'GPU-A100-80', 'MT29F64G08'].map((sku) => (
                     <button
                       key={sku}
                       onClick={() => {
@@ -400,10 +401,10 @@ export default function Dashboard() {
                         setIsSearchingNews(true);
                         fetchNews(sku);
                       }}
-                      className={`px-2 py-0.5 text-[9px] font-mono font-bold rounded border transition-all ${
+                      className={`px-2.5 py-1 text-[9.5px] font-mono font-bold rounded-lg border transition-all ${
                         newsSearchQuery === sku 
                           ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
-                          : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20'
+                          : 'bg-white text-indigo-700 border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20 dark:hover:bg-indigo-500/20'
                       }`}
                     >
                       {sku}
@@ -423,10 +424,10 @@ export default function Dashboard() {
                   <button
                     key={t.id}
                     onClick={() => setFilterTier(t.id)}
-                    className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border transition-all ${
+                    className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border transition-all ${
                       filterTier === t.id
-                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
-                        : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:border-gray-400'
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                        : 'bg-white dark:bg-white/5 text-slate-700 dark:text-gray-300 border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/30'
                     }`}
                   >
                     {t.label}
@@ -454,31 +455,32 @@ export default function Dashboard() {
                           setActiveNews(news);
                         }
                       }}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                      className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                         activeNews?.id === news.id 
-                          ? 'bg-indigo-900/40 border-indigo-500 shadow-lg' 
-                          : 'glass-panel hover:border-gray-500'
+                          ? 'bg-indigo-50/95 dark:bg-indigo-950/40 border-indigo-500 shadow-md ring-2 ring-indigo-500/20' 
+                          : 'bg-white dark:bg-[#0f1115]/60 border-slate-200 dark:border-white/10 hover:border-indigo-400 dark:hover:border-white/30 hover:shadow-xs'
                       }`}
                     >
                       <div className="flex justify-between items-start mb-2 gap-2">
-                        <span className={`px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded border ${badge.color}`}>
+                        <span className={`px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded-md border ${badge.color}`}>
                           {badge.label}
                         </span>
-                        <span className="text-[10px] text-gray-500 dark:text-gray-400 flex items-center gap-1 shrink-0">
-                          <Clock className="w-3 h-3" /> {new Date(news.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        <span className="text-[10px] font-medium text-slate-500 dark:text-gray-400 flex items-center gap-1 shrink-0">
+                          <Clock className="w-3 h-3 text-slate-400" /> {new Date(news.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                         </span>
                       </div>
 
-                      <h3 className="text-xs font-bold text-gray-900 dark:text-white leading-tight mb-2">
+                      <h3 className="text-xs font-bold text-slate-900 dark:text-white leading-snug mb-2.5">
                         {news.title}
                       </h3>
 
-                      <div className="flex items-center justify-between text-[10px] text-gray-500 dark:text-gray-400 mb-3 pt-2 border-t border-gray-100 dark:border-white/5">
-                        <span className="font-semibold text-emerald-400">
+                      <div className="flex items-center justify-between text-[10px] mb-3 pt-2.5 border-t border-slate-100 dark:border-white/5">
+                        <span className="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                           Confidence: {news.evidenceConfidence}%
                         </span>
-                        <span className="font-semibold text-indigo-400 flex items-center gap-1">
-                          <Zap className="w-3 h-3" /> {news.earlyDetectionAdvantage}
+                        <span className="font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1">
+                          <Zap className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> {news.earlyDetectionAdvantage}
                         </span>
                       </div>
 
@@ -489,7 +491,7 @@ export default function Dashboard() {
                             target="_blank" 
                             rel="noopener noreferrer" 
                             onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-indigo-400 transition-colors"
+                            className="inline-flex items-center gap-1 text-[10.5px] font-bold text-slate-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors"
                           >
                             <FileText className="w-3 h-3" /> View Source Document <ExternalLink className="w-2.5 h-2.5" />
                           </a>
@@ -499,7 +501,7 @@ export default function Dashboard() {
                       {activeNews?.id === news.id && stage === 0 && (
                          <button 
                            onClick={(e) => { e.stopPropagation(); simulatePipeline(news); }}
-                           className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md"
+                           className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-sm hover:shadow-md active:scale-[0.99]"
                          >
                            <Search className="w-3.5 h-3.5" /> Correlate with SAP BOM
                          </button>
@@ -523,25 +525,25 @@ export default function Dashboard() {
               {/* STAGE PROGRESS INDICATOR */}
               {stage > 0 && (
                 <div className="grid grid-cols-3 gap-3">
-                  <div className={`p-3 rounded-lg border flex items-center gap-3 ${stage >= 1 ? 'bg-indigo-950/30 border-indigo-500/50' : 'bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 1 ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-700'}`}>1</div>
+                  <div className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${stage >= 1 ? 'bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-500/50 shadow-2xs' : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 1 ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-700'}`}>1</div>
                     <div>
-                      <p className="text-xs font-bold text-gray-900 dark:text-white">Entity Extraction</p>
-                      <p className="text-[10px] text-gray-500">Public Signal → BOM</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">Entity Extraction</p>
+                      <p className="text-[10px] text-slate-500 dark:text-gray-400">Public Signal → BOM</p>
                     </div>
                   </div>
-                  <div className={`p-3 rounded-lg border flex items-center gap-3 ${stage >= 2 ? 'bg-indigo-950/30 border-indigo-500/50' : 'bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 2 ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-700'}`}>2</div>
+                  <div className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${stage >= 2 ? 'bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-500/50 shadow-2xs' : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 2 ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-700'}`}>2</div>
                     <div>
-                      <p className="text-xs font-bold text-gray-900 dark:text-white">SAP BOM Explosion</p>
-                      <p className="text-[10px] text-gray-500">Revenue at Risk</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">SAP BOM Explosion</p>
+                      <p className="text-[10px] text-slate-500 dark:text-gray-400">Revenue at Risk</p>
                     </div>
                   </div>
-                  <div className={`p-3 rounded-lg border flex items-center gap-3 ${stage >= 3 ? 'bg-indigo-950/30 border-indigo-500/50' : 'bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 3 ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-700'}`}>3</div>
+                  <div className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${stage >= 3 ? 'bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-500/50 shadow-2xs' : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 3 ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-700'}`}>3</div>
                     <div>
-                      <p className="text-xs font-bold text-gray-900 dark:text-white">Spot Sourcing</p>
-                      <p className="text-[10px] text-gray-500">Decision Center Ready</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">Spot Sourcing</p>
+                      <p className="text-[10px] text-slate-500 dark:text-gray-400">Decision Center Ready</p>
                     </div>
                   </div>
                 </div>
@@ -550,19 +552,19 @@ export default function Dashboard() {
               {/* DETECTION RESULT UI */}
               {stage > 0 && detectResult && (
                 detectResult.isDisruption ? (
-                  <div className="glass-panel border-red-500 bg-red-950/20 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
-                    <div className="bg-red-900/30 px-6 py-4 flex flex-wrap items-center justify-between border-b border-red-500/20 gap-3">
+                  <div className="glass-panel border-red-300 dark:border-red-500/50 bg-red-50/70 dark:bg-red-950/20 p-0 overflow-hidden shadow-sm animate-[fadeIn_0.3s_ease-out]">
+                    <div className="bg-red-100/90 dark:bg-red-900/30 px-6 py-4 flex flex-wrap items-center justify-between border-b border-red-200 dark:border-red-500/20 gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
+                        <div className="w-8 h-8 rounded-full bg-red-200 dark:bg-red-500/20 flex items-center justify-center text-red-700 dark:text-red-400">
                            <AlertTriangle className="w-4 h-4" />
                         </div>
                         <div>
-                          <h2 className="text-base font-bold text-gray-900 dark:text-white tracking-wide">CRITICAL DISRUPTION IDENTIFIED</h2>
-                          <p className="text-[10px] text-gray-400">Deterministic correlation between public signal and internal SAP BOM</p>
+                          <h2 className="text-base font-black text-red-950 dark:text-white tracking-wide">CRITICAL DISRUPTION IDENTIFIED</h2>
+                          <p className="text-[10.5px] font-medium text-red-800/80 dark:text-gray-300">Deterministic correlation between public signal and internal SAP BOM</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] uppercase tracking-widest bg-red-500 text-white font-bold px-3 py-1 rounded-full">
+                        <span className="text-[10px] uppercase tracking-widest bg-red-600 text-white font-extrabold px-3 py-1 rounded-full shadow-2xs">
                           Severity: {detectResult.severity?.toUpperCase() || 'HIGH'}
                         </span>
                       </div>
@@ -571,34 +573,34 @@ export default function Dashboard() {
                     <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="md:col-span-2 space-y-4">
                         <div>
-                          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Public Signal Diagnostic Summary</h3>
-                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5">
+                          <h3 className="text-[10.5px] font-bold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-2">Public Signal Diagnostic Summary</h3>
+                          <p className="text-slate-800 dark:text-gray-200 text-sm leading-relaxed bg-white dark:bg-black/40 p-4 rounded-xl border border-red-100 dark:border-white/5 shadow-2xs">
                             {detectResult.reason}
                           </p>
                         </div>
 
                         {/* Correlation Architecture Box */}
-                        <div className="p-3 bg-white/50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10 space-y-2 text-xs">
-                          <p className="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Correlation Pipeline Proof</p>
+                        <div className="p-3.5 bg-white dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 space-y-2 text-xs shadow-2xs">
+                          <p className="text-[10px] font-bold uppercase text-slate-400 dark:text-gray-400 tracking-wider">Correlation Pipeline Proof</p>
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-500">Public Entity Extracted:</span>
-                            <span className="font-bold text-gray-900 dark:text-white">{detectResult.correlationDetails?.publicEntityExtracted || 'Semiconductor Foundry Node'}</span>
+                            <span className="text-slate-600 dark:text-gray-400">Public Entity Extracted:</span>
+                            <span className="font-bold text-slate-900 dark:text-white">{detectResult.correlationDetails?.publicEntityExtracted || 'Semiconductor Foundry Node'}</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-500">Correlated Private BOM Part:</span>
-                            <span className="font-mono font-bold text-indigo-400">{detectResult.partNumber}</span>
+                            <span className="text-slate-600 dark:text-gray-400">Correlated Private BOM Part:</span>
+                            <span className="font-mono font-bold text-indigo-700 dark:text-indigo-400">{detectResult.partNumber}</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-500">Early Detection Advantage:</span>
-                            <span className="font-bold text-emerald-400 flex items-center gap-1"><Zap className="w-3 h-3" /> {detectResult.earlyDetectionAdvantage}</span>
+                            <span className="text-slate-600 dark:text-gray-400">Early Detection Advantage:</span>
+                            <span className="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1"><Zap className="w-3 h-3 text-emerald-600" /> {detectResult.earlyDetectionAdvantage}</span>
                           </div>
                           {detectResult.verifiedUrl && detectResult.verifiedUrl !== '#' && (
-                            <div className="pt-2 border-t border-gray-200 dark:border-white/5 flex justify-end">
+                            <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex justify-end">
                               <a 
                                 href={detectResult.verifiedUrl} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
-                                className="text-[10px] font-bold text-indigo-400 hover:underline flex items-center gap-1"
+                                className="text-[10.5px] font-bold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 hover:underline flex items-center gap-1"
                               >
                                 View Verified Source Document on Official Registry <ExternalLink className="w-3 h-3" />
                               </a>
