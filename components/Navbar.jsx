@@ -1,9 +1,11 @@
-import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon } from 'lucide-react';
+import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon, Sliders } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import GuardrailsModal from './GuardrailsModal';
 
 export default function Navbar() {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showGuardrails, setShowGuardrails] = useState(false);
   const dropdownRef = useRef(null);
 
   const [mounted, setMounted] = useState(false);
@@ -30,6 +32,8 @@ export default function Navbar() {
   ]);
 
   return (
+    <>
+    <GuardrailsModal isOpen={showGuardrails} onClose={() => setShowGuardrails(false)} />
     <header className="h-16 border-b border-gray-200 dark:border-white/10 flex items-center justify-between px-6 bg-white/80 dark:bg-[#0f1115]/80 backdrop-blur-md sticky top-0 z-40 transition-colors duration-300">
       <div className="flex items-center gap-4 lg:hidden">
         <button onClick={() => {
@@ -61,6 +65,15 @@ export default function Navbar() {
           <span className="w-4 h-4">🔍</span>
           <span>Search...</span>
           <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-bold bg-white dark:bg-black/40 rounded border border-gray-200 dark:border-white/10 ml-2">⌘K</kbd>
+        </button>
+
+        <button
+          onClick={() => setShowGuardrails(true)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-indigo-400 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 transition-all"
+          title="Configure Enterprise Procurement Guardrails"
+        >
+          <Sliders className="w-3.5 h-3.5 text-indigo-400" />
+          <span className="hidden sm:inline">Guardrails</span>
         </button>
 
         {mounted && (
@@ -134,5 +147,6 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+    </>
   );
 }

@@ -12,6 +12,8 @@ import events from '../data/events.json';
 
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import EarlyDetectionTimeline from '../components/EarlyDetectionTimeline';
+import PrAuditExportModal from '../components/PrAuditExportModal';
 import dynamic from 'next/dynamic';
 
 const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false });
@@ -30,6 +32,7 @@ export default function Dashboard() {
   const [chatRevealIndex, setChatRevealIndex] = useState(-1);
   const [autoScroll, setAutoScroll] = useState(true);
   const [approved, setApproved] = useState(false);
+  const [showPrModal, setShowPrModal] = useState(false);
   
   // SAP Integration State
   const [sapStatus, setSapStatus] = useState({ s4hana: 'Sandbox Mode', ariba: 'Sandbox Mode', mode: 'DEMO MODE' });
@@ -385,6 +388,30 @@ export default function Dashboard() {
                 )}
               </div>
 
+              {/* QUICK SKU SCANNER */}
+              <div className="space-y-1 py-0.5">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-gray-400">Quick SKU Exposure Scan:</span>
+                <div className="flex flex-wrap gap-1">
+                  {['STM32F401RE', 'PWR-9942A', 'GPU-A100-80', 'MT29F64G08'].map(sku => (
+                    <button
+                      key={sku}
+                      onClick={() => {
+                        setNewsSearchQuery(sku);
+                        setIsSearchingNews(true);
+                        fetchNews(sku);
+                      }}
+                      className={`px-2 py-0.5 text-[9px] font-mono font-bold rounded border transition-all ${
+                        newsSearchQuery === sku 
+                          ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                          : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20'
+                      }`}
+                    >
+                      {sku}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* SOURCE TIER FILTER TABS */}
               <div className="flex flex-wrap gap-1.5 py-1">
                 {[
@@ -578,6 +605,16 @@ export default function Dashboard() {
                             </div>
                           )}
                         </div>
+                        {/* Early Detection Horizon Timeline */}
+                        <div className="pt-2">
+                          <EarlyDetectionTimeline 
+                            primaryTimestamp={detectResult.primaryTimestamp || new Date(Date.now() - 28800000).toISOString()}
+                            mediaTimestamp={detectResult.mediaTimestamp || new Date(Date.now() - 3600000).toISOString()}
+                            advantageText={detectResult.earlyDetectionAdvantage}
+                            sourceTier={detectResult.sourceTier}
+                            sourceName={detectResult.sourceName}
+                          />
+                        </div>
                       </div>
                       
                       <div className="space-y-4 md:border-l md:border-gray-100 dark:border-white/5 md:pl-6">
@@ -657,12 +694,20 @@ export default function Dashboard() {
                       Mouser spot market inventory and internal SAP STO options are calculated. Open Decision Center to review the impact tree and authorize autonomous procurement.
                     </p>
                   </div>
-                  <Link
-                    href={`/disruptions/${matchResult.disruption_id || 'DSP-LIVE-1001'}`}
-                    className="shrink-0 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg flex items-center gap-2 transition-all"
-                  >
-                    Open Decision Center <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <button
+                      onClick={() => setShowPrModal(true)}
+                      className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-900 dark:text-white font-bold text-xs uppercase tracking-wider rounded-lg border border-gray-200 dark:border-white/10 flex items-center gap-2 transition-all"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-indigo-400" /> Export SAP PR Dossier
+                    </button>
+                    <Link
+                      href={`/disruptions/${matchResult.disruption_id || 'DSP-LIVE-1001'}`}
+                      className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg flex items-center gap-2 transition-all"
+                    >
+                      Open Decision Center <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
               )}
 
@@ -689,6 +734,7 @@ export default function Dashboard() {
 
         </div>
       </main>
+      <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={matchResult || detectResult} />
     </div>
   );
 }

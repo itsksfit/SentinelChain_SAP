@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
+import PrAuditExportModal from '../components/PrAuditExportModal';
+import { ArrowRight, ShieldCheck, FileText } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import StatusBadge from '../components/StatusBadge';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
@@ -20,6 +21,8 @@ export default function Ledger({ initialDisruptions }) {
   const [disruptions, setDisruptions] = useState(initialDisruptions);
   const [expandedId, setExpandedId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'detected_at', direction: 'desc' });
+  const [showPrModal, setShowPrModal] = useState(false);
+  const [selectedAudit, setSelectedAudit] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -212,13 +215,24 @@ export default function Ledger({ initialDisruptions }) {
                                     </div>
                                   ))}
                                 </div>
-                                {d.recovery_plan_id && (
-                                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+                                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex items-center justify-between">
+                                  {d.recovery_plan_id ? (
                                     <a href={`/plans?id=${d.recovery_plan_id}`} className="text-indigo-500 hover:text-indigo-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                                       View Recovery Plan {d.recovery_plan_id} <ArrowRight className="w-3 h-3" />
                                     </a>
-                                  </div>
-                                )}
+                                  ) : (
+                                    <span></span>
+                                  )}
+                                  <button
+                                    onClick={() => {
+                                      setSelectedAudit(d);
+                                      setShowPrModal(true);
+                                    }}
+                                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow"
+                                  >
+                                    <FileText className="w-3.5 h-3.5" /> Export SAP PR Dossier
+                                  </button>
+                                </div>
                               </div>
                             </td>
                           </tr>
@@ -232,6 +246,7 @@ export default function Ledger({ initialDisruptions }) {
           </div>
         </div>
       </main>
+      <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={selectedAudit} />
     </div>
   );
 }

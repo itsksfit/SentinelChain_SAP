@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle } from 'lucide-react';
+import EarlyDetectionTimeline from '../../components/EarlyDetectionTimeline';
+import PrAuditExportModal from '../../components/PrAuditExportModal';
+import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
@@ -50,6 +52,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
   const [chatRevealIndex, setChatRevealIndex] = useState(-1);
   const [planGenerated, setPlanGenerated] = useState(false);
   const [erpProgress, setErpProgress] = useState(0);
+  const [showPrModal, setShowPrModal] = useState(false);
   
   const chatContainerRef = useRef(null);
   const chatEndRef = useRef(null);
@@ -255,12 +258,24 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                   {data.event_type}
                 </p>
               </div>
-              <div className="shrink-0 flex flex-col items-end">
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">AI Confidence</p>
-                <div className="text-4xl font-black text-emerald-500 mb-2">{confidence}%</div>
-                <Link href="/risk" className="text-[10px] bg-gray-100 dark:bg-white/5 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-gray-200 dark:border-white/10 px-3 py-1.5 rounded flex items-center gap-1.5 transition-colors font-bold tracking-wide uppercase">
-                  <Activity className="w-3 h-3" /> View Risk Model
-                </Link>
+              <div className="shrink-0 flex flex-col items-end gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">AI Confidence</p>
+                    <div className="text-3xl font-black text-emerald-500">{confidence}%</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => setShowPrModal(true)} 
+                    className="text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded flex items-center gap-1.5 transition-all font-bold tracking-wide uppercase shadow-md"
+                  >
+                    <FileText className="w-3 h-3" /> Export PR Dossier
+                  </button>
+                  <Link href="/risk" className="text-[10px] bg-gray-100 dark:bg-white/5 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-gray-200 dark:border-white/10 px-3 py-1.5 rounded flex items-center gap-1.5 transition-colors font-bold tracking-wide uppercase">
+                    <Activity className="w-3 h-3" /> Risk Model
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -326,6 +341,17 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                       </a>
                     </div>
                   )}
+
+                  {/* Early Warning Timeline */}
+                  <div className="mt-4">
+                    <EarlyDetectionTimeline
+                      primaryTimestamp={data.primaryTimestamp || data.detected_at || new Date(Date.now() - 28800000).toISOString()}
+                      mediaTimestamp={data.mediaTimestamp || new Date(Date.now() - 3600000).toISOString()}
+                      advantageText={data.earlyDetectionAdvantage || 'Pre-Emptive Window Gained'}
+                      sourceTier={data.sourceTier}
+                      sourceName={data.source}
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -587,6 +613,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
           </div>
         </div>
       </main>
+      <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={data} />
     </div>
   );
 }
