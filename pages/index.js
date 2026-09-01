@@ -112,8 +112,7 @@ export default function Dashboard() {
   }, [isSearchingNews]);
 
   const addAudit = (source, message) => {
-    setAuditTrail(prev => [...prev, { time: new Date().toISOString(), source, message }]);
-  };
+  const threatSectionRef = useRef(null);
 
   const simulatePipeline = async (newsArticle) => {
     setLoading(true);
@@ -121,6 +120,14 @@ export default function Dashboard() {
     setAuditTrail([]);
     setAribaResponse(null);
     setApproved(false);
+
+    // Auto-scroll to top so user immediately sees threat analysis results
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setTimeout(() => {
+      threatSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
     
     // 1. Detect (Entity Extraction + Private Deterministic BOM Correlation)
     const r1 = await fetch('/api/detect', {
@@ -130,6 +137,15 @@ export default function Dashboard() {
     });
     const d1 = await r1.json();
     setDetectResult(d1);
+
+    // Ensure screen is scrolled to show threat diagnosis
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setTimeout(() => {
+      threatSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+
     addAudit('Entity Extraction Agent', `Extracted public entity: ${d1.correlationDetails?.publicEntityExtracted || 'Industry Node'}`);
     addAudit('BOM Correlation Engine', `Correlated to private BOM: ${d1.partNumber || 'No Direct Match'}`);
     

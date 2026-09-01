@@ -1,10 +1,8 @@
 import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
-  const { data: session } = useSession();
   const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -32,7 +30,7 @@ export default function Navbar() {
   ]);
 
   return (
-    <header className="h-16 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 flex items-center justify-between px-6 bg-white/80 dark:bg-[#0f1115]/80 backdrop-blur-md sticky top-0 z-40 transition-colors duration-300">
+    <header className="h-16 border-b border-gray-200 dark:border-white/10 flex items-center justify-between px-6 bg-white/80 dark:bg-[#0f1115]/80 backdrop-blur-md sticky top-0 z-40 transition-colors duration-300">
       <div className="flex items-center gap-4 lg:hidden">
         <button onClick={() => {
           const sidebar = document.getElementById('mobile-sidebar');
@@ -52,7 +50,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <div className="hidden lg:flex items-center text-sm text-gray-500 dark:text-gray-500 dark:text-gray-400">
+      <div className="hidden lg:flex items-center text-sm text-gray-500 dark:text-gray-400">
         Mission Control / Dashboard
       </div>
       <div className="flex items-center gap-4 relative">
@@ -68,7 +66,7 @@ export default function Navbar() {
         {mounted && (
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 transition-colors rounded-full text-gray-500 dark:text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-100 dark:bg-white/5"
+            className="p-2 transition-colors rounded-full text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
           >
             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
@@ -127,19 +125,12 @@ export default function Navbar() {
           )}
         </div>
         <div className="flex items-center gap-2 border-l border-gray-200 dark:border-gray-800 pl-4">
-          <button className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden">
-            {session?.user?.image ? (
-              <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-              <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            )}
-          </button>
-          <button 
-            onClick={() => signOut({ callbackUrl: '/login' })}
-            className="text-xs font-bold text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors uppercase tracking-wider"
-          >
-            Sign Out
-          </button>
+          <div className="w-8 h-8 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+            <User className="w-4 h-4" />
+          </div>
+          <span className="text-xs font-bold text-gray-700 dark:text-gray-300 hidden sm:inline">
+            Enterprise Admin
+          </span>
         </div>
       </div>
     </header>

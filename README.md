@@ -51,7 +51,6 @@ SentinelChain was built with strict enterprise constraints, ensuring a clean sep
 * **AI Engine:** `GroqCloud API` (Llama 3 / Mixtral for entity extraction and negotiation)
 
 ## ✨ Key Features Developed
-* **Enterprise Authentication:** Fully integrated `NextAuth.js` enabling genuine Google Single Sign-On (SSO) alongside a persistent, secure cookie-based database for authentic Enterprise Registration/Login workflows.
 * **Deterministic Evidence Confidence:** Mathematically computed veracity score based on verified primary government and corporate source tiers.
 * **Early Detection Advantage:** Computes exact hours/days gained between primary regulatory/seismic event timestamps and mainstream media coverage.
 * **Visual Node-Link Impact Graph:** A dynamic, CSS-rendered dependency tree showing exactly how a single component shortage cascades into multi-million dollar revenue loss.
