@@ -5,3 +5,4 @@ node_modules/
 
 *.log
 out*.html
+node_modules/
