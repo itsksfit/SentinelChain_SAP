@@ -13,7 +13,9 @@ export default function PrAuditExportModal({ isOpen, onClose, data }) {
   const prNumber = data.pr_number || `PR-ARIB-2026-${Math.floor(Math.random() * 8000 + 1000)}`;
   const confidence = data.evidenceConfidence || 92;
   const earlyAdvantage = data.earlyDetectionAdvantage || '6.5 Hours Early Advantage';
-  const verifiedUrl = data.verifiedUrl || 'https://www.sec.gov';
+  const verifiedUrl = data.verifiedUrl && data.verifiedUrl !== '#' 
+    ? data.verifiedUrl 
+    : 'https://www.sec.gov/ix?doc=/Archives/edgar/data/0001045810/000104581024000084/nvda-20240428.htm';
   const sourceTier = data.sourceTier || 'SEC_EDGAR';
 
   return (
