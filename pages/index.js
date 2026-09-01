@@ -619,41 +619,42 @@ export default function Dashboard() {
                         </div>
                       </div>
                       
-                      <div className="space-y-4 md:border-l md:border-gray-100 dark:border-white/5 md:pl-6">
+                      <div className="space-y-4 md:border-l md:border-slate-200 dark:border-white/10 md:pl-6">
                          <div>
-                           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Impacted BOM Component</h3>
-                           <p className="font-mono text-base text-gray-900 dark:text-white font-bold bg-gray-100 dark:bg-white/5 inline-block px-3 py-1 rounded border border-gray-200 dark:border-white/10">
+                           <h3 className="text-[10.5px] font-extrabold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">Impacted BOM Component</h3>
+                           <div className="inline-flex items-center gap-2 font-mono text-sm text-indigo-900 dark:text-indigo-200 font-bold bg-indigo-50 dark:bg-indigo-950/50 px-3.5 py-1.5 rounded-xl border border-indigo-200 dark:border-indigo-500/30 shadow-2xs">
+                             <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
                              {detectResult.partNumber}
-                           </p>
-                         </div>
-                         <div>
-                           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Disruption Classification</h3>
-                           <p className="text-sm text-red-400 font-semibold uppercase">{detectResult.disruptionType || 'Operational Constraint'}</p>
-                         </div>
-                         <div>
-                           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Evidence Confidence Score</h3>
-                           <div className="flex items-center gap-2 mt-1">
-                             <div className="flex-1 bg-gray-200 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${detectResult.evidenceConfidence || 90}%` }}></div>
-                             </div>
-                             <span className="text-xs text-gray-900 dark:text-white font-bold">{detectResult.evidenceConfidence || 90}%</span>
                            </div>
-                           <p className="text-[9px] text-gray-500 mt-1">Computed deterministically from source-tier weights</p>
+                         </div>
+                         <div>
+                           <h3 className="text-[10.5px] font-extrabold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-1">Disruption Classification</h3>
+                           <p className="text-xs font-black text-red-600 dark:text-red-400 uppercase tracking-wide">{detectResult.disruptionType || 'Operational Constraint'}</p>
+                         </div>
+                         <div>
+                           <h3 className="text-[10.5px] font-extrabold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-1">Evidence Confidence Score</h3>
+                           <div className="flex items-center gap-2 mt-1">
+                             <div className="flex-1 bg-slate-200 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                                <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${detectResult.evidenceConfidence || 90}%` }}></div>
+                             </div>
+                             <span className="text-xs text-slate-900 dark:text-white font-extrabold">{detectResult.evidenceConfidence || 90}%</span>
+                           </div>
+                           <p className="text-[9.5px] font-medium text-slate-500 dark:text-gray-400 mt-1">Computed deterministically from source-tier weights</p>
                          </div>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="glass-panel border-emerald-500 bg-emerald-950/10 p-0 overflow-hidden animate-[fadeIn_0.3s_ease-out]">
-                    <div className="bg-emerald-900/20 px-6 py-4 flex items-center gap-3 border-b border-emerald-500/20">
-                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                  <div className="glass-panel border-emerald-300 dark:border-emerald-500/40 bg-emerald-50/70 dark:bg-emerald-950/10 p-0 overflow-hidden shadow-sm animate-[fadeIn_0.3s_ease-out]">
+                    <div className="bg-emerald-100/90 dark:bg-emerald-900/20 px-6 py-4 flex items-center gap-3 border-b border-emerald-200 dark:border-emerald-500/20">
+                      <div className="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-700 dark:text-emerald-400">
                          <ShieldCheck className="w-4 h-4" />
                       </div>
-                      <h2 className="text-base font-bold text-gray-900 dark:text-white tracking-wide">SIGNAL DISMISSED (NON-CRITICAL)</h2>
+                      <h2 className="text-base font-black text-emerald-950 dark:text-white tracking-wide">SIGNAL DISMISSED (NON-CRITICAL)</h2>
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Diagnostic Assessment</h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed bg-gray-100 dark:bg-black/20 p-4 rounded-lg border border-gray-100 dark:border-white/5">
+                      <h3 className="text-xs font-bold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-2">Diagnostic Assessment</h3>
+                      <p className="text-slate-800 dark:text-gray-200 text-sm leading-relaxed bg-white dark:bg-black/40 p-4 rounded-xl border border-emerald-100 dark:border-white/5 shadow-2xs">
                         {detectResult.reason}
                       </p>
                     </div>
@@ -664,18 +665,18 @@ export default function Dashboard() {
               {/* IMPACT RESULT UI (Stage >= 2) */}
               {stage >= 2 && impactResult && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-[fadeIn_0.3s_ease-out]">
-                  <div className="glass-panel p-5 border border-gray-200 dark:border-white/10">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">SAP S/4HANA Revenue Exposure</p>
-                    <p className="text-2xl font-black text-red-500">
-                      ${impactResult.revenueAtRiskPerDay?.toLocaleString() || '0'}<span className="text-xs text-gray-500 font-normal"> / day</span>
+                  <div className="glass-panel p-5 border border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#0f1115]/80">
+                    <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1">SAP S/4HANA Revenue Exposure</p>
+                    <p className="text-3xl font-black text-red-600 dark:text-red-400 tracking-tight">
+                      ${impactResult.revenueAtRiskPerDay?.toLocaleString() || '0'}<span className="text-xs text-slate-500 dark:text-gray-400 font-semibold"> / day</span>
                     </p>
-                    <p className="text-[10px] text-gray-500 mt-2">Calculated from ERP Bill of Materials and active assembly line throughput</p>
+                    <p className="text-[10.5px] font-medium text-slate-500 dark:text-gray-400 mt-2">Calculated from ERP Bill of Materials and active assembly line throughput</p>
                   </div>
-                  <div className="glass-panel p-5 border border-gray-200 dark:border-white/10">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">Affected Assembly Lines</p>
+                  <div className="glass-panel p-5 border border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#0f1115]/80">
+                    <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-1">Affected Assembly Lines</p>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {impactResult.affectedProducts?.map((prod, idx) => (
-                        <span key={idx} className="px-2.5 py-1 text-xs font-semibold bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-gray-300 rounded border border-gray-200 dark:border-white/10">
+                        <span key={idx} className="px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-slate-200 rounded-xl border border-slate-200 dark:border-white/10 shadow-2xs">
                           {prod}
                         </span>
                       ))}
@@ -686,13 +687,13 @@ export default function Dashboard() {
 
               {/* DECISION CENTER CALLOUT (Stage >= 3) */}
               {stage >= 3 && matchResult && (
-                <div className="p-6 rounded-xl border border-indigo-500/40 bg-indigo-950/20 glass-panel animate-[fadeIn_0.3s_ease-out] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="p-6 rounded-2xl border border-indigo-200 dark:border-indigo-500/40 bg-indigo-50/80 dark:bg-indigo-950/20 shadow-sm animate-[fadeIn_0.3s_ease-out] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div>
-                    <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                    <span className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-lg bg-indigo-600 text-white shadow-2xs">
                       Decision Required
                     </span>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mt-1">Autonomous Recovery Options Formulated</h3>
-                    <p className="text-xs text-gray-400 mt-1 max-w-xl">
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white mt-2">Autonomous Recovery Options Formulated</h3>
+                    <p className="text-xs text-slate-600 dark:text-gray-400 mt-1 max-w-xl font-medium">
                       Mouser spot market inventory and internal SAP STO options are calculated. Open Decision Center to review the impact tree and authorize autonomous procurement.
                     </p>
                   </div>
