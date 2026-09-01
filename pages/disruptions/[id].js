@@ -3,10 +3,11 @@ import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
 import EarlyDetectionTimeline from '../../components/EarlyDetectionTimeline';
 import PrAuditExportModal from '../../components/PrAuditExportModal';
-import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer } from 'lucide-react';
+import PartComparisonModal from '../../components/PartComparisonModal';
+import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer, Mail, Copy, Check, Sliders, Layers, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
@@ -26,7 +27,7 @@ export async function getServerSideProps(context) {
     partInfo = partsData.find(p => p.part_id === disruption?.part_affected) || null;
   } catch (e) {}
 
-  if (!disruption && !id.includes('LIVE')) {
+  if (!disruption && !id?.includes('LIVE')) {
     return { notFound: true };
   }
 
@@ -44,18 +45,25 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
   const [data, setData] = useState(ssrDisruption);
   const [part, setPart] = useState(ssrPartInfo);
   
-  // Execution states
-  const [approvedOption, setApprovedOption] = useState(null);
-  const [executionStarted, setExecutionStarted] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [negotiateResult, setNegotiateResult] = useState(null);
-  const [chatRevealIndex, setChatRevealIndex] = useState(-1);
-  const [planGenerated, setPlanGenerated] = useState(false);
-  const [erpProgress, setErpProgress] = useState(0);
-  const [showPrModal, setShowPrModal] = useState(false);
+  // Sourcing & Requirement Configuration
+  const [quantity, setQuantity] = useState(10000);
+  const [targetDays, setTargetDays] = useState(15);
+  const [deliveryPlant, setDeliveryPlant] = useState('Plant 1001 (Automotive Hub - Stuttgart)');
   
-  const chatContainerRef = useRef(null);
-  const chatEndRef = useRef(null);
+  // Distributor Ranking & Drafting State
+  const [rankedDistributors, setRankedDistributors] = useState([]);
+  const [selectedDistributor, setSelectedDistributor] = useState(null);
+  const [emailDraft, setEmailDraft] = useState('');
+  const [prNumber, setPrNumber] = useState('');
+  const [isLoadingDistributors, setIsLoadingDistributors] = useState(false);
+  const [copied, setCopied] = useState(false);
+  
+  // Execution & Modals
+  const [approvedOption, setApprovedOption] = useState(null);
+  const [planGenerated, setPlanGenerated] = useState(false);
+  const [showPrModal, setShowPrModal] = useState(false);
+  const [showCompareModal, setShowCompareModal] = useState(false);
+  const [comparedAlt, setComparedAlt] = useState(null);
 
   useEffect(() => {
     if (id?.includes('LIVE')) {
@@ -67,127 +75,78 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
     }
   }, [id]);
 
+  // Load distributor rankings and initial Groq email draft on mount
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  }, [chatRevealIndex, negotiateResult, erpProgress]);
+    fetchDistributorRankings();
+  }, [data.part_affected, quantity, targetDays]);
 
-  const confidence = data.confidence || 94;
-  const sources = data.sources || ["Government Trade Notice", "Reuters Market Data", "Supplier Bulletin"];
-  const plants = data.plants_affected || 3;
-  const products = data.products_affected || 7;
-  
-  const options = [
-    {
-      id: 'A',
-      title: 'External Procurement',
-      vendor: part?.pin_compatible_alternatives?.[0]?.vendor || "Avnet",
-      cost_impact: "+8%",
-      lead_time: "5 days",
-      risk_reduction: 95,
-      description: "Trigger automated RFQ and PO execution with alternative vendor."
-    },
-    {
-      id: 'B',
-      title: 'Internal Reallocation',
-      vendor: "Global Inventory Sweep",
-      cost_impact: "+2%",
-      lead_time: "2 days",
-      risk_reduction: 61,
-      description: "Reroute existing stock from unaffected regional plants."
-    },
-    {
-      id: 'C',
-      title: 'Do Nothing',
-      vendor: "N/A",
-      cost_impact: "Full Exposure",
-      lead_time: "N/A",
-      risk_reduction: 0,
-      description: "Absorb the delay and maintain current procurement path."
-    }
-  ];
-
-  const handleApprove = async (opt) => {
-    setApprovedOption(opt.id);
-    setIsProcessing(true);
-    setExecutionStarted(true);
-    
-    if (opt.id === 'A') {
-      try {
-        const r = await fetch('/api/negotiate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            partNumber: data.part_affected, 
-            options: data.matched_options || (part ? part.pin_compatible_alternatives.map(v => ({ _raw: v })) : [])
-          })
-        });
-        const d = await r.json();
-        setNegotiateResult(d);
-        
-        let index = 0;
-        setChatRevealIndex(0);
-        const interval = setInterval(() => {
-          index++;
-          setChatRevealIndex(index);
-          if (index >= d.chatLog.length) {
-            clearInterval(interval);
-            setTimeout(() => completeExecution(opt), 1500);
+  const fetchDistributorRankings = async (chosenAlt = null) => {
+    setIsLoadingDistributors(true);
+    try {
+      const res = await fetch('/api/negotiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          partNumber: data.part_affected || 'STM32F401RE',
+          selectedOption: chosenAlt || selectedDistributor,
+          allOptions: data.matched_options || (part ? part.pin_compatible_alternatives?.map(v => ({ _raw: v })) : []),
+          requirement: {
+            quantity,
+            targetDays,
+            deliveryPlant
           }
-        }, 2000); 
+        })
+      });
 
-      } catch(e) {
-        setTimeout(() => completeExecution(opt), 2000);
-      }
-    } else if (opt.id === 'B') {
-      let progress = 0;
-      const int = setInterval(() => {
-        progress += 25;
-        setErpProgress(progress);
-        if(progress >= 100) {
-          clearInterval(int);
-          setTimeout(() => completeExecution(opt), 1000);
+      if (res.ok) {
+        const result = await res.json();
+        setRankedDistributors(result.rankedDistributors || []);
+        if (!selectedDistributor && result.selectedDistributor) {
+          setSelectedDistributor(result.selectedDistributor);
         }
-      }, 1500);
-    } else {
-      setTimeout(() => completeExecution(opt), 2000);
+        setEmailDraft(result.emailDraft || '');
+        setPrNumber(result.prNumber || `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+      }
+    } catch (err) {
+      console.error("Failed to load distributor rankings:", err);
+    } finally {
+      setIsLoadingDistributors(false);
     }
   };
 
-  const completeExecution = (opt) => {
-    setIsProcessing(false);
+  const handleSelectAndDraft = async (vendor) => {
+    setSelectedDistributor(vendor);
+    await fetchDistributorRankings(vendor);
+  };
+
+  const handleApprovePlan = () => {
+    setApprovedOption('A');
     setPlanGenerated(true);
 
-    const planId = `RP-LIVE-${Math.floor(Math.random()*9000)+1000}`;
+    const planId = `RP-LIVE-${Math.floor(Math.random() * 9000) + 1000}`;
     const dt = [
-      { timestamp: new Date(Date.now() - 30000).toISOString(), agent: "Detection Agent", action: "Identified critical shortage risk." },
-      { timestamp: new Date(Date.now() - 25000).toISOString(), agent: "Impact Agent", action: "Mapped revenue at risk." },
-      { timestamp: new Date(Date.now() - 15000).toISOString(), agent: "Decision Matrix", action: `User approved Option ${opt.id}: ${opt.title}` },
-      { timestamp: new Date().toISOString(), agent: "Execution Engine", action: `Finalized ${opt.title} workflow.` }
+      { timestamp: new Date(Date.now() - 30000).toISOString(), agent: "Detection Agent", action: "Identified capacity shortage risk." },
+      { timestamp: new Date(Date.now() - 25000).toISOString(), agent: "Impact Agent", action: "Exploded S/4HANA BOM & calculated revenue exposure." },
+      { timestamp: new Date(Date.now() - 15000).toISOString(), agent: "Ranking Engine", action: `Ranked distributors and selected ${selectedDistributor?.vendor || 'Arrow Electronics'}.` },
+      { timestamp: new Date().toISOString(), agent: "Execution Engine", action: `Approved commercial order draft & generated ${prNumber}.` }
     ];
-    
-    let recoveredAmt = 0;
-    if (opt.id === 'A') recoveredAmt = (data.revenue_at_risk_usd || 10000) * 0.95;
-    if (opt.id === 'B') recoveredAmt = (data.revenue_at_risk_usd || 10000) * 0.61;
 
-    // Update status globally
+    const recoveredAmt = (data.revenue_at_risk_usd || 1575000) * 0.95;
+
+    // Update global state in localStorage
     if (id?.includes('LIVE')) {
       const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
       const updated = custom.map(d => {
         if (d.disruption_id === id) {
-          return { 
-            ...d, 
-            status: 'Resolved', 
+          return {
+            ...d,
+            status: 'Resolved',
             recovery_plan_id: planId,
             decision_trail: dt,
             resolution: {
               outcome: "Executed",
-              vendor: opt?.vendor || "N/A",
-              proposed_action: opt.description,
+              vendor: selectedDistributor?.vendor || "Arrow Electronics",
+              proposed_action: `Dispatched commercial RFQ for ${selectedDistributor?.altPartId || 'AT32F403ARCT7'} (${quantity.toLocaleString()} units)`,
               recovered_amount_usd: recoveredAmt
             }
           };
@@ -197,29 +156,51 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
       localStorage.setItem('custom_disruptions', JSON.stringify(updated));
     }
 
-    // Generate Recovery Plan with Execution History for the /plans module
     const newPlan = {
       plan_id: planId,
       disruption_id: id,
-      part_affected: data.part_affected || "Unknown Part",
+      part_affected: data.part_affected || "STM32F401RE",
       created_at: new Date().toISOString(),
-      status: "Executing",
+      status: "Approved",
       confidence: confidence,
-      action_summary: opt.description,
+      action_summary: `Commercial Requisition ${prNumber} prepared for ${selectedDistributor?.vendor || 'Arrow Electronics'}`,
       decision_trail: dt,
       steps: [
-        { status: "Completed", description: "Authorization received" },
-        { status: "In Progress", description: "ERP execution" }
+        { status: "Completed", description: "Technical pinout qualification verified" },
+        { status: "Completed", description: "Commercial RFQ package drafted" },
+        { status: "In Progress", description: "SAP Ariba Purchase Requisition submission" }
       ],
       metrics: {
-        cost_impact_usd: (data.revenue_at_risk_usd || 10000) * (opt.id === 'A' ? 0.08 : opt.id === 'B' ? 0.02 : 1),
+        cost_impact_usd: (selectedDistributor?.unitPrice || 4.35) * quantity,
         revenue_protected_usd: recoveredAmt,
-        days_saved: opt.id === 'A' ? 14 : opt.id === 'B' ? 17 : 0
+        days_saved: 14
       }
     };
 
     const customPlans = JSON.parse(localStorage.getItem('custom_plans') || '[]');
     localStorage.setItem('custom_plans', JSON.stringify([newPlan, ...customPlans]));
+  };
+
+  const copyToClipboard = () => {
+    if (!emailDraft) return;
+    navigator.clipboard.writeText(emailDraft);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const confidence = data.confidence || 94;
+  const plants = data.plants_affected || 2;
+  const products = data.products_affected || 5;
+  const originalPartData = part?.part_id ? part : {
+    part_id: data.part_affected || 'STM32F401RE',
+    category: data.part_affected?.split('-')[0] || 'MCU',
+    manufacturer: data.vendor || 'STMicroelectronics',
+    base_price: 4.50
+  };
+
+  const openSpecComparison = (alt) => {
+    setComparedAlt(alt);
+    setShowCompareModal(true);
   };
 
   if (!data.part_affected && !data.event_type) return <div className="min-h-screen bg-[#0a0f18] text-white p-10">Loading...</div>;
@@ -251,7 +232,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                     {id}
                   </h1>
                   <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded border ${planGenerated ? 'bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-500 dark:border-emerald-500/20' : 'bg-red-50 text-red-600 border-red-200 dark:bg-red-500/10 dark:text-red-500 dark:border-red-500/20'}`}>
-                    {planGenerated ? 'Resolved' : 'Critical Threat'}
+                    {planGenerated ? 'Order Package Approved' : 'Critical Shortage Risk'}
                   </span>
                 </div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400 max-w-4xl leading-relaxed">
@@ -261,7 +242,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
               <div className="shrink-0 flex flex-col items-end gap-2">
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">AI Confidence</p>
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Evidence Confidence</p>
                     <div className="text-3xl font-black text-emerald-500">{confidence}%</div>
                   </div>
                 </div>
@@ -279,65 +260,41 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-white/10">
+            {/* MAIN GRID */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 dark:divide-white/10">
               
-              {/* LEFT COLUMN: EVIDENCE & IMPACT */}
-              <div className="p-6 md:p-8 lg:col-span-4 space-y-10 bg-gray-50 dark:bg-black/20">
+              {/* LEFT COLUMN: DIAGNOSTICS & PIN-COMPATIBLE CATALOG */}
+              <div className="p-6 md:p-8 lg:col-span-4 space-y-6 bg-gray-50/50 dark:bg-[#0f1115]">
+                
+                {/* Provenance Card */}
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <FileText className="w-4 h-4" /> Signal Provenance & Evidence
+                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <ShieldAlert className="w-4 h-4 text-emerald-500" /> Evidence Provenance
                   </h3>
                   
-                  <div className="mb-4 p-3 bg-white dark:bg-[#151821] rounded-lg border border-emerald-200 dark:border-emerald-900/30 shadow-sm flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="text-xs font-bold text-gray-900 dark:text-white">Evidence Confidence: {data.evidenceConfidence || confidence}%</p>
-                      </div>
-                      <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed mb-2">
-                        Calculated deterministically from verified source-tier weights. Signal correlates public disclosure against private SAP BOM catalog.
-                      </p>
-                      {data.earlyDetectionAdvantage && (
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded text-[10px] font-bold">
-                          <Activity className="w-3 h-3" /> {data.earlyDetectionAdvantage}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
+                    <div className="flex items-center justify-between p-2.5 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg border border-emerald-200 dark:border-emerald-500/20">
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Primary Source</span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                          {data.source || 'Institutional Registry'}
+                        </span>
                       </div>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400">{data.source || 'Official Regulatory / Sensor Source'}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Macro Context</span>
-                      </div>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400">NY Fed GSCPI Baseline</span>
-                    </div>
-                    <div className="flex items-center justify-between p-2 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
-                        <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">Media Baseline</span>
-                      </div>
-                      <span className="text-[10px] text-gray-500 dark:text-gray-400">NewsAPI Media Wire</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">
+                        {data.sourceTier || 'OFFICIAL_IR'}
+                      </span>
                     </div>
                   </div>
 
                   {data.verifiedUrl && data.verifiedUrl !== '#' && (
-                    <div className="mt-3">
+                    <div className="mt-2.5">
                       <a 
                         href={data.verifiedUrl} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300 hover:underline"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
                       >
-                        <FileText className="w-3.5 h-3.5" /> View Official Primary Document <ExternalLink className="w-3 h-3" />
+                        <FileText className="w-3.5 h-3.5" /> View Official Source Document <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
                   )}
@@ -347,273 +304,317 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                     <EarlyDetectionTimeline
                       primaryTimestamp={data.primaryTimestamp || data.detected_at || new Date(Date.now() - 28800000).toISOString()}
                       mediaTimestamp={data.mediaTimestamp || new Date(Date.now() - 3600000).toISOString()}
-                      advantageText={data.earlyDetectionAdvantage || 'Pre-Emptive Window Gained'}
+                      advantageText={data.earlyDetectionAdvantage || '8.0 Hours Early Advantage'}
                       sourceTier={data.sourceTier}
                       sourceName={data.source}
                     />
                   </div>
                 </div>
 
+                {/* Revenue Impact Summary */}
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <GitCommit className="w-4 h-4" /> Impact Graph
+                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <BarChart2 className="w-4 h-4 text-red-500" /> S/4HANA ERP Exposure
                   </h3>
-                  
-                  {/* Visual Node Graph */}
-                  <div className="flex flex-col items-center relative py-4">
-                    
-                    {/* Level 1: Supplier */}
-                    <div className="flex flex-col items-center z-10">
-                      <div className="px-3 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-full shadow-md flex items-center gap-2">
-                        <Factory className="w-3 h-3" />
-                        {data.vendor || (data.part_affected?.includes('GPU') ? 'NVIDIA' : data.part_affected?.includes('MCU') ? 'STMicroelectronics' : data.part_affected?.includes('FPGA') ? 'Xilinx' : data.part_affected?.includes('MEM') ? 'Micron' : 'Tier-1 Supplier')}
-                      </div>
+                  <div className="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] text-red-600 dark:text-red-400 font-bold uppercase tracking-wider">Revenue at Risk</span>
+                      <span className="text-[10px] font-bold text-gray-500">{plants} Assembly Plants</span>
                     </div>
-
-                    {/* Down arrow */}
-                    <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
-
-                    {/* Level 2: Component */}
-                    <div className="flex flex-col items-center z-10">
-                      <div className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 text-indigo-700 dark:text-indigo-400 text-xs font-mono font-bold rounded-lg shadow-sm flex items-center gap-2">
-                        <Box className="w-3 h-3" />
-                        <Link href="/network" className="hover:underline">{data.part_affected}</Link>
-                      </div>
-                    </div>
-
-                    {/* Split Branching Lines */}
-                    <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="w-48 h-px bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="flex justify-between w-48 relative top-[1px]">
-                      <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
-                      <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
-                    </div>
-
-                    {/* Level 3: BOM / Plants */}
-                    <div className="flex justify-between w-56 z-10">
-                      <div className="flex flex-col items-center bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 px-3 py-2 rounded-lg shadow-sm w-[100px]">
-                        <span className="text-lg font-black text-gray-900 dark:text-white">{plants}</span>
-                        <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest text-center">Assembly<br/>Lines</span>
-                      </div>
-                      <div className="flex flex-col items-center bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 px-3 py-2 rounded-lg shadow-sm w-[100px]">
-                        <span className="text-lg font-black text-gray-900 dark:text-white">{products}</span>
-                        <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest text-center">Affected<br/>Products</span>
-                      </div>
-                    </div>
-
-                    {/* Converging Lines */}
-                    <div className="flex justify-between w-48 relative bottom-[1px]">
-                      <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
-                      <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
-                    </div>
-                    <div className="w-48 h-px bg-red-300 dark:bg-red-900/50"></div>
-                    <div className="w-px h-4 bg-red-300 dark:bg-red-900/50"></div>
-
-                    {/* Level 4: Revenue Impact */}
-                    <div className="flex flex-col items-center z-10 w-full">
-                      <div className="w-full max-w-[220px] px-4 py-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl shadow-sm flex flex-col items-center text-center">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <ShieldAlert className="w-3 h-3 text-red-500" />
-                          <span className="text-[9px] text-red-600 dark:text-red-400 uppercase font-bold tracking-widest">Revenue at Risk</span>
-                        </div>
-                        <p className="text-xl font-black text-red-600 dark:text-red-400">
-                          ${data.revenue_at_risk_usd?.toLocaleString() || '3,500,000'}<span className="text-xs text-red-500/70 font-medium">/day</span>
-                        </p>
-                      </div>
-                    </div>
-                    
+                    <p className="text-2xl font-black text-red-600 dark:text-red-400">
+                      ${data.revenue_at_risk_usd?.toLocaleString() || '1,575,000'}<span className="text-xs text-red-500/70 font-medium"> / day</span>
+                    </p>
+                    <p className="text-[11px] text-gray-600 dark:text-gray-400 mt-1">
+                      Component: <span className="font-mono font-bold text-gray-900 dark:text-white">{data.part_affected}</span>
+                    </p>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-gray-200 dark:border-white/10">
-                  <div className="flex items-center justify-between mb-4">
+                {/* Pin-Compatible Cross-Reference with Spec Comparison Button */}
+                <div className="pt-4 border-t border-gray-200 dark:border-white/10">
+                  <div className="flex items-center justify-between mb-3">
                     <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                      <Database className="w-4 h-4" /> Catalog Cross-Reference
+                      <Database className="w-4 h-4 text-indigo-500" /> Pin-Compatible Replacements
                     </h3>
-                    <span className="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-bold uppercase rounded border border-emerald-200 dark:border-emerald-500/20 tracking-wider">Active</span>
+                    <span className="text-[10px] text-indigo-500 font-bold">Verified</span>
                   </div>
-                  <div className="space-y-3">
+
+                  <div className="space-y-2.5">
                     {(() => {
-                      const alts = data.matched_options?.map(o => o._raw) || part?.pin_compatible_alternatives || [];
-                      if (alts.length > 0) {
-                        return alts.map((alt, i) => (
-                          <div key={i} className="p-3.5 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm flex items-center justify-between group hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors">
+                      const alts = data.matched_options?.map(o => o._raw) || part?.pin_compatible_alternatives || [
+                        { alt_part_id: 'AT32F403ARCT7', vendor: 'Arrow Electronics', unit_price: 4.35, lead_time_days: 15, stock_qty: 20000 },
+                        { alt_part_id: 'GD32F403RET6', vendor: 'Farnell', unit_price: 4.28, lead_time_days: 19, stock_qty: 12515 }
+                      ];
+
+                      return alts.map((alt, i) => (
+                        <div key={i} className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm flex flex-col gap-2">
+                          <div className="flex items-center justify-between">
                             <div>
-                              <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono mb-1">{alt.alt_part_id}</p>
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">{alt.vendor}</p>
-                              </div>
+                              <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono">{alt.alt_part_id}</p>
+                              <p className="text-[10px] text-gray-500 font-medium">{alt.vendor} • {alt.stock_qty?.toLocaleString()} units</p>
                             </div>
                             <div className="text-right">
-                              <p className="text-xs font-black text-gray-900 dark:text-white mb-0.5">{alt.stock_qty?.toLocaleString()} <span className="font-medium text-gray-400 text-[10px]">UNITS</span></p>
-                              <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">ETA: {alt.lead_time_days} days</p>
-                            </div>
-                          </div>
-                        ));
-                      }
-                      return (
-                        <div className="p-4 bg-gray-100 dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl text-center shadow-inner">
-                          <AlertTriangle className="w-5 h-5 text-gray-400 mx-auto mb-2" />
-                          <p className="text-xs text-gray-500 font-medium">No drop-in replacements found in authorized vendor catalog.</p>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
-
-              {/* RIGHT COLUMN: DECISION MATRIX OR EXECUTION */}
-              <div className="p-6 md:p-8 lg:col-span-8 bg-white dark:bg-[#11141c]">
-                
-                {!executionStarted ? (
-                  <>
-                    <div className="flex justify-between items-center mb-6">
-                      <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4" /> Action Matrix
-                      </h3>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      {options.map(opt => (
-                        <div key={opt.id} className={`p-5 border rounded-xl flex flex-col xl:flex-row xl:items-center justify-between gap-6 transition-all shadow-sm ${approvedOption === opt.id ? 'bg-indigo-50/50 dark:bg-indigo-900/10 border-indigo-300 dark:border-indigo-500/50' : 'bg-white dark:bg-[#151821] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20 hover:shadow-md'}`}>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h4 className="text-lg font-black text-gray-900 dark:text-white">Option {opt.id}: {opt.title}</h4>
-                              {opt.id === 'A' && <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wide rounded-full border border-emerald-200 dark:border-emerald-500/20">Recommended</span>}
-                            </div>
-                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">{opt.description}</p>
-                            
-                            <div className="grid grid-cols-3 gap-3">
-                              <div className="bg-gray-50 dark:bg-[#0f1115] p-3 rounded-lg border border-gray-100 dark:border-white/5">
-                                <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-1">Cost Impact</p>
-                                <p className={`text-sm font-black ${opt.id === 'A' ? 'text-orange-500' : opt.id === 'B' ? 'text-yellow-600 dark:text-yellow-500' : 'text-red-500'}`}>{opt.cost_impact}</p>
-                              </div>
-                              <div className="bg-gray-50 dark:bg-[#0f1115] p-3 rounded-lg border border-gray-100 dark:border-white/5">
-                                <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-1">Lead Time</p>
-                                <p className="text-sm font-black text-gray-900 dark:text-white">{opt.lead_time}</p>
-                              </div>
-                              <div className="bg-gray-50 dark:bg-[#0f1115] p-3 rounded-lg border border-gray-100 dark:border-white/5">
-                                <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest mb-1">Risk Reduction</p>
-                                <p className={`text-sm font-black ${opt.risk_reduction > 80 ? 'text-emerald-600 dark:text-emerald-400' : opt.risk_reduction > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-red-500'}`}>{opt.risk_reduction}%</p>
-                              </div>
+                              <p className="text-xs font-black text-gray-900 dark:text-white">${alt.unit_price?.toFixed(2)}</p>
+                              <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">{alt.lead_time_days} days ETA</p>
                             </div>
                           </div>
                           
-                          <div className="shrink-0 flex items-center justify-center w-full xl:w-auto">
-                            <button 
-                              onClick={() => handleApprove(opt)}
-                              disabled={isProcessing}
-                              className={`w-full xl:w-36 py-4 rounded-xl text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 ${isProcessing ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 shadow-md hover:shadow-lg'}`}
+                          {/* Clean Spec Comparison Button */}
+                          <button
+                            onClick={() => openSpecComparison(alt)}
+                            className="w-full py-1.5 px-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors border border-indigo-200 dark:border-indigo-500/30"
+                          >
+                            <Sliders className="w-3.5 h-3.5" /> Compare Technical Specs & Pinout
+                          </button>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* RIGHT COLUMN: DISTRIBUTOR RANKING & GROQ COMMERCIAL EMAIL DRAFTER */}
+              <div className="p-6 md:p-8 lg:col-span-8 bg-white dark:bg-[#11141c] space-y-6">
+                
+                {/* SECTION 1: REQUIREMENT TUNING */}
+                <div className="p-5 bg-gray-50 dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <Sliders className="w-4 h-4 text-indigo-500" /> Sourcing Requirement Configuration
+                    </h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                      Interactive Parameter Gate
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 block mb-1">Target Volume (Units)</label>
+                      <input 
+                        type="number" 
+                        value={quantity}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
+                        className="w-full px-3 py-2 bg-white dark:bg-[#0f1115] border border-gray-300 dark:border-white/10 rounded-lg text-sm font-bold text-gray-900 dark:text-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 block mb-1">Max Delivery Window (Days)</label>
+                      <input 
+                        type="number" 
+                        value={targetDays}
+                        onChange={(e) => setTargetDays(Number(e.target.value))}
+                        className="w-full px-3 py-2 bg-white dark:bg-[#0f1115] border border-gray-300 dark:border-white/10 rounded-lg text-sm font-bold text-gray-900 dark:text-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 block mb-1">Delivery Destination</label>
+                      <input 
+                        type="text" 
+                        value={deliveryPlant}
+                        onChange={(e) => setDeliveryPlant(e.target.value)}
+                        className="w-full px-3 py-2 bg-white dark:bg-[#0f1115] border border-gray-300 dark:border-white/10 rounded-lg text-xs font-medium text-gray-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* SECTION 2: RANKED DISTRIBUTOR MATRIX */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <BarChart2 className="w-4 h-4 text-indigo-500" /> Distributor Evaluation & Scoring Matrix
+                    </h3>
+                    <span className="text-[11px] text-gray-400">Deterministic Multi-Factor Ranking</span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {rankedDistributors.map((dist, idx) => {
+                      const isSelected = selectedDistributor?.vendor === dist.vendor;
+                      return (
+                        <div 
+                          key={idx}
+                          onClick={() => handleSelectAndDraft(dist)}
+                          className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
+                            isSelected 
+                              ? 'bg-indigo-50/50 dark:bg-indigo-950/20 border-indigo-500 ring-2 ring-indigo-500/20 shadow-md' 
+                              : 'bg-white dark:bg-[#151821] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs ${
+                              idx === 0 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
+                            }`}>
+                              #{dist.rank}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h4 className="text-sm font-bold text-gray-900 dark:text-white">{dist.vendor}</h4>
+                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                  idx === 0 
+                                    ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' 
+                                    : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400'
+                                }`}>
+                                  {dist.recommendation}
+                                </span>
+                              </div>
+                              <p className="text-xs text-indigo-600 dark:text-indigo-400 font-mono">
+                                Sourced Part: {dist.altPartId}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-6 text-xs">
+                            <div>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">Unit Price</p>
+                              <p className="font-black text-gray-900 dark:text-white">${dist.unitPrice?.toFixed(2)}</p>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">Lead Time</p>
+                              <p className="font-black text-gray-900 dark:text-white">{dist.leadTimeDays} Days</p>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">Stock</p>
+                              <p className="font-bold text-gray-700 dark:text-gray-300">{dist.stockQty?.toLocaleString()}</p>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">Score</p>
+                              <p className="font-black text-emerald-600 dark:text-emerald-400 text-sm">{dist.score}/100</p>
+                            </div>
+
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openSpecComparison({ alt_part_id: dist.altPartId, vendor: dist.vendor, unit_price: dist.unitPrice, lead_time_days: dist.leadTimeDays });
+                              }}
+                              className="px-2.5 py-1 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 rounded-lg border border-indigo-200 dark:border-indigo-500/30 transition-colors"
                             >
-                              Approve
+                              Compare
                             </button>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  
-                  /* EXECUTION UI */
-                  <div className="flex flex-col h-full min-h-[450px] animate-[fadeInUp_0.4s_ease-out]">
-                    <div className="mb-6 flex justify-between items-center pb-4 border-b border-gray-100 dark:border-white/5">
-                      <div>
-                        <h3 className="text-xl font-black text-gray-900 dark:text-white flex items-center gap-3">
-                          {approvedOption === 'A' ? <MessageSquare className="w-6 h-6 text-indigo-500" /> : approvedOption === 'B' ? <Database className="w-6 h-6 text-blue-500" /> : <AlertTriangle className="w-6 h-6 text-orange-500" />} 
-                          Execution Subsystem
-                        </h3>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">
-                          {approvedOption === 'A' ? 'Autonomous Supplier Negotiation (Chase Agent)' : approvedOption === 'B' ? 'SAP S/4HANA Internal Stock Transport Order' : 'Risk Acknowledgement & Monitoring'}
-                        </p>
-                      </div>
-                      {!planGenerated ? (
-                        <div className="flex items-center gap-2 px-4 py-1.5 bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 rounded-full border border-indigo-200 dark:border-indigo-500/30">
-                          <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
-                          <span className="text-[10px] dark:text-indigo-300 font-bold tracking-widest uppercase">Processing</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2 px-4 py-1.5 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 rounded-full border border-emerald-200 dark:border-emerald-500/30">
-                          <CheckCircle className="w-3 h-3 dark:text-emerald-500" />
-                          <span className="text-[10px] dark:text-emerald-400 font-bold tracking-widest uppercase">Completed</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="flex-1 flex flex-col relative bg-gray-50 dark:bg-[#0f1115] rounded-xl border border-gray-200 dark:border-white/5 overflow-hidden shadow-inner">
-                      
-                      {approvedOption === 'A' && (
-                        <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 space-y-5">
-                          {negotiateResult?.chatLog.slice(0, chatRevealIndex + 1).map((msg, idx) => (
-                            <div key={idx} className={`flex flex-col ${msg.from.includes('Agent') || msg.from === 'System' ? 'items-end' : 'items-start'} animate-[fadeInUp_0.3s_ease-out]`}>
-                              <span className="text-[10px] text-gray-400 mb-1.5 px-1 font-bold uppercase tracking-widest">{msg.from}</span>
-                              <div className={`p-3.5 rounded-xl max-w-[85%] shadow-sm ${
-                                msg.from === 'System' ? 'bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400' :
-                                msg.from.includes('Agent') ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-[#1a1d24] text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-white/10'
-                              }`}>
-                                <p className={`text-sm font-medium leading-relaxed ${msg.from === 'System' ? 'font-mono' : ''}`}>{msg.text}</p>
-                              </div>
-                            </div>
-                          ))}
-                          {!planGenerated && negotiateResult && chatRevealIndex < negotiateResult.chatLog.length - 1 && (
-                            <div className="flex flex-col items-end">
-                              <span className="text-[10px] text-gray-400 mb-1.5 px-1 font-bold uppercase tracking-widest">Chase Agent</span>
-                              <div className="bg-indigo-600/50 p-3.5 rounded-xl max-w-[85%] flex gap-1.5">
-                                <div className="w-1.5 h-1.5 bg-white/80 rounded-full animate-bounce"></div>
-                                <div className="w-1.5 h-1.5 bg-white/80 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                                <div className="w-1.5 h-1.5 bg-white/80 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                              </div>
-                            </div>
-                          )}
-                          <div ref={chatEndRef} />
-                        </div>
-                      )}
-
-                      {approvedOption === 'B' && (
-                        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-8">
-                           <Database className={`w-12 h-12 ${planGenerated ? 'text-emerald-500' : 'text-blue-500 animate-pulse'}`} />
-                           <div className="w-full max-w-md">
-                             <div className="flex justify-between text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
-                               <span>STO Generation</span>
-                               <span>{erpProgress}%</span>
-                             </div>
-                             <div className="h-2 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
-                               <div className="h-full bg-blue-500 transition-all duration-500" style={{width: `${erpProgress}%`}}></div>
-                             </div>
-                             <p className="mt-4 text-sm font-mono text-gray-600 dark:text-gray-400">
-                               {erpProgress < 30 ? '> Locating global inventory surplus...' : erpProgress < 70 ? '> Locking inventory at EU-Central...' : erpProgress < 100 ? '> Generating Stock Transport Order...' : '> STO Executed Successfully.'}
-                             </p>
-                           </div>
-                        </div>
-                      )}
-
-                      {approvedOption === 'C' && (
-                        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-4">
-                           <AlertTriangle className="w-12 h-12 text-orange-500" />
-                           <h3 className="text-xl font-bold text-gray-900 dark:text-white">Risk Profile Acknowledged</h3>
-                           <p className="text-gray-500 dark:text-gray-400 max-w-sm">
-                             No immediate procurement action taken. SentinelChain will continue monitoring supplier ETA updates and escalate if delays exceed 14 days.
-                           </p>
-                        </div>
-                      )}
-                      
-                    </div>
-                    {planGenerated && (
-                      <div className="mt-6 animate-[fadeInUp_0.3s_ease-out]">
-                        <Link href="/ledger" className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold tracking-wide rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
-                          View Verified Impact in Recovery Ledger <ArrowRight className="w-5 h-5" />
-                        </Link>
-                      </div>
-                    )}
+                      );
+                    })}
                   </div>
-                )}
+                </div>
+
+                {/* SECTION 3: GROQ LLM COMMERCIAL ORDER DRAFT & DISPATCH */}
+                <div className="p-5 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl space-y-4 shadow-sm">
+                  <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/10">
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <Mail className="w-4 h-4 text-indigo-500" /> Commercial Purchase Requisition & RFQ Email Package
+                      </h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Tailored for <span className="font-bold text-gray-900 dark:text-white">{selectedDistributor?.vendor || 'Arrow Electronics'}</span> • Reference <span className="font-mono text-indigo-500 font-bold">{prNumber}</span>
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={copyToClipboard}
+                        className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                      >
+                        {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                        {copied ? 'Copied to Clipboard!' : 'Copy Email'}
+                      </button>
+
+                      <a
+                        href={`mailto:orders@${(selectedDistributor?.vendor || 'supplier').toLowerCase().replace(/\s+/g, '')}.com?subject=${encodeURIComponent(`[URGENT RFQ / PO: ${prNumber}] Procurement Order for ${selectedDistributor?.altPartId || 'Component'}`)}&body=${encodeURIComponent(emailDraft)}`}
+                        className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors border border-indigo-200 dark:border-indigo-500/30"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" /> Open in Mail Client
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Editable Rich Email Textarea */}
+                  <div className="relative">
+                    <textarea
+                      rows={12}
+                      value={emailDraft}
+                      onChange={(e) => setEmailDraft(e.target.value)}
+                      className="w-full p-4 bg-gray-50 dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 rounded-xl font-mono text-xs text-gray-800 dark:text-gray-200 leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      placeholder="Generating commercial procurement draft..."
+                    />
+                    <div className="absolute right-3 bottom-3 text-[10px] text-gray-400 flex items-center gap-1 bg-white/80 dark:bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+                      <Sparkles className="w-3 h-3 text-indigo-400" /> Drafted via Groq LLM
+                    </div>
+                  </div>
+
+                  {/* APPROVAL & ACTION BAR */}
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Total Order Commitment: <span className="font-black text-gray-900 dark:text-white">${((selectedDistributor?.unitPrice || 4.35) * quantity).toLocaleString()} USD</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      <button
+                        onClick={() => setShowPrModal(true)}
+                        className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                      >
+                        <FileText className="w-4 h-4" /> View Audit Dossier
+                      </button>
+
+                      <button
+                        onClick={handleApprovePlan}
+                        className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-500/20"
+                      >
+                        <CheckCircle className="w-4 h-4" /> Approve & Dispatch Requisition
+                      </button>
+                    </div>
+                  </div>
+
+                  {planGenerated && (
+                    <div className="mt-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 flex items-center justify-between animate-[fadeInUp_0.3s_ease-out]">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
+                        <div>
+                          <p className="text-xs font-bold text-emerald-900 dark:text-emerald-300">
+                            Procurement Requisition {prNumber} Approved & Synchronized
+                          </p>
+                          <p className="text-[11px] text-emerald-700 dark:text-emerald-400">
+                            Requisition logged to SAP Ariba and saved to the verified Recovery Ledger.
+                          </p>
+                        </div>
+                      </div>
+                      <Link 
+                        href="/ledger" 
+                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shrink-0 flex items-center gap-1.5 transition-all shadow"
+                      >
+                        View in Ledger <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  )}
+
+                </div>
+
               </div>
 
             </div>
           </div>
         </div>
       </main>
+
+      {/* MODALS */}
       <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={data} />
+      
+      {/* SIDE-BY-SIDE SPEC COMPARISON MODAL */}
+      <PartComparisonModal 
+        isOpen={showCompareModal} 
+        onClose={() => setShowCompareModal(false)}
+        originalPart={originalPartData}
+        altPart={comparedAlt}
+        onSelectOption={(chosen) => handleSelectAndDraft({
+          vendor: chosen.vendor,
+          altPartId: chosen.alt_part_id,
+          unitPrice: chosen.unit_price,
+          leadTimeDays: chosen.lead_time_days,
+          stockQty: chosen.stock_qty
+        })}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 node_modules/
 .next/
 .env.local
-
+.env
 *.log
 out*.html
 node_modules/
