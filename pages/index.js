@@ -111,8 +111,11 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [isSearchingNews]);
 
-  const addAudit = (source, message) => {
   const threatSectionRef = useRef(null);
+
+  const addAudit = (source, message) => {
+    setAuditTrail(prev => [...prev, { time: new Date().toISOString(), source, message }]);
+  };
 
   const simulatePipeline = async (newsArticle) => {
     setLoading(true);
@@ -481,7 +484,7 @@ export default function Dashboard() {
             </div>
 
             {/* RIGHT COLUMN: PIPELINE & VISUALIZATION */}
-            <div className="lg:col-span-3 space-y-6">
+            <div ref={threatSectionRef} id="threat-section" className="lg:col-span-3 space-y-6">
 
               {/* 3D GLOBE VISUALIZATION (Stage 0) */}
               {stage === 0 && (
