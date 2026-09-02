@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity, Radio } from 'lucide-react';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -43,6 +43,11 @@ export default function Sidebar() {
             <Link href="/" passHref legacyBehavior>
               <a className={linkClass('/')}>
                 <LayoutDashboard className={iconClass('/', 'text-indigo-600 dark:text-indigo-400')} /> Dashboard
+              </a>
+            </Link>
+            <Link href="/mesh" passHref legacyBehavior>
+              <a className={linkClass('/mesh')}>
+                <Radio className={iconClass('/mesh', 'text-amber-500 dark:text-amber-400')} /> Event Mesh Sensor
               </a>
             </Link>
             <Link href="/disruptions" passHref legacyBehavior>

@@ -319,14 +319,21 @@ export default function Dashboard() {
               <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Autonomous Supply Chain Recovery</h1>
               <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 font-medium">Multi-Source Signal Layer → Deterministic BOM Correlation → Spot Market Sourcing → SAP Execution</p>
             </div>
-            {(loading || stage > 0) && (
-              <button 
-                onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}
-                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-all border border-slate-200 dark:border-white/10 shadow-xs"
-              >
-                Reset Pipeline
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              <Link href="/mesh" passHref legacyBehavior>
+                <a className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-xs flex items-center gap-1.5">
+                  <Radio className="w-3.5 h-3.5 animate-pulse" /> Launch Event Mesh
+                </a>
+              </Link>
+              {(loading || stage > 0) && (
+                <button 
+                  onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}
+                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-all border border-slate-200 dark:border-white/10 shadow-xs"
+                >
+                  Reset Pipeline
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
