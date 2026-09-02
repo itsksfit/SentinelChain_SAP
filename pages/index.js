@@ -479,6 +479,8 @@ export default function Dashboard() {
                         </span>
                         <span className="font-mono text-slate-500 dark:text-gray-400">
                           {news.sourceTier || 'OFFICIAL'}
+                        <span className="font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1">
+                          <Zap className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> {news.earlyDetectionAdvantage}
                         </span>
                       </div>
 
@@ -591,6 +593,8 @@ export default function Dashboard() {
                           <div className="flex items-center justify-between">
                             <span className="text-slate-600 dark:text-gray-400">Evidence Confidence:</span>
                             <span className="font-bold text-emerald-700 dark:text-emerald-400">{detectResult.evidenceConfidence || 92}% (Tier-Weighted)</span>
+                            <span className="text-slate-600 dark:text-gray-400">Early Detection Advantage:</span>
+                            <span className="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1"><Zap className="w-3 h-3 text-emerald-600" /> {detectResult.earlyDetectionAdvantage}</span>
                           </div>
                           {detectResult.verifiedUrl && detectResult.verifiedUrl !== '#' && (
                             <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex justify-end">
