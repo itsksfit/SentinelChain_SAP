@@ -17,9 +17,17 @@ import dynamic from 'next/dynamic';
 
 const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false });
 
-// --- MAIN PAGE ---
+export async function getServerSideProps() {
+  try {
+    const { getLatestDisruptions } = require('../lib/intelligence/newsClient');
+    const signals = await getLatestDisruptions();
+    return { props: { initialSignals: signals || [] } };
+  } catch(e) {
+    return { props: { initialSignals: [] } };
+  }
+}
 
-export default function Dashboard() {
+export default function Dashboard({ initialSignals = [] }) {
   const router = useRouter();
   const [selectedEvent, setSelectedEvent] = useState(events[0].text);
   const [stage, setStage] = useState(0); 
@@ -39,10 +47,10 @@ export default function Dashboard() {
   const [aribaResponse, setAribaResponse] = useState(null);
   
   // Multi-Source Signal State
-  const [liveNews, setLiveNews] = useState([]);
+  const [liveNews, setLiveNews] = useState(initialSignals);
   const [filterTier, setFilterTier] = useState('ALL');
   const [accuracyStat, setAccuracyStat] = useState("Loading...");
-  const [activeNews, setActiveNews] = useState(null);
+  const [activeNews, setActiveNews] = useState(initialSignals.length > 0 ? initialSignals[0] : null);
   const [newsSearchQuery, setNewsSearchQuery] = useState('');
   const [isSearchingNews, setIsSearchingNews] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -53,8 +61,10 @@ export default function Dashboard() {
     try {
       const r = await fetch(url);
       const news = await r.json();
-      setLiveNews(news);
-      setActiveNews(prev => prev || (news.length > 0 ? news[0] : null));
+      if (Array.isArray(news) && news.length > 0) {
+        setLiveNews(news);
+        setActiveNews(prev => prev || news[0]);
+      }
     } catch (error) {
       console.error("Error fetching signals:", error);
     } finally {
