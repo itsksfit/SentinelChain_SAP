@@ -486,8 +486,6 @@ export default function Dashboard() {
                         </span>
                         <span className="font-mono text-slate-500 dark:text-gray-400">
                           {news.sourceTier || 'OFFICIAL'}
-                        <span className="font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> {news.earlyDetectionAdvantage}
                         </span>
                       </div>
 

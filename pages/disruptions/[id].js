@@ -329,10 +329,16 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
 
                   <div className="space-y-2.5">
                     {(() => {
-                      const alts = data.matched_options?.map(o => o._raw) || part?.pin_compatible_alternatives || [
-                        { alt_part_id: 'AT32F403ARCT7', vendor: 'Arrow Electronics', unit_price: 4.35, lead_time_days: 15, stock_qty: 20000 },
-                        { alt_part_id: 'GD32F403RET6', vendor: 'Farnell', unit_price: 4.28, lead_time_days: 19, stock_qty: 12515 }
-                      ];
+                      const alts = (rankedDistributors && rankedDistributors.length > 0)
+                        ? rankedDistributors.map(d => ({
+                            alt_part_id: d.altPartId,
+                            vendor: d.vendor,
+                            unit_price: d.unitPrice,
+                            lead_time_days: d.leadTimeDays,
+                            stock_qty: d.stockQty,
+                            productDetailUrl: d.productDetailUrl
+                          }))
+                        : (data.matched_options?.map(o => o._raw) || part?.pin_compatible_alternatives || []);
 
                       return alts.map((alt, i) => (
                         <div key={i} className="p-3 bg-white dark:bg-[#151821] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm flex flex-col gap-2">
