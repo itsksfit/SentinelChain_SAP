@@ -60,6 +60,7 @@ In enterprise manufacturing and B2B supply chains, revenue loss rarely occurs in
 | Module | Route | Purpose |
 | :--- | :--- | :--- |
 | **Mission Control** | `/` | 3D Global Semiconductor Node Grid, Live Institutional Signal Ticker, ERP Status Pills |
+| **News Event Mesh** | `/mesh` | Real-time CloudEvents Broker, SAP BOM Impact Sensor, and Multi-Agent Trigger Pipeline |
 | **Active Disruptions** | `/disruptions` | Active incident catalog, Visual Node-Link Impact Graph, SAP BOM Explosion |
 | **Recovery Plans** | `/plans` | Mouser live sourcing, Part Comparison Modal, Groq AI supplier negotiation chat |
 | **Recovery Ledger** | `/ledger` | Immutable financial audit trail, net dollars recovered, resolution breakdowns |

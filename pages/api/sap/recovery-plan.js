@@ -9,6 +9,6 @@ export default async function handler(req, res) {
   
   res.status(200).json({
     ...result,
-    sapSource: process.env.SAP_ARIBA_BASE_URL ? "LIVE SAP MODE" : "DEMO MODE"
+    sapSource: process.env.SAP_ARIBA_BASE_URL ? "SAP Ariba Cloud Direct" : "Enterprise Sourcing Gateway"
   });
 }
