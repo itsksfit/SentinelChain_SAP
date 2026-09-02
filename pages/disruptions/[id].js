@@ -413,14 +413,15 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                      <BarChart2 className="w-4 h-4 text-indigo-500" /> Distributor Evaluation & Scoring Matrix
+                      <BarChart2 className="w-4 h-4 text-indigo-500" /> Distributor Procurement & Fulfillment Matrix
                     </h3>
-                    <span className="text-[11px] text-gray-400">Deterministic Multi-Factor Ranking</span>
+                    <span className="text-[11px] text-gray-400">Live Franchised Market Inventory & Sourcing</span>
                   </div>
 
                   <div className="space-y-3">
                     {rankedDistributors.map((dist, idx) => {
                       const isSelected = selectedDistributor?.vendor === dist.vendor;
+                      const isInStock = (dist.stockQty || 0) > 0;
                       return (
                         <div 
                           key={idx}
@@ -441,11 +442,11 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                               <div className="flex items-center gap-2">
                                 <h4 className="text-sm font-bold text-gray-900 dark:text-white">{dist.vendor}</h4>
                                 <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                                  idx === 0 
+                                  isInStock
                                     ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' 
-                                    : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400'
+                                    : 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400'
                                 }`}>
-                                  {dist.recommendation}
+                                  {dist.recommendation || (isInStock ? 'In Stock (Spot Delivery)' : 'Factory Backorder')}
                                 </span>
                               </div>
                               <div className="flex flex-wrap items-center gap-2 mt-0.5">
@@ -489,21 +490,28 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                             </div>
                             <div>
                               <p className="text-[10px] text-gray-400 font-bold uppercase">Lead Time</p>
-                              <p className="font-black text-gray-900 dark:text-white">{dist.leadTimeDays} Days</p>
+                              <p className="font-black text-gray-900 dark:text-white">
+                                {dist.leadTimeDays} {dist.leadTimeDays === 1 ? 'Day' : 'Days'}
+                                {isInStock && <span className="text-[9px] text-emerald-500 font-normal block">Spot Courier</span>}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-[10px] text-gray-400 font-bold uppercase">Stock</p>
-                              <p className="font-bold text-gray-700 dark:text-gray-300">{dist.stockQty?.toLocaleString()}</p>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">In-Stock Qty</p>
+                              <p className="font-bold text-gray-700 dark:text-gray-300">
+                                {dist.stockQty > 0 ? dist.stockQty.toLocaleString() : '0 (Backorder)'}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-[10px] text-gray-400 font-bold uppercase">Score</p>
-                              <p className="font-black text-emerald-600 dark:text-emerald-400 text-sm">{dist.score}/100</p>
+                              <p className="text-[10px] text-gray-400 font-bold uppercase">Status</p>
+                              <p className={`font-black text-xs ${isInStock ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-500'}`}>
+                                {isInStock ? 'Ready to Ship' : 'Backorder'}
+                              </p>
                             </div>
 
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                openSpecComparison({ alt_part_id: dist.altPartId, vendor: dist.vendor, unit_price: dist.unitPrice, lead_time_days: dist.leadTimeDays });
+                                openSpecComparison({ alt_part_id: dist.altPartId, vendor: dist.vendor, unit_price: dist.unitPrice, lead_time_days: dist.leadTimeDays, productDetailUrl: dist.productDetailUrl });
                               }}
                               className="px-2.5 py-1 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 rounded-lg border border-indigo-200 dark:border-indigo-500/30 transition-colors"
                             >

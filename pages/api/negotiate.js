@@ -37,34 +37,19 @@ export default async function handler(req, res) {
     const rankedDistributors = candidates.map((opt, idx) => {
       const raw = opt._raw || opt;
       const unitPrice = raw.unit_price || raw.unitPriceUsd || 4.50;
-      const leadTime = raw.lead_time_days || raw.leadTimeDays || 15;
       const stock = raw.stock_qty || raw.stockQty || 10000;
+      const leadTime = raw.lead_time_days || (stock > 0 ? 3 : (raw.factory_lead_days || 28));
       const vendorName = raw.vendor || opt.vendor || 'Mouser Electronics';
       const altPartId = raw.alt_part_id || raw.partNumber || opt.part || 'Alternative Component';
       const detailUrl = raw.productDetailUrl || opt.productDetailUrl || `https://www.mouser.com/c/?q=${encodeURIComponent(altPartId)}`;
       const provenance = raw.sourceProvenance || opt.sourceProvenance || "Live Mouser Electronics Search API (api.mouser.com)";
       const sheetUrl = raw.dataSheetUrl || opt.dataSheetUrl || null;
       const imgPath = raw.imagePath || opt.imagePath || null;
+      const isInStock = stock > 0;
 
-      // Scoring formulas:
-      // Price Score (lower is better, basePrice is reference 100)
-      const priceVariancePct = ((unitPrice - basePrice) / basePrice) * 100;
-      const priceScore = Math.max(20, Math.min(100, Math.round(100 - (priceVariancePct * 2))));
-
-      // Lead Time Score (faster is better, targetDays is baseline 90)
-      const leadDelta = leadTime - targetDays;
-      const leadScore = Math.max(20, Math.min(100, Math.round(90 - (leadDelta * 3))));
-
-      // Stock Capacity Score
-      const stockScore = stock >= targetQty ? 100 : Math.round((stock / targetQty) * 80);
-
-      // Total Composite Score (40% Price, 35% Lead Time, 25% Stock & Reliability)
-      const totalScore = Math.round((priceScore * 0.40) + (leadScore * 0.35) + (stockScore * 0.25));
-
-      let recommendation = 'Standard Available';
-      if (idx === 0 || totalScore >= 90) recommendation = 'Optimal Balance (Rank #1)';
-      else if (leadTime <= 10) recommendation = 'Fastest Expedited Delivery';
-      else if (unitPrice < basePrice) recommendation = 'Lowest BOM Cost';
+      let recommendation = isInStock 
+        ? (stock >= targetQty ? 'In Stock (Immediate Dispatch)' : 'In Stock (Spot Delivery)') 
+        : 'Factory Backorder';
 
       return {
         rank: idx + 1,
@@ -73,7 +58,7 @@ export default async function handler(req, res) {
         unitPrice,
         leadTimeDays: leadTime,
         stockQty: stock,
-        score: totalScore,
+        isInStock,
         recommendation,
         totalBOMCost: unitPrice * targetQty,
         savingsVsBase: (basePrice - unitPrice) * targetQty,
@@ -82,7 +67,7 @@ export default async function handler(req, res) {
         dataSheetUrl: sheetUrl,
         imagePath: imgPath
       };
-    }).sort((a, b) => b.score - a.score).map((d, i) => ({ ...d, rank: i + 1 }));
+    }).sort((a, b) => (b.isInStock ? 1 : 0) - (a.isInStock ? 1 : 0) || a.unitPrice - b.unitPrice).map((d, i) => ({ ...d, rank: i + 1 }));
 
     // 2. Determine Selected Distributor for the Order Draft
     const chosenVendor = selectedOption ? {
