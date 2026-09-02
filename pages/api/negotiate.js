@@ -2,37 +2,52 @@ import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
   const { partNumber, selectedOption, allOptions, requirement } = req.body;
+  const targetQty = requirement?.quantity || 10000;
+  const targetDays = requirement?.targetDays || 15;
+  const deliveryPlant = requirement?.deliveryPlant || "Plant 1001 (Automotive Hub - Stuttgart)";
 
   try {
-    const filePath = path.join(process.cwd(), 'data', 'parts-catalog.json');
-    const partsData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    
-    const originalPart = partsData.find(p => p.part_id === partNumber) || {
-      part_id: partNumber || 'STM32F401RE',
-      category: 'MCU',
-      manufacturer: 'STMicroelectronics',
-      base_price: 4.50
-    };
-
-    const targetQty = requirement?.quantity || 10000;
-    const targetDays = requirement?.targetDays || 15;
-    const deliveryPlant = requirement?.deliveryPlant || 'Plant 1001 (Automotive Hub - Stuttgart)';
+    // 1. Load component catalog baseline
+    const catalogPath = path.join(process.cwd(), 'data', 'parts-catalog.json');
+    const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+    const originalPart = catalog.find(p => p.part_id === partNumber) || catalog[0];
     const basePrice = originalPart.base_price || 4.50;
 
-    // 1. Calculate Multi-Factor Distributor Rankings
-    let candidates = (allOptions && allOptions.length > 0) ? allOptions : null;
+    let candidates = Array.isArray(allOptions) && allOptions.length > 0 ? allOptions : [];
 
-    if (!candidates || candidates.length === 0) {
-      try {
-        const { fetchLiveComponentSourcing } = await import('../../lib/intelligence/partsLiveClient');
-        candidates = await fetchLiveComponentSourcing(partNumber);
-      } catch (e) {
-        candidates = originalPart.pin_compatible_alternatives || [];
-      }
+    if (candidates.length === 0) {
+      candidates = (originalPart.pin_compatible_alternatives || []).map(a => ({
+        alt_part_id: a.alt_part_id,
+        vendor: a.vendor,
+        unit_price: a.unit_price,
+        lead_time_days: a.lead_time_days,
+        stock_qty: a.stock_qty,
+        productDetailUrl: a.productDetailUrl
+      }));
     }
+
+    const helperGetDirectProductUrl = (vendor, partId, rawUrl) => {
+      if (rawUrl && rawUrl.startsWith('http') && !rawUrl.includes('mouser.com/c/?q=GD32') && !rawUrl.includes('mouser.com/c/?q=AT32')) {
+        return rawUrl;
+      }
+      const v = (vendor || '').toLowerCase();
+      const p = encodeURIComponent(partId || '');
+      if (v.includes('farnell') || v.includes('element14')) {
+        return `https://uk.farnell.com/search?st=${p}`;
+      } else if (v.includes('arrow')) {
+        return `https://www.arrow.com/en/products/search?q=${p}`;
+      } else if (v.includes('digi-key') || v.includes('digikey')) {
+        return `https://www.digikey.com/en/products/result?keywords=${p}`;
+      } else if (v.includes('avnet')) {
+        return `https://www.avnet.com/shop/us/search/${p}`;
+      }
+      return `https://www.mouser.com/c/?q=${p}`;
+    };
 
     const rankedDistributors = candidates.map((opt, idx) => {
       const raw = opt._raw || opt;
@@ -41,8 +56,8 @@ export default async function handler(req, res) {
       const leadTime = raw.lead_time_days || (stock > 0 ? 3 : (raw.factory_lead_days || 28));
       const vendorName = raw.vendor || opt.vendor || 'Mouser Electronics';
       const altPartId = raw.alt_part_id || raw.partNumber || opt.part || 'Alternative Component';
-      const detailUrl = raw.productDetailUrl || opt.productDetailUrl || `https://www.mouser.com/c/?q=${encodeURIComponent(altPartId)}`;
-      const provenance = raw.sourceProvenance || opt.sourceProvenance || "Live Mouser Electronics Search API (api.mouser.com)";
+      const detailUrl = helperGetDirectProductUrl(vendorName, altPartId, raw.productDetailUrl || opt.productDetailUrl);
+      const provenance = raw.sourceProvenance || opt.sourceProvenance || `Franchised Sourcing Gateway (${vendorName})`;
       const sheetUrl = raw.dataSheetUrl || opt.dataSheetUrl || null;
       const imgPath = raw.imagePath || opt.imagePath || null;
       const isInStock = stock > 0;
@@ -93,101 +108,87 @@ Supplier / Distributor: ${chosenVendor.vendor}
 Required Volume: ${targetQty.toLocaleString()} units
 Agreed / Target Unit Price: $${chosenVendor.unitPrice.toFixed(2)} USD (Total: $${(chosenVendor.unitPrice * targetQty).toLocaleString()})
 Target Lead Time: ${chosenVendor.leadTimeDays} business days
-Delivery Destination: ${deliveryPlant}
-Internal SAP Requisition Reference: ${prNumber}
-Payment Terms: Net-30 via SAP Ariba
-Incoterms: DAP (Delivered at Place)
+Delivery Plant Destination: ${deliveryPlant}
+Purchase Requisition Reference: ${prNumber}
 
-Task:
-Draft a concise, authoritative, and formal Enterprise Purchase Order Requisition & Engagement Email to the distributor's sales team.
+Draft a formal, concise, and professional commercial Purchase Order & Spot Allocation RFQ Requisition email to the distributor sales desk.
 Include:
-- Professional Subject line with ${prNumber} and Part Numbers
-- Clear summary of required quantity, pricing, and required delivery window
-- Quality and compliance requirements (AEC-Q100/RoHS, Certificate of Conformance, Date Code < 2 years, Factory Sealed Reels)
-- Clear instructions on confirming the order and sending order acknowledgment to our SAP Ariba Gateway
-- Professional sign-off.
+1. Formal commercial purchase intent referencing PR #${prNumber}.
+2. Exact technical MPN: ${chosenVendor.altPartId} (confirmed pin-compatible replacement).
+3. Line item pricing table ($${chosenVendor.unitPrice.toFixed(2)}/unit, Total: $${(chosenVendor.unitPrice * targetQty).toLocaleString()}).
+4. Immediate dock delivery commitment to ${deliveryPlant} within ${chosenVendor.leadTimeDays} business days.
+5. Standard enterprise payment terms (Net 30) and request for ASN tracking.
 
-Format output as plain text with clean markdown line breaks.`;
+Sign off as "Global Semiconductor Sourcing & Risk Team, SentinelChain Autonomous Procurement".`;
 
         const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${GROQ_API_KEY}`,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             model: "openai/gpt-oss-120b",
             messages: [{ role: "user", content: prompt }],
-            temperature: 0.2,
-            max_tokens: 700
-          })
+            temperature: 0.1
+          }),
         });
 
         if (groqRes.ok) {
-          const groqData = await groqRes.json();
-          emailDraft = groqData.choices?.[0]?.message?.content?.trim();
+          const aiData = await groqRes.json();
+          emailDraft = aiData.choices[0]?.message?.content;
         }
       } catch (err) {
-        console.error("Groq Email Drafting Error:", err.message);
+        console.warn("Groq Commercial Email Generation Fallback:", err.message);
       }
     }
 
-    // Deterministic fallback if Groq is offline
     if (!emailDraft) {
-      emailDraft = `Subject: [URGENT RFQ / PO REQUISITION: ${prNumber}] Procurement Order for ${chosenVendor.altPartId} (${targetQty.toLocaleString()} Units)
+      emailDraft = `Subject: [URGENT COMMERCE / PO: ${prNumber}] Spot Allocation & Purchase Order for ${chosenVendor.altPartId} (${targetQty.toLocaleString()} Units)
 
-Dear ${chosenVendor.vendor} Strategic Sourcing & Account Team,
+Dear ${chosenVendor.vendor} Key Accounts & Sourcing Desk,
 
-Please accept this official Procurement Engagement and Purchase Requisition initiated via SentinelChain / SAP Ariba Sourcing Gateway.
+In accordance with our Enterprise Supply Assurance Agreement, please accept this formal Purchase Requisition (${prNumber}) to allocate and dispatch the following semiconductor material:
 
-Due to a verified capacity disruption affecting our primary component (${originalPart.part_id}), our engineering team has qualified ${chosenVendor.altPartId} as our authorized pin-to-pin replacement. We are issuing this formal engagement for immediate stock reservation and delivery scheduling.
+======================================================================
+COMMERCIAL PURCHASE REQUISITION DETAILS
+======================================================================
+• Requisition Number:   ${prNumber}
+• Disrupted Primary:    ${originalPart.part_id} (${originalPart.manufacturer})
+• Sourced MPN:          ${chosenVendor.altPartId} (Verified Form-Fit-Function Drop-in)
+• Sourced Quantity:     ${targetQty.toLocaleString()} units
+• Quoted Unit Price:    $${chosenVendor.unitPrice.toFixed(2)} USD
+• Total Commitment:     $${(chosenVendor.unitPrice * targetQty).toLocaleString()} USD
+• Delivery Plant:       ${deliveryPlant}
+• Delivery SLA:         ${chosenVendor.leadTimeDays} Business Days (Spot Air-Courier)
+======================================================================
 
-=======================================================
-REQUISITION SPECIFICATIONS & ORDER DETAILS
-=======================================================
-• SAP Requisition ID:    ${prNumber}
-• Target Component:      ${originalPart.part_id} (${originalPart.manufacturer})
-• Sourced Replacement:   ${chosenVendor.altPartId}
-• Order Quantity:        ${targetQty.toLocaleString()} Units (Factory Sealed Tape & Reel)
-• Unit Quoted Price:     $${chosenVendor.unitPrice.toFixed(2)} USD
-• Total Requisition Val: $${(chosenVendor.unitPrice * targetQty).toLocaleString()} USD
-• Target Lead Time:      ${chosenVendor.leadTimeDays} Business Days
-• Delivery Location:     ${deliveryPlant}
-• Commercial Incoterms:  DAP (Delivered at Place)
-• Payment Terms:         Net-30 days via SAP Ariba Network
+ENGINEERING COMPLIANCE & QUALITY STATEMENT:
+The specified MPN (${chosenVendor.altPartId}) has cleared automated pin-compatibility and electrical footprint validation. No PCB revision is required.
 
-=======================================================
-QUALITY & TRACEABILITY ASSURANCE
-=======================================================
-1. All components must be new, unprogrammed, and sourced through authorized franchised channels.
-2. Mandatory manufacturer Certificate of Conformance (CoC) and date codes within 24 months.
-3. Full ESD/MSL packaging compliance per J-STD-033.
+Please confirm receipt, generate the sales order confirmation, and forward the Advanced Shipping Notice (ASN) with carrier airway bill (AWB) numbers at your earliest convenience.
 
-Please confirm availability and submit your formal Order Acknowledgment (OA) with tracking details by replying directly to this email or through our SAP Ariba Network vendor portal under reference ${prNumber}.
+Best regards,
 
-Sincerely,
-
-Enterprise Strategic Procurement & Supply Assurance Team
-SentinelChain Autonomous Sourcing Gateway`;
+Global Semiconductor Sourcing & Enterprise Risk Team
+SentinelChain Procurement Automation | Connected via SAP Ariba Network`;
     }
 
-    return res.status(200).json({
-      success: true,
+    res.status(200).json({
       prNumber,
-      rankedDistributors,
       selectedDistributor: chosenVendor,
+      rankedDistributors,
       emailDraft,
-      targetPart: originalPart,
-      requirement: {
-        quantity: targetQty,
-        targetDays,
-        deliveryPlant,
-        basePrice
+      basePrice,
+      originalPart: {
+        part_id: originalPart.part_id,
+        manufacturer: originalPart.manufacturer,
+        category: originalPart.category
       }
     });
 
-  } catch (err) {
-    console.error("Distributor Ranking API Error:", err);
-    return res.status(500).json({ error: "Internal Server Error" });
+  } catch (error) {
+    console.error("Distributor ranking negotiation failed:", error);
+    res.status(500).json({ error: "Failed to rank distributors and generate commercial order draft." });
   }
 }

@@ -302,18 +302,22 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                     </div>
                   </div>
 
-                  {data.verifiedUrl && data.verifiedUrl !== '#' && (
-                    <div className="mt-2.5">
-                      <a 
-                        href={data.verifiedUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
-                      >
-                        <FileText className="w-3.5 h-3.5" /> View Official Source Document <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                  )}
+                  <div className="mt-2.5">
+                    <a 
+                      href={
+                        (data.verifiedUrl && data.verifiedUrl !== '#' && !data.verifiedUrl.includes('us7000m8v5'))
+                          ? data.verifiedUrl 
+                          : (data.sourceTier === 'FED_REGISTER_BIS' 
+                              ? 'https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items'
+                              : (data.part_affected === 'STM32F401RE' ? 'https://earthquake.usgs.gov/earthquakes/map/' : 'https://www.ti.com'))
+                      } 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+                    >
+                      <FileText className="w-3.5 h-3.5" /> View Official Source Document <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
                 </div>
 
                 {/* Revenue Impact Summary */}

@@ -25,88 +25,126 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
         ];
 
   const handlePrint = () => {
-    window.print();
+    const printContent = document.getElementById('printable-audit-sheet');
+    if (!printContent) {
+      window.print();
+      return;
+    }
+
+    const printWin = window.open('', '_blank', 'width=850,height=1000');
+    if (!printWin) {
+      window.print();
+      return;
+    }
+
+    printWin.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>SAP Ariba Purchase Requisition - ${prNumber}</title>
+          <style>
+            @page {
+              size: A4 portrait;
+              margin: 12mm;
+            }
+            * {
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            }
+            body {
+              padding: 16px;
+              color: #111827;
+              background: #ffffff;
+              font-size: 11.5px;
+              line-height: 1.45;
+            }
+            .border-b { border-bottom: 1px solid #e5e7eb; }
+            .border-t { border-top: 1px solid #e5e7eb; }
+            .pb-4 { padding-bottom: 14px; }
+            .mb-1 { margin-bottom: 4px; }
+            .mb-2 { margin-bottom: 8px; }
+            .mt-1 { margin-top: 4px; }
+            .mt-0\\.5 { margin-top: 2px; }
+            .pt-1\\.5 { padding-top: 6px; }
+            .space-y-5 > * + * { margin-top: 16px; }
+            .space-y-2 > * + * { margin-top: 6px; }
+            .flex { display: flex; }
+            .items-start { align-items: flex-start; }
+            .items-center { align-items: center; }
+            .justify-between { justify-content: space-between; }
+            .justify-end { justify-content: flex-end; }
+            .text-right { text-align: right; }
+            .gap-1 { gap: 4px; }
+            .gap-2 { gap: 8px; }
+            .gap-3 { gap: 12px; }
+            .grid { display: grid; }
+            .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            @media (min-width: 640px) {
+              .sm\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            }
+            .rounded-xl { border-radius: 8px; }
+            .rounded-full { border-radius: 9999px; }
+            .rounded { border-radius: 4px; }
+            .border { border: 1px solid #e5e7eb; }
+            .p-3\\.5 { padding: 12px; }
+            .p-2\\.5 { padding: 8px 10px; }
+            .px-2 { padding-left: 8px; padding-right: 8px; }
+            .py-0\\.5 { padding-top: 2px; padding-bottom: 2px; }
+            .px-3 { padding-left: 12px; padding-right: 12px; }
+            .py-1 { padding-top: 4px; padding-bottom: 4px; }
+            .text-xl { font-size: 18px; }
+            .text-xs { font-size: 11.5px; }
+            .text-\\[10px\\] { font-size: 10px; }
+            .text-\\[11px\\] { font-size: 11px; }
+            .font-black { font-weight: 900; }
+            .font-bold { font-weight: 700; }
+            .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+            .uppercase { text-transform: uppercase; }
+            .tracking-wider { letter-spacing: 0.05em; }
+            .tracking-tight { letter-spacing: -0.025em; }
+            .text-indigo-600 { color: #4f46e5; }
+            .text-emerald-600 { color: #059669; }
+            .text-emerald-700 { color: #047857; }
+            .text-red-600 { color: #dc2626; }
+            .text-gray-900 { color: #111827; }
+            .text-gray-800 { color: #1f2937; }
+            .text-gray-500 { color: #6b7280; }
+            .text-gray-400 { color: #9ca3af; }
+            .bg-gray-50 { background-color: #f9fafb; }
+            .bg-gray-100 { background-color: #f3f4f6; }
+            .bg-indigo-50 { background-color: #eef2ff; }
+            .bg-emerald-100 { background-color: #d1fae5; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; font-size: 11px; }
+            th { background-color: #f9fafb; color: #4b5563; font-weight: 700; text-align: left; }
+            .print-hide { display: none !important; }
+            svg { display: none; }
+          </style>
+        </head>
+        <body>
+          <div id="printable-audit-sheet" class="p-8 space-y-5 text-gray-800 text-xs">
+            ${printContent.innerHTML}
+          </div>
+        </body>
+      </html>
+    `);
+
+    printWin.document.close();
+    printWin.focus();
+    setTimeout(() => {
+      printWin.print();
+      printWin.close();
+    }, 250);
   };
 
   return (
     <div id="pr-audit-modal-root" className="pr-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
-      <style jsx global>{`
-        @media print {
-          @page {
-            size: A4 portrait;
-            margin: 10mm;
-          }
-          html, body {
-            background: #ffffff !important;
-            color: #000000 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
-            height: auto !important;
-          }
-          nav, header, aside, button, .print-hide {
-            display: none !important;
-          }
-          .pr-modal-overlay {
-            position: static !important;
-            display: block !important;
-            background: transparent !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: visible !important;
-            width: 100% !important;
-            height: auto !important;
-          }
-          .pr-modal-container {
-            position: static !important;
-            display: block !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-            background: #ffffff !important;
-            color: #111827 !important;
-            border-radius: 0 !important;
-          }
-          #printable-audit-sheet {
-            display: block !important;
-            position: static !important;
-            width: 100% !important;
-            padding: 10px !important;
-            margin: 0 !important;
-            background: #ffffff !important;
-            color: #111827 !important;
-            box-shadow: none !important;
-            page-break-inside: avoid !important;
-            page-break-after: avoid !important;
-          }
-          #printable-audit-sheet * {
-            color: #111827 !important;
-            border-color: #e5e7eb !important;
-            background-color: transparent !important;
-          }
-          #printable-audit-sheet .highlight-box {
-            background-color: #f9fafb !important;
-            border: 1px solid #e5e7eb !important;
-          }
-          #printable-audit-sheet .highlight-badge {
-            background-color: #ecfdf5 !important;
-            color: #059669 !important;
-            border: 1px solid #a7f3d0 !important;
-          }
-          #printable-audit-sheet .highlight-tag {
-            background-color: #eef2ff !important;
-            color: #4f46e5 !important;
-            border: 1px solid #c7d2fe !important;
-          }
-        }
-      `}</style>
-
       <div className="pr-modal-container relative w-full max-w-3xl bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden my-8">
         
-        {/* Header Control Bar (Hidden during print) */}
+        {/* Header Control Bar */}
         <div className="print-hide flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5">
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-indigo-500" />
@@ -131,14 +169,14 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
         </div>
 
         {/* Printable Single-Page Audit Sheet */}
-        <div id="printable-audit-sheet" className="p-8 space-y-5 text-gray-800 dark:text-gray-200 text-xs">
+        <div id="printable-audit-sheet" className="p-8 space-y-5 text-gray-800 dark:text-gray-200 text-xs bg-white dark:bg-[#0f1115]">
           
           {/* Header Banner */}
           <div className="flex items-start justify-between border-b border-gray-200 dark:border-white/10 pb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white">SentinelChain</span>
-                <span className="highlight-tag text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                   SAP INTEGRATED
                 </span>
               </div>
@@ -158,7 +196,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
             <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
               1. SAP S/4HANA Disruption Profile
             </h4>
-            <div className="highlight-box grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10">
               <div>
                 <p className="text-[10px] text-gray-500">Material Number</p>
                 <p className="text-xs font-mono font-bold text-gray-900 dark:text-white">{partId}</p>
@@ -183,7 +221,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
             <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
               2. Signal Provenance & Verifiable Evidence
             </h4>
-            <div className="highlight-box bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10 space-y-2">
+            <div className="bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10 space-y-2">
               <div className="flex items-center justify-between text-[11px]">
                 <span className="text-gray-500">Primary Source Registry:</span>
                 <span className="font-bold text-gray-900 dark:text-white font-mono">{sourceTier}</span>
@@ -219,7 +257,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-white/5 font-mono text-[11px]">
-                  {alternatives.slice(0, 3).map((alt, idx) => {
+                  {alternatives.slice(0, 4).map((alt, idx) => {
                     const raw = alt._raw || alt;
                     const vName = raw.vendor || alt.vendor || 'Mouser Electronics';
                     const pName = raw.alt_part_id || raw.partNumber || alt.partNumber || 'Qualified Alt';
@@ -229,7 +267,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
                     const isOptimal = idx === 0;
 
                     return (
-                      <tr key={idx} className={isOptimal ? 'highlight-box bg-indigo-50/50 dark:bg-indigo-950/10' : 'opacity-75'}>
+                      <tr key={idx} className={isOptimal ? 'bg-indigo-50/50 dark:bg-indigo-950/10' : 'opacity-85'}>
                         <td className="p-2.5 font-sans font-bold text-gray-900 dark:text-white">{vName}</td>
                         <td className="p-2.5 text-indigo-600 dark:text-indigo-400">{pName}</td>
                         <td className="p-2.5">{lTime} {lTime === 1 ? 'Day' : 'Days'}</td>
@@ -247,7 +285,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
           </div>
 
           {/* Section 4: SAP Ariba PR Authorization */}
-          <div className="highlight-box p-3.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <ShieldCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0" />
               <div>
@@ -255,7 +293,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
                 <p className="text-[10px] text-gray-500">Signed with Enterprise System Key. Dispatched to ERP purchasing queue.</p>
               </div>
             </div>
-            <span className="highlight-badge px-3 py-1 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 rounded-full text-[10px] font-bold">
+            <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 rounded-full text-[10px] font-bold">
               AUTHORIZED
             </span>
           </div>
