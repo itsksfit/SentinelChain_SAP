@@ -82,21 +82,21 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
   const fetchDistributorRankings = async (chosenAlt = null) => {
     setIsLoadingDistributors(true);
     try {
-      let liveOptions = data.matched_options;
-      if (!liveOptions || liveOptions.length <= 2) {
-        try {
-          const matchRes = await fetch('/api/match', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ partNumber: data.part_affected || 'STM32F401RE' })
-          });
-          if (matchRes.ok) {
-            const fetched = await matchRes.json();
-            if (Array.isArray(fetched) && fetched.length > 0) {
-              liveOptions = fetched;
-            }
+      let liveOptions = null;
+      try {
+        const matchRes = await fetch('/api/match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ partNumber: data.part_affected || 'STM32F401RE' })
+        });
+        if (matchRes.ok) {
+          const fetched = await matchRes.json();
+          if (Array.isArray(fetched) && fetched.length > 0) {
+            liveOptions = fetched;
           }
-        } catch(e) {}
+        }
+      } catch(e) {
+        console.warn("Match API fetch error:", e);
       }
 
       const res = await fetch('/api/negotiate', {
@@ -105,7 +105,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
         body: JSON.stringify({
           partNumber: data.part_affected || 'STM32F401RE',
           selectedOption: chosenAlt || selectedDistributor,
-          allOptions: liveOptions || (part ? part.pin_compatible_alternatives?.map(v => ({ _raw: v })) : []),
+          allOptions: liveOptions || [],
           requirement: {
             quantity,
             targetDays,

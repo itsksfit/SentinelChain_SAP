@@ -15,8 +15,24 @@
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/STMicroelectronics/STM32F401RET6?qs=s5SkPsIz108eLldhTu8INg%3D%3D"
       },
       {
+        "alt_part_id": "LPC1768FET100",
+        "vendor": "Mouser Electronics",
+        "unit_price": 6.85,
+        "lead_time_days": 3,
+        "stock_qty": 7576,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/NXP-Semiconductors/LPC1768FET100551?qs=5eMHoInnifTQi23ua6D%252BIg%3D%3D"
+      },
+      {
+        "alt_part_id": "MSP430F5529IPN",
+        "vendor": "Mouser Electronics",
+        "unit_price": 3.85,
+        "lead_time_days": 3,
+        "stock_qty": 525,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/MSP430F5529IPN?qs=IK5e5L0zOXhMb1bOuHI1hQ%3D%3D"
+      },
+      {
         "alt_part_id": "GD32F403RET6",
-        "vendor": "Farnell",
+        "vendor": "Farnell / Digi-Key",
         "unit_price": 4.28,
         "lead_time_days": 15,
         "stock_qty": 12515,
@@ -29,14 +45,6 @@
         "lead_time_days": 15,
         "stock_qty": 20000,
         "productDetailUrl": "https://www.arrow.com/en/products/search?q=AT32F403"
-      },
-      {
-        "alt_part_id": "LPC1768FET100",
-        "vendor": "Mouser Electronics",
-        "unit_price": 6.85,
-        "lead_time_days": 3,
-        "stock_qty": 7576,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/NXP-Semiconductors/LPC1768FET100551?qs=5eMHoInnifTQi23ua6D%252BIg%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -49,12 +57,12 @@
     "base_price": 2.10,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "TPS54331DR",
+        "alt_part_id": "LM2596DSADJG",
         "vendor": "Mouser Electronics",
-        "unit_price": 1.89,
+        "unit_price": 2.86,
         "lead_time_days": 3,
-        "stock_qty": 3484,
-        "productDetailUrl": "https://www.mouser.com/c/?q=TPS54331DR"
+        "stock_qty": 13576,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/onsemi/LM2596DSADJG?qs=atIEnC%2F2K4W1Dy%252BFjrRjIQ%3D%3D"
       },
       {
         "alt_part_id": "MP1484EN-LF-Z",
@@ -62,15 +70,57 @@
         "unit_price": 3.45,
         "lead_time_days": 3,
         "stock_qty": 2385,
-        "productDetailUrl": "https://www.mouser.com/c/?q=MP1484EN"
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Monolithic-Power-Systems-MPS/MP1484EN-LF-Z?qs=rC7bBWoQAAnxJjjwTvF1fw%3D%3D"
       },
       {
-        "alt_part_id": "LM2596S-5.0",
+        "alt_part_id": "LM2596T-ADJ/NOPB",
         "vendor": "Mouser Electronics",
-        "unit_price": 2.45,
+        "unit_price": 6.23,
         "lead_time_days": 3,
-        "stock_qty": 15000,
-        "productDetailUrl": "https://www.mouser.com/c/?q=LM2596"
+        "stock_qty": 2177,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/LM2596T-ADJ-NOPB?qs=X1J7HmVL2ZFY0jaC1PT3MA%3D%3D"
+      },
+      {
+        "alt_part_id": "TPS54331DR",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 1.89,
+        "lead_time_days": 3,
+        "stock_qty": 3484,
+        "productDetailUrl": "https://www.digikey.com/en/products/result?keywords=TPS54331DR"
+      }
+    ],
+    "last_updated": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "part_id": "TPS54331DR",
+    "category": "PWR",
+    "manufacturer": "Texas Instruments",
+    "description": "TPS54331DR 3A 28V Step-Down DC-DC Converter, SOIC-8",
+    "base_price": 2.10,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "LM2596DSADJG",
+        "vendor": "Mouser Electronics",
+        "unit_price": 2.86,
+        "lead_time_days": 3,
+        "stock_qty": 13576,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/onsemi/LM2596DSADJG?qs=atIEnC%2F2K4W1Dy%252BFjrRjIQ%3D%3D"
+      },
+      {
+        "alt_part_id": "MP1484EN-LF-Z",
+        "vendor": "Mouser Electronics",
+        "unit_price": 3.45,
+        "lead_time_days": 3,
+        "stock_qty": 2385,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Monolithic-Power-Systems-MPS/MP1484EN-LF-Z?qs=rC7bBWoQAAnxJjjwTvF1fw%3D%3D"
+      },
+      {
+        "alt_part_id": "LM2596T-ADJ/NOPB",
+        "vendor": "Mouser Electronics",
+        "unit_price": 6.23,
+        "lead_time_days": 3,
+        "stock_qty": 2177,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/LM2596T-ADJ-NOPB?qs=X1J7HmVL2ZFY0jaC1PT3MA%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -83,20 +133,28 @@
     "base_price": 8.50,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "W25Q64JVSSIQ",
+        "alt_part_id": "W25Q64JWSSIN",
         "vendor": "Mouser Electronics",
-        "unit_price": 8.23,
+        "unit_price": 1.71,
         "lead_time_days": 3,
-        "stock_qty": 15251,
-        "productDetailUrl": "https://www.mouser.com/c/?q=W25Q64"
+        "stock_qty": 65,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Winbond/W25Q64JWSSIN?qs=mELouGlnn3cX9lib6mT96A%3D%3D"
       },
       {
-        "alt_part_id": "IS42S16400J-7TLI",
+        "alt_part_id": "W25Q64JWTBIQ TR",
         "vendor": "Mouser Electronics",
-        "unit_price": 3.20,
+        "unit_price": 2.27,
         "lead_time_days": 3,
-        "stock_qty": 27800,
-        "productDetailUrl": "https://www.mouser.com/c/?q=IS42S16400"
+        "stock_qty": 1689,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Winbond/W25Q64JWTBIQ-TR?qs=YwPsRIUVAOfnin8PZYtWGA%3D%3D"
+      },
+      {
+        "alt_part_id": "IS42S16400N-7BL",
+        "vendor": "Mouser Electronics",
+        "unit_price": 7.33,
+        "lead_time_days": 3,
+        "stock_qty": 137,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ISSI/IS42S16400N-7BL?qs=jRuttqqUwMSbXsGH3JgPKQ%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -109,20 +167,28 @@
     "base_price": 125.00,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "XC7Z020-2CLG400C",
+        "alt_part_id": "EP4CE10E22C7N",
         "vendor": "Mouser Electronics",
-        "unit_price": 129.69,
+        "unit_price": 48.63,
         "lead_time_days": 3,
-        "stock_qty": 22318,
-        "productDetailUrl": "https://www.mouser.com/c/?q=XC7Z020"
+        "stock_qty": 171,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Altera/EP4CE10E22C7N?qs=jblrfmjbeiFZezyoCds84w%3D%3D"
       },
       {
-        "alt_part_id": "EP4CE10F17C8N",
+        "alt_part_id": "EP4CE10F17C8",
         "vendor": "Mouser Electronics",
-        "unit_price": 109.81,
+        "unit_price": 52.14,
         "lead_time_days": 3,
-        "stock_qty": 21744,
-        "productDetailUrl": "https://www.mouser.com/c/?q=EP4CE10"
+        "stock_qty": 88,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Altera/EP4CE10F17C8?qs=jblrfmjbeiG%2FdyUUwu2XHA%3D%3D"
+      },
+      {
+        "alt_part_id": "XC7Z020-L1CLG400I",
+        "vendor": "Mouser Electronics",
+        "unit_price": 203.47,
+        "lead_time_days": 3,
+        "stock_qty": 1,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/AMD-Xilinx/XC7Z020-L1CLG400I?qs=rrS6PyfT74ccHHxG%252BilnwA%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -135,20 +201,28 @@
     "base_price": 10000.00,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "NVIDIA-H100-80",
+        "alt_part_id": "MXM-A1000-4G-35W",
         "vendor": "Mouser Electronics",
-        "unit_price": 14100.00,
-        "lead_time_days": 3,
-        "stock_qty": 5000,
-        "productDetailUrl": "https://www.mouser.com/c/?q=NVIDIA"
+        "unit_price": 825.79,
+        "lead_time_days": 7,
+        "stock_qty": 50,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ADLINK-Technology/MXM-A1000-4G-35W?qs=ST9lo4GX8V02OzEYCHlgvA%3D%3D"
       },
       {
-        "alt_part_id": "AMD-MI300X",
+        "alt_part_id": "EGX-MXM-A1000-4G",
         "vendor": "Mouser Electronics",
-        "unit_price": 13729.65,
-        "lead_time_days": 3,
-        "stock_qty": 17229,
-        "productDetailUrl": "https://www.mouser.com/c/?q=AMD"
+        "unit_price": 895.44,
+        "lead_time_days": 7,
+        "stock_qty": 30,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ADLINK-Technology/EGX-MXM-A1000-4G-35W-Adlink-logo?qs=By6Nw2ByBD1mgcVOnSZxww%3D%3D"
+      },
+      {
+        "alt_part_id": "NVIDIA-H100-SXM5",
+        "vendor": "Avnet / Arrow",
+        "unit_price": 14100.00,
+        "lead_time_days": 10,
+        "stock_qty": 500,
+        "productDetailUrl": "https://www.arrow.com/en/products/search?q=NVIDIA+H100"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -165,24 +239,24 @@
         "vendor": "Mouser Electronics",
         "unit_price": 4.72,
         "lead_time_days": 3,
-        "stock_qty": 41704,
+        "stock_qty": 41674,
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Bosch-Sensortec/BMI270?qs=u16ybLDytRYIj%252BjQEee88A%3D%3D"
       },
       {
-        "alt_part_id": "LSM6DSOXTR",
+        "alt_part_id": "ICM-42688-V",
         "vendor": "Mouser Electronics",
+        "unit_price": 9.68,
+        "lead_time_days": 3,
+        "stock_qty": 32,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/TDK-InvenSense/ICM-42688-V?qs=iLbezkQI%252Bsj8X%2F1CCh43jQ%3D%3D"
+      },
+      {
+        "alt_part_id": "LSM6DSOXTR",
+        "vendor": "Digi-Key Electronics",
         "unit_price": 4.85,
         "lead_time_days": 3,
         "stock_qty": 28400,
-        "productDetailUrl": "https://www.mouser.com/c/?q=LSM6DSOX"
-      },
-      {
-        "alt_part_id": "BMP280",
-        "vendor": "Mouser Electronics",
-        "unit_price": 4.90,
-        "lead_time_days": 3,
-        "stock_qty": 36000,
-        "productDetailUrl": "https://www.mouser.com/c/?q=BMP280"
+        "productDetailUrl": "https://www.digikey.com/en/products/result?keywords=LSM6DSOXTR"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
