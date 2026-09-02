@@ -330,11 +330,6 @@ export default function Dashboard({ initialSignals = [] }) {
               <p className="text-slate-600 dark:text-gray-400 text-sm mt-1 font-medium">Multi-Source Signal Layer → Deterministic BOM Correlation → Spot Market Sourcing → SAP Execution</p>
             </div>
             <div className="flex items-center gap-2">
-              <Link href="/mesh" passHref legacyBehavior>
-                <a className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all shadow-xs flex items-center gap-1.5">
-                  <Radio className="w-3.5 h-3.5 animate-pulse" /> Launch Event Mesh
-                </a>
-              </Link>
               {(loading || stage > 0) && (
                 <button 
                   onClick={() => { setStage(0); setDetectResult(null); setImpactResult(null); setMatchResult(null); setNegotiateResult(null); setApproved(false); setAribaResponse(null); setAuditTrail([]); setActiveNews(null); }}

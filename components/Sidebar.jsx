@@ -45,11 +45,6 @@ export default function Sidebar() {
                 <LayoutDashboard className={iconClass('/', 'text-indigo-600 dark:text-indigo-400')} /> Dashboard
               </a>
             </Link>
-            <Link href="/mesh" passHref legacyBehavior>
-              <a className={linkClass('/mesh')}>
-                <Radio className={iconClass('/mesh', 'text-amber-500 dark:text-amber-400')} /> Event Mesh Sensor
-              </a>
-            </Link>
             <Link href="/disruptions" passHref legacyBehavior>
               <a className={linkClass('/disruptions')}>
                 <ShieldAlert className={iconClass('/disruptions', 'text-red-500 dark:text-red-400')} /> Active Disruptions
