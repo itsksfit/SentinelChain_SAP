@@ -7,18 +7,36 @@
     "base_price": 4.50,
     "pin_compatible_alternatives": [
       {
+        "alt_part_id": "STM32F401RET6",
+        "vendor": "Mouser Electronics",
+        "unit_price": 8.74,
+        "lead_time_days": 3,
+        "stock_qty": 2068,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/STMicroelectronics/STM32F401RET6?qs=s5SkPsIz108eLldhTu8INg%3D%3D"
+      },
+      {
         "alt_part_id": "GD32F403RET6",
         "vendor": "Farnell",
         "unit_price": 4.28,
-        "lead_time_days": 19,
-        "stock_qty": 12515
+        "lead_time_days": 15,
+        "stock_qty": 12515,
+        "productDetailUrl": "https://uk.farnell.com/search?st=GD32F403"
       },
       {
         "alt_part_id": "AT32F403ARCT7",
         "vendor": "Arrow Electronics",
         "unit_price": 4.35,
         "lead_time_days": 15,
-        "stock_qty": 20000
+        "stock_qty": 20000,
+        "productDetailUrl": "https://www.arrow.com/en/products/search?q=AT32F403"
+      },
+      {
+        "alt_part_id": "LPC1768FET100",
+        "vendor": "Mouser Electronics",
+        "unit_price": 6.85,
+        "lead_time_days": 3,
+        "stock_qty": 7576,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/NXP-Semiconductors/LPC1768FET100551?qs=5eMHoInnifTQi23ua6D%252BIg%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -31,25 +49,28 @@
     "base_price": 2.10,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "MP1484EN",
-        "vendor": "Arrow Electronics",
-        "unit_price": 1.85,
-        "lead_time_days": 9,
-        "stock_qty": 30108
+        "alt_part_id": "TPS54331DR",
+        "vendor": "Mouser Electronics",
+        "unit_price": 1.89,
+        "lead_time_days": 3,
+        "stock_qty": 3484,
+        "productDetailUrl": "https://www.mouser.com/c/?q=TPS54331DR"
       },
       {
-        "alt_part_id": "AP6503SP-13",
-        "vendor": "Avnet",
-        "unit_price": 2.30,
-        "lead_time_days": 11,
-        "stock_qty": 3387
+        "alt_part_id": "MP1484EN-LF-Z",
+        "vendor": "Mouser Electronics",
+        "unit_price": 3.45,
+        "lead_time_days": 3,
+        "stock_qty": 2385,
+        "productDetailUrl": "https://www.mouser.com/c/?q=MP1484EN"
       },
       {
-        "alt_part_id": "PWR-9942A-ALT",
-        "vendor": "Future Electronics",
-        "unit_price": 2.34,
-        "lead_time_days": 20,
-        "stock_qty": 42229
+        "alt_part_id": "LM2596S-5.0",
+        "vendor": "Mouser Electronics",
+        "unit_price": 2.45,
+        "lead_time_days": 3,
+        "stock_qty": 15000,
+        "productDetailUrl": "https://www.mouser.com/c/?q=LM2596"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -62,18 +83,20 @@
     "base_price": 8.50,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "K9F1G08U0E",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 8.62,
-        "lead_time_days": 17,
-        "stock_qty": 41381
+        "alt_part_id": "W25Q64JVSSIQ",
+        "vendor": "Mouser Electronics",
+        "unit_price": 8.23,
+        "lead_time_days": 3,
+        "stock_qty": 15251,
+        "productDetailUrl": "https://www.mouser.com/c/?q=W25Q64"
       },
       {
-        "alt_part_id": "W25Q64JVSSIQ",
-        "vendor": "Farnell",
-        "unit_price": 8.23,
-        "lead_time_days": 11,
-        "stock_qty": 15251
+        "alt_part_id": "IS42S16400J-7TLI",
+        "vendor": "Mouser Electronics",
+        "unit_price": 3.20,
+        "lead_time_days": 3,
+        "stock_qty": 27800,
+        "productDetailUrl": "https://www.mouser.com/c/?q=IS42S16400"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -87,17 +110,19 @@
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "XC7Z020-2CLG400C",
-        "vendor": "Rutronik",
+        "vendor": "Mouser Electronics",
         "unit_price": 129.69,
-        "lead_time_days": 17,
-        "stock_qty": 22318
+        "lead_time_days": 3,
+        "stock_qty": 22318,
+        "productDetailUrl": "https://www.mouser.com/c/?q=XC7Z020"
       },
       {
         "alt_part_id": "EP4CE10F17C8N",
-        "vendor": "WT Microelectronics",
+        "vendor": "Mouser Electronics",
         "unit_price": 109.81,
-        "lead_time_days": 20,
-        "stock_qty": 21744
+        "lead_time_days": 3,
+        "stock_qty": 21744,
+        "productDetailUrl": "https://www.mouser.com/c/?q=EP4CE10"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -111,17 +136,19 @@
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "NVIDIA-H100-80",
-        "vendor": "Avnet",
+        "vendor": "Mouser Electronics",
         "unit_price": 14100.00,
-        "lead_time_days": 8,
-        "stock_qty": 5000
+        "lead_time_days": 3,
+        "stock_qty": 5000,
+        "productDetailUrl": "https://www.mouser.com/c/?q=NVIDIA"
       },
       {
         "alt_part_id": "AMD-MI300X",
-        "vendor": "WT Microelectronics",
+        "vendor": "Mouser Electronics",
         "unit_price": 13729.65,
-        "lead_time_days": 6,
-        "stock_qty": 17229
+        "lead_time_days": 3,
+        "stock_qty": 17229,
+        "productDetailUrl": "https://www.mouser.com/c/?q=AMD"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -134,148 +161,28 @@
     "base_price": 4.65,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "LSM6DSOXTR",
-        "vendor": "Arrow Electronics",
-        "unit_price": 4.85,
-        "lead_time_days": 12,
-        "stock_qty": 28400
-      },
-      {
-        "alt_part_id": "ICM-42688-P",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 4.52,
-        "lead_time_days": 14,
-        "stock_qty": 31200
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "MSP430F5529IPNR",
-    "category": "MCU",
-    "manufacturer": "Texas Instruments",
-    "description": "16-Bit Ultra-Low-Power Microcontroller, 128KB Flash, 25MHz, LQFP-80",
-    "base_price": 3.85,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MSP430F5528IRGCR",
+        "alt_part_id": "BMI270",
         "vendor": "Mouser Electronics",
-        "unit_price": 3.72,
-        "lead_time_days": 7,
-        "stock_qty": 18500
+        "unit_price": 4.72,
+        "lead_time_days": 3,
+        "stock_qty": 41704,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Bosch-Sensortec/BMI270?qs=u16ybLDytRYIj%252BjQEee88A%3D%3D"
       },
       {
-        "alt_part_id": "MSP430F5529IPN",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 3.90,
-        "lead_time_days": 9,
-        "stock_qty": 22100
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "LM2596S-5.0",
-    "category": "PWR",
-    "manufacturer": "Texas Instruments",
-    "description": "Simple Switcher 3A Step-Down Voltage Regulator 5.0V, TO-263-5",
-    "base_price": 2.45,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "XL4015E1",
-        "vendor": "Farnell",
-        "unit_price": 2.15,
-        "lead_time_days": 10,
-        "stock_qty": 34000
+        "alt_part_id": "LSM6DSOXTR",
+        "vendor": "Mouser Electronics",
+        "unit_price": 4.85,
+        "lead_time_days": 3,
+        "stock_qty": 28400,
+        "productDetailUrl": "https://www.mouser.com/c/?q=LSM6DSOX"
       },
-      {
-        "alt_part_id": "LM2596S-ADJ",
-        "vendor": "Rutronik",
-        "unit_price": 2.50,
-        "lead_time_days": 8,
-        "stock_qty": 19500
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "IS42S16400J-7TLI",
-    "category": "MEM",
-    "manufacturer": "ISSI",
-    "description": "64Mb High-Speed Synchronous DRAM (1M x 16 x 4 Banks), TSOP-54",
-    "base_price": 3.20,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "W9864G6KH-6",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 3.12,
-        "lead_time_days": 12,
-        "stock_qty": 27800
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "IRF540NPBF",
-    "category": "PWR",
-    "manufacturer": "Infineon",
-    "description": "HEXFET Power MOSFET 100V 33A Single N-Channel, TO-220AB",
-    "base_price": 1.75,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FQP30N06L",
-        "vendor": "Arrow Electronics",
-        "unit_price": 1.68,
-        "lead_time_days": 6,
-        "stock_qty": 45000
-      },
-      {
-        "alt_part_id": "IRF540N",
-        "vendor": "Future Electronics",
-        "unit_price": 1.82,
-        "lead_time_days": 8,
-        "stock_qty": 21000
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "LPC1768FBD100",
-    "category": "MCU",
-    "manufacturer": "NXP",
-    "description": "ARM Cortex-M3 32-bit MCU 512KB Flash, Ethernet, USB, LQFP-100",
-    "base_price": 6.85,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "LPC1769FBD100",
-        "vendor": "Farnell",
-        "unit_price": 7.10,
-        "lead_time_days": 11,
-        "stock_qty": 14200
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "BME280",
-    "category": "SENSOR",
-    "manufacturer": "Bosch Sensortec",
-    "description": "Combined Temperature, Relative Humidity, and Barometric Pressure Sensor, LGA-8",
-    "base_price": 5.40,
-    "pin_compatible_alternatives": [
       {
         "alt_part_id": "BMP280",
         "vendor": "Mouser Electronics",
         "unit_price": 4.90,
-        "lead_time_days": 5,
-        "stock_qty": 36000
-      },
-      {
-        "alt_part_id": "SHT31-DIS-B",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 5.85,
-        "lead_time_days": 9,
-        "stock_qty": 19000
+        "lead_time_days": 3,
+        "stock_qty": 36000,
+        "productDetailUrl": "https://www.mouser.com/c/?q=BMP280"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
