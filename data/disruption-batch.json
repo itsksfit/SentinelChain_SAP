@@ -41,12 +41,16 @@
         "action": "Negotiated procurement of GD32F403RET6 with Farnell at $4.28.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "STMicroelectronics",
+    "component_category": "MCU",
+    "component_description": "ARM Cortex-M4 32-bit MCU+FPU, 512KB Flash, LQFP-64",
+    "base_price_usd": 4.5
   },
   {
     "disruption_id": "DSP-091",
     "recovery_plan_id": "RP-8043",
-    "part_affected": "PWR-9942A",
+    "part_affected": "TPS54331DR",
     "event_type": "Factory Fire",
     "detected_at": "2026-07-31T09:26:32.281Z",
     "revenue_at_risk_usd": 2146712,
@@ -64,14 +68,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-07-31T09:26:32.281Z",
-        "action": "Detected Yield Drop affecting PWR-9942A.",
+        "action": "Detected Yield Drop affecting TPS54331DR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-07-31T09:26:37.281Z",
         "action": "Confirmed financial risk of $2,146,712/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: PWR-9942A, Revenue Dependency."
+        "data_used": "Product ID: TPS54331DR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -79,7 +83,11 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "Texas Instruments",
+    "component_category": "PWR",
+    "component_description": "3A 28V Step-Down DC-DC Converter with Eco-mode, SOIC-8",
+    "base_price_usd": 1.89
   },
   {
     "disruption_id": "DSP-088",
@@ -123,7 +131,11 @@
         "action": "Negotiated procurement of K9F1G08U0E with Digi-Key Electronics at $8.62.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Micron Technology",
+    "component_category": "MEM",
+    "component_description": "64Gb NAND Flash Memory 3.3V x8 TSOP-48 Enterprise",
+    "base_price_usd": 8.5
   },
   {
     "disruption_id": "DS-10003",
@@ -155,7 +167,11 @@
         "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
         "data_used": "SAP Inventory Check"
       }
-    ]
+    ],
+    "component_manufacturer": "AMD / Xilinx",
+    "component_category": "FPGA",
+    "component_description": "Zynq-7000 SoC Dual ARM Cortex-A9, 85K Logic Cells, BGA-400",
+    "base_price_usd": 125
   },
   {
     "disruption_id": "DS-10004",
@@ -187,12 +203,16 @@
         "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
         "data_used": "SAP Inventory Check"
       }
-    ]
+    ],
+    "component_manufacturer": "NVIDIA",
+    "component_category": "GPU",
+    "component_description": "NVIDIA A100 Tensor Core GPU SXM4 80GB HBM2e High-Bandwidth Accelerator",
+    "base_price_usd": 10000
   },
   {
     "disruption_id": "DS-10005",
     "recovery_plan_id": "RP-10005",
-    "part_affected": "SENSOR-3370S",
+    "part_affected": "BMI270",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-04T11:29:10.789Z",
     "revenue_at_risk_usd": 0,
@@ -210,7 +230,7 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-04T11:29:10.789Z",
-        "action": "Detected Yield Drop affecting SENSOR-3370S.",
+        "action": "Detected Yield Drop affecting BMI270.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
@@ -219,12 +239,16 @@
         "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
         "data_used": "SAP Inventory Check"
       }
-    ]
+    ],
+    "component_manufacturer": "Bosch Sensortec",
+    "component_category": "SENSOR",
+    "component_description": "Ultra-Low Power 6-Axis IMU (Accelerometer + Gyroscope), LGA-14",
+    "base_price_usd": 4.72
   },
   {
     "disruption_id": "DS-10006",
     "recovery_plan_id": "RP-10006",
-    "part_affected": "MCU-6093I",
+    "part_affected": "STM32F411RET6",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-05T10:08:19.882Z",
     "revenue_at_risk_usd": 0,
@@ -242,7 +266,7 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-05T10:08:19.882Z",
-        "action": "Detected Yield Drop affecting MCU-6093I.",
+        "action": "Detected Yield Drop affecting STM32F411RET6.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
@@ -251,12 +275,16 @@
         "action": "Evaluated threat. S/4HANA confirms no active BOM dependency or sufficient safety stock.",
         "data_used": "SAP Inventory Check"
       }
-    ]
+    ],
+    "component_manufacturer": "STMicroelectronics",
+    "component_category": "MCU",
+    "component_description": "ARM Cortex-M4 32-bit MCU, 512KB Flash, 100MHz",
+    "base_price_usd": 5.2
   },
   {
     "disruption_id": "DS-10007",
     "recovery_plan_id": "RP-10007",
-    "part_affected": "MCU-5347U",
+    "part_affected": "LPC1768FET100",
     "event_type": "Flood",
     "detected_at": "2026-08-06T11:26:12.295Z",
     "revenue_at_risk_usd": 4731662,
@@ -274,14 +302,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-06T11:26:12.295Z",
-        "action": "Detected Flood affecting MCU-5347U.",
+        "action": "Detected Flood affecting LPC1768FET100.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-06T11:26:17.295Z",
         "action": "Confirmed financial risk of $4,731,662/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MCU-5347U, Revenue Dependency."
+        "data_used": "Product ID: LPC1768FET100, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -289,12 +317,16 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "NXP Semiconductors",
+    "component_category": "MCU",
+    "component_description": "ARM Cortex-M3 32-bit MCU, 512KB Flash, Ethernet, USB",
+    "base_price_usd": 6.85
   },
   {
     "disruption_id": "DS-10008",
     "recovery_plan_id": "RP-10008",
-    "part_affected": "PWR-1935R",
+    "part_affected": "LM2596DSADJG",
     "event_type": "Port Strike",
     "detected_at": "2026-08-07T10:01:23.531Z",
     "revenue_at_risk_usd": 3659400,
@@ -312,14 +344,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-07T10:01:23.531Z",
-        "action": "Detected Port Strike affecting PWR-1935R.",
+        "action": "Detected Port Strike affecting LM2596DSADJG.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-07T10:01:28.531Z",
         "action": "Confirmed financial risk of $3,659,400/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: PWR-1935R, Revenue Dependency."
+        "data_used": "Product ID: LM2596DSADJG, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -327,12 +359,16 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "onsemi",
+    "component_category": "PWR",
+    "component_description": "3A Step-Down Switching Regulator, Adjustable Output, D2PAK",
+    "base_price_usd": 2.86
   },
   {
     "disruption_id": "DS-10009",
     "recovery_plan_id": "RP-10009",
-    "part_affected": "MCU-5337B",
+    "part_affected": "MSP430F5529IPNR",
     "event_type": "Raw Material Shortage",
     "detected_at": "2026-08-08T10:09:44.614Z",
     "revenue_at_risk_usd": 4263867,
@@ -350,14 +386,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-08T10:09:44.614Z",
-        "action": "Detected Raw Material Shortage affecting MCU-5337B.",
+        "action": "Detected Raw Material Shortage affecting MSP430F5529IPNR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-08T10:09:49.614Z",
         "action": "Confirmed financial risk of $4,263,867/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MCU-5337B, Revenue Dependency."
+        "data_used": "Product ID: MSP430F5529IPNR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -371,12 +407,16 @@
         "action": "Negotiated procurement of MCU-8695V with Avnet at $95.93.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Texas Instruments",
+    "component_category": "MCU",
+    "component_description": "16-Bit Ultra-Low-Power Microcontroller, 128KB Flash, USB",
+    "base_price_usd": 3.85
   },
   {
     "disruption_id": "DS-10010",
     "recovery_plan_id": "RP-10010",
-    "part_affected": "MEM-2062F",
+    "part_affected": "W25Q64JWSSIN",
     "event_type": "Flood",
     "detected_at": "2026-08-09T11:08:49.456Z",
     "revenue_at_risk_usd": 3628142,
@@ -394,14 +434,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-09T11:08:49.456Z",
-        "action": "Detected Flood affecting MEM-2062F.",
+        "action": "Detected Flood affecting W25Q64JWSSIN.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-09T11:08:54.456Z",
         "action": "Confirmed financial risk of $3,628,142/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MEM-2062F, Revenue Dependency."
+        "data_used": "Product ID: W25Q64JWSSIN, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -415,12 +455,16 @@
         "action": "Negotiated procurement of MEM-8211C with Farnell at $27.43.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Winbond",
+    "component_category": "MEM",
+    "component_description": "64Mb Serial NOR Flash Memory, 1.8V, Dual/Quad SPI, SOIC-8",
+    "base_price_usd": 1.71
   },
   {
     "disruption_id": "DS-10011",
     "recovery_plan_id": "RP-10011",
-    "part_affected": "MEM-4676T",
+    "part_affected": "W25Q64JWTBIQ TR",
     "event_type": "Raw Material Shortage",
     "detected_at": "2026-08-10T09:02:39.923Z",
     "revenue_at_risk_usd": 1864010,
@@ -438,14 +482,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-10T09:02:39.923Z",
-        "action": "Detected Raw Material Shortage affecting MEM-4676T.",
+        "action": "Detected Raw Material Shortage affecting W25Q64JWTBIQ TR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-10T09:02:44.923Z",
         "action": "Confirmed financial risk of $1,864,010/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MEM-4676T, Revenue Dependency."
+        "data_used": "Product ID: W25Q64JWTBIQ TR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -459,12 +503,16 @@
         "action": "Negotiated procurement of MEM-3586Y with Farnell at $89.36.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Winbond",
+    "component_category": "MEM",
+    "component_description": "64Mb SPI Flash, 1.8V, 133MHz, WSON-8",
+    "base_price_usd": 2.27
   },
   {
     "disruption_id": "DS-10012",
     "recovery_plan_id": "RP-10012",
-    "part_affected": "MCU-6402Q",
+    "part_affected": "STM32F401CEU6",
     "event_type": "Port Strike",
     "detected_at": "2026-08-11T09:47:33.929Z",
     "revenue_at_risk_usd": 1640856,
@@ -482,14 +530,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-11T09:47:33.929Z",
-        "action": "Detected Port Strike affecting MCU-6402Q.",
+        "action": "Detected Port Strike affecting STM32F401CEU6.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-11T09:47:38.929Z",
         "action": "Confirmed financial risk of $1,640,856/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MCU-6402Q, Revenue Dependency."
+        "data_used": "Product ID: STM32F401CEU6, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -503,12 +551,16 @@
         "action": "Negotiated procurement of MCU-4067U with WPG Holdings at $12.14.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "STMicroelectronics",
+    "component_category": "MCU",
+    "component_description": "ARM Cortex-M4 32-bit MCU, 512KB Flash, UFQFPN-48",
+    "base_price_usd": 4.2
   },
   {
     "disruption_id": "DS-10013",
     "recovery_plan_id": "RP-10013",
-    "part_affected": "FPGA-1065Z",
+    "part_affected": "EP4CE10E22C7N",
     "event_type": "Flood",
     "detected_at": "2026-08-12T09:43:26.312Z",
     "revenue_at_risk_usd": 780222,
@@ -526,14 +578,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-12T09:43:26.312Z",
-        "action": "Detected Flood affecting FPGA-1065Z.",
+        "action": "Detected Flood affecting EP4CE10E22C7N.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-12T09:43:31.312Z",
         "action": "Confirmed financial risk of $780,222/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-1065Z, Revenue Dependency."
+        "data_used": "Product ID: EP4CE10E22C7N, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -547,12 +599,16 @@
         "action": "Negotiated procurement of FPGA-5792M with Mouser Electronics at $23.19.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Intel / Altera",
+    "component_category": "FPGA",
+    "component_description": "Cyclone IV E FPGA, 10320 Logic Elements, TQFP-144",
+    "base_price_usd": 48.63
   },
   {
     "disruption_id": "DS-10014",
     "recovery_plan_id": "RP-10014",
-    "part_affected": "SENSOR-9805V",
+    "part_affected": "BME280",
     "event_type": "Export Ban",
     "detected_at": "2026-08-13T09:41:28.323Z",
     "revenue_at_risk_usd": 1564297,
@@ -570,14 +626,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-13T09:41:28.323Z",
-        "action": "Detected Export Ban affecting SENSOR-9805V.",
+        "action": "Detected Export Ban affecting BME280.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-13T09:41:33.323Z",
         "action": "Confirmed financial risk of $1,564,297/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: SENSOR-9805V, Revenue Dependency."
+        "data_used": "Product ID: BME280, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -591,12 +647,16 @@
         "action": "Negotiated procurement of SENSOR-1947F with Mouser Electronics at $16.81.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Bosch Sensortec",
+    "component_category": "SENSOR",
+    "component_description": "Integrated Environmental Sensor (Humidity, Pressure, Temp), LGA-8",
+    "base_price_usd": 6.58
   },
   {
     "disruption_id": "DS-10015",
     "recovery_plan_id": "RP-10015",
-    "part_affected": "PWR-2952Z",
+    "part_affected": "MP1484EN-LF-Z",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-14T09:24:34.290Z",
     "revenue_at_risk_usd": 3015591,
@@ -614,14 +674,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-14T09:24:34.290Z",
-        "action": "Detected Yield Drop affecting PWR-2952Z.",
+        "action": "Detected Yield Drop affecting MP1484EN-LF-Z.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-14T09:24:39.290Z",
         "action": "Confirmed financial risk of $3,015,591/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: PWR-2952Z, Revenue Dependency."
+        "data_used": "Product ID: MP1484EN-LF-Z, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -629,12 +689,16 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "Monolithic Power Systems",
+    "component_category": "PWR",
+    "component_description": "3A 18V 340kHz Synchronous Step-Down Converter, SOIC-8",
+    "base_price_usd": 3.45
   },
   {
     "disruption_id": "DS-10016",
     "recovery_plan_id": "RP-10016",
-    "part_affected": "SENSOR-3740E",
+    "part_affected": "ICM-42688-P",
     "event_type": "Power Outage",
     "detected_at": "2026-08-15T10:13:58.795Z",
     "revenue_at_risk_usd": 2296932,
@@ -652,14 +716,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-15T10:13:58.795Z",
-        "action": "Detected Power Outage affecting SENSOR-3740E.",
+        "action": "Detected Power Outage affecting ICM-42688-P.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-15T10:14:03.795Z",
         "action": "Confirmed financial risk of $2,296,932/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: SENSOR-3740E, Revenue Dependency."
+        "data_used": "Product ID: ICM-42688-P, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -667,12 +731,16 @@
         "action": "Identified alternatives but pricing breached 15% threshold. Escalating.",
         "data_used": "negotiation parameters"
       }
-    ]
+    ],
+    "component_manufacturer": "TDK InvenSense",
+    "component_category": "SENSOR",
+    "component_description": "High-Performance 6-Axis MotionTracking IMU, LGA-14",
+    "base_price_usd": 9.68
   },
   {
     "disruption_id": "DS-10017",
     "recovery_plan_id": "RP-10017",
-    "part_affected": "PWR-9621B",
+    "part_affected": "TPS65987DDHR",
     "event_type": "Flood",
     "detected_at": "2026-08-16T10:30:04.567Z",
     "revenue_at_risk_usd": 2656966,
@@ -690,14 +758,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-16T10:30:04.567Z",
-        "action": "Detected Flood affecting PWR-9621B.",
+        "action": "Detected Flood affecting TPS65987DDHR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-16T10:30:09.567Z",
         "action": "Confirmed financial risk of $2,656,966/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: PWR-9621B, Revenue Dependency."
+        "data_used": "Product ID: TPS65987DDHR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -711,12 +779,16 @@
         "action": "Negotiated procurement of PWR-2931Q with Rutronik at $80.11.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Texas Instruments",
+    "component_category": "PWR",
+    "component_description": "USB Type-C and USB PD Controller with Integrated Power Switches",
+    "base_price_usd": 4.1
   },
   {
     "disruption_id": "DS-10018",
     "recovery_plan_id": null,
-    "part_affected": "MEM-2987G",
+    "part_affected": "IS42S16400J-7TLI",
     "event_type": "Power Outage",
     "detected_at": "2026-08-17T11:34:09.084Z",
     "revenue_at_risk_usd": 0,
@@ -734,7 +806,7 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-17T11:34:09.084Z",
-        "action": "Detected Power Outage affecting MEM-2987G.",
+        "action": "Detected Power Outage affecting IS42S16400J-7TLI.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
@@ -743,12 +815,16 @@
         "action": "Evaluated threat. S/4HANA confirms no active BOM dependency.",
         "data_used": "SAP Inventory Check"
       }
-    ]
+    ],
+    "component_manufacturer": "ISSI",
+    "component_category": "MEM",
+    "component_description": "64Mb SDRAM 3.3V 143MHz 4Mx16 TSOP-54",
+    "base_price_usd": 3.2
   },
   {
     "disruption_id": "DS-10019",
     "recovery_plan_id": "RP-10019",
-    "part_affected": "FPGA-4562J",
+    "part_affected": "EP4CE10F17C8N",
     "event_type": "Flood",
     "detected_at": "2026-08-18T10:06:44.832Z",
     "revenue_at_risk_usd": 3413520,
@@ -766,14 +842,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-18T10:06:44.832Z",
-        "action": "Detected Flood affecting FPGA-4562J.",
+        "action": "Detected Flood affecting EP4CE10F17C8N.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-18T10:06:49.832Z",
         "action": "Confirmed financial risk of $3,413,520/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-4562J, Revenue Dependency."
+        "data_used": "Product ID: EP4CE10F17C8N, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -787,12 +863,16 @@
         "action": "Negotiated procurement of FPGA-4199D with Rochester Electronics at $62.98.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Intel / Altera",
+    "component_category": "FPGA",
+    "component_description": "Cyclone IV E FPGA, 10320 Logic Elements, FBGA-256",
+    "base_price_usd": 52.14
   },
   {
     "disruption_id": "DS-10020",
     "recovery_plan_id": "RP-10020",
-    "part_affected": "MEM-6521E",
+    "part_affected": "W25Q64PWUUIQ TR",
     "event_type": "Factory Fire",
     "detected_at": "2026-08-19T10:11:41.288Z",
     "revenue_at_risk_usd": 4223906,
@@ -810,14 +890,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-19T10:11:41.288Z",
-        "action": "Detected Factory Fire affecting MEM-6521E.",
+        "action": "Detected Factory Fire affecting W25Q64PWUUIQ TR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-19T10:11:46.288Z",
         "action": "Confirmed financial risk of $4,223,906/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: MEM-6521E, Revenue Dependency."
+        "data_used": "Product ID: W25Q64PWUUIQ TR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -825,12 +905,16 @@
         "action": "Identified alternatives but pricing breached 15% threshold. Escalating.",
         "data_used": "negotiation parameters"
       }
-    ]
+    ],
+    "component_manufacturer": "Winbond",
+    "component_category": "MEM",
+    "component_description": "64Mb Serial Flash Memory, Ultra-Low Power, USON-8",
+    "base_price_usd": 3.2
   },
   {
     "disruption_id": "DS-10021",
     "recovery_plan_id": "RP-10021",
-    "part_affected": "GPU-4419J",
+    "part_affected": "MXM-A1000-4G-35W",
     "event_type": "Export Ban",
     "detected_at": "2026-08-20T10:33:32.599Z",
     "revenue_at_risk_usd": 1025313,
@@ -848,14 +932,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-20T10:33:32.599Z",
-        "action": "Detected Export Ban affecting GPU-4419J.",
+        "action": "Detected Export Ban affecting MXM-A1000-4G-35W.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-20T10:33:37.599Z",
         "action": "Confirmed financial risk of $1,025,313/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: GPU-4419J, Revenue Dependency."
+        "data_used": "Product ID: MXM-A1000-4G-35W, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -863,12 +947,16 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "ADLINK / NVIDIA",
+    "component_category": "GPU",
+    "component_description": "NVIDIA RTX Embedded A1000 MXM 3.1 Type A 4GB GDDR6",
+    "base_price_usd": 825.79
   },
   {
     "disruption_id": "DS-10022",
     "recovery_plan_id": "RP-10022",
-    "part_affected": "FPGA-9009I",
+    "part_affected": "XC7A35T-1FTG256C",
     "event_type": "Yield Drop",
     "detected_at": "2026-08-21T11:00:13.098Z",
     "revenue_at_risk_usd": 1995285,
@@ -886,14 +974,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-21T11:00:13.098Z",
-        "action": "Detected Yield Drop affecting FPGA-9009I.",
+        "action": "Detected Yield Drop affecting XC7A35T-1FTG256C.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-21T11:00:18.098Z",
         "action": "Confirmed financial risk of $1,995,285/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-9009I, Revenue Dependency."
+        "data_used": "Product ID: XC7A35T-1FTG256C, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -901,12 +989,16 @@
         "action": "Attempted to source parts, but inventory globally exhausted.",
         "data_used": "parts-catalog.json stock_qty"
       }
-    ]
+    ],
+    "component_manufacturer": "AMD / Xilinx",
+    "component_category": "FPGA",
+    "component_description": "Artix-7 FPGA, 33280 Logic Cells, FTG-256",
+    "base_price_usd": 42.5
   },
   {
     "disruption_id": "DS-10023",
     "recovery_plan_id": "RP-10023",
-    "part_affected": "FPGA-1077W",
+    "part_affected": "XC7Z020-L1CLG400I",
     "event_type": "Flood",
     "detected_at": "2026-08-22T09:49:05.050Z",
     "revenue_at_risk_usd": 713545,
@@ -924,14 +1016,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-22T09:49:05.050Z",
-        "action": "Detected Flood affecting FPGA-1077W.",
+        "action": "Detected Flood affecting XC7Z020-L1CLG400I.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-22T09:49:10.050Z",
         "action": "Confirmed financial risk of $713,545/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-1077W, Revenue Dependency."
+        "data_used": "Product ID: XC7Z020-L1CLG400I, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -945,12 +1037,16 @@
         "action": "Negotiated procurement of FPGA-6440G with Rutronik at $95.05.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "AMD / Xilinx",
+    "component_category": "FPGA",
+    "component_description": "Zynq-7000 Low-Power SoC Dual ARM Cortex-A9, BGA-400",
+    "base_price_usd": 203.47
   },
   {
     "disruption_id": "DS-10024",
     "recovery_plan_id": "RP-10024",
-    "part_affected": "SENSOR-3661G",
+    "part_affected": "LSM6DSOXTR",
     "event_type": "Flood",
     "detected_at": "2026-08-23T09:00:37.252Z",
     "revenue_at_risk_usd": 4177562,
@@ -968,14 +1064,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-23T09:00:37.252Z",
-        "action": "Detected Flood affecting SENSOR-3661G.",
+        "action": "Detected Flood affecting LSM6DSOXTR.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-23T09:00:42.252Z",
         "action": "Confirmed financial risk of $4,177,562/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: SENSOR-3661G, Revenue Dependency."
+        "data_used": "Product ID: LSM6DSOXTR, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -989,12 +1085,16 @@
         "action": "Negotiated procurement of SENSOR-2169Q with WPG Holdings at $56.66.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "STMicroelectronics",
+    "component_category": "SENSOR",
+    "component_description": "iNEMO 6-Axis Inertial Module with Embedded Machine Learning, LGA-14",
+    "base_price_usd": 4.85
   },
   {
     "disruption_id": "DS-10025",
     "recovery_plan_id": "RP-10025",
-    "part_affected": "SENSOR-8145P",
+    "part_affected": "BMP280",
     "event_type": "Port Strike",
     "detected_at": "2026-08-24T11:28:23.460Z",
     "revenue_at_risk_usd": 2907649,
@@ -1012,14 +1112,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-24T11:28:23.460Z",
-        "action": "Detected Port Strike affecting SENSOR-8145P.",
+        "action": "Detected Port Strike affecting BMP280.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-24T11:28:28.460Z",
         "action": "Confirmed financial risk of $2,907,649/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: SENSOR-8145P, Revenue Dependency."
+        "data_used": "Product ID: BMP280, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -1033,12 +1133,16 @@
         "action": "Negotiated procurement of SENSOR-4054A with Digi-Key Electronics at $53.82.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Bosch Sensortec",
+    "component_category": "SENSOR",
+    "component_description": "Digital Barometric Pressure Sensor, LGA-8",
+    "base_price_usd": 4.9
   },
   {
     "disruption_id": "DS-10026",
     "recovery_plan_id": "RP-10026",
-    "part_affected": "FPGA-3358D",
+    "part_affected": "EP4CE10U14I7N",
     "event_type": "Power Outage",
     "detected_at": "2026-08-25T11:30:52.401Z",
     "revenue_at_risk_usd": 2241307,
@@ -1056,14 +1160,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-25T11:30:52.401Z",
-        "action": "Detected Power Outage affecting FPGA-3358D.",
+        "action": "Detected Power Outage affecting EP4CE10U14I7N.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-25T11:30:57.401Z",
         "action": "Confirmed financial risk of $2,241,307/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: FPGA-3358D, Revenue Dependency."
+        "data_used": "Product ID: EP4CE10U14I7N, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -1077,12 +1181,16 @@
         "action": "Negotiated procurement of FPGA-9847Y with Avnet at $87.04.",
         "data_used": "vendors.json reliability rating"
       }
-    ]
+    ],
+    "component_manufacturer": "Intel / Altera",
+    "component_category": "FPGA",
+    "component_description": "Cyclone IV E Industrial FPGA, 10K LEs, Ultra Fine BGA",
+    "base_price_usd": 61.28
   },
   {
     "disruption_id": "DS-10027",
     "recovery_plan_id": "RP-10027",
-    "part_affected": "PWR-3314D",
+    "part_affected": "LM2596T-ADJ/NOPB",
     "event_type": "Supplier Bankruptcy",
     "detected_at": "2026-08-26T10:22:54.091Z",
     "revenue_at_risk_usd": 2645084,
@@ -1100,14 +1208,14 @@
       {
         "agent": "Detection Agent",
         "timestamp": "2026-08-26T10:22:54.091Z",
-        "action": "Detected Supplier Bankruptcy affecting PWR-3314D.",
+        "action": "Detected Supplier Bankruptcy affecting LM2596T-ADJ/NOPB.",
         "data_used": "NewsAPI / SAP S/4HANA BOM mapping"
       },
       {
         "agent": "Impact Agent",
         "timestamp": "2026-08-26T10:22:59.091Z",
         "action": "Confirmed financial risk of $2,645,084/day via SAP S/4HANA baseline.",
-        "data_used": "Product ID: PWR-3314D, Revenue Dependency."
+        "data_used": "Product ID: LM2596T-ADJ/NOPB, Revenue Dependency."
       },
       {
         "agent": "Match Agent",
@@ -1115,6 +1223,10 @@
         "action": "Identified alternatives but pricing breached 15% threshold. Escalating.",
         "data_used": "negotiation parameters"
       }
-    ]
+    ],
+    "component_manufacturer": "Texas Instruments",
+    "component_category": "PWR",
+    "component_description": "3A Step-Down Voltage Regulator, TO-220-5",
+    "base_price_usd": 6.23
   }
 ]
