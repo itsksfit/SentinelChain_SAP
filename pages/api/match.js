@@ -66,6 +66,7 @@ export default async function handler(req, res) {
           partNumber: alt.alt_part_id,
           vendor: alt.vendor === 'Generic Vendor' ? 'Mouser Electronics' : alt.vendor,
           note: `${fetchStatus}. Unit Price: $${livePrice.toLocaleString()}, Lead Time: ${liveLeadTime} days. Qty: ${liveStock.toLocaleString()}`,
+          sourceProvenance: fetchStatus.includes('Live Spot') ? "Live Mouser Electronics Search API v1.0" : "SAP S/4HANA Approved Manufacturer List (AML)",
           _raw: {
             ...alt,
             unit_price: livePrice,

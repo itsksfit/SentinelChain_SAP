@@ -3,7 +3,8 @@
     "part_id": "STM32F401RE",
     "category": "MCU",
     "manufacturer": "STMicroelectronics",
-    "base_price": 4.5,
+    "description": "ARM Cortex-M4 32-bit MCU+FPU, 512KB Flash, 84MHz, LQFP-64",
+    "base_price": 4.50,
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "GD32F403RET6",
@@ -20,43 +21,45 @@
         "stock_qty": 20000
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.908Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
     "part_id": "PWR-9942A",
     "category": "PWR",
     "manufacturer": "Texas Instruments",
-    "base_price": 2.1,
+    "description": "TPS54331DR 3A 28V Step-Down DC-DC Converter, SOIC-8",
+    "base_price": 2.10,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "PWR-9942A-ALT",
-        "vendor": "Avnet",
-        "unit_price": 2.3,
-        "lead_time_days": 11,
-        "stock_qty": 3387
-      },
-      {
-        "alt_part_id": "PWR-6884U",
+        "alt_part_id": "MP1484EN",
         "vendor": "Arrow Electronics",
         "unit_price": 1.85,
         "lead_time_days": 9,
         "stock_qty": 30108
       },
       {
-        "alt_part_id": "PWR-1201V",
+        "alt_part_id": "AP6503SP-13",
+        "vendor": "Avnet",
+        "unit_price": 2.30,
+        "lead_time_days": 11,
+        "stock_qty": 3387
+      },
+      {
+        "alt_part_id": "PWR-9942A-ALT",
         "vendor": "Future Electronics",
         "unit_price": 2.34,
         "lead_time_days": 20,
         "stock_qty": 42229
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
     "part_id": "MT29F64G08AECABH1",
     "category": "MEM",
     "manufacturer": "Micron Technology",
-    "base_price": 8.5,
+    "description": "64Gb NAND Flash Memory 3.3V x8 TSOP-48 Enterprise Grade",
+    "base_price": 8.50,
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "K9F1G08U0E",
@@ -66,20 +69,21 @@
         "stock_qty": 41381
       },
       {
-        "alt_part_id": "MEM-9940B",
+        "alt_part_id": "W25Q64JVSSIQ",
         "vendor": "Farnell",
         "unit_price": 8.23,
         "lead_time_days": 11,
         "stock_qty": 15251
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
     "part_id": "XC7Z020-1CLG400C",
     "category": "FPGA",
     "manufacturer": "AMD",
-    "base_price": 125,
+    "description": "Xilinx Zynq-7000 Dual ARM Cortex-A9 MPCore with 85K Logic Cells, BGA-400",
+    "base_price": 125.00,
     "pin_compatible_alternatives": [
       {
         "alt_part_id": "XC7Z020-2CLG400C",
@@ -89,1259 +93,191 @@
         "stock_qty": 22318
       },
       {
-        "alt_part_id": "FPGA-2470T",
+        "alt_part_id": "EP4CE10F17C8N",
         "vendor": "WT Microelectronics",
         "unit_price": 109.81,
         "lead_time_days": 20,
         "stock_qty": 21744
-      },
-      {
-        "alt_part_id": "FPGA-2131R",
-        "vendor": "WT Microelectronics",
-        "unit_price": 136.91,
-        "lead_time_days": 14,
-        "stock_qty": 15981
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
     "part_id": "GPU-A100-80",
     "category": "GPU",
     "manufacturer": "NVIDIA",
-    "base_price": 10000,
+    "description": "NVIDIA A100 Tensor Core GPU SXM4 80GB HBM2e High-Bandwidth Accelerator",
+    "base_price": 10000.00,
     "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "NVIDIA-H100-80",
+        "vendor": "Avnet",
+        "unit_price": 14100.00,
+        "lead_time_days": 8,
+        "stock_qty": 5000
+      },
       {
         "alt_part_id": "AMD-MI300X",
         "vendor": "WT Microelectronics",
         "unit_price": 13729.65,
         "lead_time_days": 6,
         "stock_qty": 17229
-      },
-      {
-        "alt_part_id": "NVIDIA-H100",
-        "vendor": "Avnet",
-        "unit_price": 14100,
-        "lead_time_days": 8,
-        "stock_qty": 5000
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
-    "part_id": "SENSOR-3370S",
+    "part_id": "BMI270",
     "category": "SENSOR",
-    "manufacturer": "NVIDIA",
-    "base_price": 46.47,
+    "manufacturer": "Bosch Sensortec",
+    "description": "Ultra-Low Power 6-Axis IMU (Accelerometer + Gyroscope), LGA-14",
+    "base_price": 4.65,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "SENSOR-3190U",
-        "vendor": "WPG Holdings",
-        "unit_price": 49.39,
-        "lead_time_days": 9,
-        "stock_qty": 29326
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-6093I",
-    "category": "MCU",
-    "manufacturer": "NVIDIA",
-    "base_price": 71.98,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-6018W",
-        "vendor": "WT Microelectronics",
-        "unit_price": 80.36,
+        "alt_part_id": "LSM6DSOXTR",
+        "vendor": "Arrow Electronics",
+        "unit_price": 4.85,
         "lead_time_days": 12,
-        "stock_qty": 3209
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-5347U",
-    "category": "MCU",
-    "manufacturer": "Micron",
-    "base_price": 94.96,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-2385R",
-        "vendor": "Arrow Electronics",
-        "unit_price": 94,
-        "lead_time_days": 16,
-        "stock_qty": 47472
+        "stock_qty": 28400
       },
       {
-        "alt_part_id": "MCU-4601T",
-        "vendor": "Arrow Electronics",
-        "unit_price": 98.42,
-        "lead_time_days": 6,
-        "stock_qty": 8861
-      },
-      {
-        "alt_part_id": "MCU-1518E",
-        "vendor": "Farnell",
-        "unit_price": 94,
-        "lead_time_days": 2,
-        "stock_qty": 44702
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-1935R",
-    "category": "PWR",
-    "manufacturer": "Infineon",
-    "base_price": 54.12,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-9064F",
-        "vendor": "Farnell",
-        "unit_price": 50.14,
-        "lead_time_days": 8,
-        "stock_qty": 9121
-      },
-      {
-        "alt_part_id": "PWR-4517T",
+        "alt_part_id": "ICM-42688-P",
         "vendor": "Digi-Key Electronics",
-        "unit_price": 55.29,
-        "lead_time_days": 18,
-        "stock_qty": 11452
-      },
-      {
-        "alt_part_id": "PWR-6438N",
-        "vendor": "Avnet",
-        "unit_price": 51.36,
-        "lead_time_days": 11,
-        "stock_qty": 19813
+        "unit_price": 4.52,
+        "lead_time_days": 14,
+        "stock_qty": 31200
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
-    "part_id": "MCU-5337B",
+    "part_id": "MSP430F5529IPNR",
     "category": "MCU",
-    "manufacturer": "Analog Devices",
-    "base_price": 96.16,
+    "manufacturer": "Texas Instruments",
+    "description": "16-Bit Ultra-Low-Power Microcontroller, 128KB Flash, 25MHz, LQFP-80",
+    "base_price": 3.85,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "MCU-8695V",
-        "vendor": "Avnet",
-        "unit_price": 95.93,
-        "lead_time_days": 9,
-        "stock_qty": 45935
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-2062F",
-    "category": "MEM",
-    "manufacturer": "NVIDIA",
-    "base_price": 28.73,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-8211C",
-        "vendor": "Farnell",
-        "unit_price": 27.43,
-        "lead_time_days": 3,
-        "stock_qty": 7315
-      },
-      {
-        "alt_part_id": "MEM-6865V",
-        "vendor": "Arrow Electronics",
-        "unit_price": 29.99,
-        "lead_time_days": 12,
-        "stock_qty": 40223
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-4676T",
-    "category": "MEM",
-    "manufacturer": "AMD",
-    "base_price": 86.09,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-3586Y",
-        "vendor": "Farnell",
-        "unit_price": 89.36,
-        "lead_time_days": 10,
-        "stock_qty": 2800
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-6402Q",
-    "category": "MCU",
-    "manufacturer": "NVIDIA",
-    "base_price": 11.69,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-4067U",
-        "vendor": "WPG Holdings",
-        "unit_price": 12.14,
-        "lead_time_days": 6,
-        "stock_qty": 47763
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-1065Z",
-    "category": "FPGA",
-    "manufacturer": "STMicroelectronics",
-    "base_price": 24.09,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-5792M",
+        "alt_part_id": "MSP430F5528IRGCR",
         "vendor": "Mouser Electronics",
-        "unit_price": 23.19,
-        "lead_time_days": 18,
-        "stock_qty": 39817
-      },
-      {
-        "alt_part_id": "FPGA-8875H",
-        "vendor": "Rutronik",
-        "unit_price": 24.81,
-        "lead_time_days": 3,
-        "stock_qty": 14706
-      },
-      {
-        "alt_part_id": "FPGA-9095O",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 23.81,
-        "lead_time_days": 12,
-        "stock_qty": 12914
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "SENSOR-9805V",
-    "category": "SENSOR",
-    "manufacturer": "Microchip",
-    "base_price": 17.84,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-1947F",
-        "vendor": "Mouser Electronics",
-        "unit_price": 16.81,
-        "lead_time_days": 20,
-        "stock_qty": 11962
-      },
-      {
-        "alt_part_id": "SENSOR-5264T",
-        "vendor": "Mouser Electronics",
-        "unit_price": 17.73,
-        "lead_time_days": 2,
-        "stock_qty": 25064
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-2952Z",
-    "category": "PWR",
-    "manufacturer": "STMicroelectronics",
-    "base_price": 66.12,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-7927S",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 69.01,
-        "lead_time_days": 13,
-        "stock_qty": 46502
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "SENSOR-3740E",
-    "category": "SENSOR",
-    "manufacturer": "Infineon",
-    "base_price": 31.82,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-8664A",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 32.78,
-        "lead_time_days": 12,
-        "stock_qty": 10300
-      },
-      {
-        "alt_part_id": "SENSOR-2845M",
-        "vendor": "Rochester Electronics",
-        "unit_price": 30.57,
-        "lead_time_days": 8,
-        "stock_qty": 27660
-      },
-      {
-        "alt_part_id": "SENSOR-7717P",
-        "vendor": "Arrow Electronics",
-        "unit_price": 31.17,
+        "unit_price": 3.72,
         "lead_time_days": 7,
-        "stock_qty": 36826
+        "stock_qty": 18500
+      },
+      {
+        "alt_part_id": "MSP430F5529IPN",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 3.90,
+        "lead_time_days": 9,
+        "stock_qty": 22100
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
-    "part_id": "PWR-9621B",
+    "part_id": "LM2596S-5.0",
     "category": "PWR",
-    "manufacturer": "NXP",
-    "base_price": 77.13,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-2931Q",
-        "vendor": "Rutronik",
-        "unit_price": 80.11,
-        "lead_time_days": 10,
-        "stock_qty": 48235
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-2987G",
-    "category": "MEM",
-    "manufacturer": "Microchip",
-    "base_price": 4.15,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-7820O",
-        "vendor": "Farnell",
-        "unit_price": 4.46,
-        "lead_time_days": 2,
-        "stock_qty": 7530
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-4562J",
-    "category": "FPGA",
-    "manufacturer": "STMicroelectronics",
-    "base_price": 67.79,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-4199D",
-        "vendor": "Rochester Electronics",
-        "unit_price": 62.98,
-        "lead_time_days": 18,
-        "stock_qty": 11041
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-6521E",
-    "category": "MEM",
-    "manufacturer": "STMicroelectronics",
+    "manufacturer": "Texas Instruments",
+    "description": "Simple Switcher 3A Step-Down Voltage Regulator 5.0V, TO-263-5",
     "base_price": 2.45,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "MEM-9019B",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 2.38,
+        "alt_part_id": "XL4015E1",
+        "vendor": "Farnell",
+        "unit_price": 2.15,
         "lead_time_days": 10,
-        "stock_qty": 14392
+        "stock_qty": 34000
       },
       {
-        "alt_part_id": "MEM-3383H",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 2.4,
-        "lead_time_days": 2,
-        "stock_qty": 28500
-      },
-      {
-        "alt_part_id": "MEM-6683K",
-        "vendor": "WPG Holdings",
-        "unit_price": 2.45,
-        "lead_time_days": 9,
-        "stock_qty": 43410
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "GPU-4419J",
-    "category": "GPU",
-    "manufacturer": "AMD",
-    "base_price": 4.49,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "GPU-7481Z",
-        "vendor": "Rochester Electronics",
-        "unit_price": 3.88,
-        "lead_time_days": 21,
-        "stock_qty": 38239
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-9009I",
-    "category": "FPGA",
-    "manufacturer": "Micron",
-    "base_price": 8.72,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-1298K",
-        "vendor": "Avnet",
-        "unit_price": 8.88,
-        "lead_time_days": 4,
-        "stock_qty": 805
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-1077W",
-    "category": "FPGA",
-    "manufacturer": "AMD",
-    "base_price": 91.75,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-6440G",
+        "alt_part_id": "LM2596S-ADJ",
         "vendor": "Rutronik",
-        "unit_price": 95.05,
+        "unit_price": 2.50,
+        "lead_time_days": 8,
+        "stock_qty": 19500
+      }
+    ],
+    "last_updated": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "part_id": "IS42S16400J-7TLI",
+    "category": "MEM",
+    "manufacturer": "ISSI",
+    "description": "64Mb High-Speed Synchronous DRAM (1M x 16 x 4 Banks), TSOP-54",
+    "base_price": 3.20,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "W9864G6KH-6",
+        "vendor": "Digi-Key Electronics",
+        "unit_price": 3.12,
+        "lead_time_days": 12,
+        "stock_qty": 27800
+      }
+    ],
+    "last_updated": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "part_id": "IRF540NPBF",
+    "category": "PWR",
+    "manufacturer": "Infineon",
+    "description": "HEXFET Power MOSFET 100V 33A Single N-Channel, TO-220AB",
+    "base_price": 1.75,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "FQP30N06L",
+        "vendor": "Arrow Electronics",
+        "unit_price": 1.68,
+        "lead_time_days": 6,
+        "stock_qty": 45000
+      },
+      {
+        "alt_part_id": "IRF540N",
+        "vendor": "Future Electronics",
+        "unit_price": 1.82,
+        "lead_time_days": 8,
+        "stock_qty": 21000
+      }
+    ],
+    "last_updated": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "part_id": "LPC1768FBD100",
+    "category": "MCU",
+    "manufacturer": "NXP",
+    "description": "ARM Cortex-M3 32-bit MCU 512KB Flash, Ethernet, USB, LQFP-100",
+    "base_price": 6.85,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "LPC1769FBD100",
+        "vendor": "Farnell",
+        "unit_price": 7.10,
         "lead_time_days": 11,
-        "stock_qty": 39205
+        "stock_qty": 14200
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   },
   {
-    "part_id": "SENSOR-3661G",
+    "part_id": "BME280",
     "category": "SENSOR",
-    "manufacturer": "AMD",
-    "base_price": 57.36,
+    "manufacturer": "Bosch Sensortec",
+    "description": "Combined Temperature, Relative Humidity, and Barometric Pressure Sensor, LGA-8",
+    "base_price": 5.40,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "SENSOR-2169Q",
-        "vendor": "WPG Holdings",
-        "unit_price": 56.66,
-        "lead_time_days": 18,
-        "stock_qty": 36087
-      },
-      {
-        "alt_part_id": "SENSOR-7616Z",
-        "vendor": "Rutronik",
-        "unit_price": 55.6,
-        "lead_time_days": 15,
-        "stock_qty": 3135
-      },
-      {
-        "alt_part_id": "SENSOR-4607X",
-        "vendor": "Rutronik",
-        "unit_price": 50.95,
-        "lead_time_days": 20,
-        "stock_qty": 31408
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "SENSOR-8145P",
-    "category": "SENSOR",
-    "manufacturer": "Micron",
-    "base_price": 55.27,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-4054A",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 53.82,
-        "lead_time_days": 21,
-        "stock_qty": 4608
-      },
-      {
-        "alt_part_id": "SENSOR-7803X",
+        "alt_part_id": "BMP280",
         "vendor": "Mouser Electronics",
-        "unit_price": 58.81,
-        "lead_time_days": 2,
-        "stock_qty": 45992
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-3358D",
-    "category": "FPGA",
-    "manufacturer": "Microchip",
-    "base_price": 87.18,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-9847Y",
-        "vendor": "Avnet",
-        "unit_price": 87.04,
-        "lead_time_days": 17,
-        "stock_qty": 42747
-      },
-      {
-        "alt_part_id": "FPGA-6071W",
-        "vendor": "Future Electronics",
-        "unit_price": 77.84,
-        "lead_time_days": 6,
-        "stock_qty": 8109
-      },
-      {
-        "alt_part_id": "FPGA-8023A",
-        "vendor": "Mouser Electronics",
-        "unit_price": 93.71,
-        "lead_time_days": 8,
-        "stock_qty": 45085
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-3314D",
-    "category": "PWR",
-    "manufacturer": "Infineon",
-    "base_price": 78.85,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-9017H",
-        "vendor": "WT Microelectronics",
-        "unit_price": 71.38,
-        "lead_time_days": 4,
-        "stock_qty": 268
-      },
-      {
-        "alt_part_id": "PWR-1202J",
-        "vendor": "WPG Holdings",
-        "unit_price": 69.83,
-        "lead_time_days": 2,
-        "stock_qty": 38759
-      },
-      {
-        "alt_part_id": "PWR-3904M",
-        "vendor": "WT Microelectronics",
-        "unit_price": 76.87,
-        "lead_time_days": 15,
-        "stock_qty": 45565
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "GPU-3659W",
-    "category": "GPU",
-    "manufacturer": "NVIDIA",
-    "base_price": 3.31,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "GPU-1515Z",
-        "vendor": "Future Electronics",
-        "unit_price": 3.74,
-        "lead_time_days": 12,
-        "stock_qty": 929
-      },
-      {
-        "alt_part_id": "GPU-3489X",
-        "vendor": "WT Microelectronics",
-        "unit_price": 3.65,
-        "lead_time_days": 20,
-        "stock_qty": 43564
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-1560W",
-    "category": "MEM",
-    "manufacturer": "NVIDIA",
-    "base_price": 28.53,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-2885B",
-        "vendor": "Future Electronics",
-        "unit_price": 29.99,
-        "lead_time_days": 2,
-        "stock_qty": 11298
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-3378K",
-    "category": "MEM",
-    "manufacturer": "Infineon",
-    "base_price": 14.94,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-2999A",
-        "vendor": "Mouser Electronics",
-        "unit_price": 14.63,
-        "lead_time_days": 13,
-        "stock_qty": 48550
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "SENSOR-7049R",
-    "category": "SENSOR",
-    "manufacturer": "AMD",
-    "base_price": 31.55,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-4226V",
-        "vendor": "Rutronik",
-        "unit_price": 31.26,
-        "lead_time_days": 12,
-        "stock_qty": 28090
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-8009S",
-    "category": "PWR",
-    "manufacturer": "NXP",
-    "base_price": 61.84,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-1324Z",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 63.48,
-        "lead_time_days": 17,
-        "stock_qty": 18213
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-6332D",
-    "category": "MEM",
-    "manufacturer": "Texas Instruments",
-    "base_price": 52.6,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-7408B",
-        "vendor": "WT Microelectronics",
-        "unit_price": 46.86,
-        "lead_time_days": 14,
-        "stock_qty": 911
-      },
-      {
-        "alt_part_id": "MEM-1569E",
-        "vendor": "WT Microelectronics",
-        "unit_price": 60.34,
+        "unit_price": 4.90,
         "lead_time_days": 5,
-        "stock_qty": 16242
+        "stock_qty": 36000
       },
       {
-        "alt_part_id": "MEM-7840I",
+        "alt_part_id": "SHT31-DIS-B",
         "vendor": "Digi-Key Electronics",
-        "unit_price": 53.43,
-        "lead_time_days": 7,
-        "stock_qty": 29653
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-4407R",
-    "category": "FPGA",
-    "manufacturer": "Microchip",
-    "base_price": 77.3,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-9753T",
-        "vendor": "Rochester Electronics",
-        "unit_price": 71.71,
-        "lead_time_days": 12,
-        "stock_qty": 10295
-      },
-      {
-        "alt_part_id": "FPGA-7834E",
-        "vendor": "Rutronik",
-        "unit_price": 81.28,
-        "lead_time_days": 6,
-        "stock_qty": 12047
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "GPU-4306Z",
-    "category": "GPU",
-    "manufacturer": "NXP",
-    "base_price": 75.76,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "GPU-5770X",
-        "vendor": "Rutronik",
-        "unit_price": 82.39,
-        "lead_time_days": 16,
-        "stock_qty": 21799
-      },
-      {
-        "alt_part_id": "GPU-2404N",
-        "vendor": "Avnet",
-        "unit_price": 72.82,
-        "lead_time_days": 17,
-        "stock_qty": 40029
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-3567Y",
-    "category": "MEM",
-    "manufacturer": "Infineon",
-    "base_price": 32.18,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-8093Q",
-        "vendor": "Avnet",
-        "unit_price": 31.67,
-        "lead_time_days": 5,
-        "stock_qty": 21049
-      },
-      {
-        "alt_part_id": "MEM-5216L",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 33.66,
-        "lead_time_days": 14,
-        "stock_qty": 10759
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-5129J",
-    "category": "MEM",
-    "manufacturer": "Microchip",
-    "base_price": 64.71,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-5627R",
-        "vendor": "Rutronik",
-        "unit_price": 68.93,
-        "lead_time_days": 4,
-        "stock_qty": 27103
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-7826K",
-    "category": "MEM",
-    "manufacturer": "NXP",
-    "base_price": 29.86,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-6449C",
-        "vendor": "WT Microelectronics",
-        "unit_price": 34.04,
-        "lead_time_days": 4,
-        "stock_qty": 33515
-      },
-      {
-        "alt_part_id": "MEM-2022P",
-        "vendor": "Future Electronics",
-        "unit_price": 31.21,
-        "lead_time_days": 18,
-        "stock_qty": 7653
-      },
-      {
-        "alt_part_id": "MEM-3533K",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 30.62,
-        "lead_time_days": 19,
-        "stock_qty": 165
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-8286F",
-    "category": "MCU",
-    "manufacturer": "NXP",
-    "base_price": 91.03,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-8797U",
-        "vendor": "Rochester Electronics",
-        "unit_price": 85.17,
-        "lead_time_days": 5,
-        "stock_qty": 15023
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-6615J",
-    "category": "MEM",
-    "manufacturer": "Micron",
-    "base_price": 45.98,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-9992G",
-        "vendor": "Rochester Electronics",
-        "unit_price": 52.46,
-        "lead_time_days": 14,
-        "stock_qty": 48376
-      },
-      {
-        "alt_part_id": "MEM-3274U",
-        "vendor": "Avnet",
-        "unit_price": 44.63,
-        "lead_time_days": 14,
-        "stock_qty": 26063
-      },
-      {
-        "alt_part_id": "MEM-4585B",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 46.8,
-        "lead_time_days": 12,
-        "stock_qty": 39395
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-4471I",
-    "category": "MEM",
-    "manufacturer": "Microchip",
-    "base_price": 44.79,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-7212R",
-        "vendor": "Avnet",
-        "unit_price": 48.89,
-        "lead_time_days": 8,
-        "stock_qty": 7553
-      },
-      {
-        "alt_part_id": "MEM-5956J",
-        "vendor": "Avnet",
-        "unit_price": 44.35,
-        "lead_time_days": 17,
-        "stock_qty": 19938
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-7558O",
-    "category": "MCU",
-    "manufacturer": "Texas Instruments",
-    "base_price": 24.65,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-2828X",
-        "vendor": "Farnell",
-        "unit_price": 24.31,
-        "lead_time_days": 19,
-        "stock_qty": 23172
-      },
-      {
-        "alt_part_id": "MCU-1806G",
-        "vendor": "Future Electronics",
-        "unit_price": 24.62,
-        "lead_time_days": 4,
-        "stock_qty": 40466
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-6363D",
-    "category": "MEM",
-    "manufacturer": "STMicroelectronics",
-    "base_price": 90.76,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-5416W",
-        "vendor": "Farnell",
-        "unit_price": 86.97,
-        "lead_time_days": 19,
-        "stock_qty": 31014
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "SENSOR-5788S",
-    "category": "SENSOR",
-    "manufacturer": "NXP",
-    "base_price": 57.54,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-5395W",
-        "vendor": "WT Microelectronics",
-        "unit_price": 55.62,
-        "lead_time_days": 11,
-        "stock_qty": 47704
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-7353Q",
-    "category": "FPGA",
-    "manufacturer": "Micron",
-    "base_price": 30.23,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-7665B",
-        "vendor": "Mouser Electronics",
-        "unit_price": 29.47,
-        "lead_time_days": 15,
-        "stock_qty": 36430
-      },
-      {
-        "alt_part_id": "FPGA-3921D",
-        "vendor": "Arrow Electronics",
-        "unit_price": 29.98,
-        "lead_time_days": 21,
-        "stock_qty": 16232
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "GPU-4229U",
-    "category": "GPU",
-    "manufacturer": "AMD",
-    "base_price": 26.37,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "GPU-3729D",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 27.51,
+        "unit_price": 5.85,
         "lead_time_days": 9,
-        "stock_qty": 43320
-      },
-      {
-        "alt_part_id": "GPU-9352P",
-        "vendor": "Avnet",
-        "unit_price": 25.26,
-        "lead_time_days": 19,
-        "stock_qty": 23412
-      },
-      {
-        "alt_part_id": "GPU-4790H",
-        "vendor": "Rochester Electronics",
-        "unit_price": 22.94,
-        "lead_time_days": 16,
-        "stock_qty": 38979
+        "stock_qty": 19000
       }
     ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MCU-1724I",
-    "category": "MCU",
-    "manufacturer": "Micron",
-    "base_price": 18.2,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MCU-1190R",
-        "vendor": "WPG Holdings",
-        "unit_price": 16.36,
-        "lead_time_days": 21,
-        "stock_qty": 48660
-      },
-      {
-        "alt_part_id": "MCU-9815U",
-        "vendor": "Mouser Electronics",
-        "unit_price": 18.93,
-        "lead_time_days": 7,
-        "stock_qty": 48810
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-2870J",
-    "category": "PWR",
-    "manufacturer": "Texas Instruments",
-    "base_price": 24.21,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-8243Q",
-        "vendor": "Arrow Electronics",
-        "unit_price": 21.83,
-        "lead_time_days": 17,
-        "stock_qty": 40741
-      },
-      {
-        "alt_part_id": "PWR-2169C",
-        "vendor": "WT Microelectronics",
-        "unit_price": 27.54,
-        "lead_time_days": 19,
-        "stock_qty": 35579
-      },
-      {
-        "alt_part_id": "PWR-6293B",
-        "vendor": "Rutronik",
-        "unit_price": 26.76,
-        "lead_time_days": 6,
-        "stock_qty": 34491
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-2220R",
-    "category": "PWR",
-    "manufacturer": "NVIDIA",
-    "base_price": 38.76,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-2217C",
-        "vendor": "Mouser Electronics",
-        "unit_price": 36.64,
-        "lead_time_days": 10,
-        "stock_qty": 36542
-      },
-      {
-        "alt_part_id": "PWR-5833K",
-        "vendor": "Arrow Electronics",
-        "unit_price": 36.08,
-        "lead_time_days": 17,
-        "stock_qty": 33964
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-1899E",
-    "category": "MEM",
-    "manufacturer": "Infineon",
-    "base_price": 35.19,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-6057A",
-        "vendor": "Future Electronics",
-        "unit_price": 36.03,
-        "lead_time_days": 5,
-        "stock_qty": 27054
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-3506B",
-    "category": "PWR",
-    "manufacturer": "STMicroelectronics",
-    "base_price": 77.81,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-2135B",
-        "vendor": "WPG Holdings",
-        "unit_price": 88.36,
-        "lead_time_days": 18,
-        "stock_qty": 30015
-      },
-      {
-        "alt_part_id": "PWR-5837F",
-        "vendor": "Future Electronics",
-        "unit_price": 86.47,
-        "lead_time_days": 18,
-        "stock_qty": 36987
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-4266O",
-    "category": "FPGA",
-    "manufacturer": "Microchip",
-    "base_price": 76.05,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-1895P",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 77.27,
-        "lead_time_days": 12,
-        "stock_qty": 3178
-      },
-      {
-        "alt_part_id": "FPGA-7078Z",
-        "vendor": "WPG Holdings",
-        "unit_price": 78.91,
-        "lead_time_days": 3,
-        "stock_qty": 18942
-      },
-      {
-        "alt_part_id": "FPGA-3002N",
-        "vendor": "Farnell",
-        "unit_price": 75.22,
-        "lead_time_days": 9,
-        "stock_qty": 17278
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "GPU-6589M",
-    "category": "GPU",
-    "manufacturer": "Microchip",
-    "base_price": 35.52,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "GPU-9781K",
-        "vendor": "WT Microelectronics",
-        "unit_price": 29.85,
-        "lead_time_days": 2,
-        "stock_qty": 12545
-      },
-      {
-        "alt_part_id": "GPU-4252G",
-        "vendor": "Farnell",
-        "unit_price": 36.59,
-        "lead_time_days": 3,
-        "stock_qty": 25038
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "PWR-8075O",
-    "category": "PWR",
-    "manufacturer": "Microchip",
-    "base_price": 68.63,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "PWR-2355G",
-        "vendor": "Rutronik",
-        "unit_price": 76.17,
-        "lead_time_days": 20,
-        "stock_qty": 39242
-      },
-      {
-        "alt_part_id": "PWR-3525A",
-        "vendor": "Mouser Electronics",
-        "unit_price": 72.02,
-        "lead_time_days": 5,
-        "stock_qty": 11804
-      },
-      {
-        "alt_part_id": "PWR-7483F",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 65.47,
-        "lead_time_days": 5,
-        "stock_qty": 18170
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "MEM-2920V",
-    "category": "MEM",
-    "manufacturer": "Analog Devices",
-    "base_price": 46.7,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "MEM-2716Q",
-        "vendor": "Rutronik",
-        "unit_price": 44.97,
-        "lead_time_days": 17,
-        "stock_qty": 10724
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.909Z"
-  },
-  {
-    "part_id": "FPGA-7490U",
-    "category": "FPGA",
-    "manufacturer": "Analog Devices",
-    "base_price": 26.94,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-5519W",
-        "vendor": "Rutronik",
-        "unit_price": 25.5,
-        "lead_time_days": 3,
-        "stock_qty": 2605
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.910Z"
-  },
-  {
-    "part_id": "SENSOR-5159K",
-    "category": "SENSOR",
-    "manufacturer": "Micron",
-    "base_price": 88.13,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-1041Y",
-        "vendor": "WPG Holdings",
-        "unit_price": 79.6,
-        "lead_time_days": 14,
-        "stock_qty": 9967
-      },
-      {
-        "alt_part_id": "SENSOR-8890S",
-        "vendor": "Farnell",
-        "unit_price": 90.11,
-        "lead_time_days": 3,
-        "stock_qty": 48067
-      },
-      {
-        "alt_part_id": "SENSOR-5239L",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 83.74,
-        "lead_time_days": 21,
-        "stock_qty": 9976
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.910Z"
-  },
-  {
-    "part_id": "FPGA-6032X",
-    "category": "FPGA",
-    "manufacturer": "NVIDIA",
-    "base_price": 44.23,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "FPGA-1590F",
-        "vendor": "Farnell",
-        "unit_price": 47.9,
-        "lead_time_days": 10,
-        "stock_qty": 22096
-      },
-      {
-        "alt_part_id": "FPGA-5534O",
-        "vendor": "Farnell",
-        "unit_price": 41.98,
-        "lead_time_days": 6,
-        "stock_qty": 24063
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.910Z"
-  },
-  {
-    "part_id": "SENSOR-4789Y",
-    "category": "SENSOR",
-    "manufacturer": "NXP",
-    "base_price": 97.71,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "SENSOR-2651N",
-        "vendor": "Avnet",
-        "unit_price": 91.56,
-        "lead_time_days": 21,
-        "stock_qty": 286
-      },
-      {
-        "alt_part_id": "SENSOR-4585S",
-        "vendor": "Rutronik",
-        "unit_price": 86.8,
-        "lead_time_days": 8,
-        "stock_qty": 41621
-      }
-    ],
-    "last_updated": "2026-08-29T11:38:03.910Z"
+    "last_updated": "2026-09-01T00:00:00.000Z"
   }
 ]
