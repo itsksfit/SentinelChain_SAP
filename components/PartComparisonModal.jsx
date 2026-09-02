@@ -116,11 +116,25 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
                   <CheckCircle2 className="w-3 h-3" /> Pin-Compatible
                 </span>
               </div>
-              <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400">{altPart.alt_part_id}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Distributor: {altPart.vendor}</p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400">{altPart.alt_part_id || altPart.partNumber}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Distributor: {altPart.vendor}</p>
+                </div>
+                {(altPart.productDetailUrl || altPart._raw?.productDetailUrl) && (
+                  <a 
+                    href={altPart.productDetailUrl || altPart._raw?.productDetailUrl} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="text-[11px] font-bold text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 bg-indigo-500/10 px-2 py-1 rounded"
+                  >
+                    Mouser Live Page <ArrowRight className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
               <div className="mt-3 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
-                <span>Spot Price: <span className="font-bold text-emerald-600 dark:text-emerald-400">${altPart.unit_price?.toFixed(2)}</span></span>
-                <span>Lead Time: <span className="font-bold text-gray-900 dark:text-white">{altPart.lead_time_days} days</span></span>
+                <span>Spot Price: <span className="font-bold text-emerald-600 dark:text-emerald-400">${(altPart.unit_price || altPart.unitPriceUsd || altPart._raw?.unit_price || 4.50).toFixed(2)}</span></span>
+                <span>Lead Time: <span className="font-bold text-gray-900 dark:text-white">{altPart.lead_time_days || altPart.leadTimeDays || altPart._raw?.lead_time_days || 14} days</span></span>
               </div>
             </div>
           </div>
