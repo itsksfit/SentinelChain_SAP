@@ -398,7 +398,7 @@ export default function Dashboard() {
               <div className="space-y-1.5 py-0.5">
                 <span className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400 dark:text-gray-400">Quick SKU Exposure Scan:</span>
                 <div className="flex flex-wrap gap-1.5">
-                  {['STM32F401RE', 'PWR-9942A', 'GPU-A100-80', 'MT29F64G08'].map((sku) => (
+                  {['STM32F401RE', 'TPS54331DR', 'BMI270', 'XC7Z020', 'GPU-A100-80'].map((sku) => (
                     <button
                       key={sku}
                       onClick={() => {
