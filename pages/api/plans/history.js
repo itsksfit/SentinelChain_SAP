@@ -23,7 +23,7 @@ Return ONLY a valid JSON object with the key "plans" containing the array.`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-120b", 
+        model: "llama-3.3-70b-versatile", 
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
         temperature: 0.7 
