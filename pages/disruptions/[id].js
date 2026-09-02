@@ -448,9 +448,37 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                                   {dist.recommendation}
                                 </span>
                               </div>
-                              <p className="text-xs text-indigo-600 dark:text-indigo-400 font-mono">
-                                Sourced Part: {dist.altPartId}
-                              </p>
+                              <div className="flex flex-wrap items-center gap-2 mt-0.5">
+                                <p className="text-xs text-indigo-600 dark:text-indigo-400 font-mono font-bold">
+                                  Sourced Part: {dist.altPartId}
+                                </p>
+                                {dist.productDetailUrl && (
+                                  <a 
+                                    href={dist.productDetailUrl} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 px-2 py-0.5 rounded flex items-center gap-1 transition-all"
+                                    title="View live product listing on Mouser"
+                                  >
+                                    <span>Direct Product Link</span>
+                                    <ExternalLink className="w-2.5 h-2.5" />
+                                  </a>
+                                )}
+                                {dist.dataSheetUrl && (
+                                  <a 
+                                    href={dist.dataSheetUrl} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="text-[10px] font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 border border-blue-200 dark:border-blue-500/30 px-2 py-0.5 rounded flex items-center gap-1 transition-all"
+                                    title="Official Manufacturer Datasheet PDF"
+                                  >
+                                    <span>Datasheet PDF</span>
+                                    <FileText className="w-2.5 h-2.5" />
+                                  </a>
+                                )}
+                              </div>
                             </div>
                           </div>
 

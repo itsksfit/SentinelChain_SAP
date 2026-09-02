@@ -23,21 +23,28 @@ export default async function handler(req, res) {
     const basePrice = originalPart.base_price || 4.50;
 
     // 1. Calculate Multi-Factor Distributor Rankings
-    const candidates = (allOptions && allOptions.length > 0) ? allOptions : (
-      originalPart.pin_compatible_alternatives || [
-        { alt_part_id: 'AT32F403ARCT7', vendor: 'Arrow Electronics', unit_price: 4.35, lead_time_days: 15, stock_qty: 20000 },
-        { alt_part_id: 'GD32F403RET6', vendor: 'Farnell', unit_price: 4.28, lead_time_days: 19, stock_qty: 12515 },
-        { alt_part_id: 'AT32F403ARCT7-M', vendor: 'Mouser Electronics', unit_price: 4.60, lead_time_days: 7, stock_qty: 8500 }
-      ]
-    );
+    let candidates = (allOptions && allOptions.length > 0) ? allOptions : null;
+
+    if (!candidates || candidates.length === 0) {
+      try {
+        const { fetchLiveComponentSourcing } = await import('../../lib/intelligence/partsLiveClient');
+        candidates = await fetchLiveComponentSourcing(partNumber);
+      } catch (e) {
+        candidates = originalPart.pin_compatible_alternatives || [];
+      }
+    }
 
     const rankedDistributors = candidates.map((opt, idx) => {
       const raw = opt._raw || opt;
-      const unitPrice = raw.unit_price || 4.50;
-      const leadTime = raw.lead_time_days || 15;
-      const stock = raw.stock_qty || 10000;
-      const vendorName = raw.vendor || opt.vendor || 'Franchised Distributor';
-      const altPartId = raw.alt_part_id || opt.part || 'Alternative Component';
+      const unitPrice = raw.unit_price || raw.unitPriceUsd || 4.50;
+      const leadTime = raw.lead_time_days || raw.leadTimeDays || 15;
+      const stock = raw.stock_qty || raw.stockQty || 10000;
+      const vendorName = raw.vendor || opt.vendor || 'Mouser Electronics';
+      const altPartId = raw.alt_part_id || raw.partNumber || opt.part || 'Alternative Component';
+      const detailUrl = raw.productDetailUrl || opt.productDetailUrl || `https://www.mouser.com/c/?q=${encodeURIComponent(altPartId)}`;
+      const provenance = raw.sourceProvenance || opt.sourceProvenance || "Live Mouser Electronics Search API (api.mouser.com)";
+      const sheetUrl = raw.dataSheetUrl || opt.dataSheetUrl || null;
+      const imgPath = raw.imagePath || opt.imagePath || null;
 
       // Scoring formulas:
       // Price Score (lower is better, basePrice is reference 100)
@@ -69,7 +76,11 @@ export default async function handler(req, res) {
         score: totalScore,
         recommendation,
         totalBOMCost: unitPrice * targetQty,
-        savingsVsBase: (basePrice - unitPrice) * targetQty
+        savingsVsBase: (basePrice - unitPrice) * targetQty,
+        productDetailUrl: detailUrl,
+        sourceProvenance: provenance,
+        dataSheetUrl: sheetUrl,
+        imagePath: imgPath
       };
     }).sort((a, b) => b.score - a.score).map((d, i) => ({ ...d, rank: i + 1 }));
 
