@@ -131,7 +131,6 @@ Return ONLY a JSON object with:
 
   // Step 3: Compile Deterministic Evidence Metrics
   const evidenceConfidence = article?.evidenceConfidence || (sourceTier === 'USGS_SEISMIC' ? 88 : (sourceTier === 'FED_REGISTER_BIS' ? 91 : (sourceTier === 'SEC_EDGAR' ? 84 : 79)));
-  const earlyDetectionAdvantage = article?.earlyDetectionAdvantage || "3.5 Hours Early Advantage";
 
   const result = {
     isDisruption: isActualDisruption,
@@ -144,7 +143,6 @@ Return ONLY a JSON object with:
     
     // Evidence Metrics
     evidenceConfidence: evidenceConfidence,
-    earlyDetectionAdvantage: earlyDetectionAdvantage,
     sourceTier: sourceTier,
     verifiedUrl: verifiedUrl,
     
