@@ -7,12 +7,20 @@
     "base_price": 4.50,
     "pin_compatible_alternatives": [
       {
-        "alt_part_id": "STM32F401RET6",
+        "alt_part_id": "STM32F401RBT6TR",
         "vendor": "Mouser Electronics",
-        "unit_price": 8.74,
+        "unit_price": 6.26,
         "lead_time_days": 3,
-        "stock_qty": 2068,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/STMicroelectronics/STM32F401RET6?qs=s5SkPsIz108eLldhTu8INg%3D%3D"
+        "stock_qty": 3384,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/STMicroelectronics/STM32F401RBT6TR?qs=9MuLHSklicooI3377iF2Ew%3D%3D"
+      },
+      {
+        "alt_part_id": "STM32F401CCU6TR",
+        "vendor": "Mouser Electronics",
+        "unit_price": 6.70,
+        "lead_time_days": 3,
+        "stock_qty": 540,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/STMicroelectronics/STM32F401CCU6TR?qs=ij0jRzXZ2LvamVGMYPvONw%3D%3D"
       },
       {
         "alt_part_id": "LPC1768FET100",
@@ -23,70 +31,12 @@
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/NXP-Semiconductors/LPC1768FET100551?qs=5eMHoInnifTQi23ua6D%252BIg%3D%3D"
       },
       {
-        "alt_part_id": "MSP430F5529IPN",
+        "alt_part_id": "MSP430F5529IPNR",
         "vendor": "Mouser Electronics",
         "unit_price": 3.85,
         "lead_time_days": 3,
         "stock_qty": 525,
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/MSP430F5529IPN?qs=IK5e5L0zOXhMb1bOuHI1hQ%3D%3D"
-      },
-      {
-        "alt_part_id": "GD32F403RET6",
-        "vendor": "Farnell / Digi-Key",
-        "unit_price": 4.28,
-        "lead_time_days": 15,
-        "stock_qty": 12515,
-        "productDetailUrl": "https://uk.farnell.com/search?st=GD32F403"
-      },
-      {
-        "alt_part_id": "AT32F403ARCT7",
-        "vendor": "Arrow Electronics",
-        "unit_price": 4.35,
-        "lead_time_days": 15,
-        "stock_qty": 20000,
-        "productDetailUrl": "https://www.arrow.com/en/products/search?q=AT32F403"
-      }
-    ],
-    "last_updated": "2026-09-01T00:00:00.000Z"
-  },
-  {
-    "part_id": "PWR-9942A",
-    "category": "PWR",
-    "manufacturer": "Texas Instruments",
-    "description": "TPS54331DR 3A 28V Step-Down DC-DC Converter, SOIC-8",
-    "base_price": 2.10,
-    "pin_compatible_alternatives": [
-      {
-        "alt_part_id": "LM2596DSADJG",
-        "vendor": "Mouser Electronics",
-        "unit_price": 2.86,
-        "lead_time_days": 3,
-        "stock_qty": 13576,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/onsemi/LM2596DSADJG?qs=atIEnC%2F2K4W1Dy%252BFjrRjIQ%3D%3D"
-      },
-      {
-        "alt_part_id": "MP1484EN-LF-Z",
-        "vendor": "Mouser Electronics",
-        "unit_price": 3.45,
-        "lead_time_days": 3,
-        "stock_qty": 2385,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Monolithic-Power-Systems-MPS/MP1484EN-LF-Z?qs=rC7bBWoQAAnxJjjwTvF1fw%3D%3D"
-      },
-      {
-        "alt_part_id": "LM2596T-ADJ/NOPB",
-        "vendor": "Mouser Electronics",
-        "unit_price": 6.23,
-        "lead_time_days": 3,
-        "stock_qty": 2177,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/LM2596T-ADJ-NOPB?qs=X1J7HmVL2ZFY0jaC1PT3MA%3D%3D"
-      },
-      {
-        "alt_part_id": "TPS54331DR",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 1.89,
-        "lead_time_days": 3,
-        "stock_qty": 3484,
-        "productDetailUrl": "https://www.digikey.com/en/products/result?keywords=TPS54331DR"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -96,8 +46,16 @@
     "category": "PWR",
     "manufacturer": "Texas Instruments",
     "description": "TPS54331DR 3A 28V Step-Down DC-DC Converter, SOIC-8",
-    "base_price": 2.10,
+    "base_price": 1.89,
     "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "TPS54331DR",
+        "vendor": "Mouser Electronics",
+        "unit_price": 1.81,
+        "lead_time_days": 3,
+        "stock_qty": 2533,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/TPS54331DR?qs=QyYHynRG50rsSYcB%2Ftz4Yw%3D%3D"
+      },
       {
         "alt_part_id": "LM2596DSADJG",
         "vendor": "Mouser Electronics",
@@ -113,14 +71,40 @@
         "lead_time_days": 3,
         "stock_qty": 2385,
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Monolithic-Power-Systems-MPS/MP1484EN-LF-Z?qs=rC7bBWoQAAnxJjjwTvF1fw%3D%3D"
+      }
+    ],
+    "last_updated": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "part_id": "PWR-9942A",
+    "category": "PWR",
+    "manufacturer": "Texas Instruments",
+    "description": "TPS54331DR 3A 28V Step-Down DC-DC Converter, SOIC-8",
+    "base_price": 1.89,
+    "pin_compatible_alternatives": [
+      {
+        "alt_part_id": "TPS54331DR",
+        "vendor": "Mouser Electronics",
+        "unit_price": 1.81,
+        "lead_time_days": 3,
+        "stock_qty": 2533,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/TPS54331DR?qs=QyYHynRG50rsSYcB%2Ftz4Yw%3D%3D"
       },
       {
-        "alt_part_id": "LM2596T-ADJ/NOPB",
+        "alt_part_id": "LM2596DSADJG",
         "vendor": "Mouser Electronics",
-        "unit_price": 6.23,
+        "unit_price": 2.86,
         "lead_time_days": 3,
-        "stock_qty": 2177,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Texas-Instruments/LM2596T-ADJ-NOPB?qs=X1J7HmVL2ZFY0jaC1PT3MA%3D%3D"
+        "stock_qty": 13576,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/onsemi/LM2596DSADJG?qs=atIEnC%2F2K4W1Dy%252BFjrRjIQ%3D%3D"
+      },
+      {
+        "alt_part_id": "MP1484EN-LF-Z",
+        "vendor": "Mouser Electronics",
+        "unit_price": 3.45,
+        "lead_time_days": 3,
+        "stock_qty": 2385,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Monolithic-Power-Systems-MPS/MP1484EN-LF-Z?qs=rC7bBWoQAAnxJjjwTvF1fw%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -149,12 +133,12 @@
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Winbond/W25Q64JWTBIQ-TR?qs=YwPsRIUVAOfnin8PZYtWGA%3D%3D"
       },
       {
-        "alt_part_id": "IS42S16400N-7BL",
+        "alt_part_id": "IS42S16400J-7TLI",
         "vendor": "Mouser Electronics",
-        "unit_price": 7.33,
+        "unit_price": 3.04,
         "lead_time_days": 3,
         "stock_qty": 137,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ISSI/IS42S16400N-7BL?qs=jRuttqqUwMSbXsGH3JgPKQ%3D%3D"
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ISSI/IS42S16400J-5TL?qs=jRuttqqUwMSbXsGH3JgPKQ%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -162,7 +146,7 @@
   {
     "part_id": "XC7Z020-1CLG400C",
     "category": "FPGA",
-    "manufacturer": "AMD",
+    "manufacturer": "AMD / Xilinx",
     "description": "Xilinx Zynq-7000 Dual ARM Cortex-A9 MPCore with 85K Logic Cells, BGA-400",
     "base_price": 125.00,
     "pin_compatible_alternatives": [
@@ -175,7 +159,7 @@
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Altera/EP4CE10E22C7N?qs=jblrfmjbeiFZezyoCds84w%3D%3D"
       },
       {
-        "alt_part_id": "EP4CE10F17C8",
+        "alt_part_id": "EP4CE10F17C8N",
         "vendor": "Mouser Electronics",
         "unit_price": 52.14,
         "lead_time_days": 3,
@@ -215,14 +199,6 @@
         "lead_time_days": 7,
         "stock_qty": 30,
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/ADLINK-Technology/EGX-MXM-A1000-4G-35W-Adlink-logo?qs=By6Nw2ByBD1mgcVOnSZxww%3D%3D"
-      },
-      {
-        "alt_part_id": "NVIDIA-H100-SXM5",
-        "vendor": "Avnet / Arrow",
-        "unit_price": 14100.00,
-        "lead_time_days": 10,
-        "stock_qty": 500,
-        "productDetailUrl": "https://www.arrow.com/en/products/search?q=NVIDIA+H100"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"
@@ -243,20 +219,12 @@
         "productDetailUrl": "https://www.mouser.in/en/ProductDetail/Bosch-Sensortec/BMI270?qs=u16ybLDytRYIj%252BjQEee88A%3D%3D"
       },
       {
-        "alt_part_id": "ICM-42688-V",
+        "alt_part_id": "SEN-22398",
         "vendor": "Mouser Electronics",
-        "unit_price": 9.68,
+        "unit_price": 19.62,
         "lead_time_days": 3,
-        "stock_qty": 32,
-        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/TDK-InvenSense/ICM-42688-V?qs=iLbezkQI%252Bsj8X%2F1CCh43jQ%3D%3D"
-      },
-      {
-        "alt_part_id": "LSM6DSOXTR",
-        "vendor": "Digi-Key Electronics",
-        "unit_price": 4.85,
-        "lead_time_days": 3,
-        "stock_qty": 28400,
-        "productDetailUrl": "https://www.digikey.com/en/products/result?keywords=LSM6DSOXTR"
+        "stock_qty": 70,
+        "productDetailUrl": "https://www.mouser.in/en/ProductDetail/SparkFun/SEN-22398?qs=1Kr7Jg1SGW%252BXMmYZfwmohg%3D%3D"
       }
     ],
     "last_updated": "2026-09-01T00:00:00.000Z"

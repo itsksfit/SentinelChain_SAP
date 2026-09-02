@@ -1,42 +1,50 @@
 [
   {
-    "partNumber": "STM32F405RGT6",
+    "partNumber": "STM32F401RE",
     "name": "STMicroelectronics 32-bit ARM Cortex-M4 MCU",
-    "usedInProducts": ["Industrial Automation Controller", "EV Battery Management System"],
-    "revenueAtRiskPerDay": 85000,
+    "usedInProducts": ["Industrial Automation Controller", "EV Battery Management System", "Automotive Engine Control Unit"],
+    "revenueAtRiskPerDay": 1575000,
     "manufacturer": "STMicroelectronics",
-    "alternatives": ["GD32F405RGT6", "AT32F403ARCT7"]
+    "alternatives": ["STM32F401RBT6TR", "STM32F401CCU6TR", "LPC1768FET100"]
   },
   {
-    "partNumber": "TPS65987DDH",
-    "name": "Texas Instruments USB Type-C PD Controller",
-    "usedInProducts": ["Enterprise Laptop Series", "Smart Display Hub"],
-    "revenueAtRiskPerDay": 42000,
+    "partNumber": "TPS54331DR",
+    "name": "Texas Instruments 3A 28V Step-Down DC-DC Converter",
+    "usedInProducts": ["Industrial Power Inverters", "In-Cabin Telematics Hub"],
+    "revenueAtRiskPerDay": 735000,
     "manufacturer": "Texas Instruments",
-    "alternatives": ["CYPD3177-24LQXQ", "FUSB302BMPX"]
+    "alternatives": ["TPS54331DR", "LM2596DSADJG", "MP1484EN-LF-Z"]
   },
   {
-    "partNumber": "MT29F64G08AECABH1-10Z:A",
+    "partNumber": "BMI270",
+    "name": "Bosch Sensortec Ultra-Low Power 6-Axis IMU",
+    "usedInProducts": ["Flight Navigation IMU", "Autonomous Mobile Robotics Unit"],
+    "revenueAtRiskPerDay": 2070000,
+    "manufacturer": "Bosch Sensortec",
+    "alternatives": ["BMI270", "LSM6DSOXTR", "BME280"]
+  },
+  {
+    "partNumber": "MT29F64G08AECABH1",
     "name": "Micron 64GB NAND Flash Memory",
-    "usedInProducts": ["Flagship Smartphone Edge", "Rugged Tablet Pro"],
-    "revenueAtRiskPerDay": 120000,
+    "usedInProducts": ["Flagship Smartphone Edge", "Rugged Tablet Pro", "5G Baseband Telephony Unit"],
+    "revenueAtRiskPerDay": 2975000,
     "manufacturer": "Micron Technology",
-    "alternatives": ["K9F4G08U0F-SCB0", "TH58NVG2S3HTA00"]
+    "alternatives": ["W25Q64JWSSIN", "W25Q64JWTBIQ TR", "IS42S16400J-7TLI"]
   },
   {
     "partNumber": "XC7Z020-1CLG400C",
-    "name": "Xilinx Zynq-7000 SoC FPGA",
-    "usedInProducts": ["Military Radar Array", "Medical Imaging Ultrasound"],
-    "revenueAtRiskPerDay": 350000,
+    "name": "AMD Xilinx Zynq-7000 SoC Dual ARM Cortex-A9 FPGA",
+    "usedInProducts": ["Military Radar Array", "Medical Imaging Ultrasound", "High-Density Phased Array Radar"],
+    "revenueAtRiskPerDay": 4375000,
     "manufacturer": "AMD / Xilinx",
-    "alternatives": ["5ASTFD3K3F40I3N", "LFE5UM-45F-8BG381C"]
+    "alternatives": ["XC7Z020-L1CLG400I", "EP4CE10E22C7N", "EP4CE10F17C8N"]
   },
   {
-    "partNumber": "NVIDIA-A100-80GB",
-    "name": "NVIDIA A100 Tensor Core GPU",
-    "usedInProducts": ["Enterprise AI Training Server", "Cloud Data Center Blade"],
-    "revenueAtRiskPerDay": 980000,
+    "partNumber": "GPU-A100-80",
+    "name": "NVIDIA A100 Tensor Core GPU SXM4 80GB",
+    "usedInProducts": ["Enterprise AI Training Server", "Cloud Data Center Blade", "Hyperscale AI Compute Blade"],
+    "revenueAtRiskPerDay": 14200000,
     "manufacturer": "NVIDIA",
-    "alternatives": ["AMD-Instinct-MI250", "Intel-Gaudi2"]
+    "alternatives": ["MXM-A1000-4G-35W", "EGX-MXM-A1000-4G"]
   }
 ]

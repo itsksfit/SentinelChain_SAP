@@ -19,9 +19,9 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
     : (data.pin_compatible_alternatives && data.pin_compatible_alternatives.length > 0)
       ? data.pin_compatible_alternatives
       : [
-          { alt_part_id: "STM32F401RET6", vendor: "Mouser Electronics", lead_time_days: 3, unit_price: 8.74, final_price: 8.04, status: "✅ In Stock" },
-          { alt_part_id: "GD32F403RET6", vendor: "Farnell / Digi-Key", lead_time_days: 15, unit_price: 4.28, final_price: 3.95, status: "Counter Accepted" },
-          { alt_part_id: "AT32F403ARCT7", vendor: "Arrow Electronics", lead_time_days: 15, unit_price: 4.35, final_price: 4.00, status: "Counter Accepted" }
+          { alt_part_id: "STM32F401RBT6TR", vendor: "Mouser Electronics", lead_time_days: 3, unit_price: 6.26, final_price: 5.80, status: "✅ In Stock" },
+          { alt_part_id: "STM32F401CCU6TR", vendor: "Mouser Electronics", lead_time_days: 3, unit_price: 6.70, final_price: 6.15, status: "✅ In Stock" },
+          { alt_part_id: "LPC1768FET100", vendor: "Mouser Electronics", lead_time_days: 3, unit_price: 6.85, final_price: 6.30, status: "✅ In Stock" }
         ];
 
   const handlePrint = () => {
