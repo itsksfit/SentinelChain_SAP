@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { calculateEvidenceConfidence, calculateEarlyDetectionAdvantage } from '../../lib/intelligence/signalLayer';
+import { calculateEvidenceConfidence } from '../../lib/intelligence/signalLayer';
 
 export default async function handler(req, res) {
   const { article, eventText } = req.body;
@@ -103,8 +103,7 @@ Return ONLY a JSON object with:
   const isActualDisruption = Boolean(extractedEntity.isDisruption && correlatedPart && extractedEntity.technologyCategory !== "NONE");
 
   // Step 3: Compile Deterministic Evidence Metrics
-  const evidenceConfidence = article?.evidenceConfidence || calculateEvidenceConfidence([sourceTier, "NEWS_BASELINE"]);
-  const earlyDetectionAdvantage = article?.earlyDetectionAdvantage || calculateEarlyDetectionAdvantage(article?.primaryTimestamp || new Date(), article?.mediaTimestamp);
+  const evidenceConfidence = article?.evidenceConfidence || calculateEvidenceConfidence([sourceTier]);
 
   const result = {
     isDisruption: isActualDisruption,
@@ -115,9 +114,8 @@ Return ONLY a JSON object with:
     severity: isActualDisruption ? (extractedEntity.severity || "medium") : "low",
     disruptionType: extractedEntity.incidentType || "Supply Constraint",
     
-    // Transparent Evidence Metrics (No Fake Scores)
+    // Transparent Evidence Metrics
     evidenceConfidence: evidenceConfidence,
-    earlyDetectionAdvantage: earlyDetectionAdvantage,
     sourceTier: sourceTier,
     verifiedUrl: verifiedUrl,
     

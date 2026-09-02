@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import EarlyDetectionTimeline from '../../components/EarlyDetectionTimeline';
 import PrAuditExportModal from '../../components/PrAuditExportModal';
 import PartComparisonModal from '../../components/PartComparisonModal';
 import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer, Mail, Copy, Check, Sliders, Layers, Sparkles } from 'lucide-react';
@@ -298,17 +297,6 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                       </a>
                     </div>
                   )}
-
-                  {/* Early Warning Timeline */}
-                  <div className="mt-4">
-                    <EarlyDetectionTimeline
-                      primaryTimestamp={data.primaryTimestamp || data.detected_at || new Date(Date.now() - 28800000).toISOString()}
-                      mediaTimestamp={data.mediaTimestamp || new Date(Date.now() - 3600000).toISOString()}
-                      advantageText={data.earlyDetectionAdvantage || '8.0 Hours Early Advantage'}
-                      sourceTier={data.sourceTier}
-                      sourceName={data.source}
-                    />
-                  </div>
                 </div>
 
                 {/* Revenue Impact Summary */}

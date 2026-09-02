@@ -108,10 +108,6 @@ export default function PrAuditExportModal({ isOpen, onClose, data }) {
                 <span className="text-gray-500">Deterministic Evidence Confidence:</span>
                 <span className="font-bold text-emerald-400">{confidence}% (Tier-Weighted)</span>
               </div>
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-gray-500">Early Detection Horizon:</span>
-                <span className="font-bold text-indigo-400">{earlyAdvantage}</span>
-              </div>
               <div className="flex items-center justify-between text-xs pt-2 border-t border-gray-200 dark:border-white/10">
                 <span className="text-gray-500">Verified Citation:</span>
                 <a href={verifiedUrl} target="_blank" rel="noreferrer" className="text-indigo-400 hover:underline flex items-center gap-1 font-mono text-[11px]">

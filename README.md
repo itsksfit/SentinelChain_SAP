@@ -34,7 +34,6 @@ In enterprise manufacturing and B2B supply chains, revenue loss rarely occurs in
    - **Trade Policy Adapter:** Live **US Federal Register API** for Bureau of Industry and Security (BIS) / EAR entity rules and export bans.
    - **Corporate Disclosure Adapter:** **SEC EDGAR** Full-Text Search (10-Q / 8-K filings) from chipmakers (NVIDIA, Texas Instruments) disclosing wafer constraints.
    - **Macro Context:** **NY Fed Global Supply Chain Pressure Index (GSCPI)** for macro-economic supply risk.
-   - **Early Detection Advantage:** Benchmarks primary event timestamps against mainstream media to quantify hours/days gained ($\Delta T = T_{\text{news}} - T_{\text{primary}}$).
 
 2. **🛡️ Signal Consensus & Anti-Hallucination Engine**
    Cross-verifies data across independent regulatory feeds to enforce a strict **95%+ confidence score** before triggering any downstream ERP actions.

@@ -46,7 +46,7 @@ graph TD
     USGS --> SignalLayer
     IR --> SignalLayer
     GSCPI --> SignalLayer
-    NewsAPI -->|Early Detection Benchmark| SignalLayer
+    NewsAPI --> SignalLayer
 
     SignalLayer -->|Signal Dossier + Confidence| DetectAgent[🤖 Public Entity Extraction Agent]
     DetectAgent -->|No Impact| Terminate[🛑 Dismiss Non-Critical Event]
@@ -76,7 +76,7 @@ graph TD
   - **Geophysical Hazard Adapter:** Live **USGS Seismic Geo-Feed** cross-referenced against the Global Semiconductor Fab Registry using the *Heuristic Fab Vibration Exposure Model*.
   - **Trade Policy Adapter:** Live **US Federal Register API** for BIS Entity List rules.
   - **Macro Context:** **NY Fed GSCPI** background indicator.
-  - **Mainstream Media Baseline:** **NewsAPI** used strictly to benchmark the **Early Detection Advantage** ($\Delta T = T_{\text{news}} - T_{\text{primary}}$).
+  - **Mainstream Media Baseline:** **NewsAPI** used for public media reporting context.
 
 ### 2. Multi-Agent AI & Deterministic Correlation Framework
 * **Entity Extraction Agent:** Located in [`pages/api/detect.js`](file:///Users/sushilkohli/Downloads/untitled%20folder/SentinelChain_SAP/pages/api/detect.js). It takes incoming public signal text and extracts the affected public companies, technology categories, and incident severity.

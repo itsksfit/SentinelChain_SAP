@@ -12,7 +12,6 @@ import events from '../data/events.json';
 
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import EarlyDetectionTimeline from '../components/EarlyDetectionTimeline';
 import PrAuditExportModal from '../components/PrAuditExportModal';
 import dynamic from 'next/dynamic';
 
@@ -237,7 +236,6 @@ export default function Dashboard() {
       revenue_at_risk_usd: d2.revenueAtRiskPerDay,
       status: "Awaiting Decision",
       evidenceConfidence: d1.evidenceConfidence || 92,
-      earlyDetectionAdvantage: d1.earlyDetectionAdvantage || "Direct Primary Advantage",
       verifiedUrl: d1.verifiedUrl || newsArticle.verifiedUrl || "#",
       sourceTier: d1.sourceTier || newsArticle.sourceTier || "CORPORATE_DISCLOSURE",
       source: newsArticle.source || "Multi-Source Feed",
@@ -479,8 +477,8 @@ export default function Dashboard() {
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                           Confidence: {news.evidenceConfidence}%
                         </span>
-                        <span className="font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-indigo-600 dark:text-indigo-400" /> {news.earlyDetectionAdvantage}
+                        <span className="font-mono text-slate-500 dark:text-gray-400">
+                          {news.sourceTier || 'OFFICIAL'}
                         </span>
                       </div>
 
@@ -591,8 +589,8 @@ export default function Dashboard() {
                             <span className="font-mono font-bold text-indigo-700 dark:text-indigo-400">{detectResult.partNumber}</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-600 dark:text-gray-400">Early Detection Advantage:</span>
-                            <span className="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1"><Zap className="w-3 h-3 text-emerald-600" /> {detectResult.earlyDetectionAdvantage}</span>
+                            <span className="text-slate-600 dark:text-gray-400">Evidence Confidence:</span>
+                            <span className="font-bold text-emerald-700 dark:text-emerald-400">{detectResult.evidenceConfidence || 92}% (Tier-Weighted)</span>
                           </div>
                           {detectResult.verifiedUrl && detectResult.verifiedUrl !== '#' && (
                             <div className="pt-2 border-t border-slate-100 dark:border-white/5 flex justify-end">
@@ -606,16 +604,6 @@ export default function Dashboard() {
                               </a>
                             </div>
                           )}
-                        </div>
-                        {/* Early Detection Horizon Timeline */}
-                        <div className="pt-2">
-                          <EarlyDetectionTimeline 
-                            primaryTimestamp={detectResult.primaryTimestamp || new Date(Date.now() - 28800000).toISOString()}
-                            mediaTimestamp={detectResult.mediaTimestamp || new Date(Date.now() - 3600000).toISOString()}
-                            advantageText={detectResult.earlyDetectionAdvantage}
-                            sourceTier={detectResult.sourceTier}
-                            sourceName={detectResult.sourceName}
-                          />
                         </div>
                       </div>
                       
