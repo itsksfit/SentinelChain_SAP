@@ -87,10 +87,11 @@ export default async function handler(req, res) {
     // 2. Determine Selected Distributor for the Order Draft
     const chosenVendor = selectedOption ? {
       vendor: selectedOption.vendor || selectedOption._raw?.vendor || rankedDistributors[0].vendor,
-      altPartId: selectedOption.alt_part_id || selectedOption.part || selectedOption._raw?.alt_part_id || rankedDistributors[0].altPartId,
-      unitPrice: selectedOption.unit_price || selectedOption._raw?.unit_price || rankedDistributors[0].unitPrice,
-      leadTimeDays: selectedOption.lead_time_days || selectedOption._raw?.lead_time_days || rankedDistributors[0].leadTimeDays,
-      stockQty: selectedOption.stock_qty || selectedOption._raw?.stock_qty || rankedDistributors[0].stockQty
+      altPartId: selectedOption.altPartId || selectedOption.alt_part_id || selectedOption.partNumber || selectedOption.part || selectedOption._raw?.alt_part_id || rankedDistributors[0].altPartId,
+      unitPrice: selectedOption.unitPrice || selectedOption.unit_price || selectedOption.unitPriceUsd || selectedOption._raw?.unit_price || rankedDistributors[0].unitPrice,
+      leadTimeDays: selectedOption.leadTimeDays || selectedOption.lead_time_days || selectedOption._raw?.lead_time_days || rankedDistributors[0].leadTimeDays,
+      stockQty: selectedOption.stockQty || selectedOption.stock_qty || selectedOption._raw?.stock_qty || rankedDistributors[0].stockQty,
+      productDetailUrl: selectedOption.productDetailUrl || rankedDistributors[0].productDetailUrl
     } : rankedDistributors[0];
 
     const prNumber = `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`;

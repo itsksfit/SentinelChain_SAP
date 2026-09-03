@@ -116,10 +116,15 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
 
       if (res.ok) {
         const result = await res.json();
-        setRankedDistributors(result.rankedDistributors || []);
-        if (!selectedDistributor && result.selectedDistributor) {
-          setSelectedDistributor(result.selectedDistributor);
+        const ranked = result.rankedDistributors || [];
+        setRankedDistributors(ranked);
+        
+        if (chosenAlt) {
+          setSelectedDistributor(chosenAlt);
+        } else if (ranked.length > 0) {
+          setSelectedDistributor(prev => prev || ranked[0]);
         }
+        
         setEmailDraft(result.emailDraft || '');
         setPrNumber(result.prNumber || `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`);
       }
@@ -447,7 +452,8 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
 
                   <div className="space-y-3">
                     {rankedDistributors.map((dist, idx) => {
-                      const isSelected = selectedDistributor?.vendor === dist.vendor;
+                      const currentSelectedId = selectedDistributor?.altPartId || selectedDistributor?.alt_part_id || selectedDistributor?.partNumber;
+                      const isSelected = currentSelectedId ? currentSelectedId === dist.altPartId : idx === 0;
                       const isInStock = (dist.stockQty || 0) > 0;
                       return (
                         <div 
@@ -455,12 +461,20 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                           onClick={() => handleSelectAndDraft(dist)}
                           className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
                             isSelected 
-                              ? 'bg-indigo-50/50 dark:bg-indigo-950/20 border-indigo-500 ring-2 ring-indigo-500/20 shadow-md' 
+                              ? 'bg-indigo-50/70 dark:bg-indigo-950/30 border-indigo-500 ring-2 ring-indigo-500/30 shadow-md' 
                               : 'bg-white dark:bg-[#151821] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
                           }`}
                         >
                           <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs ${
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all shrink-0 ${
+                              isSelected 
+                                ? 'border-indigo-600 bg-indigo-600 text-white shadow-xs' 
+                                : 'border-gray-300 dark:border-gray-600 bg-transparent'
+                            }`}>
+                              {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs shrink-0 ${
                               idx === 0 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300'
                             }`}>
                               #{dist.rank}
@@ -510,7 +524,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-6 text-xs">
+                          <div className="flex items-center gap-4 sm:gap-6 text-xs">
                             <div>
                               <p className="text-[10px] text-gray-400 font-bold uppercase">Unit Price</p>
                               <p className="font-black text-gray-900 dark:text-white">${dist.unitPrice?.toFixed(2)}</p>
@@ -535,15 +549,37 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                               </p>
                             </div>
 
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openSpecComparison({ alt_part_id: dist.altPartId, vendor: dist.vendor, unit_price: dist.unitPrice, lead_time_days: dist.leadTimeDays, productDetailUrl: dist.productDetailUrl });
-                              }}
-                              className="px-2.5 py-1 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 rounded-lg border border-indigo-200 dark:border-indigo-500/30 transition-colors"
-                            >
-                              Compare
-                            </button>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSelectAndDraft(dist);
+                                }}
+                                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 ${
+                                  isSelected 
+                                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20' 
+                                    : 'bg-gray-100 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 dark:bg-white/5 dark:hover:bg-indigo-500/10 dark:text-gray-300 dark:hover:text-indigo-400 border border-gray-200 dark:border-white/10'
+                                }`}
+                              >
+                                {isSelected ? (
+                                  <>
+                                    <CheckCircle2 className="w-3.5 h-3.5" /> Selected
+                                  </>
+                                ) : (
+                                  'Select Option'
+                                )}
+                              </button>
+
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openSpecComparison({ alt_part_id: dist.altPartId, vendor: dist.vendor, unit_price: dist.unitPrice, lead_time_days: dist.leadTimeDays, productDetailUrl: dist.productDetailUrl });
+                                }}
+                                className="px-2.5 py-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-lg border border-indigo-200 dark:border-indigo-500/30 transition-colors"
+                              >
+                                Compare
+                              </button>
+                            </div>
                           </div>
                         </div>
                       );
@@ -559,7 +595,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                         <Mail className="w-4 h-4 text-indigo-500" /> Commercial Purchase Requisition & RFQ Email Package
                       </h3>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Tailored for <span className="font-bold text-gray-900 dark:text-white">{selectedDistributor?.vendor || 'Arrow Electronics'}</span> • Reference <span className="font-mono text-indigo-500 font-bold">{prNumber}</span>
+                        Tailored for <span className="font-bold text-gray-900 dark:text-white">{selectedDistributor?.vendor || 'Mouser Electronics'}</span> • Sourcing Part: <span className="font-mono text-indigo-500 font-bold">{selectedDistributor?.altPartId || 'Selected Alternative'}</span> • Reference <span className="font-mono text-indigo-500 font-bold">{prNumber}</span>
                       </p>
                     </div>
 
@@ -598,7 +634,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                   {/* APPROVAL & ACTION BAR */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      Total Order Commitment: <span className="font-black text-gray-900 dark:text-white">${((selectedDistributor?.unitPrice || 4.35) * quantity).toLocaleString()} USD</span>
+                      Total Order Commitment ({selectedDistributor?.altPartId || 'Component'}): <span className="font-black text-gray-900 dark:text-white">${((selectedDistributor?.unitPrice || 4.35) * quantity).toLocaleString()} USD</span>
                     </div>
 
                     <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -613,7 +649,7 @@ export default function DisruptionDetail({ ssrDisruption, ssrPartInfo }) {
                         onClick={handleApprovePlan}
                         className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-500/20"
                       >
-                        <CheckCircle className="w-4 h-4" /> Approve & Dispatch Requisition
+                        <CheckCircle className="w-4 h-4" /> Approve & Requisition {selectedDistributor?.altPartId || 'Selected Option'}
                       </button>
                     </div>
                   </div>
