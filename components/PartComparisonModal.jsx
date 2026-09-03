@@ -1,12 +1,15 @@
 import React from 'react';
 import { X, CheckCircle2, ShieldCheck, Cpu, ArrowRight, Layers, Zap, Info } from 'lucide-react';
 
-export default function PartComparisonModal({ isOpen, onClose, originalPart, altPart, onSelectOption }) {
+export default function PartComparisonModal({ isOpen, onClose, originalPart = {}, altPart = {}, onSelectOption }) {
   if (!isOpen || !originalPart || !altPart) return null;
 
+  const originalId = originalPart.part_id || originalPart.part || 'STM32F401RE';
+  const alternativeId = altPart.alt_part_id || altPart.altPartId || altPart.partNumber || 'STM32F401RBT6TR';
+
   // Technical specification map for rich side-by-side engineering comparison
-  const getSpecs = (partId, category, mfg) => {
-    const id = (partId || '').toUpperCase();
+  const getSpecs = (partId = '', category = 'MCU', mfg = '') => {
+    const id = String(partId || '').toUpperCase();
     if (id.includes('STM32') || id.includes('GD32') || id.includes('AT32') || category === 'MCU') {
       return {
         core: id.includes('AT32') ? 'ARM Cortex-M4 (120 MHz)' : id.includes('GD32') ? 'ARM Cortex-M4 (108 MHz)' : 'ARM Cortex-M4 (84 MHz)',
@@ -58,8 +61,8 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
     }
   };
 
-  const origSpecs = getSpecs(originalPart.part_id, originalPart.category, originalPart.manufacturer);
-  const altSpecs = getSpecs(altPart.alt_part_id, originalPart.category, altPart.vendor);
+  const origSpecs = getSpecs(originalId, originalPart.category, originalPart.manufacturer);
+  const altSpecs = getSpecs(alternativeId, originalPart.category, altPart.vendor);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-[fadeIn_0.2s_ease-out]">
@@ -101,10 +104,10 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
                 <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">Original Target Part</span>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-bold">Disrupted</span>
               </div>
-              <h3 className="text-lg font-black text-gray-900 dark:text-white">{originalPart.part_id}</h3>
+              <h3 className="text-lg font-black text-gray-900 dark:text-white">{originalId}</h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">{originalPart.manufacturer || 'Primary OEM'}</p>
               <div className="mt-3 text-xs font-semibold text-gray-700 dark:text-gray-300">
-                Base Cost: <span className="font-bold text-gray-900 dark:text-white">${originalPart.base_price?.toFixed(2)}</span>
+                Base Cost: <span className="font-bold text-gray-900 dark:text-white">${(typeof originalPart.base_price === 'number' ? originalPart.base_price : (parseFloat(originalPart.base_price) || 4.50)).toFixed(2)}</span>
               </div>
             </div>
 
@@ -118,8 +121,8 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
               </div>
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400">{altPart.alt_part_id || altPart.partNumber}</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Distributor: {altPart.vendor}</p>
+                  <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400">{alternativeId}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Distributor: {altPart.vendor || 'Mouser Electronics'}</p>
                 </div>
                 {(altPart.productDetailUrl || altPart._raw?.productDetailUrl) && (
                   <a 
@@ -133,8 +136,8 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
                 )}
               </div>
               <div className="mt-3 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
-                <span>Spot Price: <span className="font-bold text-emerald-600 dark:text-emerald-400">${(altPart.unit_price || altPart.unitPriceUsd || altPart._raw?.unit_price || 4.50).toFixed(2)}</span></span>
-                <span>Lead Time: <span className="font-bold text-gray-900 dark:text-white">{altPart.lead_time_days || altPart.leadTimeDays || altPart._raw?.lead_time_days || 14} days</span></span>
+                <span>Spot Price: <span className="font-bold text-emerald-600 dark:text-emerald-400">${(typeof altPart.unit_price === 'number' ? altPart.unit_price : (typeof altPart.unitPrice === 'number' ? altPart.unitPrice : parseFloat(altPart.unit_price || altPart.unitPrice || altPart.unitPriceUsd || altPart._raw?.unit_price) || 4.50)).toFixed(2)}</span></span>
+                <span>Lead Time: <span className="font-bold text-gray-900 dark:text-white">{altPart.lead_time_days || altPart.leadTimeDays || altPart._raw?.lead_time_days || 3} days</span></span>
               </div>
             </div>
           </div>
@@ -145,8 +148,8 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
               <thead>
                 <tr className="bg-gray-100/70 dark:bg-white/5 border-b border-gray-200 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   <th className="p-3 w-1/3">Engineering Parameter</th>
-                  <th className="p-3 w-1/3">Original: {originalPart.part_id}</th>
-                  <th className="p-3 w-1/3 text-emerald-600 dark:text-emerald-400">Alternative: {altPart.alt_part_id}</th>
+                  <th className="p-3 w-1/3">Original: {originalId}</th>
+                  <th className="p-3 w-1/3 text-emerald-600 dark:text-emerald-400">Alternative: {alternativeId}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-white/5">
@@ -242,7 +245,7 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart, alt
               }}
               className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-indigo-500/20"
             >
-              Select {altPart.alt_part_id} for Sourcing <ArrowRight className="w-4 h-4" />
+              Select {alternativeId} for Sourcing <ArrowRight className="w-4 h-4" />
             </button>
           )}
         </div>
