@@ -120,12 +120,41 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
     }
   }, [id]);
 
-  // Load distributor rankings and initial Groq email draft on mount
+  // Helper to generate instant local RFQ draft without waiting for network
+  const generateEmailDraft = (chosenVendor, prNum, targetQty, targetPlant) => {
+    const partName = chosenVendor?.altPartId || chosenVendor?.alt_part_id || 'Alternative Part';
+    const supplierName = chosenVendor?.vendor || 'Mouser Electronics';
+    const priceStr = formatPrice(chosenVendor?.unitPrice);
+    const totalCostStr = ((chosenVendor?.unitPrice || 4.50) * targetQty).toLocaleString();
+    const leadTimeStr = chosenVendor?.leadTimeDays || 3;
+
+    return `SUBJECT: [URGENT SPOT RFQ / PO: ${prNum}] Emergency Allocation Order for ${partName}
+
+Attn: ${supplierName} Global Sourcing & Sales Desk
+
+We are issuing an urgent commercial purchase requisition for immediate warehouse dispatch:
+
+• Sourced Part Number: ${partName}
+• Target Volume: ${targetQty.toLocaleString()} units
+• Quoted Spot Unit Price: $${priceStr} USD
+• Total Order Commitment: $${totalCostStr} USD
+• Required Lead Time: ${leadTimeStr} Business Days (Spot Courier Dispatch)
+• Destination Plant: ${targetPlant}
+• Requisition Reference: ${prNum}
+
+Please confirm warehouse spot stock allocation and provide the formal order acknowledgment for SAP Ariba automated synchronization.
+
+Authorized by:
+Global Procurement Director
+SentinelChain Autonomous Supply Chain Resiliency Network`;
+  };
+
+  // Load distributor rankings once on mount or when quantity/days change
   useEffect(() => {
     fetchDistributorRankings();
   }, [data?.part_affected, quantity, targetDays]);
 
-  const fetchDistributorRankings = async (chosenAlt = null) => {
+  const fetchDistributorRankings = async () => {
     setIsLoadingDistributors(true);
     try {
       let liveOptions = null;
@@ -150,7 +179,7 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           partNumber: data?.part_affected || 'STM32F401RE',
-          selectedOption: chosenAlt || selectedDistributor,
+          selectedOption: selectedDistributor,
           allOptions: liveOptions || [],
           requirement: {
             quantity,
@@ -165,14 +194,18 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
         const ranked = result.rankedDistributors || [];
         setRankedDistributors(ranked);
         
-        if (chosenAlt) {
-          setSelectedDistributor(chosenAlt);
-        } else if (ranked.length > 0) {
-          setSelectedDistributor(prev => prev || ranked[0]);
+        const currentPr = prNumber || result.prNumber || `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+        setPrNumber(currentPr);
+
+        if (ranked.length > 0) {
+          setSelectedDistributor(prev => {
+            const active = prev || ranked[0];
+            if (!emailDraft) {
+              setEmailDraft(result.emailDraft || generateEmailDraft(active, currentPr, quantity, deliveryPlant));
+            }
+            return active;
+          });
         }
-        
-        setEmailDraft(result.emailDraft || '');
-        setPrNumber(result.prNumber || `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`);
       }
     } catch (err) {
       console.error("Failed to load distributor rankings:", err);
@@ -181,9 +214,12 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
     }
   };
 
-  const handleSelectAndDraft = async (vendor) => {
+  // INSTANT, LAG-FREE LOCAL SELECTION
+  const handleSelectAndDraft = (vendor) => {
     setSelectedDistributor(vendor);
-    await fetchDistributorRankings(vendor);
+    const activePr = prNumber || `PR-ARIB-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    if (!prNumber) setPrNumber(activePr);
+    setEmailDraft(generateEmailDraft(vendor, activePr, quantity, deliveryPlant));
   };
 
   const handleApprovePlan = () => {
@@ -497,8 +533,8 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
 
                   <div className="space-y-3">
                     {rankedDistributors.map((dist, idx) => {
-                      const currentSelectedId = selectedDistributor?.altPartId || selectedDistributor?.alt_part_id || selectedDistributor?.partNumber;
-                      const isSelected = currentSelectedId ? currentSelectedId === dist.altPartId : idx === 0;
+                      const currentSelectedId = selectedDistributor?.altPartId || selectedDistributor?.alt_part_id || selectedDistributor?.partNumber || (rankedDistributors[0]?.altPartId);
+                      const isSelected = dist.altPartId === currentSelectedId;
                       const isInStock = (dist.stockQty || 0) > 0;
                       return (
                         <div 
