@@ -3,7 +3,7 @@ import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
 import PrAuditExportModal from '../../components/PrAuditExportModal';
 import PartComparisonModal from '../../components/PartComparisonModal';
-import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer, Mail, Copy, Check, Sliders, Layers, Sparkles } from 'lucide-react';
+import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, CheckCircle2, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer, Mail, Copy, Check, Sliders, Layers, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
