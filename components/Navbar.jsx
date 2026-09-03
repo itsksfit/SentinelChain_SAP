@@ -1,11 +1,9 @@
-import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon, Sliders } from 'lucide-react';
+import { Menu, ShieldCheck, Bell, User, Info, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import GuardrailsModal from './GuardrailsModal';
 
 export default function Navbar() {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [showGuardrails, setShowGuardrails] = useState(false);
   const dropdownRef = useRef(null);
 
   const [mounted, setMounted] = useState(false);
@@ -33,7 +31,6 @@ export default function Navbar() {
 
   return (
     <>
-    <GuardrailsModal isOpen={showGuardrails} onClose={() => setShowGuardrails(false)} />
     <header className="h-16 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-6 bg-white/90 dark:bg-[#0f1115]/90 backdrop-blur-md sticky top-0 z-40 transition-colors duration-200 shadow-xs">
       <div className="flex items-center gap-4 lg:hidden">
         <button onClick={() => {
@@ -65,15 +62,6 @@ export default function Navbar() {
           <span>🔍</span>
           <span>Search...</span>
           <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono font-bold bg-white dark:bg-black/40 rounded border border-slate-200 dark:border-white/10 ml-2 shadow-2xs">⌘K</kbd>
-        </button>
-
-        {/* Guardrails Trigger Button */}
-        <button
-          onClick={() => setShowGuardrails(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-gray-300 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-500/30 transition-all shadow-2xs"
-        >
-          <Sliders className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-          <span>Guardrails</span>
         </button>
 
         {mounted && (
