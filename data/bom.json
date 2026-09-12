@@ -1,0 +1,161 @@
+{
+  "MCU-2201X": {
+    "partNumber": "MCU-2201X",
+    "name": "32-bit Automotive Microcontroller",
+    "category": "Semiconductor / MCU",
+    "criticality": "CRITICAL",
+    "unitOfMeasure": "EA",
+    "inventoryOnHand": 450,
+    "safetyStock": 1200,
+    "dailyConsumptionRate": 90,
+    "leadTimeDays": 45,
+    "primarySupplier": "Distributor A",
+    "singleSource": true,
+    "approvedAlternates": [
+      {
+        "partNumber": "MCU-2201X-ALT1",
+        "vendor": "Distributor A",
+        "qualificationStatus": "QUALIFIED",
+        "pinCompatibility": "100% Drop-in",
+        "leadTimeDays": 7,
+        "unitCostDelta": "+4%"
+      },
+      {
+        "partNumber": "MCU-3301Y",
+        "vendor": "Distributor B",
+        "qualificationStatus": "PENDING_VALIDATION",
+        "pinCompatibility": "Requires PCB rework",
+        "leadTimeDays": 14,
+        "unitCostDelta": "-2%"
+      }
+    ],
+    "assemblies": [
+      {
+        "assemblyId": "ASY-EV-CTRL-01",
+        "assemblyName": "Power Inverter Control Board",
+        "quantityPerAssembly": 2,
+        "finishedProduct": "EV Charging Controller V4",
+        "productCode": "TG11",
+        "factory": "Plant 1010 (Stuttgart)",
+        "dailyProductionVolume": 45,
+        "dailyRevenue": 42000
+      },
+      {
+        "assemblyId": "ASY-THM-MAIN-02",
+        "assemblyName": "Smart Thermostat Main PCB",
+        "quantityPerAssembly": 1,
+        "finishedProduct": "Smart Thermostat V3",
+        "productCode": "TG12",
+        "factory": "Plant 1020 (Austin)",
+        "dailyProductionVolume": 120,
+        "dailyRevenue": 18000
+      }
+    ]
+  },
+  "PWR-9942A": {
+    "partNumber": "PWR-9942A",
+    "name": "High-Voltage Power IC",
+    "category": "Power Electronics",
+    "criticality": "CRITICAL",
+    "unitOfMeasure": "EA",
+    "inventoryOnHand": 210,
+    "safetyStock": 800,
+    "dailyConsumptionRate": 70,
+    "leadTimeDays": 60,
+    "primarySupplier": "PowerGlobal Inc.",
+    "singleSource": true,
+    "approvedAlternates": [
+      {
+        "partNumber": "PWR-9942B-REV2",
+        "vendor": "PowerGlobal Inc.",
+        "qualificationStatus": "QUALIFIED",
+        "pinCompatibility": "Direct replacement",
+        "leadTimeDays": 10,
+        "unitCostDelta": "+6%"
+      },
+      {
+        "partNumber": "VOLT-8800",
+        "vendor": "ElectroSource",
+        "qualificationStatus": "QUALIFIED",
+        "pinCompatibility": "Pin-compatible industrial grade",
+        "leadTimeDays": 12,
+        "unitCostDelta": "+8%"
+      }
+    ],
+    "assemblies": [
+      {
+        "assemblyId": "ASY-DRV-PWR-01",
+        "assemblyName": "Industrial Drive Power Stage",
+        "quantityPerAssembly": 4,
+        "finishedProduct": "Industrial Motor Drive X1",
+        "productCode": "TG21",
+        "factory": "Plant 2010 (Munich)",
+        "dailyProductionVolume": 35,
+        "dailyRevenue": 85000
+      },
+      {
+        "assemblyId": "ASY-INV-SOL-03",
+        "assemblyName": "Solar Conversion Matrix",
+        "quantityPerAssembly": 2,
+        "finishedProduct": "Solar Inverter 500kW",
+        "productCode": "TG22",
+        "factory": "Plant 2020 (Yokohama)",
+        "dailyProductionVolume": 15,
+        "dailyRevenue": 45000
+      }
+    ]
+  },
+  "MEM-64GB-NAND": {
+    "partNumber": "MEM-64GB-NAND",
+    "name": "64GB NAND Flash Memory Module",
+    "category": "Memory / Storage",
+    "criticality": "HIGH",
+    "unitOfMeasure": "EA",
+    "inventoryOnHand": 1800,
+    "safetyStock": 2000,
+    "dailyConsumptionRate": 250,
+    "leadTimeDays": 30,
+    "primarySupplier": "StorageTech",
+    "singleSource": false,
+    "approvedAlternates": [
+      {
+        "partNumber": "NAND-64-IND",
+        "vendor": "GlobalChips",
+        "qualificationStatus": "QUALIFIED",
+        "pinCompatibility": "100% Identical package",
+        "leadTimeDays": 8,
+        "unitCostDelta": "+3%"
+      },
+      {
+        "partNumber": "MEM-128GB-NAND",
+        "vendor": "StorageTech",
+        "qualificationStatus": "QUALIFIED",
+        "pinCompatibility": "Drop-in higher capacity",
+        "leadTimeDays": 6,
+        "unitCostDelta": "+15%"
+      }
+    ],
+    "assemblies": [
+      {
+        "assemblyId": "ASY-MOB-LOGIC-01",
+        "assemblyName": "Flagship Mobile SoC Carrier",
+        "quantityPerAssembly": 1,
+        "finishedProduct": "Flagship Smartphone X",
+        "productCode": "TG31",
+        "factory": "Plant 3010 (Shenzhen)",
+        "dailyProductionVolume": 200,
+        "dailyRevenue": 120000
+      },
+      {
+        "assemblyId": "ASY-TAB-MAIN-02",
+        "assemblyName": "Tablet Pro Computing Core",
+        "quantityPerAssembly": 1,
+        "finishedProduct": "Tablet Pro 12",
+        "productCode": "TG32",
+        "factory": "Plant 3010 (Shenzhen)",
+        "dailyProductionVolume": 50,
+        "dailyRevenue": 35000
+      }
+    ]
+  }
+}
