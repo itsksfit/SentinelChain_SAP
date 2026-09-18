@@ -153,12 +153,12 @@ export default function Ledger({ initialDisruptions }) {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0f18] flex transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0f18] transition-colors duration-200">
       <Head><title>Recovery Ledger | SentinelChain</title></Head>
       <Sidebar />
-      <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
+      <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
-        <div className="p-6 max-w-7xl mx-auto w-full space-y-6 pb-24">
+        <main className="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6 pb-24 min-w-0">
           
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-2">
@@ -374,8 +374,8 @@ export default function Ledger({ initialDisruptions }) {
               </table>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
       <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={selectedAudit} />
     </div>
   );

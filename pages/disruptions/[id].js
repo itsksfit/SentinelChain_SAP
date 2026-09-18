@@ -308,13 +308,13 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
   };
 
   return (
-    <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0a0f18] flex text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0a0f18] text-gray-900 dark:text-white">
       <Head><title>Decision Center: {id || 'DSP-LIVE'} | SentinelChain</title></Head>
       <Sidebar />
-      <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
+      <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
         
-        <div className="p-6 max-w-7xl mx-auto w-full space-y-4 pb-24">
+        <main className="flex-1 p-6 max-w-7xl mx-auto w-full space-y-4 pb-24 min-w-0">
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400 gap-2 mb-2">
@@ -633,8 +633,8 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleSelectAndDraft(dist);
+                                   e.stopPropagation();
+                                   handleSelectAndDraft(dist);
                                 }}
                                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 ${
                                   isSelected 
@@ -763,8 +763,8 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
 
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
       {/* MODALS */}
       <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={data} />

@@ -45,12 +45,12 @@ export default function Network({ vendors }) {
   }).sort((a,b) => b.reliability_score - a.reliability_score);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] flex text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] text-gray-900 dark:text-white">
       <Head><title>Supply Network | SentinelChain</title></Head>
       <Sidebar />
-      <main className="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
+      <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
-        <div className="p-6 max-w-7xl mx-auto w-full space-y-6">
+        <main className="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6 min-w-0">
           
           {/* Header & Interconnected Navigation Bar */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-200 dark:border-white/10 pb-5">
@@ -158,9 +158,8 @@ export default function Network({ vendors }) {
               </table>
             </div>
           </div>
-
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

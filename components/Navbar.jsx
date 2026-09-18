@@ -36,6 +36,8 @@ export default function Navbar() {
         <button onClick={() => {
           const sidebar = document.getElementById('mobile-sidebar');
           if (sidebar) sidebar.classList.toggle('hidden');
+          const backdrop = document.getElementById('mobile-sidebar-backdrop');
+          if (backdrop) backdrop.classList.toggle('hidden');
         }}>
           <Menu className="w-6 h-6 text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white" />
         </button>
