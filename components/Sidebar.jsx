@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity, X } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity, DollarSign, X } from 'lucide-react';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -92,6 +92,17 @@ export default function Sidebar() {
               <Link href="/risk" passHref legacyBehavior>
                 <a className={linkClass('/risk')} onClick={closeMobile}>
                   <Activity className={iconClass('/risk', 'text-amber-500 dark:text-amber-400')} /> Risk Analysis
+                </a>
+              </Link>
+            </nav>
+          </div>
+
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 dark:text-gray-500 mb-2 px-2 uppercase tracking-wider">Commercial</p>
+            <nav className="space-y-1">
+              <Link href="/pricing" passHref legacyBehavior>
+                <a className={linkClass('/pricing')} onClick={closeMobile}>
+                  <DollarSign className={iconClass('/pricing', 'text-emerald-500 dark:text-emerald-400')} /> Pricing & ROI Model
                 </a>
               </Link>
             </nav>
