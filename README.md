@@ -1,3 +1,4 @@
+
 <div align="center">
   <img src="public/shield.png" alt="SentinelChain Logo" width="110" />
   <h1>SentinelChain</h1>
@@ -197,7 +198,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 * **Decision Center Showcase:** [https://sentinelchain-gilt.vercel.app/disruptions/DSP-092](https://sentinelchain-gilt.vercel.app/disruptions/DSP-092)
 
 ---
-
-## 📄 License
-
-This project is developed for enterprise supply chain resilience under the **MIT License**.
