@@ -46,6 +46,22 @@
 }
 
 @layer utilities {
+  .font-serif-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+  }
+  .hero-luminous-gradient {
+    background: radial-gradient(circle at 50% 20%, #FDD7CD 0%, #F59A76 25%, #E65124 50%, #4D1A10 78%, #0A0A0A 100%);
+  }
+  .dark .hero-luminous-gradient {
+    background: radial-gradient(circle at 50% 20%, #522116 0%, #36150E 30%, #200D09 60%, #0A0A0A 100%);
+  }
+  .floating-card-shadow {
+    box-shadow: 0 30px 90px -15px rgba(0, 0, 0, 0.25), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+  }
+  .dark .floating-card-shadow {
+    box-shadow: 0 30px 90px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
+  }
   .glass-panel {
     background-color: var(--surface);
     border: 1px solid var(--border);

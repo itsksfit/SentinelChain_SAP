@@ -296,7 +296,7 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
         <title>Decision Center: {id || 'DSP-LIVE'} | SentinelChain</title>
         <meta name="description" content="Autonomous procurement decision center, technical part comparison, and SAP Ariba PR dispatch." />
@@ -307,57 +307,82 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
       <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
         
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full space-y-4 pb-24 min-w-0">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 lg:px-12 py-8 max-w-[1600px] mx-auto w-full space-y-8 pb-28 min-w-0">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center text-[10.5px] font-bold uppercase tracking-wider text-secondary-400 gap-2 mb-2">
+          <div className="flex items-center text-xs font-bold uppercase tracking-wider text-secondary-400 gap-2 mb-2">
             <Link href="/" className="hover:text-primary-500 transition-colors">Command Center</Link>
-            <ChevronRight className="w-3 h-3 text-secondary-300 dark:text-secondary-600" />
+            <ChevronRight className="w-3.5 h-3.5 text-secondary-300 dark:text-secondary-600" />
             <Link href="/disruptions" className="hover:text-primary-500 transition-colors">Disruptions</Link>
-            <ChevronRight className="w-3 h-3 text-secondary-300 dark:text-secondary-600" />
+            <ChevronRight className="w-3.5 h-3.5 text-secondary-300 dark:text-secondary-600" />
             <span className="text-secondary-900 dark:text-white font-mono">{id || 'DSP-LIVE'}</span>
           </div>
 
-          <div className="rounded-xl overflow-hidden border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-            {/* HEADER */}
-            <div className="p-6 md:p-8 border-b border-[#E8E8E8] dark:border-[#222222] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#F8F9FA] dark:bg-[#141414]">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <h1 className="text-2xl font-extrabold tracking-tight text-secondary-900 dark:text-white flex items-center gap-2">
-                    {id || 'DSP-LIVE'}
-                  </h1>
-                  <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded border ${planGenerated ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/40' : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40'}`}>
-                    {planGenerated ? 'Order Package Approved' : 'Critical Shortage Risk'}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-secondary-600 dark:text-secondary-400 max-w-4xl leading-relaxed">
-                  {data?.event_type || 'Active Global Semiconductor Supply Disruption'}
-                </p>
+          {/* Editorial Decision Center Header */}
+          <div className="border-b border-[#EAEAEA] dark:border-[#222222] pb-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/40 border border-primary-200 dark:border-primary-800/40 px-3 py-1 rounded-full">
+                  {id || 'DSP-LIVE-1001'}
+                </span>
+                <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full border ${planGenerated ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/40' : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40'}`}>
+                  {planGenerated ? '✓ Purchase Requisition Dispatched' : '● Critical Shortage Risk'}
+                </span>
               </div>
 
-              <div className="shrink-0 flex flex-col items-end gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <p className="text-[10px] text-secondary-400 font-bold uppercase tracking-wider">Evidence Confidence</p>
-                    <div className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">{confidence}%</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button 
-                    onClick={() => setShowPrModal(true)} 
-                    className="btn-primary !h-8 px-3 text-[11px] font-bold tracking-wider uppercase shadow-2xs flex items-center gap-1.5"
-                  >
-                    <FileText className="w-3.5 h-3.5" /> Export PR Dossier
-                  </button>
-                  <Link href="/risk" className="px-3 py-1.5 rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] text-secondary-700 dark:text-secondary-300 text-[11px] font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5 text-primary-500" /> Risk Matrix
-                  </Link>
-                </div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <button 
+                  onClick={() => setShowPrModal(true)} 
+                  className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all cursor-pointer"
+                >
+                  <FileText className="w-3.5 h-3.5 text-primary-500" /> Export PR Dossier (PDF)
+                </button>
+                <Link href="/risk" className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all">
+                  <Activity className="w-3.5 h-3.5 text-amber-500" /> Category Matrix
+                </Link>
               </div>
             </div>
 
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-secondary-900 dark:text-white leading-[1.12]">
+              Autonomous <span className="font-serif-italic text-primary-500 font-normal tracking-normal text-[1.12em] px-1">Decision Center.</span>
+            </h1>
+            <p className="text-secondary-600 dark:text-secondary-400 text-sm sm:text-base max-w-3xl mt-2 leading-relaxed">
+              {data?.event_type || 'Active Global Semiconductor Supply Disruption'}
+            </p>
+          </div>
+
+          {/* Frameless Crosshair 4-Metric Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#E5E7EB] dark:divide-[#262626] border-y border-[#E5E7EB] dark:border-[#262626] py-2">
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Revenue at Risk</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-red-600 dark:text-red-400 tracking-tight">
+                ${formatQty(data?.revenue_at_risk_usd || 1575000)}<span className="text-xs font-semibold text-secondary-400">/day</span>
+              </span>
+              <span className="text-xs text-secondary-400">{plants} assembly plants impacted</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Target Component</span>
+              <span className="text-2xl sm:text-3xl font-mono font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">{safePartNumber}</span>
+              <span className="text-xs text-secondary-400">{part?.category || 'MCU'} Architecture</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Evidence Confidence</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">{confidence}%</span>
+              <span className="text-xs text-secondary-400">Tier-weighted deterministic score</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Procurement Status</span>
+              <span className="text-2xl sm:text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">{planGenerated ? 'PR Dispatched' : 'Ready'}</span>
+              <span className="text-xs text-secondary-400">{planGenerated ? 'Sent to Ariba Queue' : 'Mouser Spot Qualified'}</span>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-[#E5E7EB] dark:border-[#262626] bg-white dark:bg-[#141414] shadow-sm">
             {/* MAIN GRID */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#E8E8E8] dark:divide-[#222222]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#E5E7EB] dark:divide-[#262626]">
               
               {/* LEFT COLUMN: DIAGNOSTICS & PIN-COMPATIBLE CATALOG */}
               <div className="p-6 md:p-8 lg:col-span-4 space-y-6 bg-[#F8F9FA]/60 dark:bg-[#0D0D0D]">

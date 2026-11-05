@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
-export default function Layout({ title, description, children, maxWidth = '1440px' }) {
+export default function Layout({ title, description, children, maxWidth = '1600px' }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const metaTitle = title
@@ -13,7 +13,7 @@ export default function Layout({ title, description, children, maxWidth = '1440p
     description || 'Autonomous AI-powered supply chain resilience, ERP exposure mapping, and spot procurement platform.';
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDesc} />
@@ -28,7 +28,7 @@ export default function Layout({ title, description, children, maxWidth = '1440p
         <Navbar onMenuClick={() => setMobileOpen(o => !o)} />
 
         <main
-          className="flex-1 px-4 sm:px-6 lg:px-8 py-6 pb-20 w-full mx-auto min-w-0"
+          className="flex-1 px-4 sm:px-6 md:px-8 lg:px-12 py-8 pb-28 w-full mx-auto min-w-0"
           style={{ maxWidth }}
         >
           {children}

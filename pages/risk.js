@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import { ShieldAlert, Activity, ArrowRight, Database, CheckCircle2, AlertTriangle, Layers, ExternalLink, Sliders, TrendingUp } from 'lucide-react';
+import { ShieldAlert, Activity, ArrowRight, Database, CheckCircle2, AlertTriangle, Layers, ExternalLink, Sliders, TrendingUp, ChevronRight, Zap, Cpu } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 export async function getServerSideProps() {
@@ -94,15 +94,10 @@ export default function RiskAnalysis({ initialDisruptions, initialRecovered, ini
     return map[code] || `${code} Semiconductor Silicon`;
   };
 
-  const getCategoryColor = (i) => {
-    const colors = ['bg-primary-500', 'bg-red-500', 'bg-orange-500', 'bg-amber-500', 'bg-cyan-500', 'bg-emerald-500'];
-    return colors[i % colors.length];
-  };
-
   const currentCategoryObj = categoryExposure.find(c => c.name === selectedCategory) || categoryExposure[0];
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
         <title>Risk Matrix | SentinelChain</title>
         <meta name="description" content="Real-time financial exposure, active threat clusters, and deterministic S/4HANA ERP risk reduction." />
@@ -113,102 +108,122 @@ export default function RiskAnalysis({ initialDisruptions, initialRecovered, ini
       <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full space-y-6 pb-24 min-w-0">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 lg:px-12 py-8 max-w-[1600px] mx-auto w-full space-y-8 pb-28 min-w-0">
           
-          {/* Header & Interconnected Navigation Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#E8E8E8] dark:border-[#222222] pb-6">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                ERP Exposure Analysis
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center text-xs font-bold uppercase tracking-wider text-secondary-400 gap-2">
+            <Link href="/" className="hover:text-primary-500 transition-colors">Command Center</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-secondary-300 dark:text-secondary-600" />
+            <span className="text-secondary-900 dark:text-white">ERP Exposure Matrix</span>
+          </div>
+
+          {/* Editorial Header */}
+          <div className="border-b border-[#EAEAEA] dark:border-[#222222] pb-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                  S/4HANA BOM Correlation
+                </span>
+                <span className="text-xs font-mono font-bold text-secondary-400">
+                  {categoryExposure.length} Silicon Categories Exposed
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-secondary-900 dark:text-white">
-                Enterprise Risk & Exposure Matrix
-              </h1>
-              <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mt-1 max-w-2xl">
-                Real-time financial exposure, active threat clusters, and deterministic SAP S/4HANA risk reduction.
-              </p>
+
+              <div className="flex flex-wrap items-center gap-2.5">
+                <Link href="/disruptions" className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all text-red-600 dark:text-red-400">
+                  <ShieldAlert className="w-3.5 h-3.5" /> Disruption Feed
+                </Link>
+                <Link href="/ledger" className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all text-primary-600 dark:text-primary-400">
+                  <Activity className="w-3.5 h-3.5" /> Recovery Ledger
+                </Link>
+              </div>
             </div>
 
-            {/* Cross-Module Navigation Shortcuts */}
-            <div className="flex flex-wrap items-center gap-2">
-              <Link href="/disruptions" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-red-600 dark:text-red-400 shadow-2xs">
-                <ShieldAlert className="w-3.5 h-3.5" /> Active Disruptions
-              </Link>
-              <Link href="/plans" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 shadow-2xs">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Recovery Plans
-              </Link>
-              <Link href="/network" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-primary-600 dark:text-primary-400 shadow-2xs">
-                <Database className="w-3.5 h-3.5" /> Supply Network
-              </Link>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-secondary-900 dark:text-white leading-[1.12]">
+              Enterprise <span className="font-serif-italic text-primary-500 font-normal tracking-normal text-[1.12em] px-1">Risk & Exposure Matrix.</span>
+            </h1>
+            <p className="text-secondary-600 dark:text-secondary-400 text-sm sm:text-base max-w-3xl mt-2 leading-relaxed">
+              Real-time financial exposure grouped by component semiconductor architectures, cross-referenced with fab telemetry, assembly plant dependencies, and bill-of-materials impact.
+            </p>
+          </div>
+
+          {/* Frameless Crosshair 4-Metric Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#E5E7EB] dark:divide-[#262626] border-y border-[#E5E7EB] dark:border-[#262626] py-2">
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Total S/4HANA Exposure</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-red-600 dark:text-red-400 tracking-tight">{formatMillions(liveAtRisk)}</span>
+              <span className="text-xs text-secondary-400">Daily aggregated assembly revenue</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Active Threat Clusters</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-orange-600 dark:text-orange-400 tracking-tight">{activeThreats} Threats</span>
+              <span className="text-xs text-secondary-400">Cross-referenced with fab telemetry</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Gross Margin Recovered</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">{formatMillions(liveRecovered)}</span>
+              <span className="text-xs text-secondary-400">Through autonomous Mouser spot matching</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Silicon Exposure Depth</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">{categoryExposure.length} Families</span>
+              <span className="text-xs text-secondary-400">MCUs, Power ICs, Memory, FPGAs</span>
             </div>
           </div>
 
-          {/* Top KPI Metrics (PART 8.2) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-[#111111] border border-[#E8E8E8] dark:border-[#222222] p-5 rounded-xl shadow-2xs">
-              <p className="text-[11px] text-secondary-500 dark:text-secondary-400 font-bold uppercase tracking-wider mb-1">Total S/4HANA Exposure</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-red-600 dark:text-red-400 tracking-tight">{formatMillions(liveAtRisk)}</div>
-              <p className="text-[10.5px] text-secondary-400 mt-1">Daily aggregated assembly revenue</p>
-            </div>
-
-            <div className="bg-white dark:bg-[#111111] border border-[#E8E8E8] dark:border-[#222222] p-5 rounded-xl shadow-2xs">
-              <p className="text-[11px] text-orange-600 dark:text-orange-400 font-bold uppercase tracking-wider mb-1">Active Threat Clusters</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-orange-600 dark:text-orange-400 tracking-tight">{activeThreats} Threats</div>
-              <p className="text-[10.5px] text-secondary-400 mt-1">Cross-referenced with fab telemetry</p>
-            </div>
-
-            <div className="bg-white dark:bg-[#111111] border border-[#E8E8E8] dark:border-[#222222] p-5 rounded-xl shadow-2xs">
-              <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mb-1">Autonomous Mitigated Value</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">{formatMillions(liveRecovered)}</div>
-              <p className="text-[10.5px] text-emerald-600 dark:text-emerald-400 font-bold mt-1">Protected via spot allocations</p>
-            </div>
-
-            <div className="bg-white dark:bg-[#111111] border border-[#E8E8E8] dark:border-[#222222] p-5 rounded-xl shadow-2xs">
-              <p className="text-[11px] text-primary-600 dark:text-primary-400 font-bold uppercase tracking-wider mb-1">Enterprise Recovery Rate</p>
-              <div className="text-2xl sm:text-3xl font-extrabold text-primary-500 tracking-tight">
-                {liveAtRisk > 0 ? Math.round((liveRecovered / liveAtRisk) * 100) : 88}%
-              </div>
-              <p className="text-[10.5px] text-primary-600 dark:text-primary-400 font-bold mt-1">Target benchmark &gt; 85%</p>
-            </div>
-          </div>
-
-          {/* Interactive Exposure Breakdown & Drilldown */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Balanced Two-Column Exposure Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Left: Category Stack */}
-            <div className="lg:col-span-5 bg-white dark:bg-[#111111] p-5 sm:p-6 border border-[#E8E8E8] dark:border-[#222222] rounded-xl shadow-2xs space-y-4">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xs font-bold text-secondary-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-primary-500" /> Exposure by Silicon Category
-                </h3>
-                <span className="text-[11px] text-secondary-400">Click to filter</span>
+            {/* LEFT COLUMN: Category Vulnerability Heat Bars (7 cols) */}
+            <div className="lg:col-span-7 bg-white dark:bg-[#141414] p-6 sm:p-8 rounded-2xl border border-[#E5E7EB] dark:border-[#262626] shadow-sm space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB] dark:border-[#262626]">
+                <div>
+                  <h3 className="text-base font-extrabold text-secondary-900 dark:text-white">Component Architecture Vulnerability</h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400 mt-0.5">Click a category to inspect affected bill-of-materials components</p>
+                </div>
+                <span className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400">
+                  {selectedCategory || 'ALL'} SELECTED
+                </span>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {categoryExposure.map((cat, i) => {
                   const isSelected = selectedCategory === cat.name;
                   return (
-                    <div 
-                      key={i}
+                    <div
+                      key={cat.name}
                       onClick={() => setSelectedCategory(cat.name)}
-                      className={`p-3.5 rounded-lg border transition-all cursor-pointer ${
+                      className={`p-4 rounded-xl border transition-all cursor-pointer ${
                         isSelected 
-                          ? 'bg-primary-50/70 dark:bg-primary-950/20 border-primary-500 ring-1 ring-primary-500/30 shadow-2xs' 
-                          : 'bg-[#F8F9FA] dark:bg-[#161616] border-[#E8E8E8] dark:border-[#262626] hover:border-[#D6D6D6] dark:hover:border-[#333333]'
+                          ? 'bg-primary-50/70 dark:bg-primary-950/20 border-primary-500 shadow-2xs' 
+                          : 'bg-[#F9FAFB] dark:bg-[#18191D] border-[#E5E7EB] dark:border-[#262626] hover:border-[#D1D5DB] dark:hover:border-[#333333]'
                       }`}
                     >
-                      <div className="flex justify-between text-xs font-bold mb-1.5">
-                        <span className="text-secondary-900 dark:text-white">{getCategoryName(cat.name)}</span>
-                        <span className="font-mono text-primary-600 dark:text-primary-400">{formatMillions(cat.value)} ({Math.round(cat.pct)}%)</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2.5">
+                          <span className={`w-3 h-3 rounded-md ${isSelected ? 'bg-primary-500' : 'bg-secondary-400'}`}></span>
+                          <span className="text-sm font-extrabold text-secondary-900 dark:text-white">
+                            {getCategoryName(cat.name)}
+                          </span>
+                        </div>
+                        <span className="font-extrabold text-sm text-secondary-900 dark:text-white">
+                          ${(cat.value / 1000000).toFixed(2)}M
+                        </span>
                       </div>
-                      <div className="w-full bg-secondary-200 dark:bg-secondary-800 rounded-full h-1.5 overflow-hidden">
-                        <div className={`${getCategoryColor(i)} h-1.5 rounded-full transition-all duration-700`} style={{ width: `${Math.max(cat.pct, 5)}%` }}></div>
-                      </div>
-                      <div className="flex items-center justify-between text-[10px] text-secondary-400 mt-2">
-                        <span>{cat.items?.length || 0} Impacted Components</span>
-                        <span className="text-primary-600 dark:text-primary-400 font-bold flex items-center gap-0.5">
-                          View Drilldown <ArrowRight className="w-2.5 h-2.5" />
+
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-2 bg-secondary-200 dark:bg-secondary-800 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full rounded-full transition-all duration-500 ${isSelected ? 'bg-primary-500' : 'bg-secondary-400 dark:bg-secondary-600'}`}
+                            style={{width: `${Math.min(100, Math.max(5, cat.pct))}%`}}
+                          ></div>
+                        </div>
+                        <span className="text-xs font-mono font-bold text-secondary-500 w-12 text-right">
+                          {cat.pct.toFixed(1)}%
                         </span>
                       </div>
                     </div>
@@ -217,55 +232,68 @@ export default function RiskAnalysis({ initialDisruptions, initialRecovered, ini
               </div>
             </div>
 
-            {/* Right: Component Drilldown Table */}
-            <div className="lg:col-span-7 bg-white dark:bg-[#111111] p-5 sm:p-6 border border-[#E8E8E8] dark:border-[#222222] rounded-xl shadow-2xs space-y-4 flex flex-col">
-              <div className="flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222] pb-3">
-                <div>
-                  <h3 className="text-xs font-bold text-secondary-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                    <Sliders className="w-4 h-4 text-emerald-500" /> Active Disrupted Components in {selectedCategory}
-                  </h3>
-                  <p className="text-[11px] text-secondary-400 mt-0.5">Click any component to inspect technical specifications and Mouser alternatives.</p>
+            {/* RIGHT COLUMN: Active Drilldown Detail Card (5 cols) */}
+            <div className="lg:col-span-5 bg-white dark:bg-[#141414] p-6 sm:p-8 rounded-2xl border border-[#E5E7EB] dark:border-[#262626] shadow-sm flex flex-col justify-between space-y-6">
+              <div>
+                <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB] dark:border-[#262626]">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 block mb-1">
+                      Active Threat Drilldown
+                    </span>
+                    <h3 className="text-lg font-extrabold text-secondary-900 dark:text-white">
+                      {currentCategoryObj ? getCategoryName(currentCategoryObj.name) : 'Category Details'}
+                    </h3>
+                  </div>
+                  <Cpu className="w-6 h-6 text-primary-500 shrink-0" />
                 </div>
-                <span className="px-2.5 py-1 text-[10px] font-bold rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
-                  {currentCategoryObj?.items?.length || 0} Active MPNs
-                </span>
+
+                <div className="mt-5 space-y-4">
+                  <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40">
+                    <p className="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider mb-1">Category Exposure at Risk</p>
+                    <p className="text-3xl font-extrabold text-red-600 dark:text-red-400 tracking-tight">
+                      ${((currentCategoryObj?.value || 0) / 1000000).toFixed(2)}M <span className="text-xs font-semibold text-secondary-400">/ day</span>
+                    </p>
+                    <p className="text-xs text-secondary-500 mt-1">
+                      Represents {currentCategoryObj?.pct?.toFixed(1) || 0}% of total enterprise daily exposure.
+                    </p>
+                  </div>
+
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-secondary-400 pt-2">
+                    Affected Components ({currentCategoryObj?.items?.length || 0})
+                  </h4>
+
+                  <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+                    {currentCategoryObj?.items?.map((item, idx) => (
+                      <div key={idx} className="p-3.5 rounded-xl bg-[#F9FAFB] dark:bg-[#18191D] border border-[#E5E7EB] dark:border-[#262626] flex items-center justify-between">
+                        <div>
+                          <p className="font-mono font-bold text-xs text-primary-600 dark:text-primary-400">{item.part_affected}</p>
+                          <p className="text-[11px] text-secondary-500">{item.event_type || 'Silicon Shortage'} • {item.plants_affected || 2} Plants</p>
+                        </div>
+                        <div className="text-right flex flex-col items-end gap-1">
+                          <span className="font-extrabold text-xs text-secondary-900 dark:text-white">${((item.revenue_at_risk_usd || 1575000) / 1000).toFixed(0)}k/d</span>
+                          <Link 
+                            href={`/disruptions/${item.disruption_id}`}
+                            className="text-[10px] font-bold text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-0.5"
+                          >
+                            Decision Center <ArrowRight className="w-2.5 h-2.5" />
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              <div className="divide-y divide-[#E8E8E8] dark:divide-[#222222] overflow-y-auto max-h-[480px]">
-                {currentCategoryObj?.items?.map((item, idx) => (
-                  <div key={idx} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-secondary-50 dark:hover:bg-[#161616] px-2 rounded-lg transition-all">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/40 px-2 py-0.5 rounded border border-primary-200 dark:border-primary-800/40">
-                          {item.part_affected}
-                        </span>
-                        <span className="text-[11px] font-bold text-secondary-700 dark:text-secondary-300 font-mono">
-                          {item.disruption_id}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-secondary-500 dark:text-secondary-400">{item.event_type} • Daily Exposure: <span className="font-bold text-red-600 dark:text-red-400">${item.revenue_at_risk_usd?.toLocaleString()}</span></p>
-                    </div>
-
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Link 
-                        href={`/disruptions/${item.disruption_id}`}
-                        className="btn-primary !h-8 px-3 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-2xs"
-                      >
-                        Decision Center <ArrowRight className="w-3 h-3" />
-                      </Link>
-                      {item.recovery_plan_id && (
-                        <Link 
-                          href={`/plans?id=${item.recovery_plan_id}`}
-                          className="px-2.5 py-1.5 bg-[#F8F9FA] dark:bg-[#161616] hover:bg-secondary-100 dark:hover:bg-[#202020] text-secondary-700 dark:text-secondary-300 rounded-md text-xs font-bold transition-all border border-[#E8E8E8] dark:border-[#262626]"
-                        >
-                          Plan
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                ))}
+              <div className="pt-4 border-t border-[#E5E7EB] dark:border-[#262626]">
+                <Link
+                  href="/disruptions"
+                  className="btn-primary !h-10 w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <ShieldAlert className="w-4 h-4" /> Open Full Disruption Decision Queue
+                </Link>
               </div>
             </div>
+
           </div>
         </main>
       </div>

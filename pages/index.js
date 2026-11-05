@@ -282,7 +282,7 @@ export default function Dashboard({ initialSignals = [] }) {
   });
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
         <title>SentinelChain | Autonomous Supply Chain Risk Management & Resilience</title>
         <meta name="description" content="AI-powered Supply Chain Risk Management (SCRM) and Resilience platform for electronics manufacturing." />
@@ -293,43 +293,35 @@ export default function Dashboard({ initialSignals = [] }) {
       <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full space-y-8 pb-24 min-w-0">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 lg:px-12 py-8 max-w-[1600px] mx-auto w-full space-y-10 pb-28 min-w-0">
           
           {/* ======================================================== */}
-          {/* SECTION B: SCALIX EDITORIAL HERO & 2x2 METRIC GRID       */}
+          {/* SECTION 1: DASHBOARD EDITORIAL HEADER & METRIC DIVIDER   */}
           {/* ======================================================== */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-[#E8E8E8] dark:border-[#222222] pb-10">
-            {/* Left Column: Two-line editorial title & CTAs */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 dark:bg-primary-950/40 border border-primary-200/80 dark:border-primary-800/40 text-[10.5px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
-                AI-Powered Supply Chain Resilience
+          <div className="border-b border-[#EAEAEA] dark:border-[#222222] pb-10">
+            
+            {/* Header Top Controls Strip */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 dark:bg-primary-950/40 border border-primary-200/80 dark:border-primary-800/40 text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-primary-500 animate-ping"></span>
+                Autonomous Supply Chain Risk Intelligence
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-secondary-900 dark:text-white leading-[1.15]">
-                Understand your <span className="italic text-primary-500 font-serif">supply chain</span>.<br className="hidden sm:inline" />
-                Decide faster with AI.
-              </h1>
+              <div className="flex flex-wrap items-center gap-3">
+                {/* Live System Telemetry Status Pill */}
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] dark:bg-emerald-950/30 border border-[#DCFCE7] dark:border-emerald-900/40 text-xs font-bold text-[#16A34A] dark:text-emerald-400 shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse"></span>
+                  <span>SAP S/4HANA & Mouser Active</span>
+                </div>
 
-              <p className="text-secondary-600 dark:text-secondary-400 text-sm sm:text-base max-w-xl leading-relaxed">
-                Real-time disruption intelligence with deterministic BOM correlation, live Mouser spot sourcing, and autonomous SAP Ariba recovery.
-              </p>
+                {/* Date Horizon Filter Selector */}
+                <div className="flex items-center gap-1.5 bg-white dark:bg-[#141414] border border-[#EAEAEA] dark:border-[#262626] rounded-xl px-3 py-1.5 text-xs font-semibold text-secondary-600 dark:text-secondary-400 shadow-2xs">
+                  <Clock className="w-3.5 h-3.5 text-secondary-400" />
+                  <span>Horizon:</span>
+                  <span className="font-bold text-secondary-900 dark:text-white">Last 24h</span>
+                </div>
 
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <button 
-                  onClick={() => {
-                    if (liveNews.length > 0) simulatePipeline(liveNews[0]);
-                  }}
-                  className="btn-primary gap-2 shadow-sm font-semibold text-xs uppercase tracking-wider cursor-pointer"
-                >
-                  <Zap className="w-4 h-4" />
-                  Analyze Active Signal
-                </button>
-
-                <Link href="/disruptions" className="btn-secondary gap-2 text-xs uppercase tracking-wider font-semibold">
-                  Disruptions Feed <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-
+                {/* Reset or Clear Pipeline Action */}
                 {(loading || stage > 0) && (
                   <button 
                     onClick={() => { 
@@ -343,7 +335,7 @@ export default function Dashboard({ initialSignals = [] }) {
                       setAuditTrail([]); 
                       setActiveNews(null); 
                     }}
-                    className="px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white bg-white dark:bg-[#161616] hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-all border border-[#E8E8E8] dark:border-[#222222]"
+                    className="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white bg-white dark:bg-[#161616] hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-xl transition-all border border-[#EAEAEA] dark:border-[#262626]"
                   >
                     Reset Pipeline
                   </button>
@@ -351,649 +343,731 @@ export default function Dashboard({ initialSignals = [] }) {
               </div>
             </div>
 
-            {/* Right Column: 2x2 Clean KPI Grid */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-px bg-[#E8E8E8] dark:bg-[#222222] rounded-xl overflow-hidden border border-[#E8E8E8] dark:border-[#222222] shadow-2xs">
-              <div className="bg-white dark:bg-[#111111] p-5 flex flex-col justify-between">
-                <span className="text-2xl sm:text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
-                  $84.5M+
-                </span>
-                <span className="text-[11px] font-medium text-secondary-500 dark:text-secondary-400 mt-1 leading-snug">
-                  Revenue exposure tracked in real time
-                </span>
+            {/* Asymmetric SCALIX Layout: Bold Headline + 2x2 Divider Matrix */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+              
+              {/* Left Column: Big Bold Typography & CTAs */}
+              <div className="lg:col-span-7 space-y-6">
+                <h1 className="text-5xl sm:text-6xl lg:text-[72px] font-extrabold tracking-[-0.04em] text-secondary-900 dark:text-white leading-[1.08]">
+                  Understand your <span className="font-serif-italic text-primary-500 font-normal tracking-normal text-[1.12em] px-1">resilience.</span><br />
+                  Decide faster with AI.
+                </h1>
+
+                <p className="text-secondary-600 dark:text-secondary-400 text-base sm:text-lg max-w-2xl leading-relaxed font-normal">
+                  Real-time institutional disruption triage with deterministic S/4HANA BOM correlation, live Mouser spot market sourcing, and autonomous SAP Ariba execution.
+                </p>
+
+                <div className="pt-2 flex flex-wrap items-center gap-4">
+                  <button 
+                    onClick={() => {
+                      if (liveNews.length > 0) simulatePipeline(liveNews[0]);
+                    }}
+                    className="px-7 py-4 bg-[#111111] hover:bg-black dark:bg-white dark:hover:bg-secondary-100 dark:text-secondary-900 text-white text-[13px] font-bold rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+                  >
+                    <Zap className="w-4 h-4 text-primary-500" />
+                    <span>Run Threat Triage</span>
+                  </button>
+
+                  <Link 
+                    href="/disruptions" 
+                    className="px-6 py-4 bg-white dark:bg-[#141414] hover:bg-secondary-50 dark:hover:bg-secondary-800 text-secondary-900 dark:text-white border border-[#E5E7EB] dark:border-[#262626] text-[13px] font-bold rounded-xl shadow-xs transition-all flex items-center gap-2"
+                  >
+                    Active Disruptions <ArrowRight className="w-4 h-4 text-secondary-400" />
+                  </Link>
+
+                  <Link 
+                    href="/plans" 
+                    className="px-6 py-4 bg-white dark:bg-[#141414] hover:bg-secondary-50 dark:hover:bg-secondary-800 text-secondary-900 dark:text-white border border-[#E5E7EB] dark:border-[#262626] text-[13px] font-bold rounded-xl shadow-xs transition-all flex items-center gap-2"
+                  >
+                    Recovery Plans <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  </Link>
+                </div>
               </div>
 
-              <div className="bg-white dark:bg-[#111111] p-5 flex flex-col justify-between">
-                <span className="text-2xl sm:text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
-                  32,490+
-                </span>
-                <span className="text-[11px] font-medium text-secondary-500 dark:text-secondary-400 mt-1 leading-snug">
-                  Global supply nodes monitored
-                </span>
+              {/* Right Column: Frameless Crosshair 2x2 Metric Matrix */}
+              <div className="lg:col-span-5 grid grid-cols-2 divide-x divide-y divide-[#E5E7EB] dark:divide-[#262626] pt-2">
+                
+                <div className="p-8 flex flex-col justify-between h-40">
+                  <span className="text-4xl sm:text-5xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                    $84.5M+
+                  </span>
+                  <span className="text-xs text-secondary-600 dark:text-secondary-400 font-medium leading-relaxed">
+                    Revenue exposure tracked across assembly lines in real time
+                  </span>
+                </div>
+
+                <div className="p-8 flex flex-col justify-between h-40">
+                  <span className="text-4xl sm:text-5xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                    32,490+
+                  </span>
+                  <span className="text-xs text-secondary-600 dark:text-secondary-400 font-medium leading-relaxed">
+                    Global semiconductor fabs and distributor nodes monitored
+                  </span>
+                </div>
+
+                <div className="p-8 flex flex-col justify-between h-40">
+                  <span className="text-4xl sm:text-5xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                    &lt; 45s
+                  </span>
+                  <span className="text-xs text-secondary-600 dark:text-secondary-400 font-medium leading-relaxed">
+                    Time from public disruption signal to actionable spot PR
+                  </span>
+                </div>
+
+                <div className="p-8 flex flex-col justify-between h-40">
+                  <span className="text-4xl sm:text-5xl font-extrabold text-primary-500 tracking-tight">
+                    AI-powered
+                  </span>
+                  <span className="text-xs text-secondary-600 dark:text-secondary-400 font-medium leading-relaxed">
+                    Decisions powered by deterministic BOM correlation
+                  </span>
+                </div>
+
               </div>
 
-              <div className="bg-white dark:bg-[#111111] p-5 flex flex-col justify-between">
-                <span className="text-2xl sm:text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
-                  &lt; 2 min
-                </span>
-                <span className="text-[11px] font-medium text-secondary-500 dark:text-secondary-400 mt-1 leading-snug">
-                  Time to actionable mitigation
-                </span>
-              </div>
-
-              <div className="bg-white dark:bg-[#111111] p-5 flex flex-col justify-between">
-                <span className="text-2xl sm:text-3xl font-extrabold text-primary-500 tracking-tight">
-                  Autonomous
-                </span>
-                <span className="text-[11px] font-medium text-secondary-500 dark:text-secondary-400 mt-1 leading-snug">
-                  Decisions & Ariba PR execution
-                </span>
-              </div>
             </div>
           </div>
 
           {/* ======================================================== */}
-          {/* SECTION C: SCALIX GRADIENT CONTAINER & DASHBOARD PREVIEW */}
+          {/* SECTION 2: SCALIX LUMINOUS PEACH-TO-DARK MEDIA CONTAINER */}
           {/* ======================================================== */}
-          <div className="relative rounded-2xl overflow-hidden p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-[#F7C9B9] via-[#F28A62] to-[#080808] dark:from-[#3a180e] dark:via-[#1c0d08] dark:to-[#080808] border border-[#E8E8E8] dark:border-[#222222] shadow-card dark:shadow-dark-card">
+          <div className="hero-luminous-gradient rounded-[32px] p-6 sm:p-10 lg:p-14 shadow-2xl relative overflow-hidden">
             
-            {/* Top Container Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-white/90 dark:bg-black/60 flex items-center justify-center shadow-2xs">
-                  <img src="/shield.png" alt="Shield" className="w-5 h-5 object-contain" />
+            {/* Top Media Container Control Strip */}
+            <div className="flex flex-wrap items-center justify-between gap-4 text-white mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-black/40 backdrop-blur-md flex items-center justify-center font-bold text-white border border-white/10 text-xs">
+                  ◈
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block">Executive Command Center</span>
-                  <span className="text-[10px] text-white/80 font-medium">Real-time Telemetry & Exposure Metrics</span>
+                  <h2 className="text-xs font-bold uppercase tracking-wider text-white/90">
+                    Mission Control Surface
+                  </h2>
+                  <p className="text-[11px] text-white/70 mt-0.5">
+                    Multi-Source Disruption Pipeline & Live Sourcing Matrix
+                  </p>
                 </div>
               </div>
 
-              <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Active Protection</span>
+              <div className="flex items-center gap-3">
+                <div className="px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-xs font-bold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Live Telemetry Engine Active</span>
+                </div>
               </div>
             </div>
 
-            {/* Floating White/Dark Dashboard Preview Card */}
-            <div className="bg-white dark:bg-[#111111] rounded-xl border border-white/50 dark:border-white/10 shadow-2xl p-5 sm:p-6 transition-all duration-300">
+            {/* ======================================================== */}
+            {/* FLOATING WHITE/DARK DASHBOARD WINDOW                      */}
+            {/* ======================================================== */}
+            <div className="bg-white dark:bg-[#111111] rounded-2xl floating-card-shadow p-6 sm:p-8 lg:p-10 space-y-8 transition-all">
               
-              {/* Segmented Subnav / Header Bar inside preview */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E8E8E8] dark:border-[#222222] pb-4 mb-5">
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-lg bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-400 text-xs font-bold uppercase tracking-wider">
-                    Overview
-                  </span>
-                  <Link href="/disruptions" className="px-3 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white text-xs font-medium transition-colors">
-                    Disruptions
-                  </Link>
-                  <Link href="/plans" className="px-3 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white text-xs font-medium transition-colors">
-                    Plans
-                  </Link>
-                  <Link href="/network" className="px-3 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white text-xs font-medium transition-colors">
-                    Network
-                  </Link>
+              {/* Window Subnav Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#EAEAEA] dark:border-[#222222] pb-6">
+                <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-[#F4511E] flex items-center justify-center text-white text-xs font-bold">
+                      ⬡
+                    </div>
+                    <span className="font-extrabold text-sm tracking-tight text-secondary-900 dark:text-white">SentinelChain</span>
+                  </div>
+
+                  <div className="flex items-center gap-1 bg-[#F5F5F5] dark:bg-[#181818] p-1 rounded-xl text-xs font-semibold">
+                    <span className="px-3.5 py-1.5 rounded-lg bg-[#111111] dark:bg-white text-white dark:text-secondary-900 font-bold shadow-xs">Overview</span>
+                    <Link href="/disruptions" className="px-3.5 py-1.5 rounded-lg text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white">Disruptions</Link>
+                    <Link href="/plans" className="px-3.5 py-1.5 rounded-lg text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white">Plans</Link>
+                    <Link href="/network" className="px-3.5 py-1.5 rounded-lg text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white">Network</Link>
+                    <Link href="/ledger" className="px-3.5 py-1.5 rounded-lg text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white">Ledger</Link>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] font-bold text-secondary-400 dark:text-secondary-500">Live Telemetry:</span>
-                  <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Operational
-                  </span>
+                  <button 
+                    onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+                    className="p-2 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-[#181818]"
+                    title="Search (⌘K)"
+                  >
+                    <Search className="w-4 h-4" />
+                  </button>
+                  <div className="w-8 h-8 rounded-full bg-[#202020] text-white font-bold text-xs flex items-center justify-center">
+                    KS
+                  </div>
                 </div>
               </div>
 
-              {/* 4 Major KPI Cards (PART 8.2) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* 1. 4-METRIC BALANCED STRIP WITH SUBTLE NUMBER NUANCE */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-2">
                 
-                {/* KPI 1: Active Disruptions */}
-                <div className="p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-[#F8F9FA] dark:bg-[#161616] flex flex-col justify-between hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">Active Disruptions</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400 border border-red-200 dark:border-red-900/40 flex items-center gap-1">
-                      <TrendingUp className="w-3 h-3" /> Critical
+                {/* Metric 1 */}
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Total revenue exposure</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                      $2,480,<span className="text-secondary-400">000</span>
+                    </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400">
+                      ↗ 32.5%
                     </span>
                   </div>
-                  <div className="my-2">
-                    <span className="text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                </div>
+
+                {/* Metric 2 */}
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Active disruptions count</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
                       {liveNews.length > 0 ? liveNews.length : 12}
                     </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FEE2E2] text-[#DC2626] dark:bg-red-950/40 dark:text-red-400">
+                      ↗ 3 Critical
+                    </span>
                   </div>
-                  <span className="text-[11px] text-secondary-400 dark:text-secondary-500">
-                    3 high-impact semiconductor alerts
-                  </span>
                 </div>
 
-                {/* KPI 2: Revenue at Risk */}
-                <div className="p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-[#F8F9FA] dark:bg-[#161616] flex flex-col justify-between hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">Revenue at Risk</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200 dark:border-amber-900/40 flex items-center gap-1">
-                      Daily ERP
+                {/* Metric 3 */}
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Suppliers monitored</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
+                      32,<span className="text-secondary-400">490</span>
+                    </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400">
+                      ↗ 98.4%
                     </span>
                   </div>
-                  <div className="my-2">
-                    <span className="text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
-                      $2.4M
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-secondary-400 dark:text-secondary-500">
-                    Mapped across 5 active plant lines
-                  </span>
                 </div>
 
-                {/* KPI 3: Suppliers Monitored */}
-                <div className="p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-[#F8F9FA] dark:bg-[#161616] flex flex-col justify-between hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">Suppliers Monitored</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/40 flex items-center gap-1">
-                      <TrendingUp className="w-3 h-3" /> 98.4%
-                    </span>
-                  </div>
-                  <div className="my-2">
-                    <span className="text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">
-                      248
-                    </span>
-                  </div>
-                  <span className="text-[11px] text-secondary-400 dark:text-secondary-500">
-                    Tier-1, Tier-2 & spot distributors
-                  </span>
-                </div>
-
-                {/* KPI 4: Network Resilience Score */}
-                <div className="p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-[#F8F9FA] dark:bg-[#161616] flex flex-col justify-between hover:border-primary-300 dark:hover:border-primary-500/40 transition-all">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">Resilience Score</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-primary-50 text-primary-700 dark:bg-primary-950/40 dark:text-primary-400 border border-primary-200 dark:border-primary-800/40 flex items-center gap-1">
-                      Target 95%
-                    </span>
-                  </div>
-                  <div className="my-2">
-                    <span className="text-3xl font-extrabold text-primary-500 tracking-tight">
+                {/* Metric 4 */}
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Network resilience score</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-primary-500 tracking-tight">
                       94.2%
                     </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FFF4ED] text-[#F4511E] dark:bg-primary-950/40 dark:text-primary-400">
+                      ↗ +3.8%
+                    </span>
                   </div>
-                  <span className="text-[11px] text-secondary-400 dark:text-secondary-500">
-                    +3.4% recovery velocity this quarter
-                  </span>
                 </div>
 
               </div>
 
-            </div>
+              {/* 2. DUAL BALANCED ANALYTICAL PANELS (MAP + SPEND HORIZON AREA CURVE) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
+                
+                {/* Left Panel: Global Disruption WorldMap (7 Columns / ~58%) */}
+                <div className="lg:col-span-7 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl overflow-hidden bg-[#0C0F17] relative shadow-inner">
+                  <WorldMap />
+                </div>
 
-          </div>
+                {/* Right Panel: Spend Horizon Area Curve (5 Columns / ~42%) */}
+                <div className="lg:col-span-5 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl p-6 sm:p-7 space-y-5 bg-white dark:bg-[#141414] flex flex-col justify-between">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-semibold text-secondary-400 uppercase tracking-wider block">Spend Protected</span>
+                      <div className="flex items-baseline gap-2 mt-1">
+                        <span className="text-3xl font-extrabold text-secondary-900 dark:text-white tracking-tight">$120,384.<span className="text-secondary-400">86</span></span>
+                        <span className="text-xs font-bold text-[#DC2626]">↘ 2% vs last week</span>
+                      </div>
+                    </div>
 
-          {/* ======================================================== */}
-          {/* SAP CONNECTION STATUS & SYSTEM HEALTH STRIP              */}
-          {/* ======================================================== */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center py-4 px-5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="px-3 py-1.5 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] flex items-center gap-2">
-                <span className="text-[10px] text-secondary-500 dark:text-secondary-400 uppercase font-bold tracking-wider">Signal Layer:</span>
-                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Live Multi-Source ({liveNews.length})
-                </span>
+                    <div className="flex items-center gap-1 bg-[#F5F5F5] dark:bg-[#1F1F1F] p-1 rounded-xl text-xs font-semibold">
+                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Day</span>
+                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Wk</span>
+                      <span className="px-2 py-0.5 rounded-lg bg-[#111111] dark:bg-white text-white dark:text-secondary-900 font-bold shadow-xs">Mo</span>
+                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Yr</span>
+                    </div>
+                  </div>
+
+                  {/* SVG Layered Area Curve */}
+                  <div className="h-44 w-full relative">
+                    <svg className="w-full h-full overflow-visible" viewBox="0 0 500 180" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="peachGradient1" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#FF713B" stopOpacity="0.45"/>
+                          <stop offset="100%" stopColor="#FFF4ED" stopOpacity="0.0"/>
+                        </linearGradient>
+                        <linearGradient id="peachGradient2" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#F4511E" stopOpacity="0.8"/>
+                          <stop offset="100%" stopColor="#FF713B" stopOpacity="0.1"/>
+                        </linearGradient>
+                      </defs>
+                      <line x1="0" y1="45" x2="500" y2="45" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
+                      <line x1="0" y1="90" x2="500" y2="90" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
+                      <line x1="0" y1="135" x2="500" y2="135" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
+                      <path d="M0,150 Q100,120 200,95 T400,50 T500,75 L500,180 L0,180 Z" fill="url(#peachGradient1)"/>
+                      <path d="M0,170 Q120,140 220,115 T380,65 T500,90 L500,180 L0,180 Z" fill="url(#peachGradient2)"/>
+                      <path d="M0,170 Q120,140 220,115 T380,65 T500,90" fill="none" stroke="#F4511E" strokeWidth="3" strokeLinecap="round"/>
+                      <circle cx="380" cy="65" r="5" fill="#FFFFFF" stroke="#F4511E" strokeWidth="3"/>
+                    </svg>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-secondary-500 pt-2 border-t border-[#F0F0F0] dark:border-[#222222]">
+                    <span>Taiwan Seismic</span>
+                    <span>BIS Export</span>
+                    <span>Infineon Lead</span>
+                    <span>TI Sourced</span>
+                  </div>
+                </div>
+
               </div>
 
-              <div className="px-3 py-1.5 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] flex items-center gap-2">
-                <span className="text-[10px] text-secondary-500 dark:text-secondary-400 uppercase font-bold tracking-wider">SAP S/4HANA:</span>
-                <span className={`text-xs font-bold ${sapStatus.s4hana === 'Connected' ? 'text-emerald-600 dark:text-emerald-400' : 'text-secondary-500 dark:text-secondary-400'}`}>
-                  ● {sapStatus.s4hana}
-                </span>
-              </div>
+              {/* 2. RISK INTELLIGENCE SECTION: MAP AS MAJOR VISUAL FOCAL POINT (68% / 32% ASYMMETRIC SPLIT) */}
+              <div className="space-y-4 pt-4 border-t border-[#EAEAEA] dark:border-[#222222]">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <GlobeIcon className="w-5 h-5 text-primary-500" />
+                    <h3 className="text-base font-extrabold text-secondary-900 dark:text-white">
+                      Global Disruption Intelligence & Semiconductor Hubs
+                    </h3>
+                    <span className="px-2.5 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 font-bold text-xs border border-primary-200 dark:border-primary-800/40">
+                      20+ Nodes Active
+                    </span>
+                  </div>
 
-              <div className="px-3 py-1.5 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] flex items-center gap-2">
-                <span className="text-[10px] text-secondary-500 dark:text-secondary-400 uppercase font-bold tracking-wider">SAP Ariba:</span>
-                <span className={`text-xs font-bold ${sapStatus.ariba === 'Connected' ? 'text-emerald-600 dark:text-emerald-400' : 'text-secondary-500 dark:text-secondary-400'}`}>
-                  ● {sapStatus.ariba}
-                </span>
-              </div>
-            </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-secondary-400 font-semibold hidden sm:inline">Camera Focus:</span>
+                    <button className="px-3 py-1 text-xs font-bold rounded-lg border border-[#EAEAEA] dark:border-[#262626] bg-white dark:bg-[#161616] text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 shadow-2xs transition-colors">
+                      APAC Silicon
+                    </button>
+                    <button className="px-3 py-1 text-xs font-bold rounded-lg border border-[#EAEAEA] dark:border-[#262626] bg-white dark:bg-[#161616] text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 shadow-2xs transition-colors">
+                      EMEA Auto
+                    </button>
+                    <button className="px-3 py-1 text-xs font-bold rounded-lg border border-[#EAEAEA] dark:border-[#262626] bg-white dark:bg-[#161616] text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 shadow-2xs transition-colors">
+                      Americas Analog
+                    </button>
+                  </div>
+                </div>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary-200 dark:border-primary-800/40 bg-primary-50 dark:bg-primary-950/40 text-primary-700 dark:text-primary-400 text-xs font-bold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
-              {sapStatus.mode || 'Multi-Source Intelligence Active'}
-            </div>
-          </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                  
+                  {/* Left: Major Global Map Visual Container (8 Columns / 68%) */}
+                  <div className="lg:col-span-8 rounded-2xl overflow-hidden border border-[#EAEAEA] dark:border-[#262626] bg-[#0C0F17] relative shadow-inner">
+                    <WorldMap />
+                  </div>
 
-          {/* ======================================================== */}
-          {/* MAIN DASHBOARD: SIGNALS FEED + RISK CENTER / WORLD MAP    */}
-          {/* ======================================================== */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            
-            {/* LEFT COLUMN: MULTI-SOURCE SIGNAL FEED */}
-            <div className="lg:col-span-1 space-y-4">
-              <div className="flex items-center justify-between mb-1">
-                <h2 className="text-xs font-bold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider flex items-center gap-2">
-                  <Radio className="w-4 h-4 text-primary-500" /> Multi-Source Signals
-                </h2>
-                <div className="flex items-center gap-2.5">
-                  <button 
-                    onClick={() => fetchNews(newsSearchQuery)} 
-                    disabled={isRefreshing}
-                    className={`text-secondary-400 hover:text-primary-500 transition-colors ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`} 
-                    title="Refresh Signals"
-                    aria-label="Refresh signals"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-primary-500' : ''}`} />
-                  </button>
-                  <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live
-                  </span>
+                  {/* Right: Contextual Regional Risk Summary (4 Columns / 32%) */}
+                  <div className="lg:col-span-4 bg-[#FAFAFA] dark:bg-[#161616] rounded-2xl border border-[#EAEAEA] dark:border-[#262626] p-6 flex flex-col justify-between space-y-4">
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-1">
+                        Contextual Regional Risk
+                      </h4>
+                      <p className="text-sm font-bold text-secondary-900 dark:text-white">
+                        Active Fab Clusters Exposure
+                      </p>
+                    </div>
+
+                    <div className="space-y-3">
+                      
+                      {/* Regional Card 1: APAC */}
+                      <div className="p-3.5 rounded-xl bg-white dark:bg-[#111111] border border-[#EAEAEA] dark:border-[#262626] shadow-sm">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-bold text-secondary-900 dark:text-white">East Asia Silicon Corridor</span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FEF2F2] text-[#DC2626] dark:bg-red-950/40 dark:text-red-400 border border-[#FEE2E2] dark:border-red-900/40">
+                            Critical Exposure
+                          </span>
+                        </div>
+                        <p className="text-xs text-secondary-600 dark:text-secondary-400 leading-snug">
+                          TSMC Fab 18 wafer logistics delayed due to M6.4 seismic event. STM32 and MCU lead times extended to 18 weeks.
+                        </p>
+                        <div className="mt-2 text-xs font-mono font-bold text-[#DC2626] dark:text-red-400">
+                          Revenue at risk: $1,575,000 / day
+                        </div>
+                      </div>
+
+                      {/* Regional Card 2: EMEA */}
+                      <div className="p-3.5 rounded-xl bg-white dark:bg-[#111111] border border-[#EAEAEA] dark:border-[#262626] shadow-sm">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-bold text-secondary-900 dark:text-white">Central Europe Automotive Hub</span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FFFBEB] text-[#D97706] dark:bg-amber-950/40 dark:text-amber-400 border border-[#FEF3C7] dark:border-amber-900/40">
+                            Moderate Risk
+                          </span>
+                        </div>
+                        <p className="text-xs text-secondary-600 dark:text-secondary-400 leading-snug">
+                          Dresden power semiconductor allocation tight. 2 Tier-1 harness plants re-routed.
+                        </p>
+                        <div className="mt-2 text-xs font-mono font-bold text-[#D97706] dark:text-amber-400">
+                          Revenue at risk: $540,000 / day
+                        </div>
+                      </div>
+
+                      {/* Regional Card 3: Americas */}
+                      <div className="p-3.5 rounded-xl bg-white dark:bg-[#111111] border border-[#EAEAEA] dark:border-[#262626] shadow-sm">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-bold text-secondary-900 dark:text-white">Americas Analog & Sensors</span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F0FDF4] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400 border border-[#DCFCE7] dark:border-emerald-900/40">
+                            Stable Sourcing
+                          </span>
+                        </div>
+                        <p className="text-xs text-secondary-600 dark:text-secondary-400 leading-snug">
+                          Texas Instruments and NXP Dallas lines running at 98.2% baseline inventory buffer.
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <div className="pt-2 border-t border-[#EAEAEA] dark:border-[#222222]">
+                      <Link 
+                        href="/network"
+                        className="w-full py-2.5 bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-secondary-800 border border-[#EAEAEA] dark:border-[#262626] text-xs font-bold text-secondary-900 dark:text-white rounded-xl transition-all flex items-center justify-center gap-1.5"
+                      >
+                        Open Global Network Directory <ChevronRight className="w-3.5 h-3.5 text-secondary-400" />
+                      </Link>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
-              {/* SEARCH BAR */}
-              <div className="p-2.5 flex items-center gap-2 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-                <Search className="w-3.5 h-3.5 text-secondary-400 shrink-0" />
-                <input 
-                  type="text"
-                  placeholder="Filter SEC, BIS, USGS, or Part..."
-                  value={newsSearchQuery}
-                  onChange={(e) => setNewsSearchQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      if (newsSearchQuery.trim()) {
-                        setIsSearchingNews(true);
-                        fetchNews(newsSearchQuery);
-                      } else {
+              {/* 3. DISRUPTION MONITORING & LIVE MULTI-SOURCE SIGNALS STREAM */}
+              <div className="space-y-5 pt-4 border-t border-[#EAEAEA] dark:border-[#222222]">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-base font-extrabold text-secondary-900 dark:text-white flex items-center gap-2">
+                      <Radio className="w-4 h-4 text-primary-500" /> Multi-Source Disruption Stream
+                    </h3>
+                    <p className="text-xs text-secondary-500 dark:text-secondary-400">
+                      Deterministic signal correlation with institutional registries (SEC, BIS, USGS, Reuters)
+                    </p>
+                  </div>
+
+                  {/* Source Filter Tabs */}
+                  <div className="flex flex-wrap items-center gap-1.5 bg-secondary-100 dark:bg-[#161616] p-1.5 rounded-xl border border-[#EAEAEA] dark:border-[#262626]">
+                    {[
+                      { id: 'ALL', label: 'All Signals' },
+                      { id: 'SEC_IR', label: 'SEC / IR' },
+                      { id: 'FED_REGISTER_BIS', label: 'BIS Rules' },
+                      { id: 'USGS_SEISMIC', label: 'USGS Sensor' }
+                    ].map(t => (
+                      <button
+                        key={t.id}
+                        onClick={() => setFilterTier(t.id)}
+                        className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg border transition-all ${
+                          filterTier === t.id
+                            ? 'bg-primary-500 text-white border-primary-500 shadow-2xs'
+                            : 'bg-white dark:bg-[#111111] text-secondary-700 dark:text-secondary-300 border-[#EAEAEA] dark:border-[#262626] hover:border-[#D6D6D6]'
+                        }`}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* SKU Search Filter */}
+                <div className="p-3 flex items-center gap-2.5 rounded-xl border border-[#EAEAEA] dark:border-[#262626] bg-white dark:bg-[#141414] shadow-2xs">
+                  <Search className="w-4 h-4 text-secondary-400 shrink-0" />
+                  <input 
+                    type="text"
+                    placeholder="Search by Part Number (e.g. STM32F401, TPS54331), supplier, or event..."
+                    value={newsSearchQuery}
+                    onChange={(e) => setNewsSearchQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        if (newsSearchQuery.trim()) {
+                          setIsSearchingNews(true);
+                          fetchNews(newsSearchQuery);
+                        } else {
+                          setIsSearchingNews(false);
+                          fetchNews();
+                        }
+                      }
+                    }}
+                    className="flex-1 bg-transparent border-none text-xs outline-none text-secondary-900 dark:text-white placeholder-secondary-400"
+                  />
+                  {newsSearchQuery && (
+                    <button 
+                      onClick={() => {
+                        setNewsSearchQuery('');
                         setIsSearchingNews(false);
                         fetchNews();
-                      }
-                    }
-                  }}
-                  className="flex-1 bg-transparent border-none text-xs outline-none text-secondary-900 dark:text-white placeholder-secondary-400"
-                />
-                {newsSearchQuery && (
-                  <button 
-                    onClick={() => {
-                      setNewsSearchQuery('');
-                      setIsSearchingNews(false);
-                      fetchNews();
-                    }} 
-                    className="text-[10px] font-bold text-secondary-400 hover:text-red-500 transition-colors uppercase px-1"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-
-              {/* QUICK SKU SCANNER */}
-              <div className="space-y-1.5 py-1">
-                <span className="text-[9.5px] font-bold uppercase tracking-wider text-secondary-400 dark:text-secondary-500">Quick SKU Exposure Scan:</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {['STM32F401RE', 'TPS54331DR', 'BMI270', 'XC7Z020', 'GPU-A100-80'].map((sku) => (
-                    <button
-                      key={sku}
-                      onClick={() => {
-                        setNewsSearchQuery(sku);
-                        setIsSearchingNews(true);
-                        fetchNews(sku);
-                      }}
-                      className={`px-2.5 py-1 text-[9.5px] font-mono font-bold rounded-lg border transition-all ${
-                        newsSearchQuery === sku 
-                          ? 'bg-primary-500 text-white border-primary-500 shadow-2xs'
-                          : 'bg-white text-secondary-700 border-[#E8E8E8] hover:bg-primary-50 hover:border-primary-200 dark:bg-[#111111] dark:text-secondary-300 dark:border-[#222222] dark:hover:bg-[#181818]'
-                      }`}
+                      }} 
+                      className="text-xs font-bold text-secondary-400 hover:text-red-500 transition-colors uppercase px-1"
                     >
-                      {sku}
+                      Clear
                     </button>
-                  ))}
+                  )}
                 </div>
-              </div>
 
-              {/* SOURCE TIER FILTER TABS */}
-              <div className="flex flex-wrap gap-1.5 py-1">
-                {[
-                  { id: 'ALL', label: 'All' },
-                  { id: 'SEC_IR', label: 'SEC / IR' },
-                  { id: 'FED_REGISTER_BIS', label: 'BIS Rules' },
-                  { id: 'USGS_SEISMIC', label: 'USGS' }
-                ].map(t => (
-                  <button
-                    key={t.id}
-                    onClick={() => setFilterTier(t.id)}
-                    className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border transition-all ${
-                      filterTier === t.id
-                        ? 'bg-primary-500 text-white border-primary-500 shadow-2xs'
-                        : 'bg-white dark:bg-[#111111] text-secondary-700 dark:text-secondary-300 border-[#E8E8E8] dark:border-[#222222] hover:border-[#D6D6D6] dark:hover:border-[#333333]'
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
+                {/* Signal Stream Cards Grid */}
+                <div className="space-y-3.5">
+                  {filteredSignals.map((news) => {
+                    const badge = getSourceBadge(news.sourceTier);
+                    const isSelected = activeNews?.id === news.id;
 
-              {/* SIGNAL CARDS */}
-              <div className="space-y-3">
-                {filteredSignals.map((news) => {
-                  const badge = getSourceBadge(news.sourceTier);
-                  return (
-                    <div 
-                      key={news.id} 
-                      onClick={() => {
-                        if (!loading) {
-                          setStage(0); 
-                          setDetectResult(null); 
-                          setImpactResult(null); 
-                          setMatchResult(null); 
-                          setNegotiateResult(null); 
-                          setApproved(false); 
-                          setAribaResponse(null); 
-                          setAuditTrail([]);
-                          setActiveNews(news);
-                        }
-                      }}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer ${
-                        activeNews?.id === news.id 
-                          ? 'bg-primary-50/70 dark:bg-primary-950/20 border-primary-400 dark:border-primary-500/50 shadow-sm ring-1 ring-primary-500/30' 
-                          : 'bg-white dark:bg-[#111111] border-[#E8E8E8] dark:border-[#222222] hover:border-primary-200 dark:hover:border-primary-500/30 hover:shadow-2xs'
-                      }`}
-                    >
-                      <div className="flex justify-between items-start mb-2 gap-2">
-                        <span className={`px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded border ${badge.color}`}>
-                          {badge.label}
-                        </span>
-                        <span className="text-[10px] font-medium text-secondary-400 flex items-center gap-1 shrink-0">
-                          <Clock className="w-3 h-3 text-secondary-400" /> {new Date(news.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                        </span>
-                      </div>
+                    return (
+                      <div 
+                        key={news.id} 
+                        onClick={() => {
+                          if (!loading) {
+                            setStage(0); 
+                            setDetectResult(null); 
+                            setImpactResult(null); 
+                            setMatchResult(null); 
+                            setNegotiateResult(null); 
+                            setApproved(false); 
+                            setAribaResponse(null); 
+                            setAuditTrail([]);
+                            setActiveNews(news);
+                          }
+                        }}
+                        className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-5 ${
+                          isSelected
+                            ? 'bg-primary-50/80 dark:bg-primary-950/25 border-primary-500 shadow-sm ring-1 ring-primary-500/30' 
+                            : 'bg-white dark:bg-[#141414] border-[#EAEAEA] dark:border-[#262626] hover:border-primary-300 dark:hover:border-primary-500/40 hover:shadow-2xs'
+                        }`}
+                      >
+                        <div className="space-y-2 max-w-4xl">
+                          <div className="flex flex-wrap items-center gap-2.5">
+                            <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md border ${badge.color}`}>
+                              {badge.label}
+                            </span>
+                            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                              {news.evidenceConfidence}% Tier-Weighted Confidence
+                            </span>
+                            <span className="text-xs text-secondary-400 flex items-center gap-1 font-mono">
+                              <Clock className="w-3 h-3 text-secondary-400" />
+                              {new Date(news.publishedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                            </span>
+                          </div>
 
-                      <h3 className="text-xs font-bold text-secondary-900 dark:text-white leading-snug mb-2">
-                        {news.title}
-                      </h3>
+                          <h4 className="text-sm sm:text-base font-bold text-secondary-900 dark:text-white leading-snug">
+                            {news.title}
+                          </h4>
 
-                      <div className="flex items-center justify-between text-[10px] mb-2.5 pt-2 border-t border-[#E8E8E8] dark:border-[#222222]">
-                        <span className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                          Confidence: {news.evidenceConfidence}%
-                        </span>
-                        <span className="font-mono text-secondary-400">
-                          {news.sourceTier || 'OFFICIAL'}
-                        </span>
-                      </div>
-
-                      {news.verifiedUrl && news.verifiedUrl !== '#' && (
-                        <div className="mb-2.5">
-                          <a 
-                            href={news.verifiedUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1 text-[10.5px] font-semibold text-secondary-500 hover:text-primary-600 dark:text-secondary-400 dark:hover:text-primary-400 transition-colors"
-                          >
-                            <FileText className="w-3 h-3" /> View Source Document <ExternalLink className="w-2.5 h-2.5" />
-                          </a>
-                        </div>
-                      )}
-
-                      {activeNews?.id === news.id && stage === 0 && (
-                         <button 
-                           onClick={(e) => { e.stopPropagation(); simulatePipeline(news); }}
-                           className="w-full flex items-center justify-center gap-2 btn-primary !h-9 text-xs font-bold uppercase tracking-wider shadow-2xs mt-2"
-                         >
-                           <Search className="w-3.5 h-3.5" /> Correlate with SAP BOM
-                         </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* RIGHT COLUMN: WORLD MAP & PIPELINE EXECUTION */}
-            <div ref={threatSectionRef} id="threat-section" className="lg:col-span-3 space-y-6">
-
-              {/* 3D GLOBE VISUALIZATION (Stage 0) */}
-              {stage === 0 && (
-                <div className="space-y-4">
-                  <WorldMap />
-
-                  {/* AI Recommendation & Executive Briefing Card (PART 8.6) */}
-                  <div className="p-5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-                    <div className="flex items-center justify-between mb-3 border-b border-[#E8E8E8] dark:border-[#222222] pb-3">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-primary-500" />
-                        <h3 className="text-xs font-bold text-secondary-900 dark:text-white uppercase tracking-wider">
-                          AI Sentinel Executive Briefing
-                        </h3>
-                      </div>
-                      <span className="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 px-2 py-0.5 rounded-full">
-                        Automated Summary
-                      </span>
-                    </div>
-
-                    <p className="text-xs text-secondary-600 dark:text-secondary-400 leading-relaxed mb-3">
-                      SentinelChain is actively correlating institutional telemetry against your SAP S/4HANA bill of materials. Selecting any signal on the left will run entity extraction, explode affected production lines, calculate daily revenue at risk, and discover verified Mouser spot alternatives.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                      <div className="p-3 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626]">
-                        <span className="text-[10px] font-bold text-secondary-400 uppercase tracking-wider block">Target Silicon</span>
-                        <span className="text-xs font-bold text-secondary-900 dark:text-white mt-0.5 block">STM32 / TPS / BMI</span>
-                      </div>
-                      <div className="p-3 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626]">
-                        <span className="text-[10px] font-bold text-secondary-400 uppercase tracking-wider block">Lead Time Window</span>
-                        <span className="text-xs font-bold text-secondary-900 dark:text-white mt-0.5 block">3 - 5 Business Days</span>
-                      </div>
-                      <div className="p-3 rounded-lg bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626]">
-                        <span className="text-[10px] font-bold text-secondary-400 uppercase tracking-wider block">Ariba PR Automation</span>
-                        <span className="text-xs font-bold text-primary-500 mt-0.5 block">Guarded Auto-Dispatch</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* STAGE PROGRESS INDICATOR */}
-              {stage > 0 && (
-                <div className="grid grid-cols-3 gap-3">
-                  <div className={`p-3.5 rounded-xl border flex items-center gap-3 transition-all ${stage >= 1 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-200 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#111111] border-[#E8E8E8] dark:border-[#222222]'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 1 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>1</div>
-                    <div>
-                      <p className="text-xs font-bold text-secondary-900 dark:text-white">Entity Extraction</p>
-                      <p className="text-[10px] text-secondary-400">Public Signal → BOM</p>
-                    </div>
-                  </div>
-
-                  <div className={`p-3.5 rounded-xl border flex items-center gap-3 transition-all ${stage >= 2 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-200 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#111111] border-[#E8E8E8] dark:border-[#222222]'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 2 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>2</div>
-                    <div>
-                      <p className="text-xs font-bold text-secondary-900 dark:text-white">SAP BOM Explosion</p>
-                      <p className="text-[10px] text-secondary-400">Revenue at Risk</p>
-                    </div>
-                  </div>
-
-                  <div className={`p-3.5 rounded-xl border flex items-center gap-3 transition-all ${stage >= 3 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-200 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#111111] border-[#E8E8E8] dark:border-[#222222]'}`}>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 3 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>3</div>
-                    <div>
-                      <p className="text-xs font-bold text-secondary-900 dark:text-white">Spot Sourcing</p>
-                      <p className="text-[10px] text-secondary-400">Decision Ready</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* DETECTION RESULT UI */}
-              {stage > 0 && detectResult && (
-                detectResult.isDisruption ? (
-                  <div className="rounded-xl border border-red-200 dark:border-red-900/40 bg-white dark:bg-[#111111] overflow-hidden shadow-2xs">
-                    <div className="bg-red-50 dark:bg-red-950/30 px-6 py-4 flex flex-wrap items-center justify-between border-b border-red-200/80 dark:border-red-900/40 gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
-                           <AlertTriangle className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <h2 className="text-sm font-bold text-red-900 dark:text-red-300 tracking-wide">CRITICAL DISRUPTION IDENTIFIED</h2>
-                          <p className="text-[10.5px] font-medium text-red-700/80 dark:text-secondary-400">Deterministic correlation between public signal and internal SAP BOM</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] uppercase tracking-wider bg-red-600 text-white font-bold px-3 py-1 rounded-full shadow-2xs">
-                          Severity: {detectResult.severity?.toUpperCase() || 'HIGH'}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="md:col-span-2 space-y-4">
-                        <div>
-                          <h3 className="text-[10.5px] font-bold text-secondary-500 uppercase tracking-wider mb-2">Public Signal Diagnostic Summary</h3>
-                          <p className="text-secondary-800 dark:text-secondary-200 text-xs sm:text-sm leading-relaxed bg-[#F8F9FA] dark:bg-[#161616] p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222]">
-                            {detectResult.reason}
+                          <p className="text-xs text-secondary-600 dark:text-secondary-400 leading-relaxed">
+                            {news.description}
                           </p>
-                        </div>
 
-                        {/* Correlation Architecture Box */}
-                        <div className="p-3.5 bg-[#F8F9FA] dark:bg-[#161616] rounded-xl border border-[#E8E8E8] dark:border-[#222222] space-y-2 text-xs">
-                          <p className="text-[10px] font-bold uppercase text-secondary-400 tracking-wider">Correlation Pipeline Proof</p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-secondary-500 dark:text-secondary-400">Public Entity Extracted:</span>
-                            <span className="font-bold text-secondary-900 dark:text-white">{detectResult.correlationDetails?.publicEntityExtracted || 'Semiconductor Foundry Node'}</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-secondary-500 dark:text-secondary-400">Correlated Private BOM Part:</span>
-                            <span className="font-mono font-bold text-primary-600 dark:text-primary-400">{detectResult.partNumber}</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-secondary-500 dark:text-secondary-400">Evidence Confidence:</span>
-                            <span className="font-bold text-emerald-600 dark:text-emerald-400">{detectResult.evidenceConfidence || 88}% (Tier-Weighted)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-secondary-500 dark:text-secondary-400">Primary Source Tier:</span>
-                            <span className="font-bold text-secondary-900 dark:text-white">{detectResult.sourceTier || 'OFFICIAL_TELEMETRY'}</span>
-                          </div>
-                          {detectResult.verifiedUrl && detectResult.verifiedUrl !== '#' && (
-                            <div className="pt-2 border-t border-[#E8E8E8] dark:border-[#222222] flex justify-end">
+                          {news.verifiedUrl && news.verifiedUrl !== '#' && (
+                            <div className="pt-1">
                               <a 
-                                href={detectResult.verifiedUrl} 
+                                href={news.verifiedUrl} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
-                                className="text-[10.5px] font-bold text-primary-600 hover:text-primary-700 dark:text-primary-400 hover:underline flex items-center gap-1"
+                                onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1 text-xs font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 transition-colors"
                               >
-                                View Verified Source Document on Official Registry <ExternalLink className="w-3 h-3" />
+                                <FileText className="w-3 h-3" /> View Verified Source Registry <ExternalLink className="w-2.5 h-2.5" />
                               </a>
                             </div>
                           )}
                         </div>
-                      </div>
-                      
-                      <div className="space-y-4 md:border-l md:border-[#E8E8E8] dark:md:border-[#222222] md:pl-6">
-                         <div>
-                           <h3 className="text-[10.5px] font-bold text-secondary-400 uppercase tracking-wider mb-1.5">Impacted BOM Component</h3>
-                           <div className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-primary-700 dark:text-primary-300 font-bold bg-primary-50 dark:bg-primary-950/40 px-3 py-1.5 rounded-lg border border-primary-200 dark:border-primary-800/40">
-                             <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
-                             {detectResult.partNumber}
-                           </div>
-                         </div>
-                         <div>
-                           <h3 className="text-[10.5px] font-bold text-secondary-400 uppercase tracking-wider mb-1">Disruption Classification</h3>
-                           <p className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wide">{detectResult.disruptionType || 'Operational Constraint'}</p>
-                         </div>
-                         <div>
-                           <h3 className="text-[10.5px] font-bold text-secondary-400 uppercase tracking-wider mb-1">Evidence Confidence Score</h3>
-                           <div className="flex items-center gap-2 mt-1">
-                             <div className="flex-1 bg-secondary-200 dark:bg-secondary-800 h-2 rounded-full overflow-hidden">
-                                <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${detectResult.evidenceConfidence || 90}%` }}></div>
-                             </div>
-                             <span className="text-xs text-secondary-900 dark:text-white font-bold">{detectResult.evidenceConfidence || 90}%</span>
-                           </div>
-                           <p className="text-[9.5px] font-medium text-secondary-400 mt-1">Computed deterministically from source-tier weights</p>
-                         </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="rounded-xl border border-emerald-200 dark:border-emerald-800/40 bg-white dark:bg-[#111111] overflow-hidden shadow-2xs">
-                    <div className="bg-emerald-50 dark:bg-emerald-950/20 px-6 py-4 flex items-center gap-3 border-b border-emerald-200/80 dark:border-emerald-800/40">
-                      <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                         <ShieldCheck className="w-4 h-4" />
-                      </div>
-                      <h2 className="text-sm font-bold text-emerald-900 dark:text-emerald-300 tracking-wide">SIGNAL DISMISSED (NON-CRITICAL)</h2>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xs font-bold text-secondary-500 uppercase tracking-wider mb-2">Diagnostic Assessment</h3>
-                      <p className="text-secondary-800 dark:text-secondary-200 text-xs sm:text-sm leading-relaxed bg-[#F8F9FA] dark:bg-[#161616] p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222]">
-                        {detectResult.reason}
-                      </p>
-                    </div>
-                  </div>
-                )
-              )}
 
-              {/* IMPACT RESULT UI (Stage >= 2) */}
-              {stage >= 2 && impactResult && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-1">SAP S/4HANA Revenue Exposure</p>
-                    <p className="text-3xl font-extrabold text-red-600 dark:text-red-400 tracking-tight">
-                      ${impactResult.revenueAtRiskPerDay?.toLocaleString() || '0'}<span className="text-xs text-secondary-400 font-semibold"> / day</span>
-                    </p>
-                    <p className="text-[10.5px] font-medium text-secondary-400 mt-2">Calculated from ERP Bill of Materials and active assembly line throughput</p>
+                        <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
+                          <button 
+                            onClick={(e) => { 
+                              e.stopPropagation(); 
+                              simulatePipeline(news); 
+                            }}
+                            className="w-full md:w-auto px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                          >
+                            <Zap className="w-3.5 h-3.5" /> Run Threat Triage
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 4. AI RECOMMENDATIONS & AUTONOMOUS DECISION CENTER (RENDERED DURING/AFTER TRIAGE) */}
+              {(stage > 0 || detectResult || matchResult) && (
+                <div ref={threatSectionRef} id="threat-section" className="space-y-6 pt-6 border-t border-[#EAEAEA] dark:border-[#222222]">
+                  
+                  {/* Stage Progress Bar */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className={`p-4 rounded-xl border flex items-center gap-3 transition-all ${stage >= 1 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-300 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#141414] border-[#EAEAEA] dark:border-[#262626]'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 1 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>1</div>
+                      <div>
+                        <p className="text-xs font-bold text-secondary-900 dark:text-white">Entity Extraction</p>
+                        <p className="text-[10px] text-secondary-500 dark:text-secondary-400">Institutional Signal → BOM</p>
+                      </div>
+                    </div>
+
+                    <div className={`p-4 rounded-xl border flex items-center gap-3 transition-all ${stage >= 2 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-300 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#141414] border-[#EAEAEA] dark:border-[#262626]'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 2 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>2</div>
+                      <div>
+                        <p className="text-xs font-bold text-secondary-900 dark:text-white">SAP S/4HANA BOM Explosion</p>
+                        <p className="text-[10px] text-secondary-500 dark:text-secondary-400">Revenue Exposure Calculated</p>
+                      </div>
+                    </div>
+
+                    <div className={`p-4 rounded-xl border flex items-center gap-3 transition-all ${stage >= 3 ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-300 dark:border-primary-500/40 shadow-2xs' : 'bg-white dark:bg-[#141414] border-[#EAEAEA] dark:border-[#262626]'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${stage >= 3 ? 'bg-primary-500 text-white' : 'bg-secondary-200 text-secondary-700'}`}>3</div>
+                      <div>
+                        <p className="text-xs font-bold text-secondary-900 dark:text-white">Mouser Spot Sourcing</p>
+                        <p className="text-[10px] text-secondary-500 dark:text-secondary-400">Ariba PR Ready</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] shadow-2xs">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-1">Affected Assembly Lines</p>
-                    <div className="flex flex-wrap gap-1.5 mt-2">
-                      {impactResult.affectedProducts?.map((prod, idx) => (
-                        <span key={idx} className="px-3 py-1.5 text-xs font-bold bg-[#F8F9FA] dark:bg-[#161616] text-secondary-800 dark:text-secondary-200 rounded-lg border border-[#E8E8E8] dark:border-[#262626]">
-                          {prod}
+
+                  {/* Detection Card */}
+                  {detectResult && (
+                    <div className="rounded-2xl border border-red-200 dark:border-red-900/40 bg-white dark:bg-[#141414] overflow-hidden shadow-sm">
+                      <div className="bg-red-50 dark:bg-red-950/30 px-6 py-4 flex flex-wrap items-center justify-between border-b border-red-200 dark:border-red-900/40 gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400 font-bold">
+                            <AlertTriangle className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-extrabold text-red-900 dark:text-red-300 uppercase tracking-wide">
+                              Critical Disruption Confirmed
+                            </h3>
+                            <p className="text-xs text-red-700/80 dark:text-secondary-400">
+                              Deterministic correlation with private enterprise SAP Bill of Materials
+                            </p>
+                          </div>
+                        </div>
+
+                        <span className="text-xs font-bold uppercase tracking-wider bg-red-600 text-white px-3 py-1 rounded-full shadow-2xs">
+                          Severity: {detectResult.severity?.toUpperCase() || 'HIGH'}
                         </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* DECISION CENTER CALLOUT (Stage >= 3) */}
-              {stage >= 3 && matchResult && (
-                <div className="p-6 rounded-xl border border-primary-200 dark:border-primary-800/40 bg-white dark:bg-[#111111] shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                  <div>
-                    <span className="px-2.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wider rounded-md bg-primary-500 text-white shadow-2xs">
-                      Decision Formulated
-                    </span>
-                    <h3 className="text-base font-bold text-secondary-900 dark:text-white mt-2">Autonomous Recovery Options Ready</h3>
-                    <p className="text-xs text-secondary-600 dark:text-secondary-400 mt-1 max-w-xl">
-                      Mouser spot market inventory and internal SAP STO options are calculated. Open Decision Center to review technical spec comparisons and authorize autonomous procurement.
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-                    <button
-                      onClick={() => setShowPrModal(true)}
-                      className="px-4 py-2 bg-secondary-100 hover:bg-secondary-200 dark:bg-secondary-800 dark:hover:bg-secondary-700 text-secondary-900 dark:text-white font-bold text-xs uppercase tracking-wider rounded-lg border border-[#E8E8E8] dark:border-[#262626] flex items-center gap-2 transition-all cursor-pointer"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-primary-500" /> Export PR Dossier
-                    </button>
-                    <Link
-                      href={`/disruptions/${matchResult.disruption_id || 'DSP-LIVE-1001'}`}
-                      className="btn-primary !h-10 text-xs font-bold uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all"
-                    >
-                      Open Decision Center <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              )}
-
-              {/* AUDIT TRAIL LOG */}
-              {auditTrail.length > 0 && (
-                <div className="p-4 rounded-xl border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] space-y-2">
-                  <p className="text-[10px] font-bold text-secondary-500 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                    <Database className="w-3 h-3 text-primary-500" /> Cryptographic System Audit Trail
-                  </p>
-                  <div className="space-y-1.5 font-mono text-[11px] max-h-40 overflow-y-auto pr-2">
-                    {auditTrail.map((log, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-secondary-600 dark:text-secondary-400">
-                        <span className="text-secondary-400 shrink-0">{new Date(log.time).toLocaleTimeString()}</span>
-                        <span className="text-primary-600 dark:text-primary-400 font-bold shrink-0">[{log.source}]</span>
-                        <span className="text-secondary-900 dark:text-secondary-200">{log.message}</span>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2 space-y-4">
+                          <div>
+                            <h4 className="text-xs font-bold text-secondary-500 uppercase tracking-wider mb-2">
+                              Diagnostic Assessment
+                            </h4>
+                            <p className="text-secondary-800 dark:text-secondary-200 text-xs sm:text-sm leading-relaxed bg-[#FAFAFA] dark:bg-[#161616] p-4 rounded-xl border border-[#EAEAEA] dark:border-[#262626]">
+                              {detectResult.reason}
+                            </p>
+                          </div>
+
+                          <div className="p-4 bg-[#FAFAFA] dark:bg-[#161616] rounded-xl border border-[#EAEAEA] dark:border-[#262626] space-y-2 text-xs">
+                            <p className="text-xs font-bold uppercase text-secondary-400 tracking-wider">Provenance Proof</p>
+                            <div className="flex items-center justify-between">
+                              <span className="text-secondary-500">Public Entity:</span>
+                              <span className="font-bold text-secondary-900 dark:text-white">{detectResult.correlationDetails?.publicEntityExtracted || 'Semiconductor Foundry'}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-secondary-500">Target Material:</span>
+                              <span className="font-mono font-bold text-primary-600 dark:text-primary-400">{detectResult.partNumber}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-secondary-500">Confidence:</span>
+                              <span className="font-bold text-emerald-600 dark:text-emerald-400">{detectResult.evidenceConfidence || 88}%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4 lg:border-l lg:border-[#EAEAEA] dark:lg:border-[#262626] lg:pl-6">
+                          <div>
+                            <span className="text-xs font-bold text-secondary-400 uppercase tracking-wider block">Impacted Material</span>
+                            <span className="font-mono text-sm font-extrabold text-primary-600 dark:text-primary-400 mt-1 block">
+                              {detectResult.partNumber}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span className="text-xs font-bold text-secondary-400 uppercase tracking-wider block">Daily Revenue Exposure</span>
+                            <span className="text-2xl font-black text-red-600 dark:text-red-400 mt-1 block">
+                              ${(detectResult.revenueAtRiskPerDay || 1575000).toLocaleString()}<span className="text-xs font-semibold text-secondary-400">/day</span>
+                            </span>
+                          </div>
+
+                          <div className="pt-2">
+                            <button
+                              onClick={() => setShowPrModal(true)}
+                              className="w-full py-2.5 bg-white dark:bg-[#161616] hover:bg-secondary-50 border border-[#EAEAEA] dark:border-[#262626] text-xs font-bold text-secondary-900 dark:text-white rounded-xl transition-all flex items-center justify-center gap-2"
+                            >
+                              <FileText className="w-3.5 h-3.5 text-primary-500" /> Export PR Dossier (PDF)
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sourced Alternatives Decision Center Table */}
+                  {matchResult && (
+                    <div className="rounded-2xl border border-primary-200 dark:border-primary-800/40 bg-white dark:bg-[#141414] p-6 space-y-4 shadow-sm">
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                          <span className="text-xs font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wider block">Autonomous Sourcing Qualified</span>
+                          <h3 className="text-lg font-black text-secondary-900 dark:text-white mt-0.5">Mouser Electronics Spot Allocation Ready</h3>
+                        </div>
+
+                        <Link
+                          href={`/disruptions/${matchResult.disruption_id || 'DSP-LIVE-1001'}`}
+                          className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-md transition-all flex items-center gap-2"
+                        >
+                          Open Decision Center <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      </div>
+
+                      <div className="border border-[#EAEAEA] dark:border-[#262626] rounded-xl overflow-hidden">
+                        <table className="w-full text-left text-xs">
+                          <thead className="bg-[#FAFAFA] dark:bg-[#161616] border-b border-[#EAEAEA] dark:border-[#262626] text-secondary-500 font-bold">
+                            <tr>
+                              <th className="p-3.5">Qualified Part (MPN)</th>
+                              <th className="p-3.5">Vendor</th>
+                              <th className="p-3.5">Lead Time</th>
+                              <th className="p-3.5">Stock Qty</th>
+                              <th className="p-3.5">Quoted Price</th>
+                              <th className="p-3.5">Target Negotiated</th>
+                              <th className="p-3.5 text-right">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#EAEAEA] dark:divide-[#262626] font-mono">
+                            <tr className="bg-primary-50/40 dark:bg-primary-950/20 font-bold">
+                              <td className="p-3.5 text-primary-600 dark:text-primary-400">STM32F401RBT6TR</td>
+                              <td className="p-3.5 font-sans">Mouser Electronics</td>
+                              <td className="p-3.5 text-emerald-600 dark:text-emerald-400">3 Days</td>
+                              <td className="p-3.5">14,200 pcs</td>
+                              <td className="p-3.5 text-secondary-400">$6.26</td>
+                              <td className="p-3.5 text-emerald-600 dark:text-emerald-400">$5.80</td>
+                              <td className="p-3.5 text-right font-sans">
+                                <span className="px-2.5 py-1 rounded bg-primary-500 text-white text-[10px] font-bold">
+                                  Optimal #1
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="p-3.5 text-secondary-900 dark:text-white">STM32F401CCU6TR</td>
+                              <td className="p-3.5 font-sans">Mouser Electronics</td>
+                              <td className="p-3.5">3 Days</td>
+                              <td className="p-3.5">8,500 pcs</td>
+                              <td className="p-3.5 text-secondary-400">$6.70</td>
+                              <td className="p-3.5 text-emerald-600 dark:text-emerald-400">$6.15</td>
+                              <td className="p-3.5 text-right font-sans">
+                                <span className="px-2.5 py-1 rounded bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300 text-[10px] font-bold">
+                                  Alternate
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Cryptographic Audit Log */}
+                  {auditTrail.length > 0 && (
+                    <div className="p-4 rounded-xl border border-[#EAEAEA] dark:border-[#262626] bg-[#FAFAFA] dark:bg-[#141414] space-y-2">
+                      <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <Database className="w-3.5 h-3.5 text-primary-500" /> Multi-Agent Audit Trail
+                      </p>
+                      <div className="space-y-1 font-mono text-xs max-h-40 overflow-y-auto pr-2">
+                        {auditTrail.map((log, idx) => (
+                          <div key={idx} className="flex items-start gap-2 text-secondary-600 dark:text-secondary-400">
+                            <span className="text-secondary-400 shrink-0">{new Date(log.time).toLocaleTimeString()}</span>
+                            <span className="text-primary-600 dark:text-primary-400 font-bold shrink-0">[{log.source}]</span>
+                            <span className="text-secondary-900 dark:text-secondary-200">{log.message}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               )}
 
             </div>
+
           </div>
 
         </main>

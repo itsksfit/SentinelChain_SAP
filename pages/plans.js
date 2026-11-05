@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { Zap, X, ArrowRight, ShieldCheck, Link as LinkIcon, CheckCircle2, Clock, Search, ChevronRight, Activity, Database, ShieldAlert, FileText } from 'lucide-react';
+import { Zap, X, ArrowRight, ShieldCheck, Link as LinkIcon, CheckCircle2, Clock, Search, ChevronRight, Activity, Database, ShieldAlert, FileText, Filter, Check } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -36,11 +36,8 @@ export async function getServerSideProps() {
 export default function Plans({ initialPlans }) {
   const router = useRouter();
   const [plans, setPlans] = useState(initialPlans);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [customInput, setCustomInput] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('ALL');
 
   useEffect(() => {
     try {
@@ -82,6 +79,11 @@ export default function Plans({ initialPlans }) {
   }, [router.query.id]);
 
   const filteredPlans = plans.filter(p => {
+    if (selectedFilter !== 'ALL') {
+      const st = (p.status || '').toLowerCase();
+      if (selectedFilter === 'EXECUTED' && !st.includes('executed') && !st.includes('completed') && !st.includes('resolved')) return false;
+      if (selectedFilter === 'AWAITING' && !st.includes('awaiting') && !st.includes('pending')) return false;
+    }
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
     return p.id.toLowerCase().includes(q) || 
@@ -90,11 +92,20 @@ export default function Plans({ initialPlans }) {
            p.vendor.toLowerCase().includes(q);
   });
 
+  const avgReduction = plans.length > 0 
+    ? Math.round(plans.reduce((acc, p) => acc + (p.risk_reduction_pct || 0), 0) / plans.length)
+    : 94;
+
+  const executedCount = plans.filter(p => {
+    const st = (p.status || '').toLowerCase();
+    return st.includes('executed') || st.includes('completed') || st.includes('resolved');
+  }).length;
+
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
         <title>Recovery Plans | SentinelChain</title>
-        <meta name="description" content="AI-orchestrated mitigation plans, commercial spot allocations, and ERP purchase orders." />
+        <meta name="description" content="AI-orchestrated mitigation plans, commercial spot allocations, and SAP Ariba PR execution packages." />
       </Head>
 
       <Sidebar />
@@ -102,109 +113,164 @@ export default function Plans({ initialPlans }) {
       <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full space-y-6 pb-24 min-w-0">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 lg:px-12 py-8 max-w-[1600px] mx-auto w-full space-y-8 pb-28 min-w-0">
           
-          {/* Header & Interconnected Navigation Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#E8E8E8] dark:border-[#222222] pb-6">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/40 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                Autonomous Mitigation Orchestration
+          {/* Breadcrumb Navigation */}
+          <div className="flex items-center text-xs font-bold uppercase tracking-wider text-secondary-400 gap-2">
+            <Link href="/" className="hover:text-primary-500 transition-colors">Command Center</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-secondary-300 dark:text-secondary-600" />
+            <span className="text-secondary-900 dark:text-white">Mitigation Strategies</span>
+          </div>
+
+          {/* Editorial Header */}
+          <div className="border-b border-[#EAEAEA] dark:border-[#222222] pb-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Autonomous Orchestration
+                </span>
+                <span className="text-xs font-mono font-bold text-secondary-400">
+                  {plans.length} Strategies Active
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-secondary-900 dark:text-white">
-                Autonomous Recovery Plans
-              </h1>
-              <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mt-1 max-w-2xl">
-                AI-orchestrated mitigation plans, commercial spot allocations, and SAP Ariba PR execution packages.
-              </p>
+
+              <div className="flex flex-wrap items-center gap-2.5">
+                <Link href="/disruptions" className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all text-red-600 dark:text-red-400">
+                  <ShieldAlert className="w-3.5 h-3.5" /> Active Threats
+                </Link>
+                <Link href="/ledger" className="px-4 py-2 bg-white dark:bg-[#141414] hover:bg-secondary-50 border border-[#E5E7EB] dark:border-[#262626] rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs flex items-center gap-2 transition-all text-primary-600 dark:text-primary-400">
+                  <FileText className="w-3.5 h-3.5" /> Recovery Ledger
+                </Link>
+              </div>
             </div>
 
-            {/* Cross-Module Navigation Shortcuts */}
-            <div className="flex flex-wrap items-center gap-2">
-              <Link href="/disruptions" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-red-600 dark:text-red-400 shadow-2xs">
-                <ShieldAlert className="w-3.5 h-3.5" /> Active Disruptions
-              </Link>
-              <Link href="/ledger" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-primary-600 dark:text-primary-400 shadow-2xs">
-                <FileText className="w-3.5 h-3.5" /> Recovery Ledger
-              </Link>
-              <Link href="/risk" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-amber-600 dark:text-amber-400 shadow-2xs">
-                <Activity className="w-3.5 h-3.5" /> Risk Matrix
-              </Link>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-secondary-900 dark:text-white leading-[1.12]">
+              Autonomous <span className="font-serif-italic text-primary-500 font-normal tracking-normal text-[1.12em] px-1">Recovery Plans.</span>
+            </h1>
+            <p className="text-secondary-600 dark:text-secondary-400 text-sm sm:text-base max-w-3xl mt-2 leading-relaxed">
+              Algorithmic mitigation strategies, pin-compatible spot allocations, and automated SAP Ariba purchase requisition packages generated in under 45 seconds.
+            </p>
+          </div>
+
+          {/* Frameless Crosshair 4-Metric Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[#E5E7EB] dark:divide-[#262626] border-y border-[#E5E7EB] dark:border-[#262626] py-2">
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Total Strategies</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-secondary-900 dark:text-white tracking-tight">{plans.length}</span>
+              <span className="text-xs text-secondary-400">AI-synthesized mitigation blueprints</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Mean Risk Mitigated</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">{avgReduction}%</span>
+              <span className="text-xs text-secondary-400">Verified financial loss protection</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Execution Velocity</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">&lt; 45s</span>
+              <span className="text-xs text-secondary-400">Telemetry to Mouser spot match</span>
+            </div>
+
+            <div className="p-6 flex flex-col justify-between h-36">
+              <span className="text-xs text-secondary-500 dark:text-secondary-400 font-semibold uppercase tracking-wider">Executed PRs</span>
+              <span className="text-3xl sm:text-4xl font-extrabold text-secondary-900 dark:text-white tracking-tight">{executedCount}</span>
+              <span className="text-xs text-secondary-400">Dispatched to S/4HANA & Ariba</span>
             </div>
           </div>
 
-          {/* Search and Filters */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-white dark:bg-[#111111] p-3.5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] shadow-2xs">
-            <div className="flex items-center gap-2 w-full sm:w-96 px-3 py-1.5 bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] rounded-lg">
-              <Search className="w-3.5 h-3.5 text-secondary-400" />
+          {/* Filter Bar & Search */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#141414] p-4 rounded-2xl border border-[#E5E7EB] dark:border-[#262626] shadow-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-bold text-secondary-400 uppercase tracking-wider pl-1 flex items-center gap-1.5">
+                <Filter className="w-3.5 h-3.5" /> Strategy Status:
+              </span>
+              {[
+                { id: 'ALL', label: `All Plans (${plans.length})` },
+                { id: 'EXECUTED', label: `Executed (${executedCount})` },
+                { id: 'AWAITING', label: `Awaiting Approval (${plans.length - executedCount})` }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedFilter(tab.id)}
+                  className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl border transition-all ${
+                    selectedFilter === tab.id
+                      ? 'bg-secondary-900 text-white dark:bg-white dark:text-secondary-900 border-secondary-900 dark:border-white shadow-2xs'
+                      : 'bg-[#F9FAFB] dark:bg-[#1C1D21] text-secondary-600 dark:text-secondary-400 border-[#E5E7EB] dark:border-[#262626] hover:border-[#D1D5DB] dark:hover:border-[#333333]'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="w-full sm:w-80 flex items-center gap-2 px-3 py-2 bg-[#F9FAFB] dark:bg-[#1C1D21] border border-[#E5E7EB] dark:border-[#262626] rounded-xl">
+              <Search className="w-3.5 h-3.5 text-secondary-400 shrink-0" />
               <input 
                 type="text"
-                placeholder="Search by Plan ID, Event ID, MPN, or Distributor..."
+                placeholder="Search Plan ID, MPN, or Distributor..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-xs outline-none text-secondary-900 dark:text-white placeholder-secondary-400"
+                className="w-full bg-transparent text-xs font-medium outline-none text-secondary-900 dark:text-white placeholder-secondary-400"
               />
             </div>
-            <span className="text-xs text-secondary-400 font-mono font-medium">
-              Showing {filteredPlans.length} active recovery strategies
-            </span>
           </div>
 
-          {/* Plans Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Recovery Plans Editorial Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredPlans.map((plan, i) => (
               <div 
                 key={i} 
                 id={plan.id} 
-                className="bg-white dark:bg-[#111111] p-5 border border-[#E8E8E8] dark:border-[#222222] rounded-xl hover:border-primary-300 dark:hover:border-primary-500/40 transition-all shadow-2xs flex flex-col justify-between"
+                className="bg-white dark:bg-[#141414] p-6 border border-[#E5E7EB] dark:border-[#262626] rounded-2xl hover:border-primary-400 dark:hover:border-primary-500 transition-all shadow-sm flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex justify-between items-start mb-3">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-secondary-900 dark:text-white text-base flex items-center gap-2">
-                          {plan.id.includes('LIVE') && (
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>
-                          )}
-                          <span className="font-mono">{plan.id}</span>
-                        </h3>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="font-mono text-xs font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/40 border border-primary-200 dark:border-primary-800/40 px-2.5 py-0.5 rounded-full">
+                          {plan.id}
+                        </span>
                         <StatusBadge status={plan.status} />
                       </div>
-                      <p className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400">
-                        Affected Material: {plan.part}
+                      <p className="text-base font-extrabold text-secondary-900 dark:text-white font-mono">
+                        {plan.part}
                       </p>
                     </div>
+
                     <div className="text-right">
                       <p className="text-[10px] text-secondary-400 font-bold uppercase tracking-wider mb-0.5">Risk Mitigated</p>
-                      <p className={`font-extrabold text-base ${plan.risk_reduction_pct > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-secondary-400'}`}>
+                      <p className={`font-extrabold text-lg sm:text-xl ${plan.risk_reduction_pct > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-secondary-400'}`}>
                         {plan.risk_reduction_pct}%
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-[#F8F9FA] dark:bg-[#161616] p-3 rounded-lg border border-[#E8E8E8] dark:border-[#262626] mb-4">
+                  <div className="bg-[#F9FAFB] dark:bg-[#18191D] p-4 rounded-xl border border-[#E5E7EB] dark:border-[#262626] mb-5">
                     <p className="text-xs text-secondary-700 dark:text-secondary-300 font-medium leading-relaxed">
                       {plan.proposed_action}
                     </p>
-                    <div className="mt-2.5 flex items-center justify-between text-[11px] text-secondary-400 font-mono">
-                      <span>Vendor / Distributor: <strong className="text-secondary-900 dark:text-white font-semibold">{plan.vendor}</strong></span>
+                    <div className="mt-3 pt-3 border-t border-[#E5E7EB] dark:border-[#262626] flex items-center justify-between text-xs text-secondary-500 dark:text-secondary-400">
+                      <span>Primary Sourcing Partner:</span>
+                      <strong className="text-secondary-900 dark:text-white font-bold">{plan.vendor}</strong>
                     </div>
                   </div>
                 </div>
 
-                {/* Interactive Interconnected Action Bar */}
-                <div className="flex items-center justify-between pt-3.5 border-t border-[#E8E8E8] dark:border-[#222222] text-xs">
+                <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB] dark:border-[#262626]">
                   <Link 
                     href={`/disruptions/${plan.source_disruption_id}`}
-                    className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-primary-600 dark:text-primary-400 hover:underline"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-secondary-500 hover:text-primary-500 transition-colors"
                   >
                     <LinkIcon className="w-3 h-3" /> Event: {plan.source_disruption_id}
                   </Link>
+
                   <Link 
                     href={`/disruptions/${plan.source_disruption_id}`} 
-                    className="btn-primary !h-8 px-3 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs"
+                    className="btn-primary !h-9 px-4 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs"
                   >
-                    Decision Center <ArrowRight className="w-3 h-3" />
+                    Decision Center <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
