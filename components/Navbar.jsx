@@ -57,37 +57,38 @@ export default function Navbar({ onMenuClick }) {
   };
 
   return (
-    <header className="h-[70px] border-b border-[#E8E8E8] dark:border-[#222222] flex items-center justify-between px-6 bg-white/95 dark:bg-[#0D0D0D]/95 backdrop-blur-md sticky top-0 z-40 transition-colors duration-200">
-      {/* Left: Mobile menu or Desktop breadcrumbs */}
-      <div className="flex items-center gap-4">
-        <button 
-          onClick={handleMobileMenu}
-          className="lg:hidden p-2 text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800"
-          aria-label="Open menu"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-        
-        {/* Mobile brand fallback */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <img 
-            src="/shield.png" 
-            alt="SentinelChain Logo" 
-            className="w-7 h-7 object-contain rounded-md"
-          />
-          <span className="text-sm font-bold tracking-tight text-secondary-900 dark:text-white">SentinelChain</span>
+    <header className="h-[70px] border-b border-[#E8E8E8] dark:border-[#222222] bg-white/95 dark:bg-[#0D0D0D]/95 backdrop-blur-md sticky top-0 z-40 transition-colors duration-200">
+      <div className="h-full w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between">
+        {/* Left: Mobile menu or Desktop breadcrumbs */}
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={handleMobileMenu}
+            className="lg:hidden p-2 text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white rounded-lg hover:bg-secondary-100 dark:hover:bg-secondary-800"
+            aria-label="Open menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          
+          {/* Mobile brand fallback */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <img 
+              src="/shield.png" 
+              alt="SentinelChain Logo" 
+              className="w-7 h-7 object-contain rounded-md"
+            />
+            <span className="text-sm font-bold tracking-tight text-secondary-900 dark:text-white">SentinelChain</span>
+          </div>
+
+          {/* Desktop Breadcrumb */}
+          <div className="hidden lg:flex items-center text-xs font-semibold text-secondary-400 dark:text-secondary-500 tracking-wide">
+            <span>Enterprise SCRM</span>
+            <ChevronRight className="w-3.5 h-3.5 mx-1.5 text-secondary-300 dark:text-secondary-600" />
+            <span className="text-secondary-900 dark:text-white font-bold">{getPageTitle()}</span>
+          </div>
         </div>
 
-        {/* Desktop Breadcrumb */}
-        <div className="hidden lg:flex items-center text-xs font-semibold text-secondary-400 dark:text-secondary-500 tracking-wide">
-          <span>Enterprise SCRM</span>
-          <ChevronRight className="w-3.5 h-3.5 mx-1.5 text-secondary-300 dark:text-secondary-600" />
-          <span className="text-secondary-900 dark:text-white font-bold">{getPageTitle()}</span>
-        </div>
-      </div>
-
-      {/* Right: Search, Theme Toggle, Notifications, Profile */}
-      <div className="flex items-center gap-2.5 relative">
+        {/* Right: Search, Theme Toggle, Notifications, Profile */}
+        <div className="flex items-center gap-2.5 relative">
         <button 
           onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
           className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs text-secondary-500 dark:text-secondary-400 bg-secondary-50 dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] rounded-lg hover:border-primary-500/40 hover:bg-secondary-100 dark:hover:bg-[#1f1f1f] transition-all font-medium"
@@ -188,6 +189,7 @@ export default function Navbar({ onMenuClick }) {
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
   );
 }
