@@ -16,6 +16,7 @@ import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
 import PrAuditExportModal from '../components/PrAuditExportModal';
 import SourceRegistryScraperModal from '../components/SourceRegistryScraperModal';
+import SpendProtectedChart from '../components/SpendProtectedChart';
 import dynamic from 'next/dynamic';
 
 const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false });
@@ -554,60 +555,8 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
                   </div>
                 </div>
 
-                {/* Right Panel: Spend Horizon Area Curve (5 Columns / ~42%) */}
-                <div className="lg:col-span-5 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl p-6 sm:p-7 space-y-5 bg-white dark:bg-[#141414] flex flex-col justify-between overflow-hidden">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                    <div>
-                      <span className="text-[11px] font-bold text-secondary-400 uppercase tracking-wider block">Spend Protected</span>
-                      <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">
-                        <span className="text-2xl sm:text-3xl font-black text-secondary-900 dark:text-white tracking-tight font-mono">
-                          $120,384<span className="text-secondary-400 text-lg sm:text-xl font-normal">.86</span>
-                        </span>
-                        <span className="text-[11px] font-bold text-[#DC2626] whitespace-nowrap bg-red-50 dark:bg-red-950/40 px-2 py-0.5 rounded-md border border-red-200/60 dark:border-red-900/40">
-                          ↘ 2% vs last week
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1 bg-secondary-100 dark:bg-[#1F1F1F] p-1 rounded-xl text-xs font-semibold shrink-0 self-start">
-                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Day</button>
-                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Wk</button>
-                      <button className="px-2.5 py-1 rounded-lg bg-[#111111] dark:bg-white text-white dark:text-secondary-900 font-bold shadow-xs">Mo</button>
-                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Yr</button>
-                    </div>
-                  </div>
-
-                  {/* SVG Layered Area Curve */}
-                  <div className="h-44 w-full relative overflow-hidden">
-                    <svg className="w-full h-full" viewBox="0 0 500 180" preserveAspectRatio="none">
-                      <defs>
-                        <linearGradient id="peachGradient1" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#FF713B" stopOpacity="0.45"/>
-                          <stop offset="100%" stopColor="#FFF4ED" stopOpacity="0.0"/>
-                        </linearGradient>
-                        <linearGradient id="peachGradient2" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#F4511E" stopOpacity="0.8"/>
-                          <stop offset="100%" stopColor="#FF713B" stopOpacity="0.1"/>
-                        </linearGradient>
-                      </defs>
-                      <line x1="0" y1="45" x2="500" y2="45" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
-                      <line x1="0" y1="90" x2="500" y2="90" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
-                      <line x1="0" y1="135" x2="500" y2="135" stroke="#F0F0F0" strokeDasharray="4 4" strokeWidth="1"/>
-                      <path d="M0,150 Q100,120 200,95 T400,50 T500,75 L500,180 L0,180 Z" fill="url(#peachGradient1)"/>
-                      <path d="M0,170 Q120,140 220,115 T380,65 T500,90 L500,180 L0,180 Z" fill="url(#peachGradient2)"/>
-                      <path d="M0,170 Q120,140 220,115 T380,65 T500,90" fill="none" stroke="#F4511E" strokeWidth="3" strokeLinecap="round"/>
-                      <circle cx="380" cy="65" r="5" fill="#FFFFFF" stroke="#F4511E" strokeWidth="3"/>
-                    </svg>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs text-secondary-500 pt-3 border-t border-[#F0F0F0] dark:border-[#222222]">
-                    <span>Taiwan Seismic</span>
-                    <span>BIS Export</span>
-                    <span>Infineon Lead</span>
-                    <span>TI Sourced</span>
-                  </div>
-                </div>
-
+                {/* Right Panel: Interactive Spend Horizon Area Curve (5 Columns / ~42%) */}
+                <SpendProtectedChart />
               </div>
 
             </div>
