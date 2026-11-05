@@ -107,9 +107,18 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
   const [newsSearchQuery, setNewsSearchQuery] = useState('');
   const [isSearchingNews, setIsSearchingNews] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const SCAN_CYCLE_SECONDS = 24 * 60 * 60; // 24 Hours Cycle (86,400s)
   const [isLiveScanning, setIsLiveScanning] = useState(false);
-  const [scanCountdown, setScanCountdown] = useState(30);
+  const [scanCountdown, setScanCountdown] = useState(SCAN_CYCLE_SECONDS);
   const [lastScannedTime, setLastScannedTime] = useState(new Date().toLocaleTimeString());
+
+  // Formatter for 24-hour countdown display (e.g., 23h 59m 45s)
+  const formatScanCountdown = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${hours}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+  };
 
   // Scraper Modal State
   const [showScraperModal, setShowScraperModal] = useState(false);
@@ -144,7 +153,7 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
   };
 
   const handleManualScan = () => {
-    setScanCountdown(30);
+    setScanCountdown(SCAN_CYCLE_SECONDS); // Reset to 24 hours
     fetchNews(newsSearchQuery, true);
   };
 
@@ -167,7 +176,7 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
           if (stageRef.current === 0 && !isSearchingNews) {
             fetchNews('', true);
           }
-          return 30;
+          return SCAN_CYCLE_SECONDS; // Reset to 24-hour cycle
         }
         return prev - 1;
       });
@@ -823,17 +832,21 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">
-                    Continuous institutional web-crawling across USGS Sensor, Federal Register (BIS), SEC EDGAR & Corporate IR
+                    Continuous institutional web-crawling across USGS Sensor, Federal Register (BIS), SEC EDGAR & Corporate IR (Every 24 Hours)
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-                {/* Countdown Ticker */}
+                {/* 24-Hour Countdown Ticker */}
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#171B24] border border-[#2B3242]">
-                  <Clock className="w-3.5 h-3.5 text-primary-400 animate-spin" style={{ animationDuration: '6s' }} />
+                  <Clock className="w-3.5 h-3.5 text-primary-400 animate-spin" style={{ animationDuration: '10s' }} />
                   <span className="text-xs text-slate-300 font-mono">
-                    Auto-scrape in <span className="font-extrabold text-primary-400">{scanCountdown}s</span>
+                    Auto-scrape in <span className="font-extrabold text-primary-400">{formatScanCountdown(scanCountdown)}</span>
+                  </span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-[10px] text-primary-400 font-mono font-bold bg-primary-950/60 px-1.5 py-0.5 rounded border border-primary-800/40">
+                    24h Cycle
                   </span>
                   <span className="text-slate-600">•</span>
                   <span className="text-[10px] text-slate-400 font-mono">
