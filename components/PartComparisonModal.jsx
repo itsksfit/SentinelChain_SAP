@@ -7,7 +7,7 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
   const originalId = originalPart.part_id || originalPart.part || 'STM32F401RE';
   const alternativeId = altPart.alt_part_id || altPart.altPartId || altPart.partNumber || 'STM32F401RBT6TR';
 
-  // Technical specification map for rich side-by-side engineering comparison
+  // Technical specification map for engineering comparison
   const getSpecs = (partId = '', category = 'MCU', mfg = '') => {
     const id = String(partId || '').toUpperCase();
     if (id.includes('STM32') || id.includes('GD32') || id.includes('AT32') || category === 'MCU') {
@@ -38,13 +38,13 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
       return {
         core: id.includes('MI300') ? 'CDNA 3 Architecture (304 CUs)' : id.includes('H100') ? 'Hopper Tensor Core (80B Transistors)' : 'Ampere Tensor Core (54B Transistors)',
         flashRam: id.includes('MI300') ? '192 GB HBM3' : id.includes('H100') ? '80 GB HBM3' : '80 GB HBM2e',
-        package: 'SXM5 / PCIe 5.0 Form Factor',
-        voltage: '48V DC Power Plane',
-        tempRange: '0°C to +70°C (Datacenter Liquid/Air)',
-        pinMatch: 'SXM / OAM Baseboard Compatible',
-        firmware: 'ROCm / CUDA Accelerated Kernel Support',
-        qualification: 'Enterprise Datacenter Grade',
-        peripherals: 'NVLink 4 / Infinity Fabric (900 GB/s)'
+        package: 'SXM4 / SXM5 Mezzanine Module',
+        voltage: '48V DC Subsystem Bus',
+        tempRange: '0°C to +85°C (Datacenter Liquid / Forced Air)',
+        pinMatch: 'Direct SXM Socket Fit',
+        firmware: 'CUDA & ROCm Driver Parity',
+        qualification: 'Enterprise High-Availability Tier 1',
+        peripherals: 'PCIe Gen 4/5, NVLink Interconnect'
       };
     } else {
       return {
@@ -65,29 +65,30 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
   const altSpecs = getSpecs(alternativeId, originalPart.category, altPart.vendor);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-[fadeIn_0.2s_ease-out]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-[fadeIn_0.2s_ease-out]">
       <div 
-        className="bg-white dark:bg-[#11141c] border border-gray-200 dark:border-white/10 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+        className="bg-white dark:bg-[#111111] border border-[#E8E8E8] dark:border-[#222222] rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* HEADER */}
-        <div className="p-5 border-b border-gray-100 dark:border-white/10 flex items-center justify-between bg-gray-50/50 dark:bg-white/[0.02]">
+        <div className="p-5 border-b border-[#E8E8E8] dark:border-[#222222] flex items-center justify-between bg-[#F8F9FA] dark:bg-[#161616]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+            <div className="w-9 h-9 rounded-lg bg-primary-50 dark:bg-primary-950/40 border border-primary-200 dark:border-primary-800/40 flex items-center justify-center text-primary-600 dark:text-primary-400">
               <Cpu className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <h2 className="text-sm sm:text-base font-bold text-secondary-900 dark:text-white flex items-center gap-2">
                 Technical Specification & Pinout Comparison
               </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-secondary-500 dark:text-secondary-400">
                 Verified hardware compatibility & drop-in qualification matrix
               </p>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-lg text-secondary-400 hover:text-secondary-700 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -99,119 +100,119 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
           {/* Header Visual Cards */}
           <div className="grid grid-cols-2 gap-4">
             {/* Original Part */}
-            <div className="p-4 rounded-xl border border-red-200 dark:border-red-500/20 bg-red-50/30 dark:bg-red-500/5">
+            <div className="p-4 rounded-xl border border-red-200 dark:border-red-900/40 bg-red-50/50 dark:bg-red-950/20">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">Original Target Part</span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 font-bold">Disrupted</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-red-700 dark:text-red-400">Original Target Part</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 font-bold">Disrupted</span>
               </div>
-              <h3 className="text-lg font-black text-gray-900 dark:text-white">{originalId}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{originalPart.manufacturer || 'Primary OEM'}</p>
-              <div className="mt-3 text-xs font-semibold text-gray-700 dark:text-gray-300">
-                Base Cost: <span className="font-bold text-gray-900 dark:text-white">${(typeof originalPart.base_price === 'number' ? originalPart.base_price : (parseFloat(originalPart.base_price) || 4.50)).toFixed(2)}</span>
+              <h3 className="text-base sm:text-lg font-bold text-secondary-900 dark:text-white font-mono">{originalId}</h3>
+              <p className="text-xs text-secondary-500 dark:text-secondary-400">{originalPart.manufacturer || 'Primary OEM'}</p>
+              <div className="mt-3 text-xs font-semibold text-secondary-700 dark:text-secondary-300">
+                Base Cost: <span className="font-bold text-secondary-900 dark:text-white">${(typeof originalPart.base_price === 'number' ? originalPart.base_price : (parseFloat(originalPart.base_price) || 4.50)).toFixed(2)}</span>
               </div>
             </div>
 
             {/* Alternative Part */}
-            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/30 dark:bg-emerald-500/5">
+            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-800/40 bg-emerald-50/50 dark:bg-emerald-950/20">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Validated Alternative</span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Validated Alternative</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3" /> Pin-Compatible
                 </span>
               </div>
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400">{alternativeId}</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Distributor: {altPart.vendor || 'Mouser Electronics'}</p>
+                  <h3 className="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400 font-mono">{alternativeId}</h3>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-400">Distributor: {altPart.vendor || 'Mouser Electronics'}</p>
                 </div>
                 {(altPart.productDetailUrl || altPart._raw?.productDetailUrl) && (
                   <a 
                     href={altPart.productDetailUrl || altPart._raw?.productDetailUrl} 
                     target="_blank" 
                     rel="noreferrer"
-                    className="text-[11px] font-bold text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1 bg-indigo-500/10 px-2 py-1 rounded"
+                    className="text-[10.5px] font-bold text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 bg-primary-50 dark:bg-primary-950/40 px-2 py-1 rounded"
                   >
-                    Mouser Live Page <ArrowRight className="w-3 h-3" />
+                    Mouser Page <ArrowRight className="w-3 h-3" />
                   </a>
                 )}
               </div>
-              <div className="mt-3 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
+              <div className="mt-3 text-xs font-semibold text-secondary-700 dark:text-secondary-300 flex items-center justify-between">
                 <span>Spot Price: <span className="font-bold text-emerald-600 dark:text-emerald-400">${(typeof altPart.unit_price === 'number' ? altPart.unit_price : (typeof altPart.unitPrice === 'number' ? altPart.unitPrice : parseFloat(altPart.unit_price || altPart.unitPrice || altPart.unitPriceUsd || altPart._raw?.unit_price) || 4.50)).toFixed(2)}</span></span>
-                <span>Lead Time: <span className="font-bold text-gray-900 dark:text-white">{altPart.lead_time_days || altPart.leadTimeDays || altPart._raw?.lead_time_days || 3} days</span></span>
+                <span>Lead Time: <span className="font-bold text-secondary-900 dark:text-white">{altPart.lead_time_days || altPart.leadTimeDays || altPart._raw?.lead_time_days || 3} days</span></span>
               </div>
             </div>
           </div>
 
           {/* Detailed Technical Spec Matrix */}
-          <div className="border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
+          <div className="border border-[#E8E8E8] dark:border-[#222222] rounded-xl overflow-hidden">
             <table className="w-full text-xs text-left">
               <thead>
-                <tr className="bg-gray-100/70 dark:bg-white/5 border-b border-gray-200 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <tr className="bg-[#F8F9FA] dark:bg-[#161616] border-b border-[#E8E8E8] dark:border-[#222222] text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400">
                   <th className="p-3 w-1/3">Engineering Parameter</th>
                   <th className="p-3 w-1/3">Original: {originalId}</th>
                   <th className="p-3 w-1/3 text-emerald-600 dark:text-emerald-400">Alternative: {alternativeId}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-white/5">
+              <tbody className="divide-y divide-[#E8E8E8] dark:divide-[#222222]">
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5 text-indigo-500" /> Package & Pinout
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-primary-500" /> Package & Pinout
                   </td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.package}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.package}</td>
                   <td className="p-3 font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" /> {altSpecs.package}
                   </td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-indigo-500" /> Silicon Core & Clock
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400 flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-primary-500" /> Silicon Core & Clock
                   </td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.core}</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200 font-semibold">{altSpecs.core}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.core}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200 font-semibold">{altSpecs.core}</td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-indigo-500" /> Memory / Configuration
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-primary-500" /> Memory / Configuration
                   </td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.flashRam}</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{altSpecs.flashRam}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.flashRam}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{altSpecs.flashRam}</td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400">Operating Voltage</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.voltage}</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{altSpecs.voltage}</td>
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400">Operating Voltage</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.voltage}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{altSpecs.voltage}</td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400">Thermal Rating</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.tempRange}</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{altSpecs.tempRange}</td>
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400">Thermal Rating</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.tempRange}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{altSpecs.tempRange}</td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400">Firmware Compatibility</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">Native OEM Drivers</td>
-                  <td className="p-3 font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 text-indigo-500 shrink-0" /> {altSpecs.firmware}
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400">Firmware Compatibility</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">Native OEM Drivers</td>
+                  <td className="p-3 font-semibold text-primary-600 dark:text-primary-400 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-primary-500 shrink-0" /> {altSpecs.firmware}
                   </td>
                 </tr>
 
                 <tr>
-                  <td className="p-3 font-medium text-gray-500 dark:text-gray-400">Quality / Automotive Rating</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{origSpecs.qualification}</td>
-                  <td className="p-3 text-gray-800 dark:text-gray-200">{altSpecs.qualification}</td>
+                  <td className="p-3 font-medium text-secondary-500 dark:text-secondary-400">Quality / Automotive Rating</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{origSpecs.qualification}</td>
+                  <td className="p-3 text-secondary-800 dark:text-secondary-200">{altSpecs.qualification}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           {/* Compatibility Verification Badge */}
-          <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <ShieldCheck className="w-5 h-5 text-emerald-500" />
+              <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div>
                 <p className="text-xs font-bold text-emerald-900 dark:text-emerald-300">
                   Engineering Qualification Check Passed
@@ -221,7 +222,7 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
                 </p>
               </div>
             </div>
-            <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 px-2.5 py-1 bg-emerald-100 dark:bg-emerald-500/20 rounded-lg shrink-0">
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg shrink-0">
               100% Match
             </span>
           </div>
@@ -229,10 +230,10 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
         </div>
 
         {/* FOOTER */}
-        <div className="p-4 border-t border-gray-100 dark:border-white/10 flex items-center justify-between bg-gray-50/50 dark:bg-white/[0.02]">
+        <div className="p-4 border-t border-[#E8E8E8] dark:border-[#222222] flex items-center justify-between bg-[#F8F9FA] dark:bg-[#161616]">
           <button 
             onClick={onClose}
-            className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors"
+            className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-secondary-500 hover:text-secondary-800 dark:hover:text-white transition-colors"
           >
             Close Comparison
           </button>
@@ -243,7 +244,7 @@ export default function PartComparisonModal({ isOpen, onClose, originalPart = {}
                 onSelectOption(altPart);
                 onClose();
               }}
-              className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-indigo-500/20"
+              className="btn-primary !h-10 text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-sm"
             >
               Select {alternativeId} for Sourcing <ArrowRight className="w-4 h-4" />
             </button>

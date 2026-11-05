@@ -105,7 +105,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
             .uppercase { text-transform: uppercase; }
             .tracking-wider { letter-spacing: 0.05em; }
             .tracking-tight { letter-spacing: -0.025em; }
-            .text-indigo-600 { color: #4f46e5; }
+            .text-primary-600 { color: #e64212; }
             .text-emerald-600 { color: #059669; }
             .text-emerald-700 { color: #047857; }
             .text-red-600 { color: #dc2626; }
@@ -115,7 +115,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
             .text-gray-400 { color: #9ca3af; }
             .bg-gray-50 { background-color: #f9fafb; }
             .bg-gray-100 { background-color: #f3f4f6; }
-            .bg-indigo-50 { background-color: #eef2ff; }
+            .bg-primary-50 { background-color: #fff4ed; }
             .bg-emerald-100 { background-color: #d1fae5; }
             table { width: 100%; border-collapse: collapse; }
             th, td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; font-size: 11px; }
@@ -142,26 +142,26 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
 
   return (
     <div id="pr-audit-modal-root" className="pr-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="pr-modal-container relative w-full max-w-3xl bg-white dark:bg-[#0f1115] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden my-8">
+      <div className="pr-modal-container relative w-full max-w-3xl bg-white dark:bg-secondary-900 border border-secondary-200 dark:border-secondary-800 rounded-2xl shadow-card overflow-hidden my-8">
         
         {/* Header Control Bar */}
-        <div className="print-hide flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5">
+        <div className="print-hide flex items-center justify-between px-6 py-4 border-b border-secondary-200 dark:border-secondary-800 bg-secondary-50/80 dark:bg-secondary-950/50">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-indigo-500" />
-            <h3 className="text-base font-black text-gray-900 dark:text-white">
+            <FileText className="w-5 h-5 text-primary-500" />
+            <h3 className="text-base font-bold text-secondary-900 dark:text-white">
               SAP Ariba Purchase Requisition & Audit Dossier
             </h3>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-all shadow-md active:scale-95 cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-primary-500 hover:bg-primary-600 text-white rounded-lg text-xs font-semibold transition-all shadow-subtle active:scale-95 cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5" /> Print / Save PDF
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-secondary-400 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -169,22 +169,22 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
         </div>
 
         {/* Printable Single-Page Audit Sheet */}
-        <div id="printable-audit-sheet" className="p-8 space-y-5 text-gray-800 dark:text-gray-200 text-xs bg-white dark:bg-[#0f1115]">
+        <div id="printable-audit-sheet" className="p-8 space-y-5 text-secondary-800 dark:text-secondary-200 text-xs bg-white dark:bg-secondary-900">
           
           {/* Header Banner */}
-          <div className="flex items-start justify-between border-b border-gray-200 dark:border-white/10 pb-4">
+          <div className="flex items-start justify-between border-b border-secondary-200 dark:border-secondary-800 pb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white">SentinelChain</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                <span className="text-xl font-extrabold tracking-tight text-secondary-900 dark:text-white">SentinelChain</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-primary-500/10 text-primary-600 dark:text-primary-400 border border-primary-500/20">
                   SAP INTEGRATED
                 </span>
               </div>
-              <p className="text-[11px] text-gray-500">Autonomous Supply Chain Intelligence & Procurement Ledger</p>
+              <p className="text-[11px] text-secondary-500">Autonomous Supply Chain Intelligence & Procurement Ledger</p>
             </div>
             <div className="text-right">
-              <p className="text-xs font-mono font-bold text-gray-400">DOC REF: <span className="text-indigo-600 dark:text-indigo-400">{prNumber}</span></p>
-              <p className="text-[11px] text-gray-500 mt-0.5">Date: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
+              <p className="text-xs font-mono font-bold text-secondary-400">DOC REF: <span className="text-primary-600 dark:text-primary-400">{prNumber}</span></p>
+              <p className="text-[11px] text-secondary-500 mt-0.5">Date: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
               <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase mt-1 flex items-center justify-end gap-1">
                 <CheckCircle2 className="w-3 h-3" /> Compliance Verified
               </p>
@@ -193,17 +193,17 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
 
           {/* Section 1: Disrupted BOM Component */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-2">
               1. SAP S/4HANA Disruption Profile
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-secondary-50 dark:bg-secondary-950/60 p-3.5 rounded-xl border border-secondary-200 dark:border-secondary-800">
               <div>
-                <p className="text-[10px] text-gray-500">Material Number</p>
-                <p className="text-xs font-mono font-bold text-gray-900 dark:text-white">{partId}</p>
+                <p className="text-[10px] text-secondary-500">Material Number</p>
+                <p className="text-xs font-mono font-bold text-secondary-900 dark:text-white">{partId}</p>
               </div>
               <div>
-                <p className="text-[10px] text-gray-500">Event Reference</p>
-                <p className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">{disruptionId}</p>
+                <p className="text-[10px] text-secondary-500">Event Reference</p>
+                <p className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400">{disruptionId}</p>
               </div>
               <div>
                 <p className="text-[10px] text-gray-500">Daily Revenue at Risk</p>
@@ -218,21 +218,21 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
 
           {/* Section 2: Verified Source Provenance */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-2">
               2. Signal Provenance & Verifiable Evidence
             </h4>
-            <div className="bg-gray-50 dark:bg-white/5 p-3.5 rounded-xl border border-gray-200 dark:border-white/10 space-y-2">
+            <div className="bg-secondary-50 dark:bg-secondary-950/60 p-3.5 rounded-xl border border-secondary-200 dark:border-secondary-800 space-y-2">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="text-gray-500">Primary Source Registry:</span>
-                <span className="font-bold text-gray-900 dark:text-white font-mono">{sourceTier}</span>
+                <span className="text-secondary-500">Primary Source Registry:</span>
+                <span className="font-bold text-secondary-900 dark:text-white font-mono">{sourceTier}</span>
               </div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="text-gray-500">Deterministic Evidence Confidence:</span>
+                <span className="text-secondary-500">Deterministic Evidence Confidence:</span>
                 <span className="font-bold text-emerald-600 dark:text-emerald-400">{confidence}% (Tier-Weighted)</span>
               </div>
-              <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-gray-200 dark:border-white/10">
-                <span className="text-gray-500">Verified Citation URL:</span>
-                <a href={verifiedUrl} target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 font-mono text-[10.5px]">
+              <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-secondary-200 dark:border-secondary-800">
+                <span className="text-secondary-500">Verified Citation URL:</span>
+                <a href={verifiedUrl} target="_blank" rel="noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 font-mono text-[10.5px]">
                   {verifiedUrl.length > 55 ? verifiedUrl.substring(0, 55) + '...' : verifiedUrl} <ExternalLink className="w-2.5 h-2.5 print-hide" />
                 </a>
               </div>
@@ -241,12 +241,12 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
 
           {/* Section 3: Autonomous Sourcing & Negotiation Summary */}
           <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400 mb-2">
               3. Autonomous Sourcing & Negotiation Results
             </h4>
-            <div className="border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
+            <div className="border border-secondary-200 dark:border-secondary-800 rounded-xl overflow-hidden">
               <table className="w-full text-left text-[11px]">
-                <thead className="bg-gray-100 dark:bg-white/5 text-gray-500 border-b border-gray-200 dark:border-white/10">
+                <thead className="bg-secondary-100 dark:bg-secondary-950/60 text-secondary-500 border-b border-secondary-200 dark:border-secondary-800">
                   <tr>
                     <th className="p-2.5">Distributor</th>
                     <th className="p-2.5">Sourced Alternative Part</th>
@@ -256,7 +256,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
                     <th className="p-2.5 text-right">Compliance</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-white/5 font-mono text-[11px]">
+                <tbody className="divide-y divide-secondary-200 dark:divide-secondary-800 font-mono text-[11px]">
                   {alternatives.slice(0, 4).map((alt, idx) => {
                     const raw = alt._raw || alt;
                     const vName = raw.vendor || alt.vendor || 'Mouser Electronics';
@@ -267,11 +267,11 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
                     const isOptimal = idx === 0;
 
                     return (
-                      <tr key={idx} className={isOptimal ? 'bg-indigo-50/50 dark:bg-indigo-950/10' : 'opacity-85'}>
-                        <td className="p-2.5 font-sans font-bold text-gray-900 dark:text-white">{vName}</td>
-                        <td className="p-2.5 text-indigo-600 dark:text-indigo-400">{pName}</td>
+                      <tr key={idx} className={isOptimal ? 'bg-primary-50/50 dark:bg-primary-950/20' : 'opacity-85'}>
+                        <td className="p-2.5 font-sans font-bold text-secondary-900 dark:text-white">{vName}</td>
+                        <td className="p-2.5 text-primary-600 dark:text-primary-400">{pName}</td>
                         <td className="p-2.5">{lTime} {lTime === 1 ? 'Day' : 'Days'}</td>
-                        <td className="p-2.5 text-gray-400">${Number(qPrice).toFixed(2)}</td>
+                        <td className="p-2.5 text-secondary-400">${Number(qPrice).toFixed(2)}</td>
                         <td className="p-2.5 font-bold text-emerald-600 dark:text-emerald-400">${Number(fPrice).toFixed(2)}</td>
                         <td className="p-2.5 text-right font-sans text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
                           {isOptimal ? '✅ Authorized #1' : 'Alternate'}
@@ -285,12 +285,12 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
           </div>
 
           {/* Section 4: SAP Ariba PR Authorization */}
-          <div className="p-3.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <ShieldCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-primary-500 shrink-0" />
               <div>
-                <p className="text-[11px] font-bold text-gray-900 dark:text-white">SAP Ariba Automated Purchase Requisition Active</p>
-                <p className="text-[10px] text-gray-500">Signed with Enterprise System Key. Dispatched to ERP purchasing queue.</p>
+                <p className="text-[11px] font-bold text-secondary-900 dark:text-white">SAP Ariba Automated Purchase Requisition Active</p>
+                <p className="text-[10px] text-secondary-500">Signed with Enterprise System Key. Dispatched to ERP purchasing queue.</p>
               </div>
             </div>
             <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 rounded-full text-[10px] font-bold">

@@ -74,8 +74,8 @@ export default function Plans({ initialPlans }) {
         const el = document.getElementById(router.query.id);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.classList.add('ring-2', 'ring-indigo-500');
-          setTimeout(() => el.classList.remove('ring-2', 'ring-indigo-500'), 3000);
+          el.classList.add('ring-2', 'ring-primary-500');
+          setTimeout(() => el.classList.remove('ring-2', 'ring-primary-500'), 3000);
         }
       }, 500);
     }
@@ -91,48 +91,61 @@ export default function Plans({ initialPlans }) {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f18] text-gray-900 dark:text-white">
-      <Head><title>Recovery Plans | SentinelChain</title></Head>
+    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#080808] text-secondary-900 dark:text-white transition-colors duration-200">
+      <Head>
+        <title>Recovery Plans | SentinelChain</title>
+        <meta name="description" content="AI-orchestrated mitigation plans, commercial spot allocations, and ERP purchase orders." />
+      </Head>
+
       <Sidebar />
+
       <div className="lg:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar />
-        <main className="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6 min-w-0">
+
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto w-full space-y-6 pb-24 min-w-0">
           
           {/* Header & Interconnected Navigation Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-200 dark:border-white/10 pb-5">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#E8E8E8] dark:border-[#222222] pb-6">
             <div>
-              <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2.5">
-                <CheckCircle2 className="w-7 h-7 text-emerald-500" /> Autonomous Recovery Plans
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/40 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Autonomous Mitigation Orchestration
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-secondary-900 dark:text-white">
+                Autonomous Recovery Plans
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                AI-orchestrated mitigation plans, commercial spot allocations, and ERP purchase orders.
+              <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400 mt-1 max-w-2xl">
+                AI-orchestrated mitigation plans, commercial spot allocations, and SAP Ariba PR execution packages.
               </p>
             </div>
 
             {/* Cross-Module Navigation Shortcuts */}
             <div className="flex flex-wrap items-center gap-2">
-              <Link href="/disruptions" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-all flex items-center gap-1.5 text-red-600 dark:text-red-400">
+              <Link href="/disruptions" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-red-600 dark:text-red-400 shadow-2xs">
                 <ShieldAlert className="w-3.5 h-3.5" /> Active Disruptions
               </Link>
-              <Link href="/ledger" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-all flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+              <Link href="/ledger" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-primary-600 dark:text-primary-400 shadow-2xs">
                 <FileText className="w-3.5 h-3.5" /> Recovery Ledger
               </Link>
-              <Link href="/risk" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-all flex items-center gap-1.5 text-amber-500 dark:text-amber-400">
-                <Activity className="w-3.5 h-3.5" /> Risk Analysis
+              <Link href="/risk" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#111111] hover:bg-secondary-50 dark:hover:bg-[#161616] transition-all flex items-center gap-1.5 text-amber-600 dark:text-amber-400 shadow-2xs">
+                <Activity className="w-3.5 h-3.5" /> Risk Matrix
               </Link>
             </div>
           </div>
 
           {/* Search and Filters */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-white dark:bg-[#0f1115] p-3.5 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm">
-            <input 
-              type="text"
-              placeholder="Search by Plan ID, Disruption ID, Part Number, or Distributor..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-96 px-3.5 py-1.5 text-xs bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg outline-none text-gray-900 dark:text-white"
-            />
-            <span className="text-xs text-gray-400 font-mono font-bold">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-white dark:bg-[#111111] p-3.5 rounded-xl border border-[#E8E8E8] dark:border-[#222222] shadow-2xs">
+            <div className="flex items-center gap-2 w-full sm:w-96 px-3 py-1.5 bg-[#F8F9FA] dark:bg-[#161616] border border-[#E8E8E8] dark:border-[#262626] rounded-lg">
+              <Search className="w-3.5 h-3.5 text-secondary-400" />
+              <input 
+                type="text"
+                placeholder="Search by Plan ID, Event ID, MPN, or Distributor..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-transparent text-xs outline-none text-secondary-900 dark:text-white placeholder-secondary-400"
+              />
+            </div>
+            <span className="text-xs text-secondary-400 font-mono font-medium">
               Showing {filteredPlans.length} active recovery strategies
             </span>
           </div>
@@ -143,51 +156,53 @@ export default function Plans({ initialPlans }) {
               <div 
                 key={i} 
                 id={plan.id} 
-                className="bg-white dark:bg-[#0f1115] p-5 border border-gray-200 dark:border-white/10 rounded-xl hover:border-indigo-500/30 transition-all shadow-sm flex flex-col justify-between"
+                className="bg-white dark:bg-[#111111] p-5 border border-[#E8E8E8] dark:border-[#222222] rounded-xl hover:border-primary-300 dark:hover:border-primary-500/40 transition-all shadow-2xs flex flex-col justify-between"
               >
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
-                          {plan.id.includes('LIVE') && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>}
+                        <h3 className="font-bold text-secondary-900 dark:text-white text-base flex items-center gap-2">
+                          {plan.id.includes('LIVE') && (
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Live Session Injection"></span>
+                          )}
                           <span className="font-mono">{plan.id}</span>
                         </h3>
                         <StatusBadge status={plan.status} />
                       </div>
-                      <p className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                      <p className="text-xs font-mono font-bold text-primary-600 dark:text-primary-400">
                         Affected Material: {plan.part}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Risk Mitigated</p>
-                      <p className={`font-black text-base ${plan.risk_reduction_pct > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400'}`}>
+                      <p className="text-[10px] text-secondary-400 font-bold uppercase tracking-wider mb-0.5">Risk Mitigated</p>
+                      <p className={`font-extrabold text-base ${plan.risk_reduction_pct > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-secondary-400'}`}>
                         {plan.risk_reduction_pct}%
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 dark:bg-white/5 p-3 rounded-lg border border-gray-200 dark:border-white/5 mb-4">
-                    <p className="text-xs text-gray-700 dark:text-gray-300 font-medium leading-relaxed">
+                  <div className="bg-[#F8F9FA] dark:bg-[#161616] p-3 rounded-lg border border-[#E8E8E8] dark:border-[#262626] mb-4">
+                    <p className="text-xs text-secondary-700 dark:text-secondary-300 font-medium leading-relaxed">
                       {plan.proposed_action}
                     </p>
-                    <div className="mt-2.5 flex items-center justify-between text-[11px] text-gray-500 font-mono">
-                      <span>Vendor / Distributor: <strong className="text-gray-800 dark:text-gray-200">{plan.vendor}</strong></span>
+                    <div className="mt-2.5 flex items-center justify-between text-[11px] text-secondary-400 font-mono">
+                      <span>Vendor / Distributor: <strong className="text-secondary-900 dark:text-white font-semibold">{plan.vendor}</strong></span>
                     </div>
                   </div>
                 </div>
 
                 {/* Interactive Interconnected Action Bar */}
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-white/5 text-xs">
+                <div className="flex items-center justify-between pt-3.5 border-t border-[#E8E8E8] dark:border-[#222222] text-xs">
                   <Link 
                     href={`/disruptions/${plan.source_disruption_id}`}
-                    className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
+                    className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-primary-600 dark:text-primary-400 hover:underline"
                   >
                     <LinkIcon className="w-3 h-3" /> Event: {plan.source_disruption_id}
                   </Link>
                   <Link 
                     href={`/disruptions/${plan.source_disruption_id}`} 
-                    className="text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded text-[11px] font-bold flex items-center gap-1 transition-all shadow-xs"
+                    className="btn-primary !h-8 px-3 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-2xs"
                   >
                     Decision Center <ArrowRight className="w-3 h-3" />
                   </Link>

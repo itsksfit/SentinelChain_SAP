@@ -52,45 +52,46 @@ export default function WorldMap() {
       munich: { lat: 48.13, lng: 11.58, name: 'Infineon Auto ICs (Munich)', type: 'auto' }
     };
 
-    // Color Palette
-    const C_PURPLE = isLight ? '#9333ea' : '#c084fc'; // EUV & Optics
-    const C_INDIGO = isLight ? '#4f46e5' : '#818cf8'; // IP & Design
-    const C_EMERALD = isLight ? '#059669' : '#34d399'; // Foundries & Assembly
-    const C_CYAN = isLight ? '#0284c7' : '#38bdf8'; // Materials & Wafers
-    const C_RED = '#ef4444'; // Active Disruption Arcs
+    // Master Design System Color Palette
+    const C_PRIMARY = isLight ? '#F4511E' : '#FF713B'; // Brand Orange
+    const C_CRITICAL = '#DC2626'; // Red
+    const C_HIGH = '#EA580C'; // High Risk Orange
+    const C_MEDIUM = '#D97706'; // Warning Amber
+    const C_LOW = '#16A34A'; // Healthy Emerald
+    const C_NEUTRAL = '#64748B'; // Slate
 
     const routes = [
       // 1. EUV Equipment & Optics to Leading Edge Fabs
-      { startLat: nodes.oberkochen.lat, startLng: nodes.oberkochen.lng, endLat: nodes.veldhoven.lat, endLng: nodes.veldhoven.lng, color: C_PURPLE },
-      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_PURPLE },
-      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.seoul.lat, endLng: nodes.seoul.lng, color: C_PURPLE },
-      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.chandler.lat, endLng: nodes.chandler.lng, color: C_PURPLE },
-      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.dresden.lat, endLng: nodes.dresden.lng, color: C_PURPLE },
+      { startLat: nodes.oberkochen.lat, startLng: nodes.oberkochen.lng, endLat: nodes.veldhoven.lat, endLng: nodes.veldhoven.lng, color: C_PRIMARY },
+      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_PRIMARY },
+      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.seoul.lat, endLng: nodes.seoul.lng, color: C_PRIMARY },
+      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.chandler.lat, endLng: nodes.chandler.lng, color: C_PRIMARY },
+      { startLat: nodes.veldhoven.lat, startLng: nodes.veldhoven.lng, endLat: nodes.dresden.lat, endLng: nodes.dresden.lng, color: C_PRIMARY },
 
       // 2. Silicon Wafers & Chemicals from Japan
-      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_CYAN },
-      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_CYAN },
-      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.seoul.lat, endLng: nodes.seoul.lng, color: C_CYAN },
-      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.hillsboro.lat, endLng: nodes.hillsboro.lng, color: C_CYAN },
+      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_NEUTRAL },
+      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_NEUTRAL },
+      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.seoul.lat, endLng: nodes.seoul.lng, color: C_NEUTRAL },
+      { startLat: nodes.tokyo.lat, startLng: nodes.tokyo.lng, endLat: nodes.hillsboro.lat, endLng: nodes.hillsboro.lng, color: C_NEUTRAL },
 
       // 3. Silicon Valley & Global IP Design Transfers
-      { startLat: nodes.santaClara.lat, startLng: nodes.santaClara.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_INDIGO },
-      { startLat: nodes.santaClara.lat, startLng: nodes.santaClara.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_INDIGO },
-      { startLat: nodes.sanDiego.lat, startLng: nodes.sanDiego.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_INDIGO },
-      { startLat: nodes.cambridge.lat, startLng: nodes.cambridge.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_INDIGO },
-      { startLat: nodes.telaviv.lat, startLng: nodes.telaviv.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_INDIGO },
-      { startLat: nodes.dallas.lat, startLng: nodes.dallas.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_INDIGO },
+      { startLat: nodes.santaClara.lat, startLng: nodes.santaClara.lng, endLat: nodes.hsinchu.lat, endLng: nodes.hsinchu.lng, color: C_PRIMARY },
+      { startLat: nodes.santaClara.lat, startLng: nodes.santaClara.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_PRIMARY },
+      { startLat: nodes.sanDiego.lat, startLng: nodes.sanDiego.lng, endLat: nodes.tainan.lat, endLng: nodes.tainan.lng, color: C_PRIMARY },
+      { startLat: nodes.cambridge.lat, startLng: nodes.cambridge.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_PRIMARY },
+      { startLat: nodes.telaviv.lat, startLng: nodes.telaviv.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_PRIMARY },
+      { startLat: nodes.dallas.lat, startLng: nodes.dallas.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_PRIMARY },
 
       // 4. Wafer to Advanced Packaging & Assembly
-      { startLat: nodes.hsinchu.lat, startLng: nodes.hsinchu.lng, endLat: nodes.kaohsiung.lat, endLng: nodes.kaohsiung.lng, color: C_EMERALD },
-      { startLat: nodes.tainan.lat, startLng: nodes.tainan.lng, endLat: nodes.penang.lat, endLng: nodes.penang.lng, color: C_EMERALD },
-      { startLat: nodes.seoul.lat, startLng: nodes.seoul.lng, endLat: nodes.incheon.lat, endLng: nodes.incheon.lng, color: C_EMERALD },
-      { startLat: nodes.dresden.lat, startLng: nodes.dresden.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_EMERALD },
+      { startLat: nodes.hsinchu.lat, startLng: nodes.hsinchu.lng, endLat: nodes.kaohsiung.lat, endLng: nodes.kaohsiung.lng, color: C_LOW },
+      { startLat: nodes.tainan.lat, startLng: nodes.tainan.lng, endLat: nodes.penang.lat, endLng: nodes.penang.lng, color: C_LOW },
+      { startLat: nodes.seoul.lat, startLng: nodes.seoul.lng, endLat: nodes.incheon.lat, endLng: nodes.incheon.lng, color: C_LOW },
+      { startLat: nodes.dresden.lat, startLng: nodes.dresden.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_LOW },
 
-      // 5. Active Critical Disrupted Routes (Red Glowing Strings)
-      { startLat: nodes.hsinchu.lat, startLng: nodes.hsinchu.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_RED },
-      { startLat: nodes.tainan.lat, startLng: nodes.tainan.lng, endLat: nodes.austin.lat, endLng: nodes.austin.lng, color: C_RED },
-      { startLat: nodes.shenzhen.lat, startLng: nodes.shenzhen.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_RED }
+      // 5. Active Critical Disrupted Routes (Critical Risk Strings)
+      { startLat: nodes.hsinchu.lat, startLng: nodes.hsinchu.lng, endLat: nodes.munich.lat, endLng: nodes.munich.lng, color: C_CRITICAL },
+      { startLat: nodes.tainan.lat, startLng: nodes.tainan.lng, endLat: nodes.austin.lat, endLng: nodes.austin.lng, color: C_CRITICAL },
+      { startLat: nodes.shenzhen.lat, startLng: nodes.shenzhen.lng, endLat: nodes.santaClara.lat, endLng: nodes.santaClara.lng, color: C_CRITICAL }
     ];
     setArcsData(routes);
 
@@ -101,17 +102,17 @@ export default function WorldMap() {
       name: n.name, 
       size: n.type === 'fab' ? 1.8 : 1.2,
       color: n.name.includes('Hsinchu') || n.name.includes('Shenzhen') 
-        ? C_RED 
-        : (isLight ? '#1e293b' : '#ffffff')
+        ? C_CRITICAL 
+        : (isLight ? '#111111' : '#FFFFFF')
     }));
     setPlaces(locations);
 
     // Pulsing seismic & factory alert rings
     setRingsData([
-      { lat: nodes.hsinchu.lat, lng: nodes.hsinchu.lng, maxR: 6, propagationSpeed: 2.2, repeatPeriod: 800, color: C_RED },
-      { lat: nodes.tainan.lat, lng: nodes.tainan.lng, maxR: 5, propagationSpeed: 1.8, repeatPeriod: 1100, color: C_RED },
-      { lat: nodes.veldhoven.lat, lng: nodes.veldhoven.lng, maxR: 4, propagationSpeed: 1.2, repeatPeriod: 1400, color: C_PURPLE },
-      { lat: nodes.santaClara.lat, lng: nodes.santaClara.lng, maxR: 4.5, propagationSpeed: 1.5, repeatPeriod: 1300, color: C_INDIGO }
+      { lat: nodes.hsinchu.lat, lng: nodes.hsinchu.lng, maxR: 6, propagationSpeed: 2.2, repeatPeriod: 800, color: C_CRITICAL },
+      { lat: nodes.tainan.lat, lng: nodes.tainan.lng, maxR: 5, propagationSpeed: 1.8, repeatPeriod: 1100, color: C_CRITICAL },
+      { lat: nodes.veldhoven.lat, lng: nodes.veldhoven.lng, maxR: 4, propagationSpeed: 1.2, repeatPeriod: 1400, color: C_PRIMARY },
+      { lat: nodes.santaClara.lat, lng: nodes.santaClara.lng, maxR: 4.5, propagationSpeed: 1.5, repeatPeriod: 1300, color: C_PRIMARY }
     ]);
 
   }, [isLight, theme, resolvedTheme]);
@@ -127,34 +128,41 @@ export default function WorldMap() {
   }, []);
 
   return (
-    <div className={`w-full h-[430px] overflow-hidden flex items-center justify-center rounded-2xl border relative transition-all duration-300 shadow-sm ${
+    <div className={`w-full h-[430px] overflow-hidden flex items-center justify-center rounded-xl border relative transition-all duration-300 shadow-2xs ${
       isLight 
-        ? 'bg-gradient-to-br from-sky-50 via-indigo-50/50 to-slate-100 border-slate-200' 
-        : 'bg-gradient-to-br from-[#0c1222] via-[#080d1a] to-[#030712] border-white/10'
+        ? 'bg-[#F8F9FA] border-[#E8E8E8]' 
+        : 'bg-[#111111] border-[#222222]'
     }`}>
       {/* Top Header Badge */}
-      <div className={`absolute top-4 left-4 z-10 px-3.5 py-2 rounded-xl border backdrop-blur-md shadow-sm ${
+      <div className={`absolute top-4 left-4 z-10 px-3.5 py-2 rounded-lg border backdrop-blur-md shadow-2xs ${
         isLight 
-          ? 'bg-white/90 border-slate-200 text-slate-800' 
-          : 'bg-black/75 border-white/15 text-slate-100'
+          ? 'bg-white/95 border-[#E8E8E8] text-secondary-900' 
+          : 'bg-[#0D0D0D]/95 border-[#222222] text-white'
       }`}>
-        <span className="text-[10px] uppercase font-extrabold tracking-wider flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Global Semiconductor Node Grid (20+ Live Fab Corridors)
+        <span className="text-[10px] uppercase font-bold tracking-wider flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Global Supply Node Grid (20+ Live Fab Corridors)
         </span>
       </div>
       
       {/* Legend */}
-      <div className={`absolute bottom-4 left-4 z-10 px-3.5 py-2.5 rounded-xl border backdrop-blur-md shadow-sm flex flex-col gap-1.5 ${
+      <div className={`absolute bottom-4 left-4 z-10 px-3.5 py-2.5 rounded-lg border backdrop-blur-md shadow-2xs flex flex-col gap-1.5 ${
         isLight 
-          ? 'bg-white/90 border-slate-200' 
-          : 'bg-black/75 border-white/15'
+          ? 'bg-white/95 border-[#E8E8E8]' 
+          : 'bg-[#0D0D0D]/95 border-[#222222]'
       }`}>
-        <div className="flex items-center gap-2 text-[9.5px] uppercase font-extrabold text-purple-600 dark:text-purple-300"><div className="w-2.5 h-1 rounded-full bg-purple-500"></div> ASML EUV & Optics</div>
-        <div className="flex items-center gap-2 text-[9.5px] uppercase font-extrabold text-sky-600 dark:text-sky-300"><div className="w-2.5 h-1 rounded-full bg-sky-500"></div> Wafers & Materials</div>
-        <div className="flex items-center gap-2 text-[9.5px] uppercase font-extrabold text-indigo-600 dark:text-indigo-300"><div className="w-2.5 h-1 rounded-full bg-indigo-500"></div> IP Design & EDA</div>
-        <div className="flex items-center gap-2 text-[9.5px] uppercase font-extrabold text-emerald-600 dark:text-emerald-300"><div className="w-2.5 h-1 rounded-full bg-emerald-500"></div> Foundries & Assembly</div>
-        <div className="flex items-center gap-2 text-[9.5px] uppercase font-extrabold text-red-600 dark:text-red-400"><div className="w-2.5 h-1 rounded-full bg-red-500 animate-pulse"></div> Active Disrupted Corridors</div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-primary-600 dark:text-primary-400">
+          <div className="w-2.5 h-1 rounded-full bg-primary-500"></div> IP Design & EUV Corridors
+        </div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-secondary-600 dark:text-secondary-400">
+          <div className="w-2.5 h-1 rounded-full bg-secondary-400"></div> Wafers & Raw Materials
+        </div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-emerald-600 dark:text-emerald-400">
+          <div className="w-2.5 h-1 rounded-full bg-emerald-500"></div> Foundries & Assembly
+        </div>
+        <div className="flex items-center gap-2 text-[9.5px] uppercase font-bold text-red-600 dark:text-red-400">
+          <div className="w-2.5 h-1 rounded-full bg-red-500 animate-pulse"></div> Active Disrupted Corridors
+        </div>
       </div>
 
       {mounted && (
@@ -168,8 +176,8 @@ export default function WorldMap() {
             : "//unpkg.com/three-globe/example/img/earth-night.jpg"
           }
           bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-          atmosphereColor={isLight ? "#38bdf8" : "#818cf8"}
-          atmosphereAltitude={0.18}
+          atmosphereColor={isLight ? "#FF713B" : "#F4511E"}
+          atmosphereAltitude={0.15}
           arcsData={arcsData}
           arcStartLat={d => d.startLat}
           arcStartLng={d => d.startLng}

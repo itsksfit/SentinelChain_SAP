@@ -1,25 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg: #F8F9FA;
+  --surface: #FFFFFF;
+  --surface-secondary: #F5F5F5;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E8E8E8;
+  --border-strong: #D6D6D6;
+  --primary: #F4511E;
+  --primary-hover: #E64212;
+  --primary-soft: #FFF4ED;
+  --sidebar: #FFFFFF;
+  --header: #FFFFFF;
+}
+
+.dark {
+  --bg: #080808;
+  --surface: #111111;
+  --surface-secondary: #181818;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-muted: #666666;
+  --border: #222222;
+  --border-strong: #333333;
+  --primary: #FF713B;
+  --primary-hover: #FF8A5C;
+  --primary-soft: #3A1C13;
+  --sidebar: #0D0D0D;
+  --header: #0D0D0D;
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-[#09090b] dark:text-[#fafafa] antialiased selection:bg-indigo-100 dark:selection:bg-indigo-950/50 transition-colors duration-200;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    @apply antialiased transition-colors duration-200;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-white dark:bg-[#09090b] border border-slate-200 dark:border-[#27272a] rounded-xl shadow-sm transition-all duration-200;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+  }
+  .dark .glass-panel {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
   }
   .glass-panel-accent {
-    @apply bg-slate-100/80 dark:bg-[#18181b] border border-slate-200 dark:border-[#27272a] rounded-xl transition-all duration-200;
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.2s ease;
   }
-  .glass-panel-danger {
-    @apply bg-red-50/80 dark:bg-[rgba(224,49,49,0.08)] border border-red-200 dark:border-[rgba(224,49,49,0.25)] rounded-xl transition-all duration-200;
+  .btn-primary {
+    background-color: #F4511E;
+    color: #FFFFFF;
+    border-radius: 8px;
+    height: 44px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
   }
-  .glass-panel-success {
-    @apply bg-emerald-50/80 dark:bg-[rgba(47,158,68,0.08)] border border-emerald-200 dark:border-[rgba(47,158,68,0.25)] rounded-xl transition-all duration-200;
+  .btn-primary:hover {
+    background-color: #E64212;
+  }
+  .dark .btn-primary {
+    background-color: #FF713B;
+  }
+  .dark .btn-primary:hover {
+    background-color: #FF8A5C;
+  }
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    height: 44px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background-color: var(--surface-secondary);
   }
 }
 
@@ -32,8 +112,15 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+  background-color: #D6D6D6;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #333333;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400 dark:bg-slate-600;
+  background-color: #BDBDBD;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #484848;
 }

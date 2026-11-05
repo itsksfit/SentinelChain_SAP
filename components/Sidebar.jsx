@@ -1,23 +1,27 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity, DollarSign, X } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, ShieldAlert, CheckCircle, Database, Activity, DollarSign, X, Radio } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, onClose }) {
   const router = useRouter();
   
-  const isActive = (path) => router.pathname === path;
+  const isActive = (path) => {
+    if (path === '/') return router.pathname === '/';
+    return router.pathname.startsWith(path);
+  };
   
   const linkClass = (path) => 
-    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+    `flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${
       isActive(path) 
-        ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-600/10 dark:text-indigo-400 font-bold border border-indigo-200/80 dark:border-indigo-500/30 shadow-xs' 
-        : 'text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border border-transparent'
+        ? 'bg-primary-50 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400 font-bold border border-primary-200/80 dark:border-primary-500/30 shadow-2xs' 
+        : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-900/60 border border-transparent'
     }`;
     
   const iconClass = (path, defaultColor) => 
-    `w-4 h-4 shrink-0 ${isActive(path) ? defaultColor : 'text-slate-500 dark:text-gray-400'}`;
+    `w-4 h-4 shrink-0 transition-colors ${isActive(path) ? 'text-primary-500 dark:text-primary-400' : 'text-secondary-400 dark:text-secondary-500'}`;
 
-  const closeMobile = () => {
+  const handleClose = () => {
+    if (onClose) onClose();
     const el = document.getElementById('mobile-sidebar');
     if (el) el.classList.add('hidden');
     const backdrop = document.getElementById('mobile-sidebar-backdrop');
@@ -29,93 +33,118 @@ export default function Sidebar() {
       {/* Mobile Backdrop Overlay */}
       <div 
         id="mobile-sidebar-backdrop" 
-        className="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden"
-        onClick={closeMobile}
+        className={`${mobileOpen ? 'block' : 'hidden'} fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden`}
+        onClick={handleClose}
       />
 
-      <aside id="mobile-sidebar" className="hidden lg:flex flex-col w-64 border-r border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0f18] h-screen fixed left-0 top-0 overflow-y-auto z-50 transition-colors duration-200">
-        <div className="p-5 flex items-center justify-between border-b border-slate-100 dark:border-white/5">
-          <div className="flex items-center gap-3">
-            <img 
-              src="/shield.png" 
-              alt="Logo Icon" 
-              className="w-9 h-9 object-contain rounded-xl shadow-xs border border-slate-200/60 dark:border-[#27272a] shrink-0"
-            />
-            <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white leading-none">SentinelChain</span>
-              <span className="text-[7.5px] font-bold text-slate-500 dark:text-gray-400 uppercase tracking-widest mt-1">Global Integrity</span>
-            </div>
-          </div>
+      <aside 
+        id="mobile-sidebar" 
+        className={`${mobileOpen ? 'flex' : 'hidden'} lg:flex flex-col w-64 border-r border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#0D0D0D] h-screen fixed left-0 top-0 overflow-y-auto z-50 transition-colors duration-200 select-none`}
+      >
+        {/* Brand Header */}
+        <div className="p-5 flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222]">
+          <Link href="/" passHref legacyBehavior>
+            <a className="flex items-center gap-3 group" onClick={handleClose}>
+              <div className="relative">
+                <img 
+                  src="/shield.png" 
+                  alt="SentinelChain Shield" 
+                  className="w-8 h-8 object-contain rounded-lg shadow-2xs shrink-0 transition-transform group-hover:scale-105"
+                />
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary-500 ring-2 ring-white dark:ring-[#0D0D0D]"></span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-base font-bold tracking-tight text-secondary-900 dark:text-white leading-none">
+                  SentinelChain
+                </span>
+                <span className="text-[8px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-widest mt-1">
+                  Enterprise SCRM
+                </span>
+              </div>
+            </a>
+          </Link>
           <button 
-            className="lg:hidden p-2 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-white/5" 
-            onClick={closeMobile}
+            className="lg:hidden p-1.5 text-secondary-400 hover:text-secondary-700 dark:hover:text-white rounded-md hover:bg-secondary-100 dark:hover:bg-secondary-800" 
+            onClick={handleClose}
+            aria-label="Close sidebar"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <div className="px-4 py-4 space-y-6 flex-1">
+        {/* Navigation Sections */}
+        <div className="px-3.5 py-4 space-y-6 flex-1">
           <div>
-            <p className="text-[10px] font-bold text-slate-400 dark:text-gray-500 mb-2 px-2 uppercase tracking-wider">Command Center</p>
+            <p className="text-[10px] font-bold text-secondary-400 dark:text-secondary-500 mb-2 px-2.5 uppercase tracking-wider">
+              Command Center
+            </p>
             <nav className="space-y-1">
               <Link href="/" passHref legacyBehavior>
-                <a className={linkClass('/')} onClick={closeMobile}>
-                  <LayoutDashboard className={iconClass('/', 'text-indigo-600 dark:text-indigo-400')} /> Dashboard
+                <a className={linkClass('/')} onClick={handleClose}>
+                  <LayoutDashboard className={iconClass('/', 'text-primary-500')} /> Dashboard
                 </a>
               </Link>
               <Link href="/disruptions" passHref legacyBehavior>
-                <a className={linkClass('/disruptions')} onClick={closeMobile}>
-                  <ShieldAlert className={iconClass('/disruptions', 'text-red-500 dark:text-red-400')} /> Active Disruptions
+                <a className={linkClass('/disruptions')} onClick={handleClose}>
+                  <ShieldAlert className={iconClass('/disruptions', 'text-red-500')} /> Active Disruptions
                 </a>
               </Link>
               <Link href="/plans" passHref legacyBehavior>
-                <a className={linkClass('/plans')} onClick={closeMobile}>
-                  <CheckCircle className={iconClass('/plans', 'text-emerald-600 dark:text-emerald-400')} /> Recovery Plans
+                <a className={linkClass('/plans')} onClick={handleClose}>
+                  <CheckCircle className={iconClass('/plans', 'text-emerald-500')} /> Recovery Plans
                 </a>
               </Link>
               <Link href="/ledger" passHref legacyBehavior>
-                <a className={linkClass('/ledger')} onClick={closeMobile}>
-                  <ShieldCheck className={iconClass('/ledger', 'text-blue-600 dark:text-blue-400')} /> Recovery Ledger
+                <a className={linkClass('/ledger')} onClick={handleClose}>
+                  <ShieldCheck className={iconClass('/ledger', 'text-primary-500')} /> Recovery Ledger
                 </a>
               </Link>
             </nav>
           </div>
           
           <div>
-            <p className="text-[10px] font-bold text-slate-400 dark:text-gray-500 mb-2 px-2 uppercase tracking-wider">Intelligence</p>
+            <p className="text-[10px] font-bold text-secondary-400 dark:text-secondary-500 mb-2 px-2.5 uppercase tracking-wider">
+              Intelligence
+            </p>
             <nav className="space-y-1">
               <Link href="/network" passHref legacyBehavior>
-                <a className={linkClass('/network')} onClick={closeMobile}>
-                  <Database className={iconClass('/network', 'text-cyan-600 dark:text-cyan-400')} /> Supply Network
+                <a className={linkClass('/network')} onClick={handleClose}>
+                  <Database className={iconClass('/network', 'text-cyan-500')} /> Supply Network
                 </a>
               </Link>
               <Link href="/risk" passHref legacyBehavior>
-                <a className={linkClass('/risk')} onClick={closeMobile}>
-                  <Activity className={iconClass('/risk', 'text-amber-500 dark:text-amber-400')} /> Risk Analysis
+                <a className={linkClass('/risk')} onClick={handleClose}>
+                  <Activity className={iconClass('/risk', 'text-amber-500')} /> Risk Matrix
                 </a>
               </Link>
             </nav>
           </div>
 
           <div>
-            <p className="text-[10px] font-bold text-slate-400 dark:text-gray-500 mb-2 px-2 uppercase tracking-wider">Commercial</p>
+            <p className="text-[10px] font-bold text-secondary-400 dark:text-secondary-500 mb-2 px-2.5 uppercase tracking-wider">
+              Commercial
+            </p>
             <nav className="space-y-1">
               <Link href="/pricing" passHref legacyBehavior>
-                <a className={linkClass('/pricing')} onClick={closeMobile}>
-                  <DollarSign className={iconClass('/pricing', 'text-emerald-500 dark:text-emerald-400')} /> Pricing & ROI Model
+                <a className={linkClass('/pricing')} onClick={handleClose}>
+                  <DollarSign className={iconClass('/pricing', 'text-emerald-500')} /> Pricing & ROI Model
                 </a>
               </Link>
             </nav>
           </div>
         </div>
 
-        <div className="mt-auto p-4 m-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-white/5 shadow-xs">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-[10px] uppercase font-bold text-slate-700 dark:text-gray-300 tracking-wider">AI Sentinel Node</span>
+        {/* Sentinel Live Status Card */}
+        <div className="mt-auto p-3.5 m-3.5 rounded-lg border border-[#E8E8E8] dark:border-[#222222] bg-[#F8F9FA] dark:bg-[#111111] shadow-2xs">
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-[9.5px] uppercase font-bold text-secondary-700 dark:text-secondary-300 tracking-wider">AI Sentinel Node</span>
+            </div>
+            <Radio className="w-3 h-3 text-primary-500" />
           </div>
-          <p className="text-xs font-semibold text-slate-600 dark:text-gray-400">Actively Scanning</p>
-          <p className="text-[11px] font-mono font-bold text-indigo-600 dark:text-indigo-400">32,491 Global Nodes</p>
+          <p className="text-[11px] font-medium text-secondary-500 dark:text-secondary-400">Continuous Ingestion</p>
+          <p className="text-[11px] font-mono font-bold text-primary-600 dark:text-primary-400 mt-0.5">32,491 Global Nodes</p>
         </div>
       </aside>
     </>

@@ -71,7 +71,7 @@ export default function CommandPalette() {
       type: 'Plan',
       id: d.recovery_plan_id,
       title: `Recovery Plan: ${d.recovery_plan_id}`,
-      icon: <Zap className="w-4 h-4 text-indigo-500" />,
+      icon: <Zap className="w-4 h-4 text-primary-500" />,
       url: `/plans?id=${d.recovery_plan_id}`
     }));
 
@@ -106,7 +106,7 @@ export default function CommandPalette() {
               id: newsItem.id,
               title: newsItem.title,
               description: newsItem.description,
-              icon: <Search className="w-4 h-4 text-indigo-400" />,
+              icon: <Search className="w-4 h-4 text-primary-500" />,
               newsObject: newsItem
             }));
             setNewsResults(formatted);
@@ -124,18 +124,18 @@ export default function CommandPalette() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[15vh]">
-      <div className="bg-white dark:bg-[#0f1115] w-full max-w-xl rounded-xl border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden animate-[fadeIn_0.15s_ease-out]">
-        <div className="flex items-center px-4 py-3 border-b border-gray-200 dark:border-white/10">
-          <Search className="w-5 h-5 text-gray-400 mr-3" />
+      <div className="bg-white dark:bg-secondary-900 w-full max-w-xl rounded-xl border border-secondary-200 dark:border-secondary-800 shadow-card overflow-hidden animate-[fadeIn_0.15s_ease-out]">
+        <div className="flex items-center px-4 py-3.5 border-b border-secondary-200 dark:border-secondary-800">
+          <Search className="w-5 h-5 text-secondary-400 mr-3" />
           <input
             ref={inputRef}
             type="text"
-            className="flex-1 bg-transparent outline-none text-gray-900 dark:text-white placeholder-gray-500 text-lg"
+            className="flex-1 bg-transparent outline-none text-secondary-900 dark:text-white placeholder-secondary-400 text-base"
             placeholder="Search disruptions, plans, vendors..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-white/10 rounded px-2 py-1 text-xs font-mono">
+          <button onClick={() => setIsOpen(false)} className="text-secondary-400 hover:text-secondary-900 dark:hover:text-white bg-secondary-100 dark:bg-secondary-800 rounded px-2 py-1 text-xs font-mono">
             ESC
           </button>
         </div>
@@ -144,22 +144,22 @@ export default function CommandPalette() {
           <div className="max-h-[60vh] overflow-y-auto p-2 space-y-4">
             {results.length > 0 && (
               <div>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-4 mb-2">Database Records</p>
+                <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest px-4 mb-2">Database Records</p>
                 {results.map((r, i) => (
                   <button
                     key={i}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-colors group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-secondary-50 dark:hover:bg-secondary-800/50 rounded-lg transition-colors group cursor-pointer"
                     onClick={() => {
                       setIsOpen(false);
                       router.push(r.url);
                     }}
                   >
-                    <div className="p-2 bg-gray-100 dark:bg-black/30 rounded-md group-hover:bg-white dark:group-hover:bg-white/10 transition-colors">
+                    <div className="p-2 bg-secondary-100 dark:bg-secondary-800/80 rounded-md group-hover:bg-white dark:group-hover:bg-secondary-700 transition-colors">
                       {r.icon}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-900 dark:text-white text-sm">{r.title}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{r.type}</p>
+                      <p className="font-semibold text-secondary-900 dark:text-white text-sm">{r.title}</p>
+                      <p className="text-xs text-secondary-500 dark:text-secondary-400">{r.type}</p>
                     </div>
                   </button>
                 ))}
@@ -168,11 +168,11 @@ export default function CommandPalette() {
 
             {newsResults.length > 0 && (
               <div>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-4 mb-2">Live News Search API (Analyze on Click)</p>
+                <p className="text-[10px] font-bold text-secondary-400 uppercase tracking-widest px-4 mb-2">Live News Search API (Analyze on Click)</p>
                 {newsResults.map((r, i) => (
                   <button
                     key={i}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg transition-colors group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-secondary-50 dark:hover:bg-secondary-800/50 rounded-lg transition-colors group cursor-pointer"
                     onClick={() => {
                       setIsOpen(false);
                       try {
@@ -181,12 +181,12 @@ export default function CommandPalette() {
                       router.push('/');
                     }}
                   >
-                    <div className="p-2 bg-indigo-500/10 rounded-md group-hover:bg-indigo-500/20 transition-colors">
+                    <div className="p-2 bg-primary-500/10 rounded-md group-hover:bg-primary-500/20 transition-colors">
                       {r.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 dark:text-white text-sm truncate">{r.title}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{r.description}</p>
+                      <p className="font-semibold text-secondary-900 dark:text-white text-sm truncate">{r.title}</p>
+                      <p className="text-xs text-secondary-500 dark:text-secondary-400 truncate">{r.description}</p>
                     </div>
                   </button>
                 ))}
@@ -196,7 +196,7 @@ export default function CommandPalette() {
         )}
         
         {query.trim() && results.length === 0 && newsResults.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center text-secondary-500 text-sm">
             No database records or live news found for "{query}"
           </div>
         )}
