@@ -3,6 +3,7 @@ import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
 import PrAuditExportModal from '../../components/PrAuditExportModal';
 import PartComparisonModal from '../../components/PartComparisonModal';
+import SourceRegistryScraperModal from '../../components/SourceRegistryScraperModal';
 import { ShieldAlert, GitCommit, Factory, Box, CheckCircle, CheckCircle2, ArrowRight, XCircle, FileText, BarChart2, MessageSquare, ChevronRight, Activity, Database, AlertTriangle, ExternalLink, Printer, Mail, Copy, Check, Sliders, Layers, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -92,6 +93,7 @@ export default function DisruptionDetail({ ssrDisruption = {}, ssrPartInfo = {} 
   const [showPrModal, setShowPrModal] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [comparedAlt, setComparedAlt] = useState(null);
+  const [showScraperModal, setShowScraperModal] = useState(false);
 
   // Safe Formatting Helpers
   const formatPrice = (val) => {
@@ -407,7 +409,15 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
                     </div>
                   </div>
 
-                  <div className="mt-2.5">
+                  <div className="mt-3 flex flex-col gap-2">
+                    <button
+                      onClick={() => setShowScraperModal(true)}
+                      className="w-full px-3.5 py-2 bg-primary-50 hover:bg-primary-600 text-primary-700 hover:text-white dark:bg-primary-950/40 dark:text-primary-400 dark:hover:bg-primary-600 dark:hover:text-white border border-primary-200 dark:border-primary-800/40 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs group"
+                    >
+                      <ShieldAlert className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                      <span>Inspect Scraped Source Registry</span>
+                    </button>
+
                     <a 
                       href={
                         (data?.verifiedUrl && data.verifiedUrl !== '#' && !data.verifiedUrl.includes('us7000m8v5'))
@@ -418,9 +428,9 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
                       } 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary-600 dark:text-primary-400 hover:underline"
+                      className="inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold text-secondary-500 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white transition-colors"
                     >
-                      <FileText className="w-3.5 h-3.5" /> View Official Source Document <ExternalLink className="w-3 h-3" />
+                      <span>Open External Source URL</span> <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
@@ -780,6 +790,13 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
           leadTimeDays: chosen.lead_time_days,
           stockQty: chosen.stock_qty
         })}
+      />
+
+      {/* VERIFIED SOURCE REGISTRY WEBSCRAPER MODAL */}
+      <SourceRegistryScraperModal 
+        isOpen={showScraperModal} 
+        onClose={() => setShowScraperModal(false)} 
+        signal={data} 
       />
     </div>
   );

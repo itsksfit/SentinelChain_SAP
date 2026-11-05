@@ -15,6 +15,7 @@ import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import StatusBadge from '../components/StatusBadge';
 import PrAuditExportModal from '../components/PrAuditExportModal';
+import SourceRegistryScraperModal from '../components/SourceRegistryScraperModal';
 import dynamic from 'next/dynamic';
 
 const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false });
@@ -105,22 +106,51 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
   const [newsSearchQuery, setNewsSearchQuery] = useState('');
   const [isSearchingNews, setIsSearchingNews] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLiveScanning, setIsLiveScanning] = useState(false);
+  const [scanCountdown, setScanCountdown] = useState(30);
+  const [lastScannedTime, setLastScannedTime] = useState(new Date().toLocaleTimeString());
 
-  const fetchNews = async (query = '') => {
+  // Scraper Modal State
+  const [showScraperModal, setShowScraperModal] = useState(false);
+  const [selectedSignalForScrape, setSelectedSignalForScrape] = useState(null);
+
+  const fetchNews = async (query = '', forceRefresh = false) => {
     setIsRefreshing(true);
-    const url = query ? `/api/news/latest?q=${encodeURIComponent(query)}` : '/api/news/latest';
+    setIsLiveScanning(true);
+    let url = '/api/news/latest';
+    const params = new URLSearchParams();
+    if (query) params.append('q', query);
+    if (forceRefresh) params.append('refresh', 'true');
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+
     try {
       const r = await fetch(url);
       const news = await r.json();
       if (Array.isArray(news) && news.length > 0) {
         setLiveNews(news);
         setActiveNews(prev => prev || news[0]);
+        setLastScannedTime(new Date().toLocaleTimeString());
       }
     } catch (error) {
       console.error("Error fetching signals:", error);
     } finally {
-      setTimeout(() => setIsRefreshing(false), 500);
+      setTimeout(() => {
+        setIsRefreshing(false);
+        setIsLiveScanning(false);
+      }, 500);
     }
+  };
+
+  const handleManualScan = () => {
+    setScanCountdown(30);
+    fetchNews(newsSearchQuery, true);
+  };
+
+  const handleOpenScraperModal = (sig, e) => {
+    if (e) e.stopPropagation();
+    setSelectedSignalForScrape(sig);
+    setShowScraperModal(true);
   };
 
   const stageRef = useRef(stage);
@@ -128,14 +158,20 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
 
   useEffect(() => {
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
-    fetchNews();
+    fetchNews('', false);
     
-    const interval = setInterval(() => {
-      if (stageRef.current === 0 && !isSearchingNews) {
-        fetchNews();
-      }
-    }, 30000);
-    return () => clearInterval(interval);
+    const ticker = setInterval(() => {
+      setScanCountdown(prev => {
+        if (prev <= 1) {
+          if (stageRef.current === 0 && !isSearchingNews) {
+            fetchNews('', true);
+          }
+          return 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(ticker);
   }, [isSearchingNews]);
 
   const threatSectionRef = useRef(null);
@@ -821,6 +857,53 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
               </div>
             </div>
 
+            {/* Real-Time Web Scraping Engine Control Bar & Live Ticker */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0F1218] text-white border border-[#222733] shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-primary-500/10 border border-primary-500/30 text-primary-400 shrink-0">
+                  <Radio className="w-4 h-4 animate-pulse text-primary-400" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[#0F1218] animate-ping" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-black tracking-wider uppercase text-white flex items-center gap-1.5">
+                      Real-Time Disruption Web-Scraping Engine
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
+                      LIVE
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Continuous institutional web-crawling across USGS Sensor, Federal Register (BIS), SEC EDGAR & Corporate IR
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                {/* Countdown Ticker */}
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#171B24] border border-[#2B3242]">
+                  <Clock className="w-3.5 h-3.5 text-primary-400 animate-spin" style={{ animationDuration: '6s' }} />
+                  <span className="text-xs text-slate-300 font-mono">
+                    Auto-scrape in <span className="font-extrabold text-primary-400">{scanCountdown}s</span>
+                  </span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    Last: {lastScannedTime}
+                  </span>
+                </div>
+
+                {/* Instant Scan Live Button */}
+                <button
+                  onClick={handleManualScan}
+                  disabled={isLiveScanning}
+                  className="px-3.5 py-1.5 bg-primary-500 hover:bg-primary-600 active:scale-95 disabled:opacity-50 text-white rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isLiveScanning ? 'animate-spin' : ''}`} />
+                  <span>{isLiveScanning ? 'Scraping Sources...' : 'Scan Sources Live'}</span>
+                </button>
+              </div>
+            </div>
+
             {/* SKU Search Filter */}
             <div className="p-3.5 flex items-center gap-3 rounded-2xl border border-[#EAEAEA] dark:border-[#262626] bg-white dark:bg-[#141414] shadow-2xs">
               <Search className="w-4 h-4 text-secondary-400 shrink-0" />
@@ -904,19 +987,28 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
                         {news.description}
                       </p>
 
-                      {news.verifiedUrl && news.verifiedUrl !== '#' && (
-                        <div className="pt-1">
+                      <div className="pt-2 flex flex-wrap items-center gap-3">
+                        <button 
+                          onClick={(e) => handleOpenScraperModal(news, e)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-primary-600 hover:text-white bg-primary-50 hover:bg-primary-600 dark:bg-primary-950/40 dark:text-primary-400 dark:hover:bg-primary-600 dark:hover:text-white border border-primary-200 dark:border-primary-800/50 transition-all cursor-pointer shadow-2xs group"
+                        >
+                          <ShieldCheck className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                          <span>View Verified Source Registry</span>
+                        </button>
+
+                        {news.verifiedUrl && news.verifiedUrl !== '#' && (
                           <a 
                             href={news.verifiedUrl} 
                             target="_blank" 
                             rel="noopener noreferrer" 
                             onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1 text-xs font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 transition-colors"
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-secondary-500 hover:text-secondary-800 dark:text-secondary-400 dark:hover:text-white transition-colors"
                           >
-                            <FileText className="w-3 h-3" /> View Verified Source Registry <ExternalLink className="w-2.5 h-2.5" />
+                            <span>Open URL</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
                           </a>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-3 shrink-0 w-full md:w-auto">
@@ -1153,6 +1245,7 @@ export default function Dashboard({ initialSignals = [], initialSapBOMs = [], in
       </div>
 
       <PrAuditExportModal isOpen={showPrModal} onClose={() => setShowPrModal(false)} data={matchResult || detectResult} />
+      <SourceRegistryScraperModal isOpen={showScraperModal} onClose={() => setShowScraperModal(false)} signal={selectedSignalForScrape} />
     </div>
   );
 }

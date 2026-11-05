@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import StatusBadge from '../components/StatusBadge';
+import SourceRegistryScraperModal from '../components/SourceRegistryScraperModal';
 
 export async function getServerSideProps() {
   const fs = require('fs');
@@ -24,6 +25,8 @@ export default function Disruptions({ initialDisruptions }) {
   const [disruptions, setDisruptions] = useState(initialDisruptions);
   const [filterSeverity, setFilterSeverity] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showScraperModal, setShowScraperModal] = useState(false);
+  const [selectedSignalForScrape, setSelectedSignalForScrape] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -232,6 +235,18 @@ export default function Disruptions({ initialDisruptions }) {
                     </div>
                     
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setSelectedSignalForScrape(d);
+                          setShowScraperModal(true);
+                        }}
+                        className="text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 bg-[#FAFAFA] dark:bg-[#181818] hover:bg-primary-50 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border border-[#E5E7EB] dark:border-[#262626] flex items-center gap-1.5 cursor-pointer"
+                        title="View scraped source registry telemetry"
+                      >
+                        <ShieldAlert className="w-3.5 h-3.5 text-primary-500" />
+                        <span>Source Registry</span>
+                      </button>
+
                       {d.recovery_plan_id && (
                         <Link 
                           href={`/plans?id=${d.recovery_plan_id}`} 
@@ -255,6 +270,12 @@ export default function Disruptions({ initialDisruptions }) {
 
         </main>
       </div>
+
+      <SourceRegistryScraperModal 
+        isOpen={showScraperModal} 
+        onClose={() => setShowScraperModal(false)} 
+        signal={selectedSignalForScrape} 
+      />
     </div>
   );
 }
