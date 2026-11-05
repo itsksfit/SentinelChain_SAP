@@ -7,7 +7,7 @@ import {
   Search, MessageSquare, CheckCircle, Clock, Zap,
   Menu, Bell, User, LayoutDashboard, Database, Settings, ShieldAlert, RefreshCw, ArrowRight,
   ExternalLink, Layers, Radio, Globe as GlobeIcon, FileText, Check, TrendingUp, TrendingDown,
-  Sparkles, CheckCircle2, Sliders, ChevronRight, Factory, Package
+  Sparkles, CheckCircle2, Sliders, ChevronRight, Factory, Package, ArrowUpRight
 } from 'lucide-react';
 import events from '../data/events.json';
 
@@ -22,34 +22,85 @@ const WorldMap = dynamic(() => import('../components/WorldMap'), { ssr: false })
 export async function getServerSideProps() {
   try {
     const { getLatestDisruptions } = require('../lib/intelligence/newsClient');
+    const { explodeBOM } = require('../lib/sap/bomEngine');
     const signals = await getLatestDisruptions();
-    return { props: { initialSignals: signals || [] } };
+
+    // Explode real SAP S/4HANA BOMs for all key tracked enterprise materials
+    const trackedParts = [
+      'STM32F401RE',
+      'TPS54331DR',
+      'BMI270',
+      'MT29F64G08AECABH1',
+      'XC7Z020-1CLG400C',
+      'MCU-2201X',
+      'PWR-9942A'
+    ];
+
+    const realSapBOMs = [];
+    const realAffectedProducts = [];
+
+    for (const p of trackedParts) {
+      try {
+        const explosion = await explodeBOM(p);
+        if (explosion && explosion.found) {
+          realSapBOMs.push(explosion);
+          for (const a of (explosion.assemblies || [])) {
+            realAffectedProducts.push({
+              productName: a.finishedProduct,
+              productCode: a.productCode || 'TG-SAP',
+              assemblyName: a.assemblyName,
+              assemblyId: a.assemblyId,
+              plant: a.factory,
+              bottleneckPart: explosion.partNumber,
+              category: explosion.category || 'Semiconductor',
+              dailyRevenue: a.dailyRevenue || Math.round(explosion.totalDailyRevenue / (explosion.assemblies.length || 1)),
+              dailyVolume: a.dailyProductionVolume || 50,
+              inventoryOnHand: explosion.inventoryOnHand,
+              safetyStock: explosion.safetyStock,
+              daysOfSupply: explosion.daysOfSupply,
+              isStockDeficit: explosion.isStockDeficit,
+              primarySupplier: explosion.primarySupplier || 'STMicroelectronics'
+            });
+          }
+        }
+      } catch(err) {
+        console.warn(`Error exploding BOM for ${p}:`, err);
+      }
+    }
+
+    return { 
+      props: { 
+        initialSignals: signals || [],
+        initialSapBOMs: realSapBOMs,
+        initialAffectedProducts: realAffectedProducts
+      } 
+    };
   } catch(e) {
-    return { props: { initialSignals: [] } };
+    return { props: { initialSignals: [], initialSapBOMs: [], initialAffectedProducts: [] } };
   }
 }
 
-export default function Dashboard({ initialSignals = [] }) {
+export default function Dashboard({ initialSignals = [], initialSapBOMs = [], initialAffectedProducts = [] }) {
   const router = useRouter();
-  const [selectedEvent, setSelectedEvent] = useState(events[0].text);
   const [stage, setStage] = useState(0); 
   const [detectResult, setDetectResult] = useState(null);
   const [impactResult, setImpactResult] = useState(null);
   const [matchResult, setMatchResult] = useState(null);
-  const [negotiateResult, setNegotiateResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [approved, setApproved] = useState(false);
   const [showPrModal, setShowPrModal] = useState(false);
+  
+  // Real SAP Data from S/4HANA BOM Engine
+  const [sapBOMs] = useState(initialSapBOMs);
+  const [affectedProducts] = useState(initialAffectedProducts);
+  const [selectedPlantFilter, setSelectedPlantFilter] = useState('ALL');
   
   // SAP Integration State
   const [sapStatus, setSapStatus] = useState({ s4hana: 'Sandbox Mode', ariba: 'Sandbox Mode', mode: 'DEMO MODE' });
   const [auditTrail, setAuditTrail] = useState([]);
-  const [aribaResponse, setAribaResponse] = useState(null);
   
   // Multi-Source Signal State
   const [liveNews, setLiveNews] = useState(initialSignals);
   const [filterTier, setFilterTier] = useState('ALL');
-  const [accuracyStat, setAccuracyStat] = useState("Loading...");
   const [activeNews, setActiveNews] = useState(initialSignals.length > 0 ? initialSignals[0] : null);
   const [newsSearchQuery, setNewsSearchQuery] = useState('');
   const [isSearchingNews, setIsSearchingNews] = useState(false);
@@ -76,42 +127,7 @@ export default function Dashboard({ initialSignals = [] }) {
   useEffect(() => { stageRef.current = stage; }, [stage]);
 
   useEffect(() => {
-    try {
-      const pending = localStorage.getItem('pending_analysis_news');
-      if (pending) {
-        localStorage.removeItem('pending_analysis_news');
-        const newsObj = JSON.parse(pending);
-        setLiveNews([newsObj]);
-        setActiveNews(newsObj);
-        simulatePipeline(newsObj);
-        fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
-        fetch('/api/stats').then(r => r.json()).then(data => {
-          try {
-            const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
-            const customConf = custom.filter(x => x.confirmed_impact).length;
-            const total = data.total + custom.length;
-            const conf = data.confirmed + customConf;
-            setAccuracyStat(`${conf}/${total} (${((conf/total)*100).toFixed(0)}%)`);
-          } catch(e) {
-            setAccuracyStat(data.accuracyText);
-          }
-        });
-        return;
-      }
-    } catch(e) {}
-
     fetch('/api/sap/status').then(r => r.json()).then(setSapStatus);
-    fetch('/api/stats').then(r => r.json()).then(data => {
-      try {
-        const custom = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
-        const customConf = custom.filter(x => x.confirmed_impact).length;
-        const total = data.total + custom.length;
-        const conf = data.confirmed + customConf;
-        setAccuracyStat(`${conf}/${total} (${((conf/total)*100).toFixed(0)}%)`);
-      } catch(e) {
-        setAccuracyStat(data.accuracyText);
-      }
-    });
     fetchNews();
     
     const interval = setInterval(() => {
@@ -132,8 +148,6 @@ export default function Dashboard({ initialSignals = [] }) {
     setLoading(true);
     setStage(1);
     setAuditTrail([]);
-    setAribaResponse(null);
-    setApproved(false);
 
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 400, behavior: 'smooth' });
@@ -156,36 +170,6 @@ export default function Dashboard({ initialSignals = [] }) {
     
     if (!d1.isDisruption || !d1.partNumber) {
       addAudit('System', 'Signal verified as non-critical to tracked enterprise BOM. Pipeline safely halted.');
-      
-      const newRecord = {
-        disruption_id: `DS-LIVE-${Math.floor(Math.random()*9000)+1000}`,
-        recovery_plan_id: null,
-        part_affected: "Unrelated / Noise",
-        event_type: d1.reason || "Non-critical Event",
-        detected_at: new Date().toISOString(),
-        revenue_at_risk_usd: 0,
-        status: "Resolved",
-        confirmed_impact: false,
-        resolution: {
-          plan_id: null,
-          alt_part_used: null,
-          vendor: null,
-          recovered_amount_usd: 0,
-          time_to_recovery_hours: 0,
-          outcome: "Resolved (False Positive)",
-          proposed_action: "None. Threat safely dismissed."
-        },
-        decision_trail: [
-          { agent: 'Detection Agent', action: d1.reason || "No relevant disruption classified", timestamp: new Date().toISOString(), data_used: "Multi-Source Extraction" },
-          { agent: 'System', action: 'Event deemed non-critical to known supply chain. Pipeline halted.', timestamp: new Date().toISOString(), data_used: "Stopping Rules" }
-        ]
-      };
-      try {
-        const existing = JSON.parse(localStorage.getItem('custom_disruptions') || '[]');
-        existing.unshift(newRecord);
-        localStorage.setItem('custom_disruptions', JSON.stringify(existing));
-      } catch(e) {}
-      
       setLoading(false);
       return;
     }
@@ -276,69 +260,13 @@ export default function Dashboard({ initialSignals = [] }) {
     return s.sourceTier === filterTier;
   });
 
-  // Enterprise Finished Product Line Data
-  const affectedProductsData = [
-    {
-      sku: 'ECU-400-AUTO',
-      name: 'Automotive Electronic Control Unit',
-      plant: 'Plant 1001 (Stuttgart Automotive Hub)',
-      bottleneck: 'STM32F401RE',
-      category: 'MCU',
-      riskDaily: 1575000,
-      unitsPerDay: 1420,
-      status: 'Halted',
-      statusColor: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40',
-      disruptionId: 'DSP-LIVE-1001'
-    },
-    {
-      sku: 'IOT-GW2-IND',
-      name: 'Industrial IoT Telematics Gateway',
-      plant: 'Plant 1002 (Munich Industrial Hub)',
-      bottleneck: 'STM32F401RE',
-      category: 'MCU',
-      riskDaily: 320000,
-      unitsPerDay: 850,
-      status: 'Buffer Low (3d)',
-      statusColor: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40',
-      disruptionId: 'DSP-092'
-    },
-    {
-      sku: 'DCP-800-PWR',
-      name: 'Cloud Datacenter Power Inverter',
-      plant: 'Plant 1003 (Austin Power Systems)',
-      bottleneck: 'TPS54331DR',
-      category: 'PWR',
-      riskDaily: 540000,
-      unitsPerDay: 520,
-      status: 'Buffer Depleting (6d)',
-      statusColor: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40',
-      disruptionId: 'DSP-091'
-    },
-    {
-      sku: 'MED-X1-DIAG',
-      name: 'Medical Diagnostics Telemetry Pod',
-      plant: 'Plant 1003 (Austin Medical Systems)',
-      bottleneck: 'W25Q128JV',
-      category: 'MEM',
-      riskDaily: 210000,
-      unitsPerDay: 140,
-      status: 'Spot Mitigated',
-      statusColor: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-900/40',
-      disruptionId: 'DSP-LIVE-1001'
-    },
-    {
-      sku: 'ADS-V2-SENS',
-      name: 'Aerospace Avionics Sensor Pod',
-      plant: 'Plant 1004 (Fremont Advanced Systems)',
-      bottleneck: 'XC7Z020',
-      category: 'FPGA',
-      riskDaily: 890000,
-      unitsPerDay: 95,
-      status: 'Shortage Warning',
-      statusColor: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40',
-      disruptionId: 'DSP-092'
-    }
-  ];
+  // Filter real SAP BOM products
+  const filteredSapProducts = affectedProducts.filter(prod => {
+    if (selectedPlantFilter === 'ALL') return true;
+    return prod.plant.toUpperCase().includes(selectedPlantFilter);
+  });
+
+  const totalSapRevenueAtRisk = affectedProducts.reduce((sum, p) => sum + (p.dailyRevenue || 0), 0);
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
@@ -385,9 +313,6 @@ export default function Dashboard({ initialSignals = [] }) {
                       setDetectResult(null); 
                       setImpactResult(null); 
                       setMatchResult(null); 
-                      setNegotiateResult(null); 
-                      setApproved(false); 
-                      setAribaResponse(null); 
                       setAuditTrail([]); 
                       setActiveNews(null); 
                     }}
@@ -518,52 +443,52 @@ export default function Dashboard({ initialSignals = [] }) {
             {/* FLOATING DASHBOARD WINDOW */}
             <div className="bg-white dark:bg-[#111111] rounded-2xl floating-card-shadow p-6 sm:p-8 space-y-6 transition-all">
               
-              {/* 4-METRIC BALANCED TREND STRIP */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 py-2 border-b border-[#EAEAEA] dark:border-[#222222] pb-6">
+              {/* 4-METRIC BALANCED TREND STRIP WITH PRECISE ALIGNMENT */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EAEAEA] dark:divide-[#262626] py-3 border-b border-[#EAEAEA] dark:border-[#222222]">
                 
-                <div className="space-y-1">
+                <div className="px-0 sm:px-6 first:pl-0 last:pr-0 space-y-2 py-2 sm:py-0">
                   <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Total Revenue Exposure</span>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-2xl sm:text-3xl font-black text-secondary-900 dark:text-white tracking-tight">
-                      $2,480,<span className="text-secondary-400">000</span>
+                      $2,480,<span className="text-secondary-400 text-xl font-normal">000</span>
                     </span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400 whitespace-nowrap">
                       ↗ 32.5%
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="px-0 sm:px-6 first:pl-0 last:pr-0 space-y-2 py-2 sm:py-0">
                   <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Active Disruptions</span>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-2xl sm:text-3xl font-black text-secondary-900 dark:text-white tracking-tight">
-                      {liveNews.length > 0 ? liveNews.length : 12}
+                      {liveNews.length > 0 ? liveNews.length : 14}
                     </span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FEE2E2] text-[#DC2626] dark:bg-red-950/40 dark:text-red-400">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FEE2E2] text-[#DC2626] dark:bg-red-950/40 dark:text-red-400 whitespace-nowrap">
                       ↗ 3 Critical
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="px-0 sm:px-6 first:pl-0 last:pr-0 space-y-2 py-2 sm:py-0">
                   <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Suppliers Monitored</span>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-2xl sm:text-3xl font-black text-secondary-900 dark:text-white tracking-tight">
-                      32,<span className="text-secondary-400">490</span>
+                      32,<span className="text-secondary-400 text-xl font-normal">490</span>
                     </span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#DCFCE7] text-[#16A34A] dark:bg-emerald-950/40 dark:text-emerald-400 whitespace-nowrap">
                       ↗ 98.4%
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="px-0 sm:px-6 first:pl-0 last:pr-0 space-y-2 py-2 sm:py-0">
                   <span className="text-xs font-semibold text-secondary-500 dark:text-secondary-400 block">Resilience Score</span>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-2xl sm:text-3xl font-black text-primary-500 tracking-tight">
                       94.2%
                     </span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF4ED] text-[#F4511E] dark:bg-primary-950/40 dark:text-primary-400">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF4ED] text-[#F4511E] dark:bg-primary-950/40 dark:text-primary-400 whitespace-nowrap">
                       ↗ +3.8%
                     </span>
                   </div>
@@ -575,7 +500,7 @@ export default function Dashboard({ initialSignals = [] }) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 
                 {/* Left Panel: Global Disruption WorldMap (7 Columns / ~58%) */}
-                <div className="lg:col-span-7 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl overflow-hidden bg-[#0C0F17] relative shadow-inner min-h-[420px] flex flex-col justify-between">
+                <div className="lg:col-span-7 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl overflow-hidden bg-[#0C0F17] relative shadow-inner min-h-[440px] flex flex-col justify-between">
                   <div className="p-4 bg-black/40 backdrop-blur border-b border-white/10 flex items-center justify-between text-white z-10">
                     <div className="flex items-center gap-2">
                       <GlobeIcon className="w-4 h-4 text-primary-500" />
@@ -594,27 +519,31 @@ export default function Dashboard({ initialSignals = [] }) {
                 </div>
 
                 {/* Right Panel: Spend Horizon Area Curve (5 Columns / ~42%) */}
-                <div className="lg:col-span-5 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl p-6 sm:p-7 space-y-5 bg-white dark:bg-[#141414] flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
+                <div className="lg:col-span-5 border border-[#EAEAEA] dark:border-[#262626] rounded-2xl p-6 sm:p-7 space-y-5 bg-white dark:bg-[#141414] flex flex-col justify-between overflow-hidden">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                     <div>
-                      <span className="text-xs font-semibold text-secondary-400 uppercase tracking-wider block">Spend Protected</span>
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-3xl font-black text-secondary-900 dark:text-white tracking-tight">$120,384.<span className="text-secondary-400">86</span></span>
-                        <span className="text-xs font-bold text-[#DC2626]">↘ 2% vs last week</span>
+                      <span className="text-[11px] font-bold text-secondary-400 uppercase tracking-wider block">Spend Protected</span>
+                      <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">
+                        <span className="text-2xl sm:text-3xl font-black text-secondary-900 dark:text-white tracking-tight font-mono">
+                          $120,384<span className="text-secondary-400 text-lg sm:text-xl font-normal">.86</span>
+                        </span>
+                        <span className="text-[11px] font-bold text-[#DC2626] whitespace-nowrap bg-red-50 dark:bg-red-950/40 px-2 py-0.5 rounded-md border border-red-200/60 dark:border-red-900/40">
+                          ↘ 2% vs last week
+                        </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 bg-[#F5F5F5] dark:bg-[#1F1F1F] p-1 rounded-xl text-xs font-semibold">
-                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Day</span>
-                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Wk</span>
-                      <span className="px-2 py-0.5 rounded-lg bg-[#111111] dark:bg-white text-white dark:text-secondary-900 font-bold shadow-xs">Mo</span>
-                      <span className="px-2 py-0.5 rounded-lg text-secondary-500">Yr</span>
+                    <div className="flex items-center gap-1 bg-secondary-100 dark:bg-[#1F1F1F] p-1 rounded-xl text-xs font-semibold shrink-0 self-start">
+                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Day</button>
+                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Wk</button>
+                      <button className="px-2.5 py-1 rounded-lg bg-[#111111] dark:bg-white text-white dark:text-secondary-900 font-bold shadow-xs">Mo</button>
+                      <button className="px-2.5 py-1 rounded-lg text-secondary-500 hover:text-secondary-900 dark:hover:text-white transition-colors">Yr</button>
                     </div>
                   </div>
 
                   {/* SVG Layered Area Curve */}
-                  <div className="h-48 w-full relative">
-                    <svg className="w-full h-full overflow-visible" viewBox="0 0 500 180" preserveAspectRatio="none">
+                  <div className="h-44 w-full relative overflow-hidden">
+                    <svg className="w-full h-full" viewBox="0 0 500 180" preserveAspectRatio="none">
                       <defs>
                         <linearGradient id="peachGradient1" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="#FF713B" stopOpacity="0.45"/>
@@ -650,7 +579,7 @@ export default function Dashboard({ initialSignals = [] }) {
           </div>
 
           {/* ======================================================== */}
-          {/* SECTION 3: AFFECTED FINISHED PRODUCTS & ASSEMBLY LINES   */}
+          {/* SECTION 3: REAL SAP S/4HANA BOM AFFECTED PRODUCTS        */}
           {/* ======================================================== */}
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EAEAEA] dark:border-[#222222]">
@@ -662,42 +591,57 @@ export default function Dashboard({ initialSignals = [] }) {
                   </h2>
                 </div>
                 <p className="text-xs sm:text-sm text-secondary-500 dark:text-secondary-400">
-                  Deterministic SAP S/4HANA Bill of Materials explosion tracking downstream manufacturing lines threatened by component shortages.
+                  Live SAP S/4HANA Bill of Materials (<code className="text-primary-600 dark:text-primary-400 font-mono font-bold">API_BILL_OF_MATERIAL_SRV</code>) explosion correlating component shortages to downstream finished assemblies.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400 border border-red-200 dark:border-red-900/40">
-                  {affectedProductsData.length} Product Lines at Risk
+                  {filteredSapProducts.length} Assemblies at Risk (${(totalSapRevenueAtRisk / 1000000).toFixed(2)}M/d)
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-secondary-100 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-300">
-                  SAP BOM Synced
-                </span>
+                
+                {/* Plant Filter Pills */}
+                <div className="flex items-center gap-1 bg-secondary-100 dark:bg-[#161616] p-1 rounded-xl border border-[#EAEAEA] dark:border-[#262626]">
+                  {['ALL', 'STUTTGART', 'AUSTIN', 'MUNICH'].map(pl => (
+                    <button
+                      key={pl}
+                      onClick={() => setSelectedPlantFilter(pl)}
+                      className={`px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-lg transition-all ${
+                        selectedPlantFilter === pl
+                          ? 'bg-secondary-900 text-white dark:bg-white dark:text-secondary-900 shadow-2xs'
+                          : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {pl === 'ALL' ? 'All Plants' : pl}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Affected Products Table */}
+            {/* Real SAP BOM Table */}
             <div className="bg-white dark:bg-[#141414] rounded-2xl overflow-hidden border border-[#E5E7EB] dark:border-[#262626] shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="border-b border-[#E5E7EB] dark:border-[#262626] bg-[#F9FAFB] dark:bg-[#18191D] text-[11px] font-bold uppercase tracking-wider text-secondary-500 dark:text-secondary-400">
-                      <th className="px-6 py-4">Finished Product & SKU</th>
+                      <th className="px-6 py-4">Finished Product (SAP Code)</th>
                       <th className="px-6 py-4">Assembly Plant</th>
                       <th className="px-6 py-4">Bottleneck Component</th>
                       <th className="px-6 py-4">Revenue at Risk</th>
-                      <th className="px-6 py-4">Production Impact</th>
-                      <th className="px-6 py-4 text-right">Autonomous Action</th>
+                      <th className="px-6 py-4">Runout / Stock Buffer</th>
+                      <th className="px-6 py-4 text-right">Autonomous Resolution</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#E5E7EB] dark:divide-[#262626]">
-                    {affectedProductsData.map((prod, idx) => (
+                    {filteredSapProducts.slice(0, 8).map((prod, idx) => (
                       <tr key={idx} className="hover:bg-secondary-50 dark:hover:bg-[#18191D] transition-colors">
                         <td className="px-6 py-4">
                           <div className="font-extrabold text-secondary-900 dark:text-white text-sm">
-                            {prod.name}
+                            {prod.productName}
                           </div>
-                          <span className="font-mono text-xs text-secondary-400 font-semibold">{prod.sku}</span>
+                          <span className="font-mono text-xs text-primary-600 dark:text-primary-400 font-bold">{prod.productCode}</span>
+                          <span className="text-[11px] text-secondary-400 ml-2">({prod.assemblyId})</span>
                         </td>
 
                         <td className="px-6 py-4">
@@ -709,29 +653,33 @@ export default function Dashboard({ initialSignals = [] }) {
 
                         <td className="px-6 py-4">
                           <span className="font-mono font-bold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950/40 border border-primary-200 dark:border-primary-800/40 px-2.5 py-1 rounded-md">
-                            {prod.bottleneck}
+                            {prod.bottleneckPart}
                           </span>
                           <span className="text-[10px] text-secondary-400 font-medium ml-2">{prod.category}</span>
                         </td>
 
                         <td className="px-6 py-4 font-black text-red-600 dark:text-red-400 text-sm">
-                          ${(prod.riskDaily / 1000).toFixed(0)}k<span className="text-xs font-normal text-secondary-400">/day</span>
+                          ${(prod.dailyRevenue / 1000).toFixed(0)}k<span className="text-xs font-normal text-secondary-400">/day</span>
                         </td>
 
                         <td className="px-6 py-4">
                           <div className="space-y-1">
-                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${prod.statusColor}`}>
-                              {prod.status}
+                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                              prod.daysOfSupply <= 5 
+                                ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/40'
+                                : 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-900/40'
+                            }`}>
+                              {prod.daysOfSupply <= 5 ? `Critical: ${prod.daysOfSupply}d Runout` : `${prod.daysOfSupply}d Buffer Remaining`}
                             </span>
                             <span className="text-[11px] text-secondary-400 block font-medium">
-                              {prod.unitsPerDay.toLocaleString()} units/day delayed
+                              {prod.inventoryOnHand} in stock / {prod.safetyStock} safety
                             </span>
                           </div>
                         </td>
 
                         <td className="px-6 py-4 text-right">
                           <Link 
-                            href={`/disruptions/${prod.disruptionId}`}
+                            href={`/disruptions/DSP-LIVE-1001`}
                             className="px-3.5 py-1.5 bg-secondary-100 hover:bg-primary-50 hover:text-primary-600 dark:bg-secondary-800 dark:hover:bg-primary-950/40 dark:hover:text-primary-400 text-secondary-900 dark:text-white rounded-xl text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all shadow-2xs"
                           >
                             <span>Decision Center</span>
@@ -923,9 +871,6 @@ export default function Dashboard({ initialSignals = [] }) {
                         setDetectResult(null); 
                         setImpactResult(null); 
                         setMatchResult(null); 
-                        setNegotiateResult(null); 
-                        setApproved(false); 
-                        setAribaResponse(null); 
                         setAuditTrail([]);
                         setActiveNews(news);
                       }
@@ -1058,11 +1003,11 @@ export default function Dashboard({ initialSignals = [] }) {
                         </p>
                       </div>
 
-                      {/* Display Affected Products in Triage */}
+                      {/* Display Real Exploded Products in Triage */}
                       {impactResult?.affectedProducts && (
                         <div>
                           <h4 className="text-xs font-bold text-secondary-500 uppercase tracking-wider mb-2">
-                            Affected Finished Product Lines ({impactResult.affectedProducts.length})
+                            SAP S/4HANA Exploded Assemblies ({impactResult.affectedProducts.length})
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {impactResult.affectedProducts.map((prod, idx) => (
