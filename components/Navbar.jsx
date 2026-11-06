@@ -70,13 +70,17 @@ export default function Navbar({ onMenuClick }) {
           </button>
           
           {/* Mobile brand fallback */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center lg:hidden">
             <img 
-              src="/shield.png" 
-              alt="SentinelChain Logo" 
-              className="w-7 h-7 object-contain rounded-md"
+              src="/logo-dark.png" 
+              alt="SentinelChain" 
+              className="h-7 w-auto max-w-[140px] object-contain block dark:hidden"
             />
-            <span className="text-sm font-bold tracking-tight text-secondary-900 dark:text-white">SentinelChain</span>
+            <img 
+              src="/logo.png" 
+              alt="SentinelChain" 
+              className="h-7 w-auto max-w-[140px] object-contain hidden dark:block"
+            />
           </div>
 
           {/* Desktop Breadcrumb */}

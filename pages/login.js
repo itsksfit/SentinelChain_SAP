@@ -122,9 +122,8 @@ export default function Login() {
 
         {/* Brand Header */}
         <div className="relative z-10 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/shield.png" alt="SentinelChain" className="w-10 h-10 object-contain drop-shadow" />
-            <span className="font-black text-2xl tracking-tight text-white">SentinelChain</span>
+          <Link href="/" className="flex items-center">
+            <img src="/logo.png" alt="SentinelChain" className="h-10 object-contain drop-shadow" />
           </Link>
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur border border-white/20">
             Enterprise SCRM
@@ -180,9 +179,9 @@ export default function Login() {
         <div className="max-w-md w-full mx-auto space-y-8">
           
           {/* Mobile Brand Link */}
-          <div className="lg:hidden flex items-center gap-2 mb-4">
-            <img src="/shield.png" alt="SentinelChain" className="w-8 h-8 object-contain" />
-            <span className="font-black text-xl text-secondary-900 dark:text-white">SentinelChain</span>
+          <div className="lg:hidden flex items-center mb-4">
+            <img src="/logo-dark.png" alt="SentinelChain" className="h-8 object-contain block dark:hidden" />
+            <img src="/logo.png" alt="SentinelChain" className="h-8 object-contain hidden dark:block" />
           </div>
 
           <div>

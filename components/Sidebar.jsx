@@ -42,23 +42,20 @@ export default function Sidebar({ mobileOpen, onClose }) {
         className={`${mobileOpen ? 'flex' : 'hidden'} lg:flex flex-col w-64 border-r border-[#E8E8E8] dark:border-[#222222] bg-white dark:bg-[#0D0D0D] h-screen fixed left-0 top-0 overflow-y-auto z-50 transition-colors duration-200 select-none`}
       >
         {/* Brand Header */}
-        <div className="p-5 flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222]">
-          <Link href="/" className="flex items-center gap-3 group" onClick={handleClose}>
+        <div className="p-4 sm:p-5 flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222]">
+          <Link href="/" className="flex items-center group py-0.5" onClick={handleClose}>
             <div className="relative">
               <img 
-                src="/shield.png" 
-                alt="SentinelChain Shield" 
-                className="w-8 h-8 object-contain rounded-lg shadow-2xs shrink-0 transition-transform group-hover:scale-105"
+                src="/logo-dark.png" 
+                alt="SentinelChain" 
+                className="h-9 w-auto max-w-[170px] object-contain block dark:hidden transition-transform group-hover:scale-[1.02]"
               />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary-500 ring-2 ring-white dark:ring-[#0D0D0D]"></span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base font-bold tracking-tight text-secondary-900 dark:text-white leading-none">
-                SentinelChain
-              </span>
-              <span className="text-[8px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-widest mt-1">
-                Enterprise SCRM
-              </span>
+              <img 
+                src="/logo.png" 
+                alt="SentinelChain" 
+                className="h-9 w-auto max-w-[170px] object-contain hidden dark:block transition-transform group-hover:scale-[1.02]"
+              />
+              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary-500 ring-2 ring-white dark:ring-[#0D0D0D]"></span>
             </div>
           </Link>
           <button 
