@@ -76,7 +76,7 @@ export default function Login() {
       redirect: false,
       email: signupEmail,
       password: signupPassword,
-      callbackUrl: '/'
+      callbackUrl: '/dashboard'
     });
 
     if (res?.error) {
@@ -96,7 +96,7 @@ export default function Login() {
       redirect: false,
       email: loginEmail,
       password: loginPassword,
-      callbackUrl: '/'
+      callbackUrl: '/dashboard'
     });
 
     if (res?.error) {

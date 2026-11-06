@@ -33,7 +33,7 @@ export default function Navbar({ onMenuClick }) {
 
   const getPageTitle = () => {
     const path = router.pathname;
-    if (path === '/') return 'Mission Control';
+    if (path === '/dashboard' || path === '/') return 'Mission Control';
     if (path.startsWith('/disruptions/')) return 'Decision Center';
     if (path === '/disruptions') return 'Active Disruptions';
     if (path === '/plans') return 'Recovery Plans';

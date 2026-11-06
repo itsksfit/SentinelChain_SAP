@@ -6,7 +6,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
   const router = useRouter();
   
   const isActive = (path) => {
-    if (path === '/') return router.pathname === '/';
+    if (path === '/dashboard') return router.pathname === '/dashboard';
     return router.pathname.startsWith(path);
   };
   
@@ -43,7 +43,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
       >
         {/* Brand Header */}
         <div className="p-4 sm:p-5 flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222]">
-          <Link href="/" className="flex items-center group py-0.5" onClick={handleClose}>
+          <Link href="/dashboard" className="flex items-center group py-0.5" onClick={handleClose}>
             <div className="relative">
               <img 
                 src="/logo-dark.png" 
@@ -74,8 +74,8 @@ export default function Sidebar({ mobileOpen, onClose }) {
               Command Center
             </p>
             <nav className="space-y-1">
-              <Link href="/" className={linkClass('/')} onClick={handleClose}>
-                <LayoutDashboard className={iconClass('/', 'text-primary-500')} /> Dashboard
+              <Link href="/dashboard" className={linkClass('/dashboard')} onClick={handleClose}>
+                <LayoutDashboard className={iconClass('/dashboard', 'text-primary-500')} /> Dashboard
               </Link>
               <Link href="/disruptions" className={linkClass('/disruptions')} onClick={handleClose}>
                 <ShieldAlert className={iconClass('/disruptions', 'text-red-500')} /> Active Disruptions

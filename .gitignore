@@ -28,6 +28,10 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 
+# Impeccable Design Skill
+.agent/
+.impeccable/
+
 # OS & Editor
 .DS_Store
 *.pem
