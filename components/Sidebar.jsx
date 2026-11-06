@@ -43,25 +43,23 @@ export default function Sidebar({ mobileOpen, onClose }) {
       >
         {/* Brand Header */}
         <div className="p-5 flex items-center justify-between border-b border-[#E8E8E8] dark:border-[#222222]">
-          <Link href="/" passHref legacyBehavior>
-            <a className="flex items-center gap-3 group" onClick={handleClose}>
-              <div className="relative">
-                <img 
-                  src="/shield.png" 
-                  alt="SentinelChain Shield" 
-                  className="w-8 h-8 object-contain rounded-lg shadow-2xs shrink-0 transition-transform group-hover:scale-105"
-                />
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary-500 ring-2 ring-white dark:ring-[#0D0D0D]"></span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-base font-bold tracking-tight text-secondary-900 dark:text-white leading-none">
-                  SentinelChain
-                </span>
-                <span className="text-[8px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-widest mt-1">
-                  Enterprise SCRM
-                </span>
-              </div>
-            </a>
+          <Link href="/" className="flex items-center gap-3 group" onClick={handleClose}>
+            <div className="relative">
+              <img 
+                src="/shield.png" 
+                alt="SentinelChain Shield" 
+                className="w-8 h-8 object-contain rounded-lg shadow-2xs shrink-0 transition-transform group-hover:scale-105"
+              />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary-500 ring-2 ring-white dark:ring-[#0D0D0D]"></span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-base font-bold tracking-tight text-secondary-900 dark:text-white leading-none">
+                SentinelChain
+              </span>
+              <span className="text-[8px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-widest mt-1">
+                Enterprise SCRM
+              </span>
+            </div>
           </Link>
           <button 
             className="lg:hidden p-1.5 text-secondary-400 hover:text-secondary-700 dark:hover:text-white rounded-md hover:bg-secondary-100 dark:hover:bg-secondary-800" 
@@ -79,25 +77,17 @@ export default function Sidebar({ mobileOpen, onClose }) {
               Command Center
             </p>
             <nav className="space-y-1">
-              <Link href="/" passHref legacyBehavior>
-                <a className={linkClass('/')} onClick={handleClose}>
-                  <LayoutDashboard className={iconClass('/', 'text-primary-500')} /> Dashboard
-                </a>
+              <Link href="/" className={linkClass('/')} onClick={handleClose}>
+                <LayoutDashboard className={iconClass('/', 'text-primary-500')} /> Dashboard
               </Link>
-              <Link href="/disruptions" passHref legacyBehavior>
-                <a className={linkClass('/disruptions')} onClick={handleClose}>
-                  <ShieldAlert className={iconClass('/disruptions', 'text-red-500')} /> Active Disruptions
-                </a>
+              <Link href="/disruptions" className={linkClass('/disruptions')} onClick={handleClose}>
+                <ShieldAlert className={iconClass('/disruptions', 'text-red-500')} /> Active Disruptions
               </Link>
-              <Link href="/plans" passHref legacyBehavior>
-                <a className={linkClass('/plans')} onClick={handleClose}>
-                  <CheckCircle className={iconClass('/plans', 'text-emerald-500')} /> Recovery Plans
-                </a>
+              <Link href="/plans" className={linkClass('/plans')} onClick={handleClose}>
+                <CheckCircle className={iconClass('/plans', 'text-emerald-500')} /> Recovery Plans
               </Link>
-              <Link href="/ledger" passHref legacyBehavior>
-                <a className={linkClass('/ledger')} onClick={handleClose}>
-                  <ShieldCheck className={iconClass('/ledger', 'text-primary-500')} /> Recovery Ledger
-                </a>
+              <Link href="/ledger" className={linkClass('/ledger')} onClick={handleClose}>
+                <ShieldCheck className={iconClass('/ledger', 'text-primary-500')} /> Recovery Ledger
               </Link>
             </nav>
           </div>
@@ -107,15 +97,11 @@ export default function Sidebar({ mobileOpen, onClose }) {
               Intelligence
             </p>
             <nav className="space-y-1">
-              <Link href="/network" passHref legacyBehavior>
-                <a className={linkClass('/network')} onClick={handleClose}>
-                  <Database className={iconClass('/network', 'text-cyan-500')} /> Supply Network
-                </a>
+              <Link href="/network" className={linkClass('/network')} onClick={handleClose}>
+                <Database className={iconClass('/network', 'text-cyan-500')} /> Supply Network
               </Link>
-              <Link href="/risk" passHref legacyBehavior>
-                <a className={linkClass('/risk')} onClick={handleClose}>
-                  <Activity className={iconClass('/risk', 'text-amber-500')} /> Risk Matrix
-                </a>
+              <Link href="/risk" className={linkClass('/risk')} onClick={handleClose}>
+                <Activity className={iconClass('/risk', 'text-amber-500')} /> Risk Matrix
               </Link>
             </nav>
           </div>
@@ -125,10 +111,8 @@ export default function Sidebar({ mobileOpen, onClose }) {
               Commercial
             </p>
             <nav className="space-y-1">
-              <Link href="/pricing" passHref legacyBehavior>
-                <a className={linkClass('/pricing')} onClick={handleClose}>
-                  <DollarSign className={iconClass('/pricing', 'text-emerald-500')} /> Pricing & ROI Model
-                </a>
+              <Link href="/pricing" className={linkClass('/pricing')} onClick={handleClose}>
+                <DollarSign className={iconClass('/pricing', 'text-emerald-500')} /> Pricing & ROI Model
               </Link>
             </nav>
           </div>

@@ -71,11 +71,11 @@ export async function getServerSideProps() {
     }
 
     return { 
-      props: { 
+      props: JSON.parse(JSON.stringify({ 
         initialSignals: signals || [],
         initialSapBOMs: realSapBOMs,
         initialAffectedProducts: realAffectedProducts
-      } 
+      }))
     };
   } catch(e) {
     return { props: { initialSignals: [], initialSapBOMs: [], initialAffectedProducts: [] } };

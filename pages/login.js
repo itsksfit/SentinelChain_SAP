@@ -110,7 +110,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white flex antialiased font-sans">
       <Head>
-        <title>{isLoginView ? 'Sign In' : 'Enterprise Onboarding'} | SentinelChain</title>
+        <title>{`${isLoginView ? 'Sign In' : 'Enterprise Onboarding'} | SentinelChain`}</title>
         <meta name="description" content="Sign in to SentinelChain Enterprise Supply Chain Risk Management & Resilience platform." />
       </Head>
 

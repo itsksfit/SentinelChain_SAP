@@ -300,7 +300,7 @@ SentinelChain Autonomous Supply Chain Resiliency Network`;
   return (
     <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#090A0C] text-secondary-900 dark:text-white transition-colors duration-200 antialiased font-sans">
       <Head>
-        <title>Decision Center: {id || 'DSP-LIVE'} | SentinelChain</title>
+        <title>{`Decision Center: ${id || 'DSP-LIVE'} | SentinelChain`}</title>
         <meta name="description" content="Autonomous procurement decision center, technical part comparison, and SAP Ariba PR dispatch." />
       </Head>
 
