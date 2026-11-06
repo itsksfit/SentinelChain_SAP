@@ -121,7 +121,7 @@ export default function PrAuditExportModal({ isOpen, onClose, data = {} }) {
             th, td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; font-size: 11px; }
             th { background-color: #f9fafb; color: #4b5563; font-weight: 700; text-align: left; }
             .print-hide { display: none !important; }
-            svg { display: none; }
+            svg { display: inline-block; vertical-align: middle; }
           </style>
         </head>
         <body>
