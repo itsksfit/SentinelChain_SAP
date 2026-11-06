@@ -118,11 +118,11 @@ export default function WorldMap() {
   }, [isLight, theme, resolvedTheme]);
 
   useEffect(() => {
-    // Smooth controls with zoom enabled
+    // Auto-rotate with smooth controls
     if (globeEl.current) {
       globeEl.current.controls().autoRotate = true;
-      globeEl.current.controls().autoRotateSpeed = 0.7;
-      globeEl.current.controls().enableZoom = true;
+      globeEl.current.controls().autoRotateSpeed = 1.3;
+      globeEl.current.controls().enableZoom = false;
       globeEl.current.pointOfView({ lat: 22, lng: 115, altitude: 2.2 }, 1000);
     }
   }, []);
@@ -133,15 +133,15 @@ export default function WorldMap() {
         ? 'bg-[#F8F9FA] border-[#E8E8E8]' 
         : 'bg-[#111111] border-[#222222]'
     }`}>
-      {/* Interactive Controls Pill */}
-      <div className={`absolute top-4 left-4 z-10 px-3 py-1.5 rounded-lg border backdrop-blur-md shadow-2xs flex items-center gap-2 ${
+      {/* Top Header Badge */}
+      <div className={`absolute top-4 left-4 z-10 px-3.5 py-2 rounded-lg border backdrop-blur-md shadow-2xs ${
         isLight 
           ? 'bg-white/95 border-[#E8E8E8] text-secondary-900' 
           : 'bg-[#0D0D0D]/95 border-[#222222] text-white'
       }`}>
-        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span className="text-[11px] font-bold uppercase tracking-wider text-secondary-700 dark:text-secondary-300">
-          20+ Live Corridors • Scroll to Zoom
+        <span className="text-[10px] uppercase font-bold tracking-wider flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Global Supply Node Grid (20+ Live Fab Corridors)
         </span>
       </div>
       
