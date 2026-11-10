@@ -15,13 +15,14 @@ export default function SentinelChainLandingPage() {
   const [openFaqs, setOpenFaqs] = useState({ 0: true });
 
   useEffect(() => {
-    // Ensure all sections are visible immediately
+    // 1. Immediately make hero elements visible so there is zero initial layout shift
     if (typeof document !== 'undefined') {
-      document.querySelectorAll('.scroll-reveal').forEach((el) => {
+      document.querySelectorAll('[data-purpose^="hero-"]').forEach((el) => {
         el.classList.add('is-visible');
       });
     }
 
+    // 2. Track scroll position for progress bar and header elevation
     const handleScroll = () => {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -33,7 +34,58 @@ export default function SentinelChainLandingPage() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // 3. Setup IntersectionObserver for staggered waterfall entrances
+    if (typeof window === 'undefined') return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = document.querySelectorAll('.scroll-reveal:not(.is-visible)');
+
+    if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
+      revealElements.forEach((el) => el.classList.add('is-visible'));
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const stagger = el.getAttribute('data-stagger');
+            const delay = stagger !== null ? parseInt(stagger, 10) * 100 : 0;
+            if (stagger !== null && !el.style.transitionDelay) {
+              el.style.transitionDelay = `${delay}ms`;
+            }
+            el.classList.add('is-visible');
+            observer.unobserve(el);
+
+            // Once entrance transition has completed, clear transitionDelay so hovers are instant
+            setTimeout(() => {
+              if (el) el.style.transitionDelay = '';
+            }, delay + 850);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -30px 0px'
+      }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    // Fallback safety: ensure all elements become visible after 4 seconds
+    const safetyTimer = setTimeout(() => {
+      document.querySelectorAll('.scroll-reveal:not(.is-visible)').forEach((el) => {
+        el.classList.add('is-visible');
+      });
+    }, 4000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      revealObserver.disconnect();
+      clearTimeout(safetyTimer);
+    };
   }, []);
 
   const handlePlayTrigger = (e) => {
@@ -423,7 +475,7 @@ export default function SentinelChainLandingPage() {
 <section className="py-24 bg-white/80 backdrop-blur-sm border-t border-brand-100 relative" data-purpose="engine-features" id="how-it-works">
 <div className="max-w-6xl mx-auto px-6">
 {/*  Section Header  */}
-<div className="text-center max-w-3xl mx-auto mb-16 scroll-reveal is-visible" data-reveal="fade">
+<div className="text-center max-w-3xl mx-auto mb-16 scroll-reveal" data-reveal="fade">
 <span className="text-xs font-semibold text-brand-500 uppercase tracking-widest">HOW IT WORKS</span>
 <h2 className="text-3xl sm:text-4xl font-bold text-brand-900 tracking-tight mt-3">
     From disruption alert to purchase request, in one flow.
@@ -435,7 +487,7 @@ export default function SentinelChainLandingPage() {
 {/*  2x3 Grid of 6 Feature Cards with Micro-Animations & Scroll Stagger  */}
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="featureGridContainer">
 {/*  Card 1  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="0" style={{ transitionDelay: "0ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="0" style={{ transitionDelay: "0ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:-rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -445,7 +497,7 @@ export default function SentinelChainLandingPage() {
 </p>
 </div>
 {/*  Card 2  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="1" style={{ transitionDelay: "85ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="1" style={{ transitionDelay: "85ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -455,7 +507,7 @@ export default function SentinelChainLandingPage() {
 </p>
 </div>
 {/*  Card 3  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="2" style={{ transitionDelay: "170ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="2" style={{ transitionDelay: "170ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -465,7 +517,7 @@ export default function SentinelChainLandingPage() {
 </p>
 </div>
 {/*  Card 4  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="3" style={{ transitionDelay: "255ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="3" style={{ transitionDelay: "255ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -475,7 +527,7 @@ export default function SentinelChainLandingPage() {
 </p>
 </div>
 {/*  Card 5  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="4" style={{ transitionDelay: "340ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="4" style={{ transitionDelay: "340ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -485,7 +537,7 @@ export default function SentinelChainLandingPage() {
 </p>
 </div>
 {/*  Card 6  */}
-<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default is-visible" data-stagger="5" style={{ transitionDelay: "425ms" }}>
+<div className="scroll-reveal card-sheen-sweep p-8 rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 group cursor-default" data-stagger="5" style={{ transitionDelay: "425ms" }}>
 <div className="w-10 h-10 rounded-lg bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-800 mb-6 group-hover:bg-brand-900 group-hover:text-white group-hover:scale-110 transition-all duration-300">
 <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </div>
@@ -496,7 +548,7 @@ export default function SentinelChainLandingPage() {
 </div>
 </div>
 {/*  Engine Section Bottom CTA  */}
-<div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm scroll-reveal is-visible">
+<div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm scroll-reveal">
 <Link className="btn-shimmer inline-flex items-center justify-center bg-brand-900 hover:bg-black text-white font-semibold rounded-full px-6 py-2.5 transition-all duration-200 shadow-subtle hover:scale-[1.02] active:scale-[0.98]" href="/disruptions/DSP-092">
     Run the Taiwan earthquake scenario
     <svg className="w-3.5 h-3.5 ml-1.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
@@ -512,7 +564,7 @@ export default function SentinelChainLandingPage() {
 <section className="py-12 bg-white" data-purpose="trust-integrations" id="data-sources">
 <div className="max-w-5xl mx-auto px-6">
 {/*  Enclosed Gray Card Container  */}
-<div className="bg-brand-50 rounded-3xl p-10 sm:p-12 border border-brand-200/70 scroll-reveal transition-all duration-300 hover:border-brand-300 is-visible">
+<div className="bg-brand-50 rounded-3xl p-10 sm:p-12 border border-brand-200/70 scroll-reveal transition-all duration-300 hover:border-brand-300">
 <div className="text-center mb-10">
 <h3 className="text-lg sm:text-xl font-semibold text-brand-900 tracking-tight">
     Built on live public data and your SAP system.
@@ -525,19 +577,19 @@ export default function SentinelChainLandingPage() {
 <div>
 <div className="text-xs font-semibold text-brand-400 uppercase tracking-wider mb-3 px-1">Integrations</div>
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4" id="integrationsGrid">
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default is-visible" data-stagger="0" style={{ transitionDelay: "0ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default" data-stagger="0" style={{ transitionDelay: "0ms" }}>
 <span className="w-2 h-2 rounded-full bg-blue-600"></span>
 <span className="font-semibold text-sm text-brand-800">SAP S/4HANA</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default is-visible" data-stagger="1" style={{ transitionDelay: "85ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default" data-stagger="1" style={{ transitionDelay: "85ms" }}>
 <span className="w-2 h-2 rounded-full bg-blue-500"></span>
 <span className="font-semibold text-sm text-brand-800">SAP Ariba</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default is-visible" data-stagger="2" style={{ transitionDelay: "170ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default" data-stagger="2" style={{ transitionDelay: "170ms" }}>
 <span className="w-2 h-2 rounded-full bg-blue-700"></span>
 <span className="font-semibold text-sm text-brand-800">Mouser Electronics</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default is-visible" data-stagger="3" style={{ transitionDelay: "255ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-4 px-4 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 cursor-default" data-stagger="3" style={{ transitionDelay: "255ms" }}>
 <span className="w-2 h-2 rounded-full bg-orange-600"></span>
 <span className="font-semibold text-sm text-brand-800">Groq Inference</span>
 </div>
@@ -546,23 +598,23 @@ export default function SentinelChainLandingPage() {
 <div>
 <div className="text-xs font-semibold text-brand-400 uppercase tracking-wider mb-3 px-1">Disruption Feeds &amp; Public Data Sources</div>
 <div className="grid grid-cols-2 md:grid-cols-5 gap-3" id="disruptionGrid">
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default is-visible" data-stagger="0" style={{ transitionDelay: "0ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default" data-stagger="0" style={{ transitionDelay: "0ms" }}>
 <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0"></span>
 <span className="font-semibold text-xs text-brand-800">USGS Seismic Net</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default is-visible" data-stagger="1" style={{ transitionDelay: "85ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default" data-stagger="1" style={{ transitionDelay: "85ms" }}>
 <span className="w-2 h-2 rounded-full bg-amber-600 shrink-0"></span>
 <span className="font-semibold text-xs text-brand-800">Federal Register (BIS)</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default is-visible" data-stagger="2" style={{ transitionDelay: "170ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default" data-stagger="2" style={{ transitionDelay: "170ms" }}>
 <span className="w-2 h-2 rounded-full bg-slate-700 shrink-0"></span>
 <span className="font-semibold text-xs text-brand-800">SEC EDGAR</span>
 </div>
-<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default is-visible" data-stagger="3" style={{ transitionDelay: "255ms" }}>
+<div className="chip-item scroll-reveal bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default" data-stagger="3" style={{ transitionDelay: "255ms" }}>
 <span className="w-2 h-2 rounded-full bg-indigo-600 shrink-0"></span>
 <span className="font-semibold text-xs text-brand-800">NY Fed GSCPI</span>
 </div>
-<div className="chip-item scroll-reveal col-span-2 md:col-span-1 bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default is-visible" data-stagger="4" style={{ transitionDelay: "340ms" }}>
+<div className="chip-item scroll-reveal col-span-2 md:col-span-1 bg-white border border-brand-200 rounded-xl py-3 px-3 shadow-subtle flex items-center justify-center gap-2 hover:border-brand-400 hover:-translate-y-0.5 transition-all duration-200 text-center cursor-default" data-stagger="4" style={{ transitionDelay: "340ms" }}>
 <span className="w-2 h-2 rounded-full bg-purple-600 shrink-0"></span>
 <span className="font-semibold text-xs text-brand-800">Foundry IR (TSMC/ASML)</span>
 </div>
@@ -578,7 +630,7 @@ export default function SentinelChainLandingPage() {
 <div className="max-w-5xl mx-auto px-6">
 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 {/*  Text column (Slide in left)  */}
-<div className="lg:col-span-7 space-y-6 scroll-reveal reveal-left is-visible">
+<div className="lg:col-span-7 space-y-6 scroll-reveal reveal-left">
 <h2 className="text-2xl sm:text-3xl font-bold text-brand-900 leading-snug tracking-tight">
   When a chip fab goes down, most teams find out from the news.
 </h2>
@@ -596,7 +648,7 @@ export default function SentinelChainLandingPage() {
 </div>
 </div>
 {/*  Dashboard Decision Preview Graphic with Sliding Right Offset & Counter Trigger  */}
-<div className="lg:col-span-5 flex flex-col items-center justify-center scroll-reveal reveal-right is-visible" id="testimonialCardWrapper" style={{ transitionDelay: "150ms" }}>
+<div className="lg:col-span-5 flex flex-col items-center justify-center scroll-reveal reveal-right" id="testimonialCardWrapper" style={{ transitionDelay: "150ms" }}>
 <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-card hover:shadow-float border border-brand-200 bg-white p-5 space-y-4 hover:-translate-y-1 transition-all duration-300 group cursor-default">
 <div className="flex items-center justify-between pb-3 border-b border-brand-100">
 <div className="flex items-center gap-2">
@@ -643,7 +695,7 @@ export default function SentinelChainLandingPage() {
 {/*  BEGIN: FAQ Section  */}
 <section className="py-20 bg-brand-50/50 border-t border-brand-200" id="faq">
 <div className="max-w-4xl mx-auto px-6">
-<div className="text-center mb-12 scroll-reveal is-visible">
+<div className="text-center mb-12 scroll-reveal">
 <span className="text-xs font-semibold text-brand-500 uppercase tracking-widest">FREQUENTLY ASKED QUESTIONS</span>
 <h2 className="text-3xl font-bold text-brand-900 tracking-tight mt-2">Clear answers to your technical questions</h2>
 <p className="text-brand-600 text-sm mt-2">Everything you need to know about system architecture, safety guardrails, and data integrity.</p>
@@ -652,7 +704,12 @@ export default function SentinelChainLandingPage() {
   {faqItems.map((item, idx) => {
     const isOpen = openFaqs[idx] ?? (idx === 0);
     return (
-      <div key={idx} className="faq-item scroll-reveal border border-brand-200 rounded-xl bg-white overflow-hidden transition-all duration-300 shadow-subtle hover:border-brand-300 is-visible" data-stagger={idx}>
+      <div 
+        key={idx} 
+        className="faq-item scroll-reveal border border-brand-200 rounded-xl bg-white overflow-hidden transition-all duration-300 shadow-subtle hover:border-brand-300" 
+        data-stagger={idx}
+        style={{ transitionDelay: `${idx * 100}ms` }}
+      >
         <button 
           type="button"
           onClick={() => toggleFaq(idx)}
@@ -680,7 +737,7 @@ export default function SentinelChainLandingPage() {
 {/*  BEGIN: PreFooterBanner  */}
 <section className="py-16 bg-white relative z-10" data-purpose="pre-footer-cta">
 <div className="max-w-5xl mx-auto px-6">
-<div className="bg-brand-50/70 rounded-3xl p-10 sm:p-16 text-center border border-brand-200/80 shadow-subtle scroll-reveal is-visible">
+<div className="bg-brand-50/70 rounded-3xl p-10 sm:p-16 text-center border border-brand-200/80 shadow-subtle scroll-reveal pre-footer-card">
 <h2 className="text-3xl sm:text-4xl font-bold text-brand-900 tracking-tight">
   Find your exposure before the next disruption does.
 </h2>

@@ -308,6 +308,30 @@
   transform: translate(0, 0) scale(1) !important;
 }
 
+/* FAQ Staggered Waterfall Entrance */
+.faq-item.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.faq-item.scroll-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Pre-Footer Banner Dynamic Scale Entrance */
+.pre-footer-card.scroll-reveal {
+  opacity: 0;
+  transform: scale(0.96) translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.pre-footer-card.scroll-reveal.is-visible {
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+}
+
 /* Subtle card sheen on scroll pass */
 .card-sheen-sweep {
   position: relative;
