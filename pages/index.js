@@ -15,6 +15,13 @@ export default function SentinelChainLandingPage() {
   const [openFaqs, setOpenFaqs] = useState({ 0: true });
 
   useEffect(() => {
+    // Ensure all sections are visible immediately
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll('.scroll-reveal').forEach((el) => {
+        el.classList.add('is-visible');
+      });
+    }
+
     const handleScroll = () => {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -671,21 +678,21 @@ export default function SentinelChainLandingPage() {
 </section>
 {/*  END: FAQ Section  */}
 {/*  BEGIN: PreFooterBanner  */}
-<section className="py-12 bg-white relative" data-purpose="pre-footer-cta">
+<section className="py-16 bg-white relative z-10" data-purpose="pre-footer-cta">
 <div className="max-w-5xl mx-auto px-6">
-<div className="bg-brand-50 rounded-3xl p-10 sm:p-14 text-center border border-brand-200/80 shadow-subtle scroll-reveal">
-<h2 className="text-2xl sm:text-3xl font-bold text-brand-900 tracking-tight">
+<div className="bg-brand-50/70 rounded-3xl p-10 sm:p-16 text-center border border-brand-200/80 shadow-subtle scroll-reveal is-visible">
+<h2 className="text-3xl sm:text-4xl font-bold text-brand-900 tracking-tight">
   Find your exposure before the next disruption does.
 </h2>
-<p className="mt-3 text-sm sm:text-base text-brand-600 max-w-xl mx-auto">
+<p className="mt-3.5 text-base sm:text-lg text-brand-600 max-w-xl mx-auto leading-relaxed">
   Run the interactive Taiwan earthquake scenario on live Mouser stock and a SAP sandbox.
 </p>
 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-<Link className="btn-shimmer inline-flex items-center justify-center bg-brand-900 hover:bg-black text-white text-sm font-semibold rounded-full px-6 py-3 transition-all duration-200 shadow-subtle hover:scale-[1.02] active:scale-[0.98]" href="/disruptions/DSP-092">
+<Link className="btn-shimmer inline-flex items-center justify-center bg-brand-900 hover:bg-black text-white text-sm font-semibold rounded-full px-7 py-3.5 transition-all duration-200 shadow-subtle hover:scale-[1.02] active:scale-[0.98] cursor-pointer" href="/disruptions/DSP-092">
   Run the scenario
   <svg className="w-4 h-4 ml-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
 </Link>
-<a className="inline-flex items-center justify-center bg-white hover:bg-brand-100 text-brand-700 text-sm font-semibold rounded-full px-6 py-3 transition-all duration-200 border border-brand-300 shadow-subtle hover:scale-[1.01]" href="mailto:contact@sentinelchain.com">
+<a className="inline-flex items-center justify-center bg-white hover:bg-brand-50 text-brand-700 text-sm font-semibold rounded-full px-7 py-3.5 transition-all duration-200 border border-brand-300 shadow-subtle hover:scale-[1.01] cursor-pointer" href="mailto:contact@sentinelchain.com">
   Get in touch
 </a>
 </div>
