@@ -35,56 +35,78 @@ export default function SentinelChainLandingPage() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // 3. Setup IntersectionObserver for staggered waterfall entrances
+    // 3. Setup Per-Slide / Section-Level Motion Observer
     if (typeof window === 'undefined') return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealElements = document.querySelectorAll('.scroll-reveal:not(.is-visible)');
-
     if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
-      revealElements.forEach((el) => el.classList.add('is-visible'));
+      document.querySelectorAll('.scroll-reveal').forEach((el) => el.classList.add('is-visible'));
       return () => window.removeEventListener('scroll', handleScroll);
     }
 
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const stagger = el.getAttribute('data-stagger');
-            const delay = stagger !== null ? parseInt(stagger, 10) * 100 : 0;
-            if (stagger !== null && !el.style.transitionDelay) {
-              el.style.transitionDelay = `${delay}ms`;
-            }
-            el.classList.add('is-visible');
-            observer.unobserve(el);
+    const slideSelectors = [
+      '#how-it-works',
+      '#data-sources',
+      '#scenario',
+      '#faq',
+      '[data-purpose="pre-footer-cta"]'
+    ];
 
-            // Once entrance transition has completed, clear transitionDelay so hovers are instant
-            setTimeout(() => {
-              if (el) el.style.transitionDelay = '';
-            }, delay + 850);
+    const slideElements = document.querySelectorAll(slideSelectors.join(','));
+
+    // Trigger waterfall reveal on slide elements
+    const activateSlide = (section) => {
+      const revealItems = section.querySelectorAll('.scroll-reveal');
+      revealItems.forEach((item, index) => {
+        const stagger = item.getAttribute('data-stagger');
+        const delay = stagger !== null ? parseInt(stagger, 10) * 100 : index * 80;
+        item.style.transitionDelay = `${delay}ms`;
+        item.classList.add('is-visible');
+
+        // Once the entrance transition finishes, clear transitionDelay so hover & interactions are immediate
+        setTimeout(() => {
+          if (item && item.classList.contains('is-visible')) {
+            item.style.transitionDelay = '';
+          }
+        }, delay + 800);
+      });
+    };
+
+    // Reset slide elements when user scrolls away back up
+    const resetSlide = (section) => {
+      const revealItems = section.querySelectorAll('.scroll-reveal');
+      revealItems.forEach((item) => {
+        item.style.transitionDelay = '0ms';
+        item.classList.remove('is-visible');
+      });
+    };
+
+    const slideObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const section = entry.target;
+          if (entry.isIntersecting) {
+            // User scrolled into this specific slide/interface!
+            activateSlide(section);
+          } else {
+            // If the section scrolled below the viewport (user scrolled back up), reset so it can animate again when returning
+            if (entry.boundingClientRect.top > 0) {
+              resetSlide(section);
+            }
           }
         });
       },
       {
         threshold: 0.08,
-        rootMargin: '0px 0px -30px 0px'
+        rootMargin: '0px 0px -40px 0px'
       }
     );
 
-    revealElements.forEach((el) => revealObserver.observe(el));
-
-    // Fallback safety: ensure all elements become visible after 4 seconds
-    const safetyTimer = setTimeout(() => {
-      document.querySelectorAll('.scroll-reveal:not(.is-visible)').forEach((el) => {
-        el.classList.add('is-visible');
-      });
-    }, 4000);
+    slideElements.forEach((slide) => slideObserver.observe(slide));
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      revealObserver.disconnect();
-      clearTimeout(safetyTimer);
+      slideObserver.disconnect();
     };
   }, []);
 
@@ -708,7 +730,6 @@ export default function SentinelChainLandingPage() {
         key={idx} 
         className="faq-item scroll-reveal border border-brand-200 rounded-xl bg-white overflow-hidden transition-all duration-300 shadow-subtle hover:border-brand-300" 
         data-stagger={idx}
-        style={{ transitionDelay: `${idx * 100}ms` }}
       >
         <button 
           type="button"
