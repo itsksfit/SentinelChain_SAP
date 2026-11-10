@@ -81,3 +81,4 @@ A pure black, metallic silver, enterprise-grade intelligence platform for missio
 - **Metallic Buttons**: High-density pill and rounded-xl containers with 1px silver border, subtle radial highlight, and tactile hover states.
 - **Technical Pipeline Spine**: Connected data bus with sequential stage nodes, pulse indicators, and live data telemetry.
 - **Integration Nodes**: Clean architectural badges for SAP S/4HANA, SAP Ariba, Mouser, and regulatory feeds with live status pings.
+

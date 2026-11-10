@@ -49,6 +49,18 @@ module.exports = {
           dangerSurface: '#FEF2F2',
           info: '#2563EB',
           infoSurface: '#EFF6FF',
+        },
+        brand: {
+          50: '#F9FAFB',
+          100: '#F2F4F7',
+          200: '#EAECF0',
+          300: '#D0D5DD',
+          400: '#98A2B3',
+          500: '#667085',
+          600: '#475467',
+          700: '#344054',
+          800: '#1D2939',
+          900: '#101828',
         }
       },
       fontFamily: {
@@ -63,8 +75,10 @@ module.exports = {
         '2xl': '20px',
       },
       boxShadow: {
-        'subtle': '0 1px 2px rgba(0,0,0,0.05)',
-        'card': '0 2px 8px rgba(0,0,0,0.06)',
+        'xs': '0px 1px 2px rgba(16, 24, 40, 0.05)',
+        'subtle': '0px 1px 2px rgba(16, 24, 40, 0.05)',
+        'card': '0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)',
+        'float': '0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03)',
         'popover': '0 10px 24px rgba(0,0,0,0.1)',
         'dark-subtle': '0 1px 2px rgba(0,0,0,0.3)',
         'dark-card': '0 2px 12px rgba(0,0,0,0.35)',

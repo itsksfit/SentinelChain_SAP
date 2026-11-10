@@ -31,3 +31,4 @@
 - **Color Palette**: Pure black (`#050608`) and obsidian charcoal backgrounds; metallic silver typography and accents (`#E2E8F0`, `#94A3B8`); crisp white text; subtle silver metallic gradients; restrained glass effects; fine technical hairline grids.
 - **Strict Anti-Patterns**: No generic purple AI gradients; no playful consumer SaaS illustrations; no random floating AI sparkle icons; no repetitive bubbly rounded cards; no orange startup-style themes on the landing page.
 - **Brand Assets**: Authentic SentinelChain metallic silver hexagonal "S" emblem with global network, transport truck, orbital ring, and "SentinelChain" wordmark (`/logo.png`, `/shield.png`, `/logo-dark.png`).
+
