@@ -140,3 +140,224 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background-color: #484848;
 }
+
+/* Scroll Progress Indicator Bar */
+#scrollProgressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  z-index: 100;
+  background: linear-gradient(90deg, #3B82F6 0%, #6366F1 50%, #10B981 100%);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6), 0 0 4px rgba(16, 185, 129, 0.5);
+  pointer-events: none;
+  transition: width 0.08s ease-out;
+}
+
+/* Dynamic Subtle Background Matrix */
+.bg-grid-ambient {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(16, 24, 40, 0.024) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 24, 40, 0.024) 1px, transparent 1px);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Ambient glowing orbs */
+.glow-orb-primary {
+  position: absolute;
+  width: 720px;
+  height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.065) 0%, rgba(99, 102, 241, 0.02) 50%, transparent 70%);
+  filter: blur(55px);
+  pointer-events: none;
+  will-change: transform;
+}
+.glow-orb-secondary {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Micro Button Shimmer */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 30%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.24) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: shimmerSlide 5.5s infinite ease-in-out;
+}
+@keyframes shimmerSlide {
+  0%, 75% { left: -60%; }
+  100% { left: 160%; }
+}
+
+/* Telemetry Ambient Breathing & Waves */
+@keyframes erpBeacon {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.6); opacity: 0; }
+}
+.pulse-beacon {
+  animation: erpBeacon 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shockPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+  50% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+}
+.shock-pulse {
+  animation: shockPulse 2.4s ease-in-out infinite;
+}
+
+/* Radar / Shockwave Scanline in SVG Chart */
+@keyframes scanlineSweep {
+  0% { transform: translateX(0); opacity: 0; }
+  15% { opacity: 0.85; }
+  85% { opacity: 0.85; }
+  100% { transform: translateX(800px); opacity: 0; }
+}
+.chart-scanline {
+  animation: scanlineSweep 4.5s ease-in-out infinite;
+}
+.chart-scanline.active-fast {
+  animation: scanlineSweep 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Live SVG line draw animation */
+.chart-draw-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: chartLineDraw 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+}
+@keyframes chartLineDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Interactive smooth path transitions for telemetry */
+#burnArea, #burnLine, #recoveryArea, #recoveryLine, #eventMarker {
+  transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* FAQ Accordion Transitions */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.accordion-content.is-open {
+  grid-template-rows: 1fr;
+}
+.accordion-inner {
+  overflow: hidden;
+}
+
+/* 3D Dashboard Perspective & Scale Parallax Container */
+.dashboard-parallax-viewport {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+#hero-dashboard {
+  will-change: transform, box-shadow, filter;
+  transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+/* Floating Parallax Badges */
+.floating-parallax-badge {
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Dynamic Scroll Motion Classes (Fluid scroll-triggered reveals) */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.scroll-reveal.reveal-left {
+  transform: translateX(-32px) translateY(16px);
+}
+.scroll-reveal.reveal-right {
+  transform: translateX(32px) translateY(16px);
+}
+.scroll-reveal.reveal-scale {
+  transform: scale(0.95) translateY(28px);
+}
+.scroll-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+}
+
+/* Subtle card sheen on scroll pass */
+.card-sheen-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.card-sheen-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.75s ease-out;
+}
+.card-sheen-sweep.is-visible::before {
+  left: 200%;
+}
+
+/* Header Scrolled Elevation */
+header.nav-scrolled {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom-color: rgba(208, 213, 221, 0.85) !important;
+  box-shadow: 0 4px 20px -2px rgba(16, 24, 40, 0.06), 0 2px 6px -1px rgba(16, 24, 40, 0.04) !important;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  #scrollProgressBar {
+    display: none !important;
+  }
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  #hero-dashboard, .floating-parallax-badge {
+    transform: none !important;
+  }
+  .glow-orb-primary, .glow-orb-secondary {
+    display: none !important;
+  }
+}

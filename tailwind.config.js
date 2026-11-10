@@ -79,6 +79,7 @@ module.exports = {
         'subtle': '0px 1px 2px rgba(16, 24, 40, 0.05)',
         'card': '0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)',
         'float': '0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03)',
+        'float-hover': '0px 28px 36px -6px rgba(16, 24, 40, 0.14), 0px 12px 14px -4px rgba(16, 24, 40, 0.05)',
         'popover': '0 10px 24px rgba(0,0,0,0.1)',
         'dark-subtle': '0 1px 2px rgba(0,0,0,0.3)',
         'dark-card': '0 2px 12px rgba(0,0,0,0.35)',
